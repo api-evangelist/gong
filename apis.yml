@@ -1,31 +1,44 @@
 aid: gong
 name: Gong
-description: >-
-  What the Gong API provides · Keep track of calls made to customers. ·
-  Correlate between user stats in Gong to external data. · Import Gong calls ...
+description: Gong is a revenue intelligence platform that captures and analyzes customer interactions across phone, web conferencing, and email to provide insights for sales teams.
 type: Index
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://www.gong.io/wp-content/uploads/2021/04/gong-logo.svg
 tags:
-  - API
+- API
 created: '2025-02-09'
 modified: '2025-02-09'
 url: https://raw.githubusercontent.com/api-evangelist/gong/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
-  - aid: gong:gong
-    name: Gong
-    description: >-
-      What the Gong API provides · Keep track of calls made to customers. ·
-      Correlate between user stats in Gong to external data. · Import Gong calls
-      ...
-    humanURL: https://help.gong.io/docs/what-the-gong-api-provides
-    tags:
-      - API
-    properties:
-      - type: Documentation
-        url: https://help.gong.io/docs/what-the-gong-api-provides
+- aid: gong:gong
+  name: Gong
+  description: What the Gong API provides ï¿½ Keep track of calls made to customers. ï¿½ Correlate between user stats in Gong to external data. ï¿½ Import Gong calls ...
+  humanURL: https://help.gong.io/docs/what-the-gong-api-provides
+  tags:
+  - API
+  properties:
+  - type: Documentation
+    url: https://help.gong.io/docs/what-the-gong-api-provides
 maintainers:
-  - FN: Kin Lane
-    email: info@apievangelist.com
+- FN: Kin Lane
+  email: info@apievangelist.com
+- FN: Gong
+  email: support@gong.io
+  url: https://www.gong.io
+common:
+- url: https://app.gong.io
+  type: Portal
+- url: https://www.gong.io/get-started/
+  type: Sign Up
+- url: https://app.gong.io/login
+  type: Login
+- url: https://www.gong.io/privacy-policy/
+  type: Privacy Policy
+- url: https://www.gong.io/terms-of-service/
+  type: Terms of Service
+- url: https://www.gong.io/blog/
+  type: Blog
+- url: https://www.gong.io/contact-us/
+  type: Contact
