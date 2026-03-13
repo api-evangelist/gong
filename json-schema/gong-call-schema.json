@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-evangelist/gong/blob/main/json-schema/gong-call-schema.json",
+  "title": "Gong Call",
+  "description": "Represents a call record in the Gong platform, including metadata, participants, timing, and media information.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique numeric identifier for the call (up to 20 digits)."
+    },
+    "title": {
+      "type": "string",
+      "description": "The title or subject of the call."
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the call in the Gong web application."
+    },
+    "scheduled": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Scheduled start time of the call in ISO-8601 format."
+    },
+    "started": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Actual start time of the call in ISO-8601 format."
+    },
+    "duration": {
+      "type": "number",
+      "description": "Duration of the call in seconds."
+    },
+    "direction": {
+      "type": "string",
+      "enum": ["Inbound", "Outbound", "Conference", "Unknown"],
+      "description": "The direction of the call."
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["Internal", "External", "Unknown"],
+      "description": "Whether the call was internal or external."
+    },
+    "media": {
+      "type": "string",
+      "enum": ["Video", "Audio"],
+      "description": "The type of media recorded."
+    },
+    "language": {
+      "type": "string",
+      "description": "The detected language of the call."
+    },
+    "workspaceId": {
+      "type": "string",
+      "description": "The workspace identifier the call belongs to."
+    },
+    "primaryUserId": {
+      "type": "string",
+      "description": "The Gong user ID of the primary user on the call."
+    },
+    "parties": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CallParty"
+      },
+      "description": "The participants in the call."
+    }
+  },
+  "required": ["id"],
+  "$defs": {
+    "CallParty": {
+      "type": "object",
+      "description": "A participant in a Gong call.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the party."
+        },
+        "emailAddress": {
+          "type": "string",
+          "format": "email",
+          "description": "Email address of the party."
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name of the party."
+        },
+        "title": {
+          "type": "string",
+          "description": "Job title of the party."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Gong user ID if the party is a Gong user."
+        },
+        "speakerId": {
+          "type": "string",
+          "description": "Speaker identifier within the call."
+        },
+        "affiliation": {
+          "type": "string",
+          "enum": ["Internal", "External", "Unknown"],
+          "description": "Whether the party is internal or external."
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "Phone number of the party."
+        }
+      }
+    }
+  }
+}

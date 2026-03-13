@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-evangelist/gong/blob/main/json-schema/gong-scorecard-schema.json",
+  "title": "Gong Scorecard",
+  "description": "Represents a scorecard configuration in the Gong platform, used for evaluating call quality and performance.",
+  "type": "object",
+  "properties": {
+    "scorecardId": {
+      "type": "string",
+      "description": "Unique identifier for the scorecard."
+    },
+    "scorecardName": {
+      "type": "string",
+      "description": "Name of the scorecard."
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Whether the scorecard is currently enabled."
+    },
+    "workspaceId": {
+      "type": "string",
+      "description": "The workspace the scorecard belongs to."
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the scorecard was created."
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the scorecard was last updated."
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ScorecardQuestion"
+      },
+      "description": "List of questions in the scorecard."
+    }
+  },
+  "required": ["scorecardId", "scorecardName"],
+  "$defs": {
+    "ScorecardQuestion": {
+      "type": "object",
+      "description": "A question within a Gong scorecard.",
+      "properties": {
+        "questionId": {
+          "type": "string",
+          "description": "Unique identifier for the question."
+        },
+        "questionText": {
+          "type": "string",
+          "description": "The question text."
+        },
+        "questionType": {
+          "type": "string",
+          "enum": ["YesNo", "Scale", "FreeText", "SingleChoice", "MultipleChoice"],
+          "description": "The type of question."
+        },
+        "isRequired": {
+          "type": "boolean",
+          "description": "Whether the question requires an answer."
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Available answer options for choice-type questions."
+        }
+      }
+    }
+  }
+}

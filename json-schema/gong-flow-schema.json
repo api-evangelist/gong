@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-evangelist/gong/blob/main/json-schema/gong-flow-schema.json",
+  "title": "Gong Engage Flow",
+  "description": "Represents an Engage flow in the Gong platform, which is an automated outreach sequence used for prospect engagement.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the flow."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the flow."
+    },
+    "ownerEmail": {
+      "type": "string",
+      "format": "email",
+      "description": "Email of the flow owner."
+    },
+    "folderId": {
+      "type": "string",
+      "description": "ID of the folder containing the flow."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["Active", "Paused", "Archived", "Draft"],
+      "description": "Current status of the flow."
+    },
+    "stepsCount": {
+      "type": "integer",
+      "description": "Number of steps in the flow."
+    },
+    "prospectsCount": {
+      "type": "integer",
+      "description": "Number of prospects currently in the flow."
+    },
+    "workspaceId": {
+      "type": "string",
+      "description": "The workspace the flow belongs to."
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the flow was created."
+    },
+    "modified": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the flow was last modified."
+    }
+  },
+  "required": ["id", "name"]
+}

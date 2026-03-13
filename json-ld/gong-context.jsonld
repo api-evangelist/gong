@@ -1,0 +1,187 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "gong": "https://api.gong.io/v2/",
+    "schema": "https://schema.org/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "sioc": "http://rdfs.org/sioc/ns#",
+
+    "Call": {
+      "@id": "schema:Event",
+      "@context": {
+        "id": "schema:identifier",
+        "title": "schema:name",
+        "url": "schema:url",
+        "scheduled": "schema:startDate",
+        "started": "schema:startDate",
+        "duration": "schema:duration",
+        "direction": "gong:callDirection",
+        "scope": "gong:callScope",
+        "media": "schema:encodingFormat",
+        "language": "schema:inLanguage",
+        "workspaceId": "gong:workspaceId",
+        "primaryUserId": "schema:organizer",
+        "parties": "schema:attendee"
+      }
+    },
+
+    "CallParty": {
+      "@id": "schema:Person",
+      "@context": {
+        "id": "schema:identifier",
+        "emailAddress": "schema:email",
+        "name": "schema:name",
+        "title": "schema:jobTitle",
+        "userId": "schema:identifier",
+        "speakerId": "gong:speakerId",
+        "affiliation": "schema:affiliation",
+        "phoneNumber": "schema:telephone"
+      }
+    },
+
+    "User": {
+      "@id": "schema:Person",
+      "@context": {
+        "id": "schema:identifier",
+        "emailAddress": "schema:email",
+        "firstName": "schema:givenName",
+        "lastName": "schema:familyName",
+        "title": "schema:jobTitle",
+        "phoneNumber": "schema:telephone",
+        "extension": "vcard:hasExtension",
+        "personalMeetingUrls": "schema:url",
+        "managerId": "schema:worksFor",
+        "meetingConsentPageUrl": "schema:url",
+        "active": "schema:activeStatus",
+        "created": "dcterms:created",
+        "avatarUrl": "schema:image",
+        "trustedEmailAddress": "schema:email"
+      }
+    },
+
+    "Meeting": {
+      "@id": "schema:Event",
+      "@context": {
+        "id": "schema:identifier",
+        "title": "schema:name",
+        "scheduledStart": "schema:startDate",
+        "scheduledEnd": "schema:endDate",
+        "organizerEmail": "schema:organizer",
+        "meetingUrl": "schema:url",
+        "description": "schema:description",
+        "meetingProvider": "gong:meetingProvider",
+        "externalMeetingId": "schema:identifier",
+        "attendees": "schema:attendee"
+      }
+    },
+
+    "MeetingAttendee": {
+      "@id": "schema:Person",
+      "@context": {
+        "emailAddress": "schema:email",
+        "name": "schema:name",
+        "responseStatus": "schema:rsvpResponse"
+      }
+    },
+
+    "Flow": {
+      "@id": "schema:Action",
+      "@context": {
+        "id": "schema:identifier",
+        "name": "schema:name",
+        "ownerEmail": "schema:creator",
+        "folderId": "schema:isPartOf",
+        "status": "schema:actionStatus",
+        "stepsCount": "gong:stepsCount",
+        "prospectsCount": "gong:prospectsCount",
+        "workspaceId": "gong:workspaceId",
+        "created": "dcterms:created",
+        "modified": "dcterms:modified"
+      }
+    },
+
+    "Prospect": {
+      "@id": "schema:Person",
+      "@context": {
+        "emailAddress": "schema:email",
+        "firstName": "schema:givenName",
+        "lastName": "schema:familyName",
+        "company": "schema:worksFor",
+        "title": "schema:jobTitle",
+        "phoneNumber": "schema:telephone",
+        "linkedInUrl": "schema:sameAs"
+      }
+    },
+
+    "Workspace": {
+      "@id": "schema:Organization",
+      "@context": {
+        "id": "schema:identifier",
+        "name": "schema:name",
+        "description": "schema:description"
+      }
+    },
+
+    "Scorecard": {
+      "@id": "schema:Rating",
+      "@context": {
+        "scorecardId": "schema:identifier",
+        "scorecardName": "schema:name",
+        "enabled": "gong:enabled",
+        "workspaceId": "gong:workspaceId",
+        "created": "dcterms:created",
+        "updated": "dcterms:modified",
+        "questions": "schema:hasPart"
+      }
+    },
+
+    "Transcript": {
+      "@id": "schema:CreativeWork",
+      "@context": {
+        "callId": "schema:isPartOf",
+        "transcript": "schema:text"
+      }
+    },
+
+    "AuditLogEntry": {
+      "@id": "schema:Action",
+      "@context": {
+        "id": "schema:identifier",
+        "logType": "dcterms:type",
+        "timestamp": "schema:dateCreated",
+        "userId": "schema:agent",
+        "userEmail": "schema:agent",
+        "action": "schema:name",
+        "resourceType": "schema:object",
+        "resourceId": "schema:identifier",
+        "ipAddress": "gong:ipAddress"
+      }
+    },
+
+    "PermissionProfile": {
+      "@id": "schema:Role",
+      "@context": {
+        "profileId": "schema:identifier",
+        "name": "schema:name",
+        "description": "schema:description",
+        "workspaceId": "gong:workspaceId",
+        "userCount": "gong:userCount"
+      }
+    },
+
+    "LibraryFolder": {
+      "@id": "schema:Collection",
+      "@context": {
+        "id": "schema:identifier",
+        "name": "schema:name",
+        "description": "schema:description",
+        "parentFolderId": "schema:isPartOf",
+        "callCount": "schema:size",
+        "createdBy": "schema:creator",
+        "created": "dcterms:created"
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-evangelist/gong/blob/main/json-schema/gong-meeting-schema.json",
+  "title": "Gong Meeting",
+  "description": "Represents a meeting in the Gong platform, including scheduling information, participants, and conferencing details.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique meeting identifier."
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the meeting."
+    },
+    "scheduledStart": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Scheduled start time of the meeting in ISO-8601 format."
+    },
+    "scheduledEnd": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Scheduled end time of the meeting in ISO-8601 format."
+    },
+    "organizerEmail": {
+      "type": "string",
+      "format": "email",
+      "description": "Email of the meeting organizer."
+    },
+    "meetingUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the meeting (conferencing link)."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description or agenda for the meeting."
+    },
+    "meetingProvider": {
+      "type": "string",
+      "description": "The meeting provider (e.g., Zoom, Google Meet, Microsoft Teams)."
+    },
+    "externalMeetingId": {
+      "type": "string",
+      "description": "External meeting ID from the conferencing system."
+    },
+    "attendees": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/MeetingAttendee"
+      },
+      "description": "List of meeting attendees."
+    }
+  },
+  "required": ["id", "title"],
+  "$defs": {
+    "MeetingAttendee": {
+      "type": "object",
+      "description": "An attendee of a Gong meeting.",
+      "properties": {
+        "emailAddress": {
+          "type": "string",
+          "format": "email",
+          "description": "The attendee's email address."
+        },
+        "name": {
+          "type": "string",
+          "description": "The attendee's display name."
+        },
+        "responseStatus": {
+          "type": "string",
+          "enum": ["Accepted", "Declined", "Tentative", "NeedsAction"],
+          "description": "The attendee's RSVP response status."
+        }
+      }
+    }
+  }
+}

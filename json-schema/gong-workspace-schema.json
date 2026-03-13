@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-evangelist/gong/blob/main/json-schema/gong-workspace-schema.json",
+  "title": "Gong Workspace",
+  "description": "Represents a workspace in the Gong platform, used to organize and segment data within the organization.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the workspace."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the workspace."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the workspace."
+    }
+  },
+  "required": ["id", "name"]
+}

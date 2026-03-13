@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-evangelist/gong/blob/main/json-schema/gong-transcript-schema.json",
+  "title": "Gong Call Transcript",
+  "description": "Represents a call transcript in the Gong platform, containing speaker-identified segments with timing information.",
+  "type": "object",
+  "properties": {
+    "callId": {
+      "type": "string",
+      "description": "The call ID this transcript belongs to."
+    },
+    "transcript": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/TranscriptSegment"
+      },
+      "description": "Transcript segments with speaker and timing data."
+    }
+  },
+  "required": ["callId"],
+  "$defs": {
+    "TranscriptSegment": {
+      "type": "object",
+      "description": "A segment of a call transcript attributed to a specific speaker.",
+      "properties": {
+        "speakerId": {
+          "type": "string",
+          "description": "ID of the speaker."
+        },
+        "topic": {
+          "type": "string",
+          "description": "Topic of the segment."
+        },
+        "sentences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TranscriptSentence"
+          },
+          "description": "Individual sentences within the segment."
+        }
+      }
+    },
+    "TranscriptSentence": {
+      "type": "object",
+      "description": "A single transcribed sentence with timing information.",
+      "properties": {
+        "start": {
+          "type": "number",
+          "description": "Start time in seconds."
+        },
+        "end": {
+          "type": "number",
+          "description": "End time in seconds."
+        },
+        "text": {
+          "type": "string",
+          "description": "The transcribed text."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-evangelist/gong/blob/main/json-schema/gong-user-schema.json",
+  "title": "Gong User",
+  "description": "Represents a user account in the Gong platform, including profile information, settings, and organizational details.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique Gong user identifier."
+    },
+    "emailAddress": {
+      "type": "string",
+      "format": "email",
+      "description": "The user's email address."
+    },
+    "firstName": {
+      "type": "string",
+      "description": "The user's first name."
+    },
+    "lastName": {
+      "type": "string",
+      "description": "The user's last name."
+    },
+    "title": {
+      "type": "string",
+      "description": "The user's job title."
+    },
+    "phoneNumber": {
+      "type": "string",
+      "description": "The user's phone number."
+    },
+    "extension": {
+      "type": "string",
+      "description": "The user's phone extension."
+    },
+    "personalMeetingUrls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "description": "List of the user's personal meeting URLs."
+    },
+    "settings": {
+      "type": "object",
+      "description": "User recording and import settings.",
+      "properties": {
+        "webConferencesRecorded": {
+          "type": "boolean",
+          "description": "Whether web conferences are recorded."
+        },
+        "preventWebConferenceRecording": {
+          "type": "boolean",
+          "description": "Whether web conference recording is prevented."
+        },
+        "telephonyCallsImported": {
+          "type": "boolean",
+          "description": "Whether telephony calls are imported."
+        },
+        "emailsImported": {
+          "type": "boolean",
+          "description": "Whether emails are imported."
+        },
+        "preventEmailImport": {
+          "type": "boolean",
+          "description": "Whether email import is prevented."
+        }
+      }
+    },
+    "managerId": {
+      "type": "string",
+      "description": "The Gong user ID of this user's manager."
+    },
+    "meetingConsentPageUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the meeting consent page."
+    },
+    "spokenLanguages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "type": "string"
+          },
+          "primary": {
+            "type": "boolean"
+          }
+        }
+      },
+      "description": "Languages spoken by the user."
+    },
+    "active": {
+      "type": "boolean",
+      "description": "Whether the user account is active."
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the user account was created."
+    },
+    "avatarUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the user's avatar image."
+    },
+    "trustedEmailAddress": {
+      "type": "string",
+      "format": "email",
+      "description": "The user's trusted email address for SSO."
+    }
+  },
+  "required": ["id", "emailAddress"]
+}
