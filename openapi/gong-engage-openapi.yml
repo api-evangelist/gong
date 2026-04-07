@@ -24,10 +24,10 @@ security:
 tags:
   - name: Flows
     description: Operations for managing Engage flows
-  - name: Prospects
-    description: Operations for managing prospects in Engage flows
   - name: Folders
     description: Operations for managing flow folders
+  - name: Prospects
+    description: Operations for managing prospects in Engage flows
 paths:
   /flows:
     get:

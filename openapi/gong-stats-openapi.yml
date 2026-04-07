@@ -21,10 +21,10 @@ security:
   - basicAuth: []
   - bearerAuth: []
 tags:
-  - name: Statistics
-    description: Operations for retrieving activity and performance statistics
   - name: Scorecards
     description: Operations for retrieving scorecard statistics
+  - name: Statistics
+    description: Operations for retrieving activity and performance statistics
 paths:
   /stats/activity/aggregated:
     post:

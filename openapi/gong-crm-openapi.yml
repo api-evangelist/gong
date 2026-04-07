@@ -21,10 +21,10 @@ security:
   - basicAuth: []
   - bearerAuth: []
 tags:
-  - name: CRM Integration
-    description: Operations for registering and managing CRM integrations
   - name: CRM Data
     description: Operations for uploading and retrieving CRM data
+  - name: CRM Integration
+    description: Operations for registering and managing CRM integrations
   - name: CRM Schema
     description: Operations for managing CRM object schemas
 paths:

@@ -21,10 +21,10 @@ security:
   - basicAuth: []
   - bearerAuth: []
 tags:
-  - name: Engagement Events
-    description: Operations for reporting customer engagement events
   - name: Digital Interactions
     description: Operations for posting digital interaction data
+  - name: Engagement Events
+    description: Operations for reporting customer engagement events
 paths:
   /customer-engagement/share:
     put:
