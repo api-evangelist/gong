@@ -160,7 +160,7 @@ paths:
   /meetings/integration-status:
     post:
       operationId: validateMeetingIntegrationStatus
-      summary: Validate meeting integration status
+      summary: Gong Validate meeting integration status
       description: >-
         Validates the integration status for a meeting, checking whether the
         meeting system integration is properly configured and operational.

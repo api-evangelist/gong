@@ -29,7 +29,7 @@ paths:
   /customer-engagement/share:
     put:
       operationId: reportContentShareEvent
-      summary: Report content share event
+      summary: Gong Report content share event
       description: >-
         Reports a content sharing event to Gong, tracking when a user shares
         content (such as documents, presentations, or links) with a prospect or
@@ -70,7 +70,7 @@ paths:
   /customer-engagement/view:
     put:
       operationId: reportContentViewEvent
-      summary: Report content view event
+      summary: Gong Report content view event
       description: >-
         Reports a content viewing event to Gong, tracking when a prospect or
         customer views shared content such as documents, presentations, or
@@ -111,7 +111,7 @@ paths:
   /customer-engagement/action:
     put:
       operationId: reportCustomActionEvent
-      summary: Report custom action event
+      summary: Gong Report custom action event
       description: >-
         Reports a custom engagement action event to Gong, tracking custom
         interactions between users and prospects that are not covered by the
@@ -152,7 +152,7 @@ paths:
   /digital-interactions:
     post:
       operationId: postDigitalInteraction
-      summary: Post digital interaction
+      summary: Gong Post digital interaction
       description: >-
         Posts a digital interaction event to Gong, recording structured data
         about digital communications such as emails, chat messages, or other
@@ -193,7 +193,7 @@ paths:
   /integration-settings:
     post:
       operationId: configureIntegrationSettings
-      summary: Configure integration settings
+      summary: Gong Configure integration settings
       description: >-
         Configures integration settings for customer engagement tracking,
         specifying how engagement data should be processed and associated with

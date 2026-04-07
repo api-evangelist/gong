@@ -27,7 +27,7 @@ paths:
   /logs:
     get:
       operationId: retrieveAuditLogs
-      summary: Retrieve audit logs by type and time range
+      summary: Gong Retrieve audit logs by type and time range
       description: >-
         Retrieves audit log entries filtered by log type and time range.
         Provides visibility into user actions, system events, and configuration

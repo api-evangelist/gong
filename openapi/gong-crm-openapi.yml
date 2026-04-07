@@ -31,7 +31,7 @@ paths:
   /crm/integrations:
     put:
       operationId: registerCrmIntegration
-      summary: Register a CRM integration
+      summary: Gong Register a CRM integration
       description: >-
         Registers a new CRM integration with Gong. A successful registration
         enables uploading CRM data to Gong. Only one active integration per
@@ -71,7 +71,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     get:
       operationId: getCrmIntegrations
-      summary: Get CRM integration details
+      summary: Gong Get CRM integration details
       description: >-
         Retrieves details about the currently registered CRM integrations for
         the account.
@@ -98,7 +98,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     delete:
       operationId: deleteCrmIntegration
-      summary: Delete a CRM integration
+      summary: Gong Delete a CRM integration
       description: >-
         Deletes a registered CRM integration and its associated data from Gong.
       tags:
@@ -144,7 +144,7 @@ paths:
   /crm/entities:
     post:
       operationId: uploadCrmObjects
-      summary: Upload CRM objects
+      summary: Gong Upload CRM objects
       description: >-
         Uploads CRM objects (such as deals, accounts, contacts, or leads) to
         Gong for association with call data. Objects are uploaded for a specific
@@ -206,7 +206,7 @@ paths:
   /crm/objects:
     get:
       operationId: getCrmObjects
-      summary: Get CRM objects
+      summary: Gong Get CRM objects
       description: >-
         Retrieves CRM objects that have been uploaded to Gong for a specific
         integration and object type.
@@ -247,7 +247,7 @@ paths:
   /crm/entity-schema:
     post:
       operationId: uploadObjectSchema
-      summary: Upload CRM object schema
+      summary: Gong Upload CRM object schema
       description: >-
         Uploads the schema definition for a CRM object type including field
         definitions, labels, and data types. This defines the structure of CRM
@@ -287,7 +287,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     get:
       operationId: getSchemaFields
-      summary: List schema fields
+      summary: Gong List schema fields
       description: >-
         Retrieves the schema fields defined for a specific CRM object type and
         integration.
@@ -328,7 +328,7 @@ paths:
   /crm/upload-status:
     get:
       operationId: getUploadStatus
-      summary: Get upload request status
+      summary: Gong Get upload request status
       description: >-
         Retrieves the status of a previous CRM data upload request using the
         integration ID and client request ID.

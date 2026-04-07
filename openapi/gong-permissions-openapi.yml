@@ -27,7 +27,7 @@ paths:
   /workspaces/{workspaceId}/permission-profiles:
     get:
       operationId: listPermissionProfiles
-      summary: List company permission profiles
+      summary: Gong List company permission profiles
       description: >-
         Retrieves all permission profiles defined for a specific workspace.
         Permission profiles define sets of capabilities and access levels that
@@ -69,7 +69,7 @@ paths:
   /permission-profiles:
     post:
       operationId: createPermissionProfile
-      summary: Create permission profile
+      summary: Gong Create permission profile
       description: >-
         Creates a new permission profile in the specified workspace with defined
         capabilities and access levels.
@@ -116,7 +116,7 @@ paths:
   /permission-profiles/{profileId}:
     get:
       operationId: getPermissionProfile
-      summary: Get permission profile by ID
+      summary: Gong Get permission profile by ID
       description: >-
         Retrieves detailed information about a specific permission profile
         identified by its unique ID.
@@ -156,7 +156,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     put:
       operationId: updatePermissionProfile
-      summary: Update permission profile
+      summary: Gong Update permission profile
       description: >-
         Updates an existing permission profile's capabilities and access levels.
       tags:
@@ -208,7 +208,7 @@ paths:
   /permission-profiles/{profileId}/users:
     get:
       operationId: listUsersByPermissionProfile
-      summary: List users by permission profile
+      summary: Gong List users by permission profile
       description: >-
         Retrieves a list of users assigned to a specific permission profile.
       tags:

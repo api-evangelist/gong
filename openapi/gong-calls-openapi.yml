@@ -32,7 +32,7 @@ paths:
   /calls:
     get:
       operationId: listCalls
-      summary: List calls
+      summary: Gong List calls
       description: >-
         Retrieves a list of calls that took place during a specified date range.
         Results are paginated and can be filtered by workspace.
@@ -98,7 +98,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     post:
       operationId: addCall
-      summary: Add a new call
+      summary: Gong Add a new call
       description: >-
         Adds a new call record to Gong. Either provide a downloadMediaUrl in the
         request body or use the returned callId in a follow-up request to
@@ -139,7 +139,7 @@ paths:
   /calls/{id}:
     get:
       operationId: getCall
-      summary: Retrieve a specific call
+      summary: Gong Retrieve a specific call
       description: >-
         Retrieves detailed information about a specific call identified by its
         unique numeric identifier.
@@ -181,7 +181,7 @@ paths:
   /calls/{id}/media:
     put:
       operationId: addCallRecording
-      summary: Add call media recording
+      summary: Gong Add call media recording
       description: >-
         Adds call media (audio or video recording) to a previously created call.
         Gong accepts recordings in WAV, MP3, MP4, MKV, and FLAC formats up to
@@ -244,7 +244,7 @@ paths:
   /calls/extensive:
     post:
       operationId: listCallsExtensive
-      summary: Retrieve detailed call data
+      summary: Gong Retrieve detailed call data
       description: >-
         Retrieves extensive call data including participants, topics, trackers,
         comments, scorecards, and other analytics. Supports filtering by date
@@ -286,7 +286,7 @@ paths:
   /calls/transcript:
     post:
       operationId: getCallTranscripts
-      summary: Retrieve call transcripts
+      summary: Gong Retrieve call transcripts
       description: >-
         Retrieves transcript data for calls matching the specified filter
         criteria. Transcripts include speaker identification and timing
@@ -327,7 +327,7 @@ paths:
   /calls/manual-crm-associations:
     get:
       operationId: listManualCrmAssociations
-      summary: List calls manually associated with CRM
+      summary: Gong List calls manually associated with CRM
       description: >-
         Retrieves a list of calls that were manually associated with CRM objects
         by users. This endpoint is in beta phase. Results can be filtered by
@@ -375,7 +375,7 @@ paths:
   /calls/users-access:
     post:
       operationId: retrieveUserCallAccess
-      summary: Retrieve user call access
+      summary: Gong Retrieve user call access
       description: >-
         Retrieves the list of users who have access to specified calls and their
         access levels.
@@ -408,7 +408,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     put:
       operationId: giveUserCallAccess
-      summary: Give user call access
+      summary: Gong Give user call access
       description: >-
         Grants specified users access to specified calls within the Gong
         platform.
@@ -441,7 +441,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     delete:
       operationId: removeUserCallAccess
-      summary: Remove user call access
+      summary: Gong Remove user call access
       description: >-
         Removes specified users' access to specified calls within the Gong
         platform.

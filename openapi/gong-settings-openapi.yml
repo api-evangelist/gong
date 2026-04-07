@@ -31,7 +31,7 @@ paths:
   /settings/scorecards:
     get:
       operationId: listScorecards
-      summary: Retrieve scorecards
+      summary: Gong Retrieve scorecards
       description: >-
         Retrieves all scorecard configurations defined in the Gong account,
         including their questions, scoring criteria, and associated metadata.
@@ -59,7 +59,7 @@ paths:
   /settings/trackers:
     get:
       operationId: listTrackers
-      summary: Retrieve trackers
+      summary: Gong Retrieve trackers
       description: >-
         Retrieves all tracker configurations defined in the Gong account.
         Trackers are keywords and phrases that Gong identifies during call
@@ -95,7 +95,7 @@ paths:
   /workspaces:
     get:
       operationId: listWorkspaces
-      summary: List company workspaces
+      summary: Gong List company workspaces
       description: >-
         Retrieves a list of all workspaces configured in the Gong account.
         Workspaces are used to organize and segment data within the platform.

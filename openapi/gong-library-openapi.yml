@@ -27,7 +27,7 @@ paths:
   /library/folders:
     get:
       operationId: listLibraryFolders
-      summary: Retrieve library folders
+      summary: Gong Retrieve library folders
       description: >-
         Retrieves the library folder structure, listing all folders available in
         the Gong library. Folders are used to organize curated call content for
@@ -63,7 +63,7 @@ paths:
   /library/folders/{folderId}/calls:
     get:
       operationId: listCallsInFolder
-      summary: List calls in a library folder
+      summary: Gong List calls in a library folder
       description: >-
         Retrieves a list of calls stored in a specific library folder. Returns
         call references that can be used to retrieve full call details via the

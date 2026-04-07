@@ -28,7 +28,7 @@ paths:
   /data-privacy/email-references:
     get:
       operationId: retrieveEmailReferences
-      summary: Retrieve email address references
+      summary: Gong Retrieve email address references
       description: >-
         Retrieves all references to a specified email address across the Gong
         platform, including calls, meetings, and other records. Used to fulfill
@@ -72,7 +72,7 @@ paths:
   /data-privacy/phone-references:
     get:
       operationId: retrievePhoneReferences
-      summary: Retrieve phone number references
+      summary: Gong Retrieve phone number references
       description: >-
         Retrieves all references to a specified phone number across the Gong
         platform, including calls, meetings, and other records. Used to fulfill
@@ -115,7 +115,7 @@ paths:
   /data-privacy/email-delete:
     post:
       operationId: deleteEmailAddressData
-      summary: Delete email address and associated data
+      summary: Gong Delete email address and associated data
       description: >-
         Purges all data associated with the specified email address from the Gong
         platform, including call records, transcripts, and user data. This
@@ -157,7 +157,7 @@ paths:
   /data-privacy/phone-delete:
     post:
       operationId: deletePhoneNumberData
-      summary: Delete phone number and associated data
+      summary: Gong Delete phone number and associated data
       description: >-
         Purges all data associated with the specified phone number from the Gong
         platform, including call records and transcripts. This operation is

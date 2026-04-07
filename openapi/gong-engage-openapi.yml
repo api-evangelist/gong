@@ -32,7 +32,7 @@ paths:
   /flows:
     get:
       operationId: listEngageFlows
-      summary: List Engage flows
+      summary: Gong List Engage flows
       description: >-
         Retrieves a list of all available Engage flows. Results can be filtered
         by flow owner email and workspace, and are paginated.
@@ -82,7 +82,7 @@ paths:
   /flows/folders:
     get:
       operationId: listFlowFolders
-      summary: List flow folders
+      summary: Gong List flow folders
       description: >-
         Retrieves all company flow folders, plus personal flow folders and flow
         folders shared with the specified user. Used to organize and categorize
@@ -126,7 +126,7 @@ paths:
   /flows/prospects/assign:
     post:
       operationId: assignProspectsToFlow
-      summary: Assign prospects to Engage flow
+      summary: Gong Assign prospects to Engage flow
       description: >-
         Assigns one or more prospects to a specified Engage flow. Prospects will
         begin receiving the flow's outreach sequence upon assignment.
@@ -166,7 +166,7 @@ paths:
   /flows/prospects/unassign:
     post:
       operationId: unassignProspectsFromFlow
-      summary: Unassign prospects from Engage flow
+      summary: Gong Unassign prospects from Engage flow
       description: >-
         Removes one or more prospects from specified Engage flows. You can remove
         prospects from up to 100 flows in a single request. The response returns
@@ -207,7 +207,7 @@ paths:
   /flows/prospects:
     post:
       operationId: listAssignedFlowsForProspects
-      summary: List assigned flows for prospects
+      summary: Gong List assigned flows for prospects
       description: >-
         Retrieves the list of Engage flows that specified prospects are currently
         assigned to.
@@ -248,7 +248,7 @@ paths:
   /flows/{flowId}/content-override:
     put:
       operationId: overrideFlowContent
-      summary: Override flow content
+      summary: Gong Override flow content
       description: >-
         Overrides the content of specific steps in an Engage flow to tailor
         messaging for specific campaigns or workflows. Allows customizing email

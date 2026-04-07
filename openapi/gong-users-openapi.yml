@@ -27,7 +27,7 @@ paths:
   /users:
     get:
       operationId: listUsers
-      summary: List all users
+      summary: Gong List all users
       description: >-
         Retrieves a list of all users in the Gong account. Results are paginated
         and can optionally include user avatar images.
@@ -72,7 +72,7 @@ paths:
   /users/{id}:
     get:
       operationId: getUser
-      summary: Retrieve a specific user
+      summary: Gong Retrieve a specific user
       description: >-
         Retrieves detailed information about a specific user identified by their
         unique Gong user ID.
@@ -113,7 +113,7 @@ paths:
   /users/{id}/settings-history:
     get:
       operationId: getUserSettingsHistory
-      summary: Retrieve user settings history
+      summary: Gong Retrieve user settings history
       description: >-
         Retrieves the settings change history for a specific user, including
         changes to their role, permissions, and other configuration settings over
@@ -155,7 +155,7 @@ paths:
   /users/filter:
     post:
       operationId: listUsersByFilter
-      summary: List users by filter
+      summary: Gong List users by filter
       description: >-
         Retrieves a filtered list of users based on specified criteria such as
         creation date, user IDs, or other attributes.

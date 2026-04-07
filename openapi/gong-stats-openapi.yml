@@ -29,7 +29,7 @@ paths:
   /stats/activity/aggregated:
     post:
       operationId: retrieveAggregatedActivity
-      summary: Retrieve aggregated activity
+      summary: Gong Retrieve aggregated activity
       description: >-
         Retrieves aggregated user activity statistics for a specified time
         period. Returns metrics such as call counts, email counts, and other
@@ -70,7 +70,7 @@ paths:
   /stats/activity/day-by-day:
     post:
       operationId: retrieveDailyActivity
-      summary: Retrieve daily activity
+      summary: Gong Retrieve daily activity
       description: >-
         Retrieves daily activity statistics broken down by date for specified
         users and time period. Returns per-day metrics for calls, emails, and
@@ -111,7 +111,7 @@ paths:
   /stats/interaction:
     post:
       operationId: retrieveInteractionStats
-      summary: Retrieve interaction statistics
+      summary: Gong Retrieve interaction statistics
       description: >-
         Retrieves interaction statistics for calls including talk ratios,
         longest monologues, interactivity scores, and patience metrics for
@@ -152,7 +152,7 @@ paths:
   /stats/scorecards:
     post:
       operationId: retrieveAnsweredScorecards
-      summary: Retrieve answered scorecards
+      summary: Gong Retrieve answered scorecards
       description: >-
         Retrieves answered scorecard data for calls, including scores and
         evaluations by reviewers for the specified time period and users.
@@ -192,7 +192,7 @@ paths:
   /coaching/metrics:
     get:
       operationId: listCoachingMetrics
-      summary: List coaching metrics
+      summary: Gong List coaching metrics
       description: >-
         Retrieves coaching metrics for a specified manager, workspace, and time
         period. Returns data about coaching activities and performance.
