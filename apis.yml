@@ -7,7 +7,7 @@ access: 3rd-Party
 image: https://www.gong.io/wp-content/uploads/2021/04/gong-logo.svg
 tags: []
 created: '2025-02-09'
-modified: '2026-03-16'
+modified: '2026-04-28'
 url: https://raw.githubusercontent.com/api-evangelist/gong/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
