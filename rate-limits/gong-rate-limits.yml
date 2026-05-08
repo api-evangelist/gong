@@ -3,49 +3,33 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Gong
 providerId: gong
-created: '2026-05-04'
-modified: '2026-05-05'
+created: '2026-05-08'
+modified: '2026-05-08'
 reconciled: false
 tags:
-  - Rate Limiting
-  - Revenue Intelligence
-  - Conversation Intelligence
-description: Gong's public API enforces rate limits at the company (tenant) level. The widely documented
-  limit is 3 requests per second and 10,000 calls per day per company; clients receive HTTP 429 with a
-  Retry-After header on breach. Specific numbers are not maintained on Gong's public marketing site; verify
-  current values in the in-app developer documentation accessible to authenticated tenants.
-notes: Public marketing site does not surface rate limits; numbers above are based on long-standing developer
-  community references. Recommend reconciling against the in-app docs.
+- Sales
+- Revenue Intelligence
+- Conversation
+- Analytics
+- AI
+- Rate Limiting
+- Quotas
+- Throttling
+description: Placeholder rate-limit artifact for Gong. Replace with real limits once researched.
+notes: Initial scaffold — limits have not yet been reconciled.
 sources:
-  - https://help.gong.io/
-  - https://www.gong.io/
-headers:
-  retryAfter: Retry-After
+- https://www.gong.io/
 responseCodes:
   throttled: 429
 limits:
-  - name: Per-company request rate
-    scope: tenant
-    metric: requests_per_second
-    limit: 3
-    timeFrame: second
-    notes: Long-standing community-documented limit; verify in tenant developer docs.
-  - name: Per-company daily quota
-    scope: tenant
-    metric: requests_per_day
-    limit: 10000
-    timeFrame: day
-    notes: Daily call cap shared across all API consumers in the tenant.
+- name: Default
+  scope: account
+  metric: varies
+  limit: see provider documentation
+  notes: Pending reconciliation.
 policies:
-  - name: Backoff Strategy
-    description: Honor the Retry-After header on 429 responses; otherwise apply exponential backoff with
-      jitter.
-  - name: Tenant scoping
-    description: Limits are per-company, not per-API-key. Multiple integrations against the same Gong
-      tenant share quota; coordinate poll cadences.
-  - name: Bulk export
-    description: For large historical pulls (calls, transcripts), stagger requests and use the documented
-      pagination patterns rather than parallelizing across the daily cap.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor any Retry-After header.
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
