@@ -1,7 +1,7 @@
 aid: gong
 url: https://raw.githubusercontent.com/api-evangelist/gong/refs/heads/main/apis.yml
 name: Gong
-x-type: company
+kind: company
 description: Gong is the revenue intelligence platform that captures and analyzes customer interactions across calls, emails,
   and meetings. APIs expose calls, transcripts, deals, users, and analytics.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
