@@ -1,0 +1,255 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gong Permissions API — Permission Profiles
+  description: 'Gong Permissions API — Permission Profiles. 5 operations. Lead operation: Gong Create permission profile.
+    Self-contained Naftiko capability covering one Gong business surface.'
+  tags:
+  - Gong
+  - Permission Profiles
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GONG_API_KEY: GONG_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permissions-permission-profiles
+    baseUri: https://api.gong.io/v2
+    description: Gong Permissions API — Permission Profiles business capability. Self-contained, no shared references.
+    resources:
+    - name: permission-profiles
+      path: /permission-profiles
+      operations:
+      - name: createpermissionprofile
+        method: POST
+        description: Gong Create permission profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: workspaceId
+          in: query
+          type: string
+          description: The workspace to create the permission profile in.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: permission-profiles-profileId
+      path: /permission-profiles/{profileId}
+      operations:
+      - name: getpermissionprofile
+        method: GET
+        description: Gong Get permission profile by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: profileId
+          in: path
+          type: string
+          description: The unique identifier of the permission profile.
+          required: true
+      - name: updatepermissionprofile
+        method: PUT
+        description: Gong Update permission profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: profileId
+          in: path
+          type: string
+          description: The unique identifier of the permission profile to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: permission-profiles-profileId-users
+      path: /permission-profiles/{profileId}/users
+      operations:
+      - name: listusersbypermissionprofile
+        method: GET
+        description: Gong List users by permission profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: profileId
+          in: path
+          type: string
+          description: The unique identifier of the permission profile.
+          required: true
+    - name: workspaces-workspaceId-permission-profiles
+      path: /workspaces/{workspaceId}/permission-profiles
+      operations:
+      - name: listpermissionprofiles
+        method: GET
+        description: Gong List company permission profiles
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: workspaceId
+          in: path
+          type: string
+          description: The unique identifier of the workspace.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.GONG_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permissions-permission-profiles-rest
+    port: 8080
+    description: REST adapter for Gong Permissions API — Permission Profiles. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/permission-profiles
+      name: permission-profiles
+      description: REST surface for permission-profiles.
+      operations:
+      - method: POST
+        name: createpermissionprofile
+        description: Gong Create permission profile
+        call: permissions-permission-profiles.createpermissionprofile
+        with:
+          workspaceId: rest.workspaceId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/permission-profiles/{profileid}
+      name: permission-profiles-profileid
+      description: REST surface for permission-profiles-profileId.
+      operations:
+      - method: GET
+        name: getpermissionprofile
+        description: Gong Get permission profile by ID
+        call: permissions-permission-profiles.getpermissionprofile
+        with:
+          profileId: rest.profileId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatepermissionprofile
+        description: Gong Update permission profile
+        call: permissions-permission-profiles.updatepermissionprofile
+        with:
+          profileId: rest.profileId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/permission-profiles/{profileid}/users
+      name: permission-profiles-profileid-users
+      description: REST surface for permission-profiles-profileId-users.
+      operations:
+      - method: GET
+        name: listusersbypermissionprofile
+        description: Gong List users by permission profile
+        call: permissions-permission-profiles.listusersbypermissionprofile
+        with:
+          profileId: rest.profileId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/workspaces/{workspaceid}/permission-profiles
+      name: workspaces-workspaceid-permission-profiles
+      description: REST surface for workspaces-workspaceId-permission-profiles.
+      operations:
+      - method: GET
+        name: listpermissionprofiles
+        description: Gong List company permission profiles
+        call: permissions-permission-profiles.listpermissionprofiles
+        with:
+          workspaceId: rest.workspaceId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permissions-permission-profiles-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gong Permissions API — Permission Profiles. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: gong-create-permission-profile
+      description: Gong Create permission profile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permissions-permission-profiles.createpermissionprofile
+      with:
+        workspaceId: tools.workspaceId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gong-get-permission-profile-id
+      description: Gong Get permission profile by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permissions-permission-profiles.getpermissionprofile
+      with:
+        profileId: tools.profileId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gong-update-permission-profile
+      description: Gong Update permission profile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: permissions-permission-profiles.updatepermissionprofile
+      with:
+        profileId: tools.profileId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gong-list-users-permission-profile
+      description: Gong List users by permission profile
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permissions-permission-profiles.listusersbypermissionprofile
+      with:
+        profileId: tools.profileId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gong-list-company-permission-profiles
+      description: Gong List company permission profiles
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permissions-permission-profiles.listpermissionprofiles
+      with:
+        workspaceId: tools.workspaceId
+      outputParameters:
+      - type: object
+        mapping: $.

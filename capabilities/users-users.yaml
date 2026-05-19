@@ -1,0 +1,211 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gong Users API — Users
+  description: 'Gong Users API — Users. 4 operations. Lead operation: Gong List all users. Self-contained Naftiko capability
+    covering one Gong business surface.'
+  tags:
+  - Gong
+  - Users
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GONG_API_KEY: GONG_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: users-users
+    baseUri: https://api.gong.io/v2
+    description: Gong Users API — Users business capability. Self-contained, no shared references.
+    resources:
+    - name: users
+      path: /users
+      operations:
+      - name: listusers
+        method: GET
+        description: Gong List all users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+          description: A cursor for pagination. Pass the cursor from the previous response to retrieve the next page of results.
+        - name: includeAvatars
+          in: query
+          type: boolean
+          description: When set to true, the response includes user avatar image URLs.
+    - name: users-filter
+      path: /users/filter
+      operations:
+      - name: listusersbyfilter
+        method: POST
+        description: Gong List users by filter
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: users-id
+      path: /users/{id}
+      operations:
+      - name: getuser
+        method: GET
+        description: Gong Retrieve a specific user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique Gong user ID.
+          required: true
+    - name: users-id-settings-history
+      path: /users/{id}/settings-history
+      operations:
+      - name: getusersettingshistory
+        method: GET
+        description: Gong Retrieve user settings history
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique Gong user ID.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.GONG_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: users-users-rest
+    port: 8080
+    description: REST adapter for Gong Users API — Users. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/users
+      name: users
+      description: REST surface for users.
+      operations:
+      - method: GET
+        name: listusers
+        description: Gong List all users
+        call: users-users.listusers
+        with:
+          cursor: rest.cursor
+          includeAvatars: rest.includeAvatars
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/filter
+      name: users-filter
+      description: REST surface for users-filter.
+      operations:
+      - method: POST
+        name: listusersbyfilter
+        description: Gong List users by filter
+        call: users-users.listusersbyfilter
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/{id}
+      name: users-id
+      description: REST surface for users-id.
+      operations:
+      - method: GET
+        name: getuser
+        description: Gong Retrieve a specific user
+        call: users-users.getuser
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/{id}/settings-history
+      name: users-id-settings-history
+      description: REST surface for users-id-settings-history.
+      operations:
+      - method: GET
+        name: getusersettingshistory
+        description: Gong Retrieve user settings history
+        call: users-users.getusersettingshistory
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: users-users-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gong Users API — Users. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: gong-list-all-users
+      description: Gong List all users
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: users-users.listusers
+      with:
+        cursor: tools.cursor
+        includeAvatars: tools.includeAvatars
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gong-list-users-filter
+      description: Gong List users by filter
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: users-users.listusersbyfilter
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gong-retrieve-specific-user
+      description: Gong Retrieve a specific user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: users-users.getuser
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gong-retrieve-user-settings-history
+      description: Gong Retrieve user settings history
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: users-users.getusersettingshistory
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

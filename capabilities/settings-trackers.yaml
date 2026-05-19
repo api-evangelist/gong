@@ -1,0 +1,79 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gong Settings API — Trackers
+  description: 'Gong Settings API — Trackers. 1 operations. Lead operation: Gong Retrieve trackers. Self-contained Naftiko
+    capability covering one Gong business surface.'
+  tags:
+  - Gong
+  - Trackers
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GONG_API_KEY: GONG_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: settings-trackers
+    baseUri: https://api.gong.io/v2
+    description: Gong Settings API — Trackers business capability. Self-contained, no shared references.
+    resources:
+    - name: settings-trackers
+      path: /settings/trackers
+      operations:
+      - name: listtrackers
+        method: GET
+        description: Gong Retrieve trackers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: workspaceId
+          in: query
+          type: string
+          description: Optional workspace ID to filter trackers by workspace.
+    authentication:
+      type: bearer
+      token: '{{env.GONG_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: settings-trackers-rest
+    port: 8080
+    description: REST adapter for Gong Settings API — Trackers. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/settings/trackers
+      name: settings-trackers
+      description: REST surface for settings-trackers.
+      operations:
+      - method: GET
+        name: listtrackers
+        description: Gong Retrieve trackers
+        call: settings-trackers.listtrackers
+        with:
+          workspaceId: rest.workspaceId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: settings-trackers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gong Settings API — Trackers. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: gong-retrieve-trackers
+      description: Gong Retrieve trackers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: settings-trackers.listtrackers
+      with:
+        workspaceId: tools.workspaceId
+      outputParameters:
+      - type: object
+        mapping: $.

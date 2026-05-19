@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gong Settings API — Workspaces
+  description: 'Gong Settings API — Workspaces. 1 operations. Lead operation: Gong List company workspaces. Self-contained
+    Naftiko capability covering one Gong business surface.'
+  tags:
+  - Gong
+  - Workspaces
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GONG_API_KEY: GONG_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: settings-workspaces
+    baseUri: https://api.gong.io/v2
+    description: Gong Settings API — Workspaces business capability. Self-contained, no shared references.
+    resources:
+    - name: workspaces
+      path: /workspaces
+      operations:
+      - name: listworkspaces
+        method: GET
+        description: Gong List company workspaces
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.GONG_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: settings-workspaces-rest
+    port: 8080
+    description: REST adapter for Gong Settings API — Workspaces. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/workspaces
+      name: workspaces
+      description: REST surface for workspaces.
+      operations:
+      - method: GET
+        name: listworkspaces
+        description: Gong List company workspaces
+        call: settings-workspaces.listworkspaces
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: settings-workspaces-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gong Settings API — Workspaces. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: gong-list-company-workspaces
+      description: Gong List company workspaces
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: settings-workspaces.listworkspaces
+      outputParameters:
+      - type: object
+        mapping: $.

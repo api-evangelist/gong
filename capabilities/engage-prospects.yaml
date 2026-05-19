@@ -1,0 +1,164 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gong Engage API — Prospects
+  description: 'Gong Engage API — Prospects. 3 operations. Lead operation: Gong List assigned flows for prospects. Self-contained
+    Naftiko capability covering one Gong business surface.'
+  tags:
+  - Gong
+  - Prospects
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GONG_API_KEY: GONG_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: engage-prospects
+    baseUri: https://api.gong.io/v2
+    description: Gong Engage API — Prospects business capability. Self-contained, no shared references.
+    resources:
+    - name: flows-prospects
+      path: /flows/prospects
+      operations:
+      - name: listassignedflowsforprospects
+        method: POST
+        description: Gong List assigned flows for prospects
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: flows-prospects-assign
+      path: /flows/prospects/assign
+      operations:
+      - name: assignprospectstoflow
+        method: POST
+        description: Gong Assign prospects to Engage flow
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: flows-prospects-unassign
+      path: /flows/prospects/unassign
+      operations:
+      - name: unassignprospectsfromflow
+        method: POST
+        description: Gong Unassign prospects from Engage flow
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.GONG_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: engage-prospects-rest
+    port: 8080
+    description: REST adapter for Gong Engage API — Prospects. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/flows/prospects
+      name: flows-prospects
+      description: REST surface for flows-prospects.
+      operations:
+      - method: POST
+        name: listassignedflowsforprospects
+        description: Gong List assigned flows for prospects
+        call: engage-prospects.listassignedflowsforprospects
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/flows/prospects/assign
+      name: flows-prospects-assign
+      description: REST surface for flows-prospects-assign.
+      operations:
+      - method: POST
+        name: assignprospectstoflow
+        description: Gong Assign prospects to Engage flow
+        call: engage-prospects.assignprospectstoflow
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/flows/prospects/unassign
+      name: flows-prospects-unassign
+      description: REST surface for flows-prospects-unassign.
+      operations:
+      - method: POST
+        name: unassignprospectsfromflow
+        description: Gong Unassign prospects from Engage flow
+        call: engage-prospects.unassignprospectsfromflow
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: engage-prospects-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gong Engage API — Prospects. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: gong-list-assigned-flows-prospects
+      description: Gong List assigned flows for prospects
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: engage-prospects.listassignedflowsforprospects
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gong-assign-prospects-engage-flow
+      description: Gong Assign prospects to Engage flow
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: engage-prospects.assignprospectstoflow
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gong-unassign-prospects-engage-flow
+      description: Gong Unassign prospects from Engage flow
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: engage-prospects.unassignprospectsfromflow
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

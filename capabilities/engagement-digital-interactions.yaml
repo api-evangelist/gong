@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gong Engagement API — Digital Interactions
+  description: 'Gong Engagement API — Digital Interactions. 1 operations. Lead operation: Gong Post digital interaction. Self-contained
+    Naftiko capability covering one Gong business surface.'
+  tags:
+  - Gong
+  - Digital Interactions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GONG_API_KEY: GONG_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: engagement-digital-interactions
+    baseUri: https://api.gong.io/v2
+    description: Gong Engagement API — Digital Interactions business capability. Self-contained, no shared references.
+    resources:
+    - name: digital-interactions
+      path: /digital-interactions
+      operations:
+      - name: postdigitalinteraction
+        method: POST
+        description: Gong Post digital interaction
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.GONG_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: engagement-digital-interactions-rest
+    port: 8080
+    description: REST adapter for Gong Engagement API — Digital Interactions. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/digital-interactions
+      name: digital-interactions
+      description: REST surface for digital-interactions.
+      operations:
+      - method: POST
+        name: postdigitalinteraction
+        description: Gong Post digital interaction
+        call: engagement-digital-interactions.postdigitalinteraction
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: engagement-digital-interactions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gong Engagement API — Digital Interactions. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: gong-post-digital-interaction
+      description: Gong Post digital interaction
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: engagement-digital-interactions.postdigitalinteraction
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
