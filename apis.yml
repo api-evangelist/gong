@@ -6,74 +6,76 @@ description: Gong is the revenue intelligence platform that captures and analyze
   and meetings. APIs expose calls, transcripts, deals, users, and analytics.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-- Sales
-- Revenue Intelligence
-- Conversation
-- Analytics
-- AI
+  - Sales
+  - Revenue Intelligence
+  - Conversation
+  - Analytics
+  - AI
 created: '2026-05-08'
 modified: '2026-05-08'
 specificationVersion: '0.19'
 apis:
-- name: Gong Calls API
-  description: List calls, retrieve metadata, transcripts, recordings and trackers.
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - Calls
-  - Conversation Intelligence
-  properties:
-  - type: Documentation
-    url: https://app.gong.io/settings/api/documentation
-- name: Gong Users API
-  description: Read user, manager and team data.
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - Users
-  properties:
-  - type: Documentation
-    url: https://app.gong.io/settings/api/documentation
-- name: Gong CRM Integration API
-  description: Push CRM-style account, contact, deal and engagement data into Gong.
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - CRM
-  - Integration
-  properties:
-  - type: Documentation
-    url: https://app.gong.io/settings/api/documentation
-- name: Gong Engagement Data API
-  description: Read activity, scorecards, trackers, and library content.
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - Engagement
-  - Analytics
-  properties:
-  - type: Documentation
-    url: https://app.gong.io/settings/api/documentation
-- name: Gong Library API
-  description: Access and organize library folders and shared call collections.
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - Library
-  properties:
-  - type: Documentation
-    url: https://app.gong.io/settings/api/documentation
+  - name: Gong Calls API
+    description: List calls, retrieve metadata, transcripts, recordings and trackers.
+    humanURL: https://app.gong.io/settings/api/documentation
+    baseURL: https://api.gong.io/v2
+    tags:
+    - Calls
+    - Conversation Intelligence
+    properties:
+    - type: Documentation
+      url: https://app.gong.io/settings/api/documentation
+  - name: Gong Users API
+    description: Read user, manager and team data.
+    humanURL: https://app.gong.io/settings/api/documentation
+    baseURL: https://api.gong.io/v2
+    tags:
+    - Users
+    properties:
+    - type: Documentation
+      url: https://app.gong.io/settings/api/documentation
+  - name: Gong CRM Integration API
+    description: Push CRM-style account, contact, deal and engagement data into Gong.
+    humanURL: https://app.gong.io/settings/api/documentation
+    baseURL: https://api.gong.io/v2
+    tags:
+    - CRM
+    - Integration
+    properties:
+    - type: Documentation
+      url: https://app.gong.io/settings/api/documentation
+  - name: Gong Engagement Data API
+    description: Read activity, scorecards, trackers, and library content.
+    humanURL: https://app.gong.io/settings/api/documentation
+    baseURL: https://api.gong.io/v2
+    tags:
+    - Engagement
+    - Analytics
+    properties:
+    - type: Documentation
+      url: https://app.gong.io/settings/api/documentation
+  - name: Gong Library API
+    description: Access and organize library folders and shared call collections.
+    humanURL: https://app.gong.io/settings/api/documentation
+    baseURL: https://api.gong.io/v2
+    tags:
+    - Library
+    properties:
+    - type: Documentation
+      url: https://app.gong.io/settings/api/documentation
 common:
+  - type: GitHubOrganization
+    url: https://github.com/gong-io
   - type: LinkedIn
     url: https://www.linkedin.com/company/gong-io
-- type: Website
-  url: https://www.gong.io/
-- type: Plans
-  url: plans/gong-plans-pricing.yml
-- type: RateLimits
-  url: rate-limits/gong-rate-limits.yml
-- type: FinOps
-  url: finops/gong-finops.yml
+  - type: Website
+    url: https://www.gong.io/
+  - type: Plans
+    url: plans/gong-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/gong-rate-limits.yml
+  - type: FinOps
+    url: finops/gong-finops.yml
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com
