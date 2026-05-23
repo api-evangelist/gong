@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ContentShareEventRequest",
+  "title": "ContentShareEventRequest",
+  "type": "object",
+  "required": [
+    "contentTitle",
+    "senderEmailAddress",
+    "eventTimestamp"
+  ],
+  "properties": {
+    "contentTitle": {
+      "type": "string",
+      "description": "Title of the content that was shared."
+    },
+    "contentUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the shared content."
+    },
+    "senderEmailAddress": {
+      "type": "string",
+      "format": "email",
+      "description": "Email of the user who shared the content."
+    },
+    "recipientEmailAddresses": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "email"
+      },
+      "description": "Email addresses of the recipients."
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the sharing event occurred in ISO-8601 format."
+    },
+    "contentType": {
+      "type": "string",
+      "description": "Type of content (e.g., Document, Presentation, Link)."
+    },
+    "customProperties": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Custom properties for the engagement event."
+    },
+    "crmContext": {
+      "type": "object",
+      "properties": {
+        "objectType": {
+          "type": "string",
+          "description": "CRM object type (e.g., Deal, Account)."
+        },
+        "objectId": {
+          "type": "string",
+          "description": "CRM object identifier."
+        }
+      },
+      "description": "CRM context for associating the event with CRM records."
+    }
+  }
+}

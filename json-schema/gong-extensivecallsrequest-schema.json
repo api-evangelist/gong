@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ExtensiveCallsRequest",
+  "title": "ExtensiveCallsRequest",
+  "type": "object",
+  "properties": {
+    "cursor": {
+      "type": "string",
+      "description": "Cursor for pagination."
+    },
+    "filter": {
+      "type": "object",
+      "properties": {
+        "fromDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start of the date range filter."
+        },
+        "toDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End of the date range filter."
+        },
+        "callIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Specific call IDs to retrieve."
+        },
+        "workspaceId": {
+          "type": "string",
+          "description": "Filter by workspace."
+        }
+      },
+      "description": "Filter criteria for calls."
+    },
+    "contentSelector": {
+      "type": "object",
+      "properties": {
+        "context": {
+          "type": "string",
+          "enum": [
+            "None",
+            "Extended",
+            "Full"
+          ],
+          "description": "Level of context to include."
+        },
+        "exposedFields": {
+          "type": "object",
+          "properties": {
+            "collaboration": {
+              "type": "boolean",
+              "description": "Include collaboration data."
+            },
+            "content": {
+              "type": "boolean",
+              "description": "Include content data."
+            },
+            "currentSpeakerUserIds": {
+              "type": "boolean",
+              "description": "Include speaker user IDs."
+            },
+            "media": {
+              "type": "boolean",
+              "description": "Include media URLs (requires api:calls:read:media-url scope)."
+            },
+            "parties": {
+              "type": "boolean",
+              "description": "Include party information."
+            },
+            "publicComments": {
+              "type": "boolean",
+              "description": "Include public comments."
+            }
+          },
+          "description": "Fields to include in the response."
+        }
+      },
+      "description": "Selector for what content to include in the response."
+    }
+  }
+}

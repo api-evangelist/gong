@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/IntegrationSettingsRequest",
+  "title": "IntegrationSettingsRequest",
+  "type": "object",
+  "properties": {
+    "integrationName": {
+      "type": "string",
+      "description": "Name of the integration."
+    },
+    "enableContentTracking": {
+      "type": "boolean",
+      "description": "Enable tracking of content sharing and viewing."
+    },
+    "enableActionTracking": {
+      "type": "boolean",
+      "description": "Enable tracking of custom actions."
+    },
+    "crmAssociationEnabled": {
+      "type": "boolean",
+      "description": "Enable automatic CRM record association."
+    }
+  }
+}

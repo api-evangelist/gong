@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AnsweredScorecardsResponse",
+  "title": "AnsweredScorecardsResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "records": {
+      "type": "object",
+      "properties": {
+        "totalRecords": {
+          "type": "integer"
+        },
+        "currentPageSize": {
+          "type": "integer"
+        },
+        "cursor": {
+          "type": "string"
+        }
+      }
+    },
+    "answeredScorecards": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AnsweredScorecard"
+      },
+      "description": "List of answered scorecards."
+    }
+  }
+}

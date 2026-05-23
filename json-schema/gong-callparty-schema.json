@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CallParty",
+  "title": "CallParty",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the party."
+    },
+    "emailAddress": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address of the party."
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the party."
+    },
+    "title": {
+      "type": "string",
+      "description": "Job title of the party."
+    },
+    "userId": {
+      "type": "string",
+      "description": "Gong user ID if the party is a Gong user."
+    },
+    "speakerId": {
+      "type": "string",
+      "description": "Speaker identifier within the call."
+    },
+    "affiliation": {
+      "type": "string",
+      "enum": [
+        "Internal",
+        "External",
+        "Unknown"
+      ],
+      "description": "Whether the party is internal or external."
+    },
+    "phoneNumber": {
+      "type": "string",
+      "description": "Phone number of the party."
+    },
+    "methods": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Communication methods used by the party."
+    }
+  }
+}

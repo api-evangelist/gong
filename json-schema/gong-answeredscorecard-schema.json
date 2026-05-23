@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AnsweredScorecard",
+  "title": "AnsweredScorecard",
+  "type": "object",
+  "properties": {
+    "callId": {
+      "type": "string",
+      "description": "The call ID the scorecard was answered for."
+    },
+    "scorecardId": {
+      "type": "string",
+      "description": "The scorecard template ID."
+    },
+    "scorecardName": {
+      "type": "string",
+      "description": "The name of the scorecard."
+    },
+    "reviewedUserId": {
+      "type": "string",
+      "description": "The user ID of the person being reviewed."
+    },
+    "reviewerUserId": {
+      "type": "string",
+      "description": "The user ID of the reviewer."
+    },
+    "answeredAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the scorecard was answered."
+    },
+    "overallScore": {
+      "type": "number",
+      "format": "float",
+      "description": "The overall score given."
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "questionId": {
+            "type": "string"
+          },
+          "questionText": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          },
+          "score": {
+            "type": "number",
+            "format": "float"
+          },
+          "isNotApplicable": {
+            "type": "boolean"
+          }
+        }
+      },
+      "description": "Individual question answers and scores."
+    }
+  }
+}

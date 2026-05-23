@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UnassignProspectsRequest",
+  "title": "UnassignProspectsRequest",
+  "type": "object",
+  "required": [
+    "flowInstanceIds"
+  ],
+  "properties": {
+    "flowInstanceIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of flow instance IDs to unassign. Up to 100 per request."
+    }
+  }
+}

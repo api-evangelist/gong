@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CallsResponse",
+  "title": "CallsResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "records": {
+      "type": "object",
+      "properties": {
+        "totalRecords": {
+          "type": "integer",
+          "description": "Total number of call records matching the filter."
+        },
+        "currentPageSize": {
+          "type": "integer",
+          "description": "Number of records in the current page."
+        },
+        "currentPageNumber": {
+          "type": "integer",
+          "description": "The current page number."
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Cursor value for retrieving the next page of results."
+        }
+      }
+    },
+    "calls": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Call"
+      },
+      "description": "List of call objects."
+    }
+  }
+}

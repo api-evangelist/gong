@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/FlowContentOverrideRequest",
+  "title": "FlowContentOverrideRequest",
+  "type": "object",
+  "required": [
+    "steps"
+  ],
+  "properties": {
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "stepIndex": {
+            "type": "integer",
+            "description": "The zero-based index of the step to override."
+          },
+          "subject": {
+            "type": "string",
+            "description": "The overridden email subject line."
+          },
+          "body": {
+            "type": "string",
+            "description": "The overridden email body content."
+          }
+        },
+        "required": [
+          "stepIndex"
+        ]
+      },
+      "description": "List of step content overrides."
+    }
+  }
+}

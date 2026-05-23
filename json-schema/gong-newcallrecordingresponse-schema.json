@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/NewCallRecordingResponse",
+  "title": "NewCallRecordingResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "callId": {
+      "type": "string",
+      "description": "The call ID the media was attached to."
+    }
+  }
+}

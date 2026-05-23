@@ -1,0 +1,11 @@
+name: Gong Domain Vocabulary
+provider: Gong
+providerId: gong
+description: Tag-derived vocabulary for the Gong API surface; sourced from openapi/ tags.
+terms:
+- term: Calls
+  description: Operations for managing and retrieving call data
+- term: Recordings
+  description: Operations for managing call recordings and media
+- term: Transcripts
+  description: Operations for retrieving call transcripts

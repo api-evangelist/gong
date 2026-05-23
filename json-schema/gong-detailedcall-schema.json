@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DetailedCall",
+  "title": "DetailedCall",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/Call"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "object",
+          "properties": {
+            "topics": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "duration": {
+                    "type": "number"
+                  }
+                }
+              },
+              "description": "Topics discussed during the call."
+            },
+            "trackers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "count": {
+                    "type": "integer"
+                  },
+                  "occurrences": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "startTime": {
+                          "type": "number"
+                        },
+                        "speakerId": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "description": "Tracked keywords and phrases."
+            },
+            "pointsOfInterest": {
+              "type": "object",
+              "properties": {
+                "actionItems": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "snippet": {
+                        "type": "string"
+                      },
+                      "speakerId": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "description": "Key points and action items."
+            }
+          },
+          "description": "Content analysis data."
+        },
+        "collaboration": {
+          "type": "object",
+          "properties": {
+            "publicComments": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "commenterUserId": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  },
+                  "audioStartTime": {
+                    "type": "number"
+                  },
+                  "posted": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              },
+              "description": "Public comments on the call."
+            }
+          },
+          "description": "Collaboration data."
+        },
+        "interaction": {
+          "type": "object",
+          "properties": {
+            "speakers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "userId": {
+                    "type": "string"
+                  },
+                  "talkTime": {
+                    "type": "number"
+                  }
+                }
+              },
+              "description": "Speaker statistics."
+            },
+            "interactivity": {
+              "type": "number",
+              "description": "Interactivity score."
+            }
+          },
+          "description": "Interaction statistics."
+        },
+        "media": {
+          "type": "object",
+          "properties": {
+            "audioUrl": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL for the audio recording."
+            },
+            "videoUrl": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL for the video recording."
+            }
+          },
+          "description": "Media URLs for the call recording."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CallTranscriptRequest",
+  "title": "CallTranscriptRequest",
+  "type": "object",
+  "properties": {
+    "cursor": {
+      "type": "string",
+      "description": "Cursor for pagination."
+    },
+    "filter": {
+      "type": "object",
+      "properties": {
+        "callIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of call IDs to retrieve transcripts for."
+        },
+        "fromDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start of the date range filter."
+        },
+        "toDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End of the date range filter."
+        },
+        "workspaceId": {
+          "type": "string",
+          "description": "Filter by workspace."
+        }
+      },
+      "description": "Filter criteria for transcript retrieval."
+    }
+  }
+}

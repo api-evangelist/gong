@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CustomActionEventRequest",
+  "title": "CustomActionEventRequest",
+  "type": "object",
+  "required": [
+    "actionName",
+    "actorEmailAddress",
+    "eventTimestamp"
+  ],
+  "properties": {
+    "actionName": {
+      "type": "string",
+      "description": "Name of the custom action."
+    },
+    "actorEmailAddress": {
+      "type": "string",
+      "format": "email",
+      "description": "Email of the person who performed the action."
+    },
+    "targetEmailAddress": {
+      "type": "string",
+      "format": "email",
+      "description": "Email of the target of the action."
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the action occurred in ISO-8601 format."
+    },
+    "actionDetails": {
+      "type": "string",
+      "description": "Additional details about the action."
+    },
+    "customProperties": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Custom properties for the action event."
+    }
+  }
+}

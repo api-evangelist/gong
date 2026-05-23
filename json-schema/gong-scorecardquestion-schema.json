@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ScorecardQuestion",
+  "title": "ScorecardQuestion",
+  "type": "object",
+  "properties": {
+    "questionId": {
+      "type": "string",
+      "description": "Unique identifier for the question."
+    },
+    "questionText": {
+      "type": "string",
+      "description": "The question text."
+    },
+    "questionType": {
+      "type": "string",
+      "enum": [
+        "YesNo",
+        "Scale",
+        "FreeText",
+        "SingleChoice",
+        "MultipleChoice"
+      ],
+      "description": "The type of question."
+    },
+    "isRequired": {
+      "type": "boolean",
+      "description": "Whether the question requires an answer."
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Available answer options (for choice-type questions)."
+    }
+  }
+}

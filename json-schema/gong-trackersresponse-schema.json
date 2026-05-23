@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TrackersResponse",
+  "title": "TrackersResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "trackers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Tracker"
+      },
+      "description": "List of tracker configurations."
+    }
+  }
+}

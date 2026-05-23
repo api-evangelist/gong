@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DailyActivityResponse",
+  "title": "DailyActivityResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "records": {
+      "type": "object",
+      "properties": {
+        "totalRecords": {
+          "type": "integer"
+        },
+        "currentPageSize": {
+          "type": "integer"
+        },
+        "cursor": {
+          "type": "string"
+        }
+      }
+    },
+    "usersDayByDayActivity": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "The Gong user ID."
+          },
+          "dailyActivities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "The activity date."
+                },
+                "callsAsHost": {
+                  "type": "integer"
+                },
+                "callsAttended": {
+                  "type": "integer"
+                },
+                "callsGaveComments": {
+                  "type": "integer"
+                },
+                "callsAccessedRecording": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "description": "Daily activity breakdown per user."
+    }
+  }
+}

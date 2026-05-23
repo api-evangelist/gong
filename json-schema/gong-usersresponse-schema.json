@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UsersResponse",
+  "title": "UsersResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "records": {
+      "type": "object",
+      "properties": {
+        "totalRecords": {
+          "type": "integer",
+          "description": "Total number of user records."
+        },
+        "currentPageSize": {
+          "type": "integer",
+          "description": "Number of records in the current page."
+        },
+        "currentPageNumber": {
+          "type": "integer",
+          "description": "The current page number."
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Cursor value for retrieving the next page."
+        }
+      }
+    },
+    "users": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/User"
+      },
+      "description": "List of user objects."
+    }
+  }
+}

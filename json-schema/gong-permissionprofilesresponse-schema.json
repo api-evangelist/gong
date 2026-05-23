@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PermissionProfilesResponse",
+  "title": "PermissionProfilesResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "permissionProfiles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/PermissionProfile"
+      },
+      "description": "List of permission profiles."
+    }
+  }
+}

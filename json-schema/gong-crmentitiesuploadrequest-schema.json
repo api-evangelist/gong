@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CrmEntitiesUploadRequest",
+  "title": "CrmEntitiesUploadRequest",
+  "type": "object",
+  "properties": {
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "objectId": {
+            "type": "string",
+            "description": "The unique identifier of the CRM object in the source CRM."
+          },
+          "fields": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Key-value pairs representing the fields of the CRM object."
+          }
+        },
+        "required": [
+          "objectId",
+          "fields"
+        ]
+      },
+      "description": "List of CRM entity objects to upload."
+    }
+  }
+}

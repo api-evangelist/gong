@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Tracker",
+  "title": "Tracker",
+  "type": "object",
+  "properties": {
+    "trackerId": {
+      "type": "string",
+      "description": "Unique identifier for the tracker."
+    },
+    "trackerName": {
+      "type": "string",
+      "description": "Name of the tracker."
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "keyword": {
+            "type": "string",
+            "description": "The keyword or phrase to track."
+          },
+          "tag": {
+            "type": "string",
+            "description": "Optional tag for the keyword."
+          }
+        }
+      },
+      "description": "Keywords and phrases being tracked."
+    },
+    "workspaceId": {
+      "type": "string",
+      "description": "The workspace the tracker belongs to."
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the tracker was created."
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the tracker was last updated."
+    }
+  }
+}

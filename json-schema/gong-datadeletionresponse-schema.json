@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DataDeletionResponse",
+  "title": "DataDeletionResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Accepted",
+        "Processing",
+        "Complete"
+      ],
+      "description": "Status of the deletion request."
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ContentViewEventRequest",
+  "title": "ContentViewEventRequest",
+  "type": "object",
+  "required": [
+    "contentTitle",
+    "viewerEmailAddress",
+    "eventTimestamp"
+  ],
+  "properties": {
+    "contentTitle": {
+      "type": "string",
+      "description": "Title of the content that was viewed."
+    },
+    "contentUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the viewed content."
+    },
+    "viewerEmailAddress": {
+      "type": "string",
+      "format": "email",
+      "description": "Email of the person who viewed the content."
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the viewing event occurred in ISO-8601 format."
+    },
+    "viewDuration": {
+      "type": "number",
+      "description": "Duration of the view in seconds."
+    },
+    "pagesViewed": {
+      "type": "integer",
+      "description": "Number of pages viewed (for documents)."
+    },
+    "totalPages": {
+      "type": "integer",
+      "description": "Total number of pages in the content."
+    },
+    "percentageViewed": {
+      "type": "number",
+      "format": "float",
+      "description": "Percentage of content viewed (0-100)."
+    },
+    "customProperties": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Custom properties for the view event."
+    }
+  }
+}

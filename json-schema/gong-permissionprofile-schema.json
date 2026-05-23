@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PermissionProfile",
+  "title": "PermissionProfile",
+  "type": "object",
+  "properties": {
+    "profileId": {
+      "type": "string",
+      "description": "Unique identifier for the permission profile."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the permission profile."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the permission profile."
+    },
+    "workspaceId": {
+      "type": "string",
+      "description": "The workspace the profile belongs to."
+    },
+    "permissions": {
+      "type": "object",
+      "properties": {
+        "viewOwnCalls": {
+          "type": "boolean",
+          "description": "Can view their own calls."
+        },
+        "viewTeamCalls": {
+          "type": "boolean",
+          "description": "Can view team members' calls."
+        },
+        "viewAllCalls": {
+          "type": "boolean",
+          "description": "Can view all calls."
+        },
+        "downloadRecordings": {
+          "type": "boolean",
+          "description": "Can download call recordings."
+        },
+        "shareExternally": {
+          "type": "boolean",
+          "description": "Can share calls externally."
+        },
+        "createScorecards": {
+          "type": "boolean",
+          "description": "Can create and fill scorecards."
+        },
+        "manageUsers": {
+          "type": "boolean",
+          "description": "Can manage users."
+        },
+        "manageSettings": {
+          "type": "boolean",
+          "description": "Can manage settings."
+        }
+      },
+      "description": "Permission flags for the profile."
+    },
+    "userCount": {
+      "type": "integer",
+      "description": "Number of users assigned to this profile."
+    }
+  }
+}

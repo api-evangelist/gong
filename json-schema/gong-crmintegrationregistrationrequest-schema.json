@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CrmIntegrationRegistrationRequest",
+  "title": "CrmIntegrationRegistrationRequest",
+  "type": "object",
+  "required": [
+    "integrationId",
+    "integrationType"
+  ],
+  "properties": {
+    "integrationId": {
+      "type": "string",
+      "description": "Unique identifier for the CRM integration."
+    },
+    "integrationType": {
+      "type": "string",
+      "description": "The type of CRM system (e.g., Salesforce, HubSpot, Custom)."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name for the integration."
+    },
+    "crmInstanceUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the CRM instance."
+    }
+  }
+}

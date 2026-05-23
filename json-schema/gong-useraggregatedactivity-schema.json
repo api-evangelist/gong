@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UserAggregatedActivity",
+  "title": "UserAggregatedActivity",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "The Gong user ID."
+    },
+    "callsAsHost": {
+      "type": "integer",
+      "description": "Number of calls where the user was the host."
+    },
+    "callsAttended": {
+      "type": "integer",
+      "description": "Number of calls the user attended."
+    },
+    "callsGaveComments": {
+      "type": "integer",
+      "description": "Number of calls where the user gave comments."
+    },
+    "callsReceivedComments": {
+      "type": "integer",
+      "description": "Number of calls where the user received comments."
+    },
+    "callsAccessedRecording": {
+      "type": "integer",
+      "description": "Number of calls where the user accessed the recording."
+    },
+    "callsScored": {
+      "type": "integer",
+      "description": "Number of calls scored by the user."
+    },
+    "ownCallsListenedTo": {
+      "type": "integer",
+      "description": "Number of own calls the user listened to."
+    },
+    "othersCallsListenedTo": {
+      "type": "integer",
+      "description": "Number of others' calls the user listened to."
+    }
+  }
+}

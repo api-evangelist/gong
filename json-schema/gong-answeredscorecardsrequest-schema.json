@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AnsweredScorecardsRequest",
+  "title": "AnsweredScorecardsRequest",
+  "type": "object",
+  "properties": {
+    "cursor": {
+      "type": "string",
+      "description": "Cursor for pagination."
+    },
+    "filter": {
+      "type": "object",
+      "properties": {
+        "fromDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start of the date range."
+        },
+        "toDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End of the date range."
+        },
+        "userIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Filter by specific user IDs."
+        },
+        "scorecardIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Filter by specific scorecard IDs."
+        }
+      },
+      "description": "Filter criteria for answered scorecards."
+    }
+  }
+}

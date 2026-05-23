@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WorkspacesResponse",
+  "title": "WorkspacesResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "workspaces": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Workspace"
+      },
+      "description": "List of workspace objects."
+    }
+  }
+}

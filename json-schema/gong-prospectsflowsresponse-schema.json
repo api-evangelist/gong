@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ProspectsFlowsResponse",
+  "title": "ProspectsFlowsResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "prospectsFlows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "prospectEmail": {
+            "type": "string",
+            "format": "email"
+          },
+          "assignedFlows": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "flowId": {
+                  "type": "string"
+                },
+                "flowInstanceId": {
+                  "type": "string"
+                },
+                "flowName": {
+                  "type": "string"
+                },
+                "assignedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        }
+      },
+      "description": "Flow assignments for each prospect."
+    }
+  }
+}

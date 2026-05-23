@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ManualAssociationResponse",
+  "title": "ManualAssociationResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "records": {
+      "type": "object",
+      "properties": {
+        "totalRecords": {
+          "type": "integer"
+        },
+        "currentPageSize": {
+          "type": "integer"
+        },
+        "cursor": {
+          "type": "string"
+        }
+      }
+    },
+    "calls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "callId": {
+            "type": "string",
+            "description": "The call ID."
+          },
+          "crmAssociations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "objectType": {
+                  "type": "string"
+                },
+                "objectId": {
+                  "type": "string"
+                },
+                "associatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        }
+      },
+      "description": "Calls with their manual CRM associations."
+    }
+  }
+}

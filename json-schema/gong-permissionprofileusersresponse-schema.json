@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PermissionProfileUsersResponse",
+  "title": "PermissionProfileUsersResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "users": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "The Gong user ID."
+          },
+          "emailAddress": {
+            "type": "string",
+            "format": "email",
+            "description": "The user's email address."
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The user's first name."
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The user's last name."
+          }
+        }
+      },
+      "description": "Users assigned to the permission profile."
+    }
+  }
+}

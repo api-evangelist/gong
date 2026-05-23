@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreateMeetingRequest",
+  "title": "CreateMeetingRequest",
+  "type": "object",
+  "required": [
+    "title",
+    "scheduledStart",
+    "scheduledEnd",
+    "organizerEmail"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Title of the meeting."
+    },
+    "scheduledStart": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Scheduled start time of the meeting in ISO-8601 format."
+    },
+    "scheduledEnd": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Scheduled end time of the meeting in ISO-8601 format."
+    },
+    "organizerEmail": {
+      "type": "string",
+      "format": "email",
+      "description": "Email of the meeting organizer."
+    },
+    "meetingUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the meeting (conferencing link)."
+    },
+    "attendees": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MeetingAttendee"
+      },
+      "description": "List of meeting attendees."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description or agenda for the meeting."
+    },
+    "meetingProvider": {
+      "type": "string",
+      "description": "The meeting provider (e.g., Zoom, Google Meet, Microsoft Teams)."
+    },
+    "externalMeetingId": {
+      "type": "string",
+      "description": "External meeting ID from the conferencing system."
+    }
+  }
+}

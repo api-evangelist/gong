@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/LibraryCall",
+  "title": "LibraryCall",
+  "type": "object",
+  "properties": {
+    "callId": {
+      "type": "string",
+      "description": "Unique identifier for the call."
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the call."
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the call in the Gong web application."
+    },
+    "started": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the call started."
+    },
+    "duration": {
+      "type": "number",
+      "description": "Duration of the call in seconds."
+    },
+    "primaryUserId": {
+      "type": "string",
+      "description": "User ID of the primary user on the call."
+    },
+    "addedToLibraryAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the call was added to the library folder."
+    },
+    "addedBy": {
+      "type": "string",
+      "description": "User ID of who added the call to the library."
+    }
+  }
+}

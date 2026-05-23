@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CrmEntitiesUploadResponse",
+  "title": "CrmEntitiesUploadResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "clientRequestId": {
+      "type": "string",
+      "description": "The client-provided request ID for tracking."
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the upload (e.g., Queued, Processing, Complete)."
+    }
+  }
+}

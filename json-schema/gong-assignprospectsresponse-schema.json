@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AssignProspectsResponse",
+  "title": "AssignProspectsResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "assignedProspects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "emailAddress": {
+            "type": "string",
+            "format": "email"
+          },
+          "flowInstanceId": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "List of successfully assigned prospects with their flow instance IDs."
+    },
+    "failedProspects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "emailAddress": {
+            "type": "string",
+            "format": "email"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "List of prospects that failed to be assigned."
+    }
+  }
+}

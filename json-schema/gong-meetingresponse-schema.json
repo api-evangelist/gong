@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/MeetingResponse",
+  "title": "MeetingResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "meetingId": {
+      "type": "string",
+      "description": "The Gong-assigned meeting identifier."
+    },
+    "meeting": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique meeting identifier."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the meeting."
+        },
+        "scheduledStart": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Scheduled start time."
+        },
+        "scheduledEnd": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Scheduled end time."
+        },
+        "organizerEmail": {
+          "type": "string",
+          "format": "email",
+          "description": "Email of the organizer."
+        },
+        "meetingUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "Meeting URL."
+        },
+        "attendees": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/MeetingAttendee"
+          }
+        }
+      }
+    }
+  }
+}

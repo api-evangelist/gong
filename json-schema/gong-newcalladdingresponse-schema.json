@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/NewCallAddingResponse",
+  "title": "NewCallAddingResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "callId": {
+      "type": "string",
+      "description": "The Gong-assigned unique identifier for the newly created call."
+    }
+  }
+}

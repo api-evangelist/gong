@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UpdateMeetingRequest",
+  "title": "UpdateMeetingRequest",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Updated title of the meeting."
+    },
+    "scheduledStart": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Updated scheduled start time."
+    },
+    "scheduledEnd": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Updated scheduled end time."
+    },
+    "meetingUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "Updated meeting URL."
+    },
+    "attendees": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MeetingAttendee"
+      },
+      "description": "Updated list of attendees."
+    },
+    "description": {
+      "type": "string",
+      "description": "Updated meeting description."
+    }
+  }
+}

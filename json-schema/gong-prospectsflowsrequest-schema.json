@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ProspectsFlowsRequest",
+  "title": "ProspectsFlowsRequest",
+  "type": "object",
+  "required": [
+    "prospectEmails"
+  ],
+  "properties": {
+    "prospectEmails": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "email"
+      },
+      "description": "List of prospect email addresses to check."
+    }
+  }
+}

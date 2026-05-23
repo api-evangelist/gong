@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ScorecardsResponse",
+  "title": "ScorecardsResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "scorecards": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Scorecard"
+      },
+      "description": "List of scorecard configurations."
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UserSettingsHistoryResponse",
+  "title": "UserSettingsHistoryResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "userSettingsHistory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "The user ID."
+          },
+          "settingName": {
+            "type": "string",
+            "description": "Name of the setting that changed."
+          },
+          "previousValue": {
+            "type": "string",
+            "description": "The previous value of the setting."
+          },
+          "newValue": {
+            "type": "string",
+            "description": "The new value of the setting."
+          },
+          "changedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the setting was changed."
+          },
+          "changedBy": {
+            "type": "string",
+            "description": "Who made the change."
+          }
+        }
+      },
+      "description": "List of settings changes for the user."
+    }
+  }
+}

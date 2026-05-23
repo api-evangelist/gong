@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UsersFilterRequest",
+  "title": "UsersFilterRequest",
+  "type": "object",
+  "properties": {
+    "cursor": {
+      "type": "string",
+      "description": "Cursor for pagination."
+    },
+    "filter": {
+      "type": "object",
+      "properties": {
+        "userIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Filter by specific user IDs."
+        },
+        "createdFromDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Filter users created after this date."
+        },
+        "createdToDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Filter users created before this date."
+        }
+      },
+      "description": "Filter criteria for users."
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AggregatedActivityRequest",
+  "title": "AggregatedActivityRequest",
+  "type": "object",
+  "properties": {
+    "cursor": {
+      "type": "string",
+      "description": "Cursor for pagination."
+    },
+    "filter": {
+      "type": "object",
+      "properties": {
+        "fromDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start of the date range."
+        },
+        "toDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End of the date range."
+        },
+        "userIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Filter by specific user IDs."
+        }
+      },
+      "description": "Filter criteria for activity retrieval."
+    }
+  }
+}

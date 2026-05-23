@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AuditLogEntry",
+  "title": "AuditLogEntry",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the log entry."
+    },
+    "logType": {
+      "type": "string",
+      "description": "The type of audit log."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the event occurred."
+    },
+    "userId": {
+      "type": "string",
+      "description": "The Gong user ID of the user who performed the action (if applicable)."
+    },
+    "userEmail": {
+      "type": "string",
+      "format": "email",
+      "description": "Email of the user who performed the action."
+    },
+    "action": {
+      "type": "string",
+      "description": "The action that was performed."
+    },
+    "resourceType": {
+      "type": "string",
+      "description": "The type of resource affected."
+    },
+    "resourceId": {
+      "type": "string",
+      "description": "The identifier of the resource affected."
+    },
+    "details": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Additional details about the event."
+    },
+    "ipAddress": {
+      "type": "string",
+      "description": "IP address from which the action was performed."
+    }
+  }
+}

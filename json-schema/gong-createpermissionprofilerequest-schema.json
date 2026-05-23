@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreatePermissionProfileRequest",
+  "title": "CreatePermissionProfileRequest",
+  "type": "object",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name for the new permission profile."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the permission profile."
+    },
+    "permissions": {
+      "type": "object",
+      "properties": {
+        "viewOwnCalls": {
+          "type": "boolean"
+        },
+        "viewTeamCalls": {
+          "type": "boolean"
+        },
+        "viewAllCalls": {
+          "type": "boolean"
+        },
+        "downloadRecordings": {
+          "type": "boolean"
+        },
+        "shareExternally": {
+          "type": "boolean"
+        },
+        "createScorecards": {
+          "type": "boolean"
+        },
+        "manageUsers": {
+          "type": "boolean"
+        },
+        "manageSettings": {
+          "type": "boolean"
+        }
+      },
+      "description": "Permission flags to set."
+    }
+  }
+}

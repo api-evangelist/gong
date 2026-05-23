@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DataReference",
+  "title": "DataReference",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "Call",
+        "Meeting",
+        "Email",
+        "EngageFlow",
+        "User"
+      ],
+      "description": "The type of record containing the reference."
+    },
+    "id": {
+      "type": "string",
+      "description": "The unique identifier of the record."
+    },
+    "date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date associated with the reference."
+    },
+    "details": {
+      "type": "string",
+      "description": "Additional details about the reference."
+    }
+  }
+}

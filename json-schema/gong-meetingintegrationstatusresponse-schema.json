@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/MeetingIntegrationStatusResponse",
+  "title": "MeetingIntegrationStatusResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "isIntegrated": {
+      "type": "boolean",
+      "description": "Whether the meeting integration is properly configured."
+    },
+    "provider": {
+      "type": "string",
+      "description": "The meeting provider checked."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "Inactive",
+        "Error"
+      ],
+      "description": "Current status of the integration."
+    },
+    "details": {
+      "type": "string",
+      "description": "Additional details about the integration status."
+    }
+  }
+}

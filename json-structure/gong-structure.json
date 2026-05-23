@@ -1,0 +1,228 @@
+{
+  "provider": "Gong",
+  "providerId": "gong",
+  "kind": "json-structure",
+  "description": "Structural overview of the Gong API surface; extracted from openapi/.",
+  "schemaCount": 20,
+  "operationCount": 10,
+  "schemas": [
+    {
+      "name": "CallsResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "Call",
+      "type": "object",
+      "propertyCount": 13,
+      "required": []
+    },
+    {
+      "name": "CallParty",
+      "type": "object",
+      "propertyCount": 9,
+      "required": []
+    },
+    {
+      "name": "NewCallAddingRequest",
+      "type": "object",
+      "propertyCount": 14,
+      "required": [
+        "actualStart",
+        "clientUniqueId",
+        "direction",
+        "parties",
+        "primaryUser"
+      ]
+    },
+    {
+      "name": "NewCallParty",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "NewCallAddingResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "NewCallRecordingResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "SpecificCallResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "ExtensiveCallsRequest",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "ExtensiveCallsResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "DetailedCall",
+      "type": null,
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "CallTranscriptRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "CallTranscriptsResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "CallTranscript",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "ManualAssociationResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "UserCallAccessRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "UserCallAccessResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "UserCallAccessUpdateRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "BaseResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "ErrorResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    }
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/calls",
+      "operationId": "listCalls",
+      "summary": "Gong List calls",
+      "tags": [
+        "Calls"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/calls",
+      "operationId": "addCall",
+      "summary": "Gong Add a new call",
+      "tags": [
+        "Calls"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/calls/{id}",
+      "operationId": "getCall",
+      "summary": "Gong Retrieve a specific call",
+      "tags": [
+        "Calls"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/calls/{id}/media",
+      "operationId": "addCallRecording",
+      "summary": "Gong Add call media recording",
+      "tags": [
+        "Recordings"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/calls/extensive",
+      "operationId": "listCallsExtensive",
+      "summary": "Gong Retrieve detailed call data",
+      "tags": [
+        "Calls"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/calls/transcript",
+      "operationId": "getCallTranscripts",
+      "summary": "Gong Retrieve call transcripts",
+      "tags": [
+        "Transcripts"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/calls/manual-crm-associations",
+      "operationId": "listManualCrmAssociations",
+      "summary": "Gong List calls manually associated with CRM",
+      "tags": [
+        "Calls"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/calls/users-access",
+      "operationId": "retrieveUserCallAccess",
+      "summary": "Gong Retrieve user call access",
+      "tags": [
+        "Calls"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/calls/users-access",
+      "operationId": "giveUserCallAccess",
+      "summary": "Gong Give user call access",
+      "tags": [
+        "Calls"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/calls/users-access",
+      "operationId": "removeUserCallAccess",
+      "summary": "Gong Remove user call access",
+      "tags": [
+        "Calls"
+      ]
+    }
+  ]
+}

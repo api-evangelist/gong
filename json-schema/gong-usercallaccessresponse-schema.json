@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UserCallAccessResponse",
+  "title": "UserCallAccessResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "callAccessDetails": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "callId": {
+            "type": "string"
+          },
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "description": "Access details for each call."
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/FlowsResponse",
+  "title": "FlowsResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "records": {
+      "type": "object",
+      "properties": {
+        "totalRecords": {
+          "type": "integer",
+          "description": "Total number of flows."
+        },
+        "currentPageSize": {
+          "type": "integer",
+          "description": "Number of records in the current page."
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Cursor for pagination."
+        }
+      }
+    },
+    "flows": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Flow"
+      },
+      "description": "List of Engage flow objects."
+    }
+  }
+}

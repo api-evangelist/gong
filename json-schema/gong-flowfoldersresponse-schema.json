@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/FlowFoldersResponse",
+  "title": "FlowFoldersResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "folders": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/FlowFolder"
+      },
+      "description": "List of flow folders."
+    }
+  }
+}

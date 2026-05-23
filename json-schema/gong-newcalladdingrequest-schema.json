@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/NewCallAddingRequest",
+  "title": "NewCallAddingRequest",
+  "type": "object",
+  "required": [
+    "actualStart",
+    "clientUniqueId",
+    "direction",
+    "parties",
+    "primaryUser"
+  ],
+  "properties": {
+    "actualStart": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The actual start time of the call in ISO-8601 format."
+    },
+    "clientUniqueId": {
+      "type": "string",
+      "description": "A unique identifier for the call provided by the client to prevent duplicates."
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "Inbound",
+        "Outbound",
+        "Conference",
+        "Unknown"
+      ],
+      "description": "The direction of the call."
+    },
+    "downloadMediaUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "Optional URL from which Gong can download the call recording media. If not provided, use /v2/calls/{id}/media to upload."
+    },
+    "duration": {
+      "type": "number",
+      "description": "Duration of the call in seconds."
+    },
+    "languageCode": {
+      "type": "string",
+      "description": "Language code of the call for transcription."
+    },
+    "meetingUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the meeting (if applicable)."
+    },
+    "parties": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/NewCallParty"
+      },
+      "description": "List of call participants."
+    },
+    "primaryUser": {
+      "type": "string",
+      "description": "Email address of the primary Gong user on the call."
+    },
+    "purpose": {
+      "type": "string",
+      "description": "The purpose or subject of the call."
+    },
+    "scheduledEnd": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The scheduled end time of the call."
+    },
+    "scheduledStart": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The scheduled start time of the call."
+    },
+    "title": {
+      "type": "string",
+      "description": "The title of the call."
+    },
+    "workspaceId": {
+      "type": "string",
+      "description": "The workspace to associate the call with."
+    }
+  }
+}

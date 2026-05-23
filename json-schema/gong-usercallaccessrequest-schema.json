@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UserCallAccessRequest",
+  "title": "UserCallAccessRequest",
+  "type": "object",
+  "properties": {
+    "callIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of call IDs to check access for."
+    }
+  }
+}

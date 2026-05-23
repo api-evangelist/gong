@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/LibraryFolderCallsResponse",
+  "title": "LibraryFolderCallsResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "calls": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/LibraryCall"
+      },
+      "description": "List of calls in the folder."
+    }
+  }
+}

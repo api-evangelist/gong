@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UserCallAccessUpdateRequest",
+  "title": "UserCallAccessUpdateRequest",
+  "type": "object",
+  "properties": {
+    "callIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of call IDs to update access for."
+    },
+    "userIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of user IDs to grant or revoke access."
+    }
+  }
+}

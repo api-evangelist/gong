@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/NewCallParty",
+  "title": "NewCallParty",
+  "type": "object",
+  "properties": {
+    "emailAddress": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address of the participant."
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the participant."
+    },
+    "phoneNumber": {
+      "type": "string",
+      "description": "Phone number of the participant."
+    },
+    "userId": {
+      "type": "string",
+      "description": "Gong user ID of the participant (if applicable)."
+    }
+  }
+}

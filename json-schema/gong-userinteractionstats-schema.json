@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UserInteractionStats",
+  "title": "UserInteractionStats",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "The Gong user ID."
+    },
+    "callsCount": {
+      "type": "integer",
+      "description": "Total number of calls."
+    },
+    "talkRatio": {
+      "type": "number",
+      "format": "float",
+      "description": "Average talk ratio (percentage of time the user spoke)."
+    },
+    "longestMonologue": {
+      "type": "number",
+      "description": "Longest uninterrupted speaking duration in seconds."
+    },
+    "interactivity": {
+      "type": "number",
+      "format": "float",
+      "description": "Average interactivity score."
+    },
+    "patience": {
+      "type": "number",
+      "format": "float",
+      "description": "Average patience metric."
+    },
+    "questionRate": {
+      "type": "number",
+      "format": "float",
+      "description": "Average question rate per call."
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CrmIntegrationsResponse",
+  "title": "CrmIntegrationsResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "integrations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "integrationId": {
+            "type": "string",
+            "description": "Unique identifier for the integration."
+          },
+          "integrationType": {
+            "type": "string",
+            "description": "The type of CRM system."
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Display name of the integration."
+          },
+          "crmInstanceUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the CRM instance."
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the integration."
+          }
+        }
+      },
+      "description": "List of registered CRM integrations."
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EmailReferencesResponse",
+  "title": "EmailReferencesResponse",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "description": "A unique identifier for the request."
+    },
+    "emailAddress": {
+      "type": "string",
+      "format": "email",
+      "description": "The email address that was searched."
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/DataReference"
+      },
+      "description": "List of references to the email address."
+    }
+  }
+}

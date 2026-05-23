@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DigitalInteractionRequest",
+  "title": "DigitalInteractionRequest",
+  "type": "object",
+  "required": [
+    "interactionType",
+    "participants",
+    "timestamp"
+  ],
+  "properties": {
+    "interactionType": {
+      "type": "string",
+      "enum": [
+        "Email",
+        "Chat",
+        "SMS",
+        "SocialMedia",
+        "Other"
+      ],
+      "description": "The type of digital interaction."
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject of the interaction (e.g., email subject)."
+    },
+    "body": {
+      "type": "string",
+      "description": "Body content of the interaction."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the interaction occurred."
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "Inbound",
+        "Outbound"
+      ],
+      "description": "Direction of the interaction."
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "emailAddress": {
+            "type": "string",
+            "format": "email"
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "Sender",
+              "Recipient",
+              "CC",
+              "BCC"
+            ]
+          }
+        }
+      },
+      "description": "Participants in the interaction."
+    },
+    "workspaceId": {
+      "type": "string",
+      "description": "The workspace to associate the interaction with."
+    },
+    "clientUniqueId": {
+      "type": "string",
+      "description": "Client-provided unique ID to prevent duplicate submissions."
+    }
+  }
+}
