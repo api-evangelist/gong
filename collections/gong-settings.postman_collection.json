@@ -1,0 +1,589 @@
+{
+  "item": [
+    {
+      "id": "64a91f3e-bf52-4f98-a4b7-7e2a451dbc91",
+      "name": "Scorecards",
+      "description": {
+        "content": "Operations for retrieving scorecard configurations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a19a5077-de07-480c-ad5d-f77ae54a2995",
+          "name": "Gong Retrieve scorecards",
+          "request": {
+            "name": "Gong Retrieve scorecards",
+            "description": {
+              "content": "Retrieves all scorecard configurations defined in the Gong account, including their questions, scoring criteria, and associated metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "scorecards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a42aa2dd-d10b-4787-aa1b-fb170281908f",
+              "name": "Successful response containing scorecard configurations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "scorecards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"scorecards\": [\n    {\n      \"scorecardId\": \"string\",\n      \"scorecardName\": \"string\",\n      \"enabled\": false,\n      \"workspaceId\": \"string\",\n      \"created\": \"2013-10-26T02:36:53.952Z\",\n      \"updated\": \"1997-01-05T20:20:51.194Z\",\n      \"questions\": [\n        {\n          \"questionId\": \"string\",\n          \"questionText\": \"string\",\n          \"questionType\": \"SingleChoice\",\n          \"isRequired\": false,\n          \"options\": [\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            },\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            }\n          ]\n        },\n        {\n          \"questionId\": \"string\",\n          \"questionText\": \"string\",\n          \"questionType\": \"YesNo\",\n          \"isRequired\": true,\n          \"options\": [\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            },\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"scorecardId\": \"string\",\n      \"scorecardName\": \"string\",\n      \"enabled\": false,\n      \"workspaceId\": \"string\",\n      \"created\": \"1971-02-07T15:57:34.278Z\",\n      \"updated\": \"1970-01-23T08:39:08.064Z\",\n      \"questions\": [\n        {\n          \"questionId\": \"string\",\n          \"questionText\": \"string\",\n          \"questionType\": \"YesNo\",\n          \"isRequired\": false,\n          \"options\": [\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            },\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            }\n          ]\n        },\n        {\n          \"questionId\": \"string\",\n          \"questionText\": \"string\",\n          \"questionType\": \"YesNo\",\n          \"isRequired\": false,\n          \"options\": [\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            },\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ec25415-3806-45f7-a964-5e895289f07a",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "scorecards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8954f508-5f63-4593-9e56-2ca3791c8ca2",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "scorecards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "8f01a3af-8334-4018-821e-ce463b7aaa2a",
+      "name": "Trackers",
+      "description": {
+        "content": "Operations for retrieving tracker configurations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "29fcf00b-f44e-4349-ade8-a2cb468f01f3",
+          "name": "Gong Retrieve trackers",
+          "request": {
+            "name": "Gong Retrieve trackers",
+            "description": {
+              "content": "Retrieves all tracker configurations defined in the Gong account. Trackers are keywords and phrases that Gong identifies during call transcription and analysis.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "trackers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workspaceId",
+                  "value": "<string>",
+                  "description": "Optional workspace ID to filter trackers by workspace."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "104726fc-d76d-4654-8d10-052f5ada3bef",
+              "name": "Successful response containing tracker configurations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "trackers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspaceId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"trackers\": [\n    {\n      \"trackerId\": \"string\",\n      \"trackerName\": \"string\",\n      \"keywords\": [\n        {\n          \"keyword\": \"string\",\n          \"tag\": \"string\"\n        },\n        {\n          \"keyword\": \"string\",\n          \"tag\": \"string\"\n        }\n      ],\n      \"workspaceId\": \"string\",\n      \"created\": \"2025-09-30T09:28:13.792Z\",\n      \"updated\": \"1989-11-18T16:22:20.336Z\"\n    },\n    {\n      \"trackerId\": \"string\",\n      \"trackerName\": \"string\",\n      \"keywords\": [\n        {\n          \"keyword\": \"string\",\n          \"tag\": \"string\"\n        },\n        {\n          \"keyword\": \"string\",\n          \"tag\": \"string\"\n        }\n      ],\n      \"workspaceId\": \"string\",\n      \"created\": \"1966-04-28T21:35:16.938Z\",\n      \"updated\": \"2019-04-11T17:47:59.865Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1374e32c-60c0-4ab7-9e33-93e5e5c9d00c",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "trackers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspaceId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8119942-3846-4fa3-bf86-d9f1cab4c782",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "trackers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspaceId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "9baac607-29f9-4690-9bc3-8bd269c50b59",
+      "name": "Workspaces",
+      "description": {
+        "content": "Operations for managing workspaces",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c954775f-5b95-45b2-ad44-bd54a3d498a3",
+          "name": "Gong List company workspaces",
+          "request": {
+            "name": "Gong List company workspaces",
+            "description": {
+              "content": "Retrieves a list of all workspaces configured in the Gong account. Workspaces are used to organize and segment data within the platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workspaces"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "faae8692-1bc9-4e2c-801d-4c7e1ae69c06",
+              "name": "Successful response containing a list of workspaces.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"workspaces\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5827453e-d412-44e9-a8d7-2c08e15d6102",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffe96f03-947f-4a69-981d-f21378ac5d87",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gong.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "95bb28b5-daaf-40a7-bb4e-5236adb5552e",
+    "name": "Gong Settings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Gong Settings API provides endpoints to retrieve scorecard configurations, tracker details, and list all company workspaces, enabling programmatic access to organizational settings and evaluation frameworks.\n\nContact Support:\n Name: Gong\n Email: support@gong.io",
+      "type": "text/plain"
+    }
+  }
+}

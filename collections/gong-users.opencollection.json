@@ -1,0 +1,103 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Users API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong List all users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/users",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A cursor for pagination. Pass the cursor from the previous response to retrieve the next page of results."
+              },
+              {
+                "name": "includeAvatars",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, the response includes user avatar image URLs."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all users in the Gong account. Results are paginated and can optionally include user avatar images."
+        },
+        {
+          "info": {
+            "name": "Gong Retrieve a specific user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique Gong user ID."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information about a specific user identified by their unique Gong user ID."
+        },
+        {
+          "info": {
+            "name": "Gong Retrieve user settings history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/users/:id/settings-history",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique Gong user ID."
+              }
+            ]
+          },
+          "docs": "Retrieves the settings change history for a specific user, including changes to their role, permissions, and other configuration settings over time."
+        },
+        {
+          "info": {
+            "name": "Gong List users by filter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/users/filter",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves a filtered list of users based on specified criteria such as creation date, user IDs, or other attributes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

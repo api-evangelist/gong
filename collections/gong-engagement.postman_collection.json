@@ -1,0 +1,1331 @@
+{
+  "item": [
+    {
+      "id": "354384f1-5919-4d39-9380-51949fea8b1a",
+      "name": "Digital Interactions",
+      "description": {
+        "content": "Operations for posting digital interaction data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eb264fdb-a333-49a9-bbe7-dbeb087318c9",
+          "name": "Gong Post digital interaction",
+          "request": {
+            "name": "Gong Post digital interaction",
+            "description": {
+              "content": "Posts a digital interaction event to Gong, recording structured data about digital communications such as emails, chat messages, or other text-based interactions with customers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "digital-interactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"interactionType\": \"<string>\",\n  \"participants\": [\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    },\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"timestamp\": \"<dateTime>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"direction\": \"<string>\",\n  \"workspaceId\": \"<string>\",\n  \"clientUniqueId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "52b4aefe-2154-40c1-bed7-9487b8c8e9a2",
+              "name": "Digital interaction successfully posted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital-interactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"interactionType\": \"<string>\",\n  \"participants\": [\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    },\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"timestamp\": \"<dateTime>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"direction\": \"<string>\",\n  \"workspaceId\": \"<string>\",\n  \"clientUniqueId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"interactionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eda07a0f-3283-4268-a166-73f6523f13d3",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital-interactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"interactionType\": \"<string>\",\n  \"participants\": [\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    },\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"timestamp\": \"<dateTime>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"direction\": \"<string>\",\n  \"workspaceId\": \"<string>\",\n  \"clientUniqueId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f03bc72b-9f68-42ef-8893-9f89af5bebfd",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital-interactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"interactionType\": \"<string>\",\n  \"participants\": [\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    },\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"timestamp\": \"<dateTime>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"direction\": \"<string>\",\n  \"workspaceId\": \"<string>\",\n  \"clientUniqueId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88adf0cd-56cf-43f7-bb7f-71fa48f1db6a",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital-interactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"interactionType\": \"<string>\",\n  \"participants\": [\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    },\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"timestamp\": \"<dateTime>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"direction\": \"<string>\",\n  \"workspaceId\": \"<string>\",\n  \"clientUniqueId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "ea940345-7620-4c59-8ee6-a8e44ddd2be7",
+      "name": "Engagement Events",
+      "description": {
+        "content": "Operations for reporting customer engagement events",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1d400f15-5854-452a-8289-aff8a8398775",
+          "name": "Gong Report content share event",
+          "request": {
+            "name": "Gong Report content share event",
+            "description": {
+              "content": "Reports a content sharing event to Gong, tracking when a user shares content (such as documents, presentations, or links) with a prospect or customer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "customer-engagement",
+                "share"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contentTitle\": \"<string>\",\n  \"senderEmailAddress\": \"<email>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"contentUrl\": \"<uri>\",\n  \"recipientEmailAddresses\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"contentType\": \"<string>\",\n  \"customProperties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"crmContext\": {\n    \"objectType\": \"<string>\",\n    \"objectId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b1aff92c-a72d-45df-a4ad-07cc12baf13e",
+              "name": "Content share event successfully reported.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer-engagement",
+                    "share"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contentTitle\": \"<string>\",\n  \"senderEmailAddress\": \"<email>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"contentUrl\": \"<uri>\",\n  \"recipientEmailAddresses\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"contentType\": \"<string>\",\n  \"customProperties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"crmContext\": {\n    \"objectType\": \"<string>\",\n    \"objectId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa5746c2-8a04-45d5-bbfe-a1468352d94a",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer-engagement",
+                    "share"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contentTitle\": \"<string>\",\n  \"senderEmailAddress\": \"<email>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"contentUrl\": \"<uri>\",\n  \"recipientEmailAddresses\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"contentType\": \"<string>\",\n  \"customProperties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"crmContext\": {\n    \"objectType\": \"<string>\",\n    \"objectId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35fb2e6e-68cb-43c8-a100-35b6b430932a",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer-engagement",
+                    "share"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contentTitle\": \"<string>\",\n  \"senderEmailAddress\": \"<email>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"contentUrl\": \"<uri>\",\n  \"recipientEmailAddresses\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"contentType\": \"<string>\",\n  \"customProperties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"crmContext\": {\n    \"objectType\": \"<string>\",\n    \"objectId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3dbab1cd-5f62-438b-95a4-4d66c40f3b47",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer-engagement",
+                    "share"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contentTitle\": \"<string>\",\n  \"senderEmailAddress\": \"<email>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"contentUrl\": \"<uri>\",\n  \"recipientEmailAddresses\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"contentType\": \"<string>\",\n  \"customProperties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"crmContext\": {\n    \"objectType\": \"<string>\",\n    \"objectId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f72d962-3479-4d73-ba48-8872a0c112d3",
+          "name": "Gong Report content view event",
+          "request": {
+            "name": "Gong Report content view event",
+            "description": {
+              "content": "Reports a content viewing event to Gong, tracking when a prospect or customer views shared content such as documents, presentations, or proposals.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "customer-engagement",
+                "view"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contentTitle\": \"<string>\",\n  \"viewerEmailAddress\": \"<email>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"contentUrl\": \"<uri>\",\n  \"viewDuration\": \"<number>\",\n  \"pagesViewed\": \"<integer>\",\n  \"totalPages\": \"<integer>\",\n  \"percentageViewed\": \"<float>\",\n  \"customProperties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "96ac2b02-a958-4798-b513-2d6d64a1ebae",
+              "name": "Content view event successfully reported.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer-engagement",
+                    "view"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contentTitle\": \"<string>\",\n  \"viewerEmailAddress\": \"<email>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"contentUrl\": \"<uri>\",\n  \"viewDuration\": \"<number>\",\n  \"pagesViewed\": \"<integer>\",\n  \"totalPages\": \"<integer>\",\n  \"percentageViewed\": \"<float>\",\n  \"customProperties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "762d6f2a-33ce-48b1-b15f-ca9538726028",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer-engagement",
+                    "view"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contentTitle\": \"<string>\",\n  \"viewerEmailAddress\": \"<email>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"contentUrl\": \"<uri>\",\n  \"viewDuration\": \"<number>\",\n  \"pagesViewed\": \"<integer>\",\n  \"totalPages\": \"<integer>\",\n  \"percentageViewed\": \"<float>\",\n  \"customProperties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d55fe3e-4e97-4bad-9f87-a013fc869866",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer-engagement",
+                    "view"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contentTitle\": \"<string>\",\n  \"viewerEmailAddress\": \"<email>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"contentUrl\": \"<uri>\",\n  \"viewDuration\": \"<number>\",\n  \"pagesViewed\": \"<integer>\",\n  \"totalPages\": \"<integer>\",\n  \"percentageViewed\": \"<float>\",\n  \"customProperties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0e82c04-45e3-47c7-af2c-d4840b04b5a8",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer-engagement",
+                    "view"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contentTitle\": \"<string>\",\n  \"viewerEmailAddress\": \"<email>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"contentUrl\": \"<uri>\",\n  \"viewDuration\": \"<number>\",\n  \"pagesViewed\": \"<integer>\",\n  \"totalPages\": \"<integer>\",\n  \"percentageViewed\": \"<float>\",\n  \"customProperties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "95d21a6a-34ab-4294-b530-e3acf4d23a04",
+          "name": "Gong Report custom action event",
+          "request": {
+            "name": "Gong Report custom action event",
+            "description": {
+              "content": "Reports a custom engagement action event to Gong, tracking custom interactions between users and prospects that are not covered by the standard share and view events.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "customer-engagement",
+                "action"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"actionName\": \"<string>\",\n  \"actorEmailAddress\": \"<email>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"targetEmailAddress\": \"<email>\",\n  \"actionDetails\": \"<string>\",\n  \"customProperties\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "53c9a34f-6add-437a-8702-8deba7d41f28",
+              "name": "Custom action event successfully reported.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer-engagement",
+                    "action"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actionName\": \"<string>\",\n  \"actorEmailAddress\": \"<email>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"targetEmailAddress\": \"<email>\",\n  \"actionDetails\": \"<string>\",\n  \"customProperties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1be65c6a-b5b3-4c0c-8c0d-e96a0285f28b",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer-engagement",
+                    "action"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actionName\": \"<string>\",\n  \"actorEmailAddress\": \"<email>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"targetEmailAddress\": \"<email>\",\n  \"actionDetails\": \"<string>\",\n  \"customProperties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6b5dce6-ab30-4f05-a3ae-b9ecaccb19d0",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer-engagement",
+                    "action"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actionName\": \"<string>\",\n  \"actorEmailAddress\": \"<email>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"targetEmailAddress\": \"<email>\",\n  \"actionDetails\": \"<string>\",\n  \"customProperties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e136180b-dbab-4da2-aef4-9931598b3a81",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer-engagement",
+                    "action"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actionName\": \"<string>\",\n  \"actorEmailAddress\": \"<email>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"targetEmailAddress\": \"<email>\",\n  \"actionDetails\": \"<string>\",\n  \"customProperties\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54fbbf80-9128-46de-bc44-3d86095cc470",
+          "name": "Gong Configure integration settings",
+          "request": {
+            "name": "Gong Configure integration settings",
+            "description": {
+              "content": "Configures integration settings for customer engagement tracking, specifying how engagement data should be processed and associated with CRM records.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integration-settings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"integrationName\": \"<string>\",\n  \"enableContentTracking\": \"<boolean>\",\n  \"enableActionTracking\": \"<boolean>\",\n  \"crmAssociationEnabled\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "960ebbf6-de85-40c8-b352-240b9cc1d260",
+              "name": "Integration settings successfully configured.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"integrationName\": \"<string>\",\n  \"enableContentTracking\": \"<boolean>\",\n  \"enableActionTracking\": \"<boolean>\",\n  \"crmAssociationEnabled\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83bdab51-28cc-4e3f-91d0-4d1186b7ddb1",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"integrationName\": \"<string>\",\n  \"enableContentTracking\": \"<boolean>\",\n  \"enableActionTracking\": \"<boolean>\",\n  \"crmAssociationEnabled\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d81ab065-97b5-4499-930d-a36a9dfaedea",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"integrationName\": \"<string>\",\n  \"enableContentTracking\": \"<boolean>\",\n  \"enableActionTracking\": \"<boolean>\",\n  \"crmAssociationEnabled\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7019be4b-9257-4899-a444-91edb8c18190",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"integrationName\": \"<string>\",\n  \"enableContentTracking\": \"<boolean>\",\n  \"enableActionTracking\": \"<boolean>\",\n  \"crmAssociationEnabled\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gong.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "35ffebd3-4e5c-46e1-9fe2-a8c30c99f5b0",
+    "name": "Gong Engagement API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Gong Engagement API reports customer engagement events including content sharing, content viewing, and custom actions, providing visibility into how prospects interact with shared materials.\n\nContact Support:\n Name: Gong\n Email: support@gong.io",
+      "type": "text/plain"
+    }
+  }
+}

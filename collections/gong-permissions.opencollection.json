@@ -1,0 +1,128 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Permissions API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Permission Profiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong List company permission profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/workspaces/:workspaceId/permission-profiles",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the workspace."
+              }
+            ]
+          },
+          "docs": "Retrieves all permission profiles defined for a specific workspace. Permission profiles define sets of capabilities and access levels that can be assigned to users."
+        },
+        {
+          "info": {
+            "name": "Gong Create permission profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/permission-profiles",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "The workspace to create the permission profile in."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new permission profile in the specified workspace with defined capabilities and access levels."
+        },
+        {
+          "info": {
+            "name": "Gong Get permission profile by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/permission-profiles/:profileId",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the permission profile."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information about a specific permission profile identified by its unique ID."
+        },
+        {
+          "info": {
+            "name": "Gong Update permission profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.gong.io/v2/permission-profiles/:profileId",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the permission profile to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing permission profile's capabilities and access levels."
+        },
+        {
+          "info": {
+            "name": "Gong List users by permission profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/permission-profiles/:profileId/users",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the permission profile."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of users assigned to a specific permission profile."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

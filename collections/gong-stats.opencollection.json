@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Stats API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Statistics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Retrieve aggregated activity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/stats/activity/aggregated",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves aggregated user activity statistics for a specified time period. Returns metrics such as call counts, email counts, and other activity measures grouped by user."
+        },
+        {
+          "info": {
+            "name": "Gong Retrieve daily activity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/stats/activity/day-by-day",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves daily activity statistics broken down by date for specified users and time period. Returns per-day metrics for calls, emails, and other activities."
+        },
+        {
+          "info": {
+            "name": "Gong Retrieve interaction statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/stats/interaction",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves interaction statistics for calls including talk ratios, longest monologues, interactivity scores, and patience metrics for specified users and time period."
+        },
+        {
+          "info": {
+            "name": "Gong List coaching metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/coaching/metrics",
+            "params": [
+              {
+                "name": "workspace-id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by workspace ID."
+              },
+              {
+                "name": "manager-id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by manager's Gong user ID."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start date for the metrics period in ISO-8601 format."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End date for the metrics period in ISO-8601 format."
+              }
+            ]
+          },
+          "docs": "Retrieves coaching metrics for a specified manager, workspace, and time period. Returns data about coaching activities and performance."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Scorecards",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Retrieve answered scorecards",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/stats/scorecards",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves answered scorecard data for calls, including scores and evaluations by reviewers for the specified time period and users."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

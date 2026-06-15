@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Library API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Library",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Retrieve library folders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/library/folders",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "Optional workspace ID to filter folders by workspace."
+              }
+            ]
+          },
+          "docs": "Retrieves the library folder structure, listing all folders available in the Gong library. Folders are used to organize curated call content for training and review. Can be filtered by workspace."
+        },
+        {
+          "info": {
+            "name": "Gong List calls in a library folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/library/folders/:folderId/calls",
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the library folder."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of calls stored in a specific library folder. Returns call references that can be used to retrieve full call details via the Calls API."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

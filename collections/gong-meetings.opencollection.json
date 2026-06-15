@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Meetings API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Meetings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Gong meeting",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/meetings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new meeting in Gong with the specified details including participants, scheduling information, and meeting configuration."
+        },
+        {
+          "info": {
+            "name": "Update a Gong meeting",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.gong.io/v2/meetings/:meetingId",
+            "params": [
+              {
+                "name": "meetingId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the meeting to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing Gong meeting with new details such as updated scheduling, participants, or meeting configuration."
+        },
+        {
+          "info": {
+            "name": "Delete a Gong meeting",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.gong.io/v2/meetings/:meetingId",
+            "params": [
+              {
+                "name": "meetingId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the meeting to delete."
+              }
+            ]
+          },
+          "docs": "Removes a specific meeting from Gong using its unique meeting ID. This operation is irreversible."
+        },
+        {
+          "info": {
+            "name": "Gong Validate meeting integration status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/meetings/integration-status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates the integration status for a meeting, checking whether the meeting system integration is properly configured and operational."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

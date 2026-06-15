@@ -1,0 +1,217 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong CRM API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CRM Integration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Get CRM integration details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/crm/integrations"
+          },
+          "docs": "Retrieves details about the currently registered CRM integrations for the account."
+        },
+        {
+          "info": {
+            "name": "Gong Register a CRM integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.gong.io/v2/crm/integrations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers a new CRM integration with Gong. A successful registration enables uploading CRM data to Gong. Only one active integration per integration type is allowed."
+        },
+        {
+          "info": {
+            "name": "Gong Delete a CRM integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.gong.io/v2/crm/integrations",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the CRM integration to delete."
+              },
+              {
+                "name": "clientRequestId",
+                "value": "",
+                "type": "query",
+                "description": "A client-generated request ID for idempotency."
+              }
+            ]
+          },
+          "docs": "Deletes a registered CRM integration and its associated data from Gong."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "CRM Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Upload CRM objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/crm/entities",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the CRM integration."
+              },
+              {
+                "name": "objectType",
+                "value": "",
+                "type": "query",
+                "description": "The type of CRM object being uploaded (e.g., Deal, Account, Contact, Lead)."
+              },
+              {
+                "name": "clientRequestId",
+                "value": "",
+                "type": "query",
+                "description": "A client-generated request ID for tracking."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Uploads CRM objects (such as deals, accounts, contacts, or leads) to Gong for association with call data. Objects are uploaded for a specific integration and object type."
+        },
+        {
+          "info": {
+            "name": "Gong Get CRM objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/crm/objects",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the CRM integration."
+              },
+              {
+                "name": "objectType",
+                "value": "",
+                "type": "query",
+                "description": "The type of CRM object to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves CRM objects that have been uploaded to Gong for a specific integration and object type."
+        },
+        {
+          "info": {
+            "name": "Gong Get upload request status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/crm/upload-status",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the CRM integration."
+              },
+              {
+                "name": "clientRequestId",
+                "value": "",
+                "type": "query",
+                "description": "The client request ID from the original upload request."
+              }
+            ]
+          },
+          "docs": "Retrieves the status of a previous CRM data upload request using the integration ID and client request ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "CRM Schema",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong List schema fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/crm/entity-schema",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the CRM integration."
+              },
+              {
+                "name": "objectType",
+                "value": "",
+                "type": "query",
+                "description": "The type of CRM object to get schema for."
+              }
+            ]
+          },
+          "docs": "Retrieves the schema fields defined for a specific CRM object type and integration."
+        },
+        {
+          "info": {
+            "name": "Gong Upload CRM object schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/crm/entity-schema",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Uploads the schema definition for a CRM object type including field definitions, labels, and data types. This defines the structure of CRM objects that can be uploaded to Gong."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,165 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Engage API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Flows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong List Engage flows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/flows",
+            "params": [
+              {
+                "name": "flowOwnerEmail",
+                "value": "",
+                "type": "query",
+                "description": "Filter flows by the owner's email address."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A cursor for pagination. Pass the cursor from the previous response to retrieve the next page of results."
+              },
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "Filter flows by workspace ID."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all available Engage flows. Results can be filtered by flow owner email and workspace, and are paginated."
+        },
+        {
+          "info": {
+            "name": "Gong Override flow content",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.gong.io/v2/flows/:flowId/content-override",
+            "params": [
+              {
+                "name": "flowId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the Engage flow."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Overrides the content of specific steps in an Engage flow to tailor messaging for specific campaigns or workflows. Allows customizing email subjects, bodies, and other step content."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Folders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong List flow folders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/flows/folders",
+            "params": [
+              {
+                "name": "userEmail",
+                "value": "",
+                "type": "query",
+                "description": "Email of the user to include personal and shared folders for."
+              },
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "Filter folders by workspace ID."
+              }
+            ]
+          },
+          "docs": "Retrieves all company flow folders, plus personal flow folders and flow folders shared with the specified user. Used to organize and categorize Engage flows."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Prospects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Assign prospects to Engage flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/flows/prospects/assign",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assigns one or more prospects to a specified Engage flow. Prospects will begin receiving the flow's outreach sequence upon assignment."
+        },
+        {
+          "info": {
+            "name": "Gong Unassign prospects from Engage flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/flows/prospects/unassign",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes one or more prospects from specified Engage flows. You can remove prospects from up to 100 flows in a single request. The response returns the flow instance IDs the prospect was successfully removed from."
+        },
+        {
+          "info": {
+            "name": "Gong List assigned flows for prospects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/flows/prospects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves the list of Engage flows that specified prospects are currently assigned to."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

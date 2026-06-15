@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Engagement API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Engagement Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Report content share event",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.gong.io/v2/customer-engagement/share",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reports a content sharing event to Gong, tracking when a user shares content (such as documents, presentations, or links) with a prospect or customer."
+        },
+        {
+          "info": {
+            "name": "Gong Report content view event",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.gong.io/v2/customer-engagement/view",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reports a content viewing event to Gong, tracking when a prospect or customer views shared content such as documents, presentations, or proposals."
+        },
+        {
+          "info": {
+            "name": "Gong Report custom action event",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.gong.io/v2/customer-engagement/action",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reports a custom engagement action event to Gong, tracking custom interactions between users and prospects that are not covered by the standard share and view events."
+        },
+        {
+          "info": {
+            "name": "Gong Configure integration settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/integration-settings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Configures integration settings for customer engagement tracking, specifying how engagement data should be processed and associated with CRM records."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Digital Interactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Post digital interaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/digital-interactions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Posts a digital interaction event to Gong, recording structured data about digital communications such as emails, chat messages, or other text-based interactions with customers."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

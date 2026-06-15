@@ -1,0 +1,241 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Calls API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Calls",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong List calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/calls",
+            "params": [
+              {
+                "name": "fromDateTime",
+                "value": "",
+                "type": "query",
+                "description": "The start date and time for the calls filter in ISO-8601 format (e.g., 2021-01-01T00:00:00Z)."
+              },
+              {
+                "name": "toDateTime",
+                "value": "",
+                "type": "query",
+                "description": "The end date and time for the calls filter in ISO-8601 format (e.g., 2021-12-31T23:59:59Z)."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A cursor for pagination. Pass the cursor from the previous response to retrieve the next page of results."
+              },
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "Optional workspace identifier to filter calls by workspace."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of calls that took place during a specified date range. Results are paginated and can be filtered by workspace."
+        },
+        {
+          "info": {
+            "name": "Gong Add a new call",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/calls",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a new call record to Gong. Either provide a downloadMediaUrl in the request body or use the returned callId in a follow-up request to /v2/calls/{id}/media to upload the media file."
+        },
+        {
+          "info": {
+            "name": "Gong Retrieve a specific call",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/calls/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Gong's unique numeric identifier for the call (up to 20 digits)."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information about a specific call identified by its unique numeric identifier."
+        },
+        {
+          "info": {
+            "name": "Gong Retrieve detailed call data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/calls/extensive",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves extensive call data including participants, topics, trackers, comments, scorecards, and other analytics. Supports filtering by date range, call IDs, or hosting users. Requires the scope api:calls:read:extensive."
+        },
+        {
+          "info": {
+            "name": "Gong List calls manually associated with CRM",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/calls/manual-crm-associations",
+            "params": [
+              {
+                "name": "fromDateTime",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the time the manual association was created, in ISO-8601 format."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A cursor for pagination. Pass the cursor from the previous response to retrieve the next page of results."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of calls that were manually associated with CRM objects by users. This endpoint is in beta phase. Results can be filtered by association time."
+        },
+        {
+          "info": {
+            "name": "Gong Retrieve user call access",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/calls/users-access",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves the list of users who have access to specified calls and their access levels."
+        },
+        {
+          "info": {
+            "name": "Gong Give user call access",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.gong.io/v2/calls/users-access",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Grants specified users access to specified calls within the Gong platform."
+        },
+        {
+          "info": {
+            "name": "Gong Remove user call access",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.gong.io/v2/calls/users-access",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes specified users' access to specified calls within the Gong platform."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Recordings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Add call media recording",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.gong.io/v2/calls/:id/media",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The callId returned from the Add New Call request."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "mediaFile",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Adds call media (audio or video recording) to a previously created call. Gong accepts recordings in WAV, MP3, MP4, MKV, and FLAC formats up to 1.5GB in size."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Transcripts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Retrieve call transcripts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/calls/transcript",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves transcript data for calls matching the specified filter criteria. Transcripts include speaker identification and timing information."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

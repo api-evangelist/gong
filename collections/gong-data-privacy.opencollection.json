@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Data Privacy API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Data Privacy",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Retrieve email address references",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/data-privacy/email-references",
+            "params": [
+              {
+                "name": "emailAddress",
+                "value": "",
+                "type": "query",
+                "description": "The email address to search for references."
+              }
+            ]
+          },
+          "docs": "Retrieves all references to a specified email address across the Gong platform, including calls, meetings, and other records. Used to fulfill data subject access requests under privacy regulations."
+        },
+        {
+          "info": {
+            "name": "Gong Retrieve phone number references",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/data-privacy/phone-references",
+            "params": [
+              {
+                "name": "phoneNumber",
+                "value": "",
+                "type": "query",
+                "description": "The phone number to search for references."
+              }
+            ]
+          },
+          "docs": "Retrieves all references to a specified phone number across the Gong platform, including calls, meetings, and other records. Used to fulfill data subject access requests under privacy regulations."
+        },
+        {
+          "info": {
+            "name": "Gong Delete email address and associated data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/data-privacy/email-delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Purges all data associated with the specified email address from the Gong platform, including call records, transcripts, and user data. This operation is irreversible and supports compliance with data erasure requests under GDPR and similar regulations."
+        },
+        {
+          "info": {
+            "name": "Gong Delete phone number and associated data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/data-privacy/phone-delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Purges all data associated with the specified phone number from the Gong platform, including call records and transcripts. This operation is irreversible and supports compliance with data erasure requests under GDPR and similar regulations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

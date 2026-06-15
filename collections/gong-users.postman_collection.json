@@ -1,0 +1,1015 @@
+{
+  "item": [
+    {
+      "id": "9d69d10a-d6ca-429d-88d5-864bb43b209b",
+      "name": "Users",
+      "description": {
+        "content": "Operations for managing and retrieving user data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "552c2caa-622e-4840-a031-7994b62b4e3a",
+          "name": "Gong List all users",
+          "request": {
+            "name": "Gong List all users",
+            "description": {
+              "content": "Retrieves a list of all users in the Gong account. Results are paginated and can optionally include user avatar images.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "A cursor for pagination. Pass the cursor from the previous response to retrieve the next page of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeAvatars",
+                  "value": "false",
+                  "description": "When set to true, the response includes user avatar image URLs."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c93df5e4-7989-4508-9c8d-1206b0ebc687",
+              "name": "Successful response containing a list of users.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeAvatars",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"records\": {\n    \"totalRecords\": 3897,\n    \"currentPageSize\": 3276,\n    \"currentPageNumber\": 6249,\n    \"cursor\": \"string\"\n  },\n  \"users\": [\n    {\n      \"id\": \"string\",\n      \"emailAddress\": \"IvAIdu05eEGI4q@gi.gp\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"title\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"extension\": \"string\",\n      \"personalMeetingUrls\": [\n        \"http://eLeneKMZSfB.hziCUn3ZSFMFojlMV4+VQacZPrTzTpqQINCsOiybqj\",\n        \"http://JQwnJBEHodmvuigmxyFdmF.nqU,vxnaX.QSE-JNkCjpm4QNZ7PLXxjJrHr+RUu9rS2H0hfokuhjtC+S\"\n      ],\n      \"settings\": {\n        \"webConferencesRecorded\": false,\n        \"preventWebConferenceRecording\": true,\n        \"telephonyCallsImported\": false,\n        \"emailsImported\": true,\n        \"preventEmailImport\": false\n      },\n      \"managerId\": \"string\",\n      \"meetingConsentPageUrl\": \"https://mljiHJv.yubDHsPX\",\n      \"spokenLanguages\": [\n        {\n          \"language\": \"string\",\n          \"primary\": false\n        },\n        {\n          \"language\": \"string\",\n          \"primary\": false\n        }\n      ],\n      \"active\": true,\n      \"created\": \"2006-06-25T01:24:50.569Z\",\n      \"avatarUrl\": \"https://bUrVBvmKDEzimuIkXeqrBHM.rqFN68DlD6Gdhpnb1DqxdZ1,Z5fp+w5KTp.VcuR\",\n      \"trustedEmailAddress\": \"nuHbj@cydhVTGcjNNHXCRhVTJXYNhKREnzqFO.wyah\"\n    },\n    {\n      \"id\": \"string\",\n      \"emailAddress\": \"omg66vMG@iUyQwWhpZvcPsh.flx\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"title\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"extension\": \"string\",\n      \"personalMeetingUrls\": [\n        \"http://ZRTXWNjdRgjRQsnPfOrOwHgCYXP.ychuJcwptQT.0xucGwVL6Z\",\n        \"http://qZfrdhjIXj.pzkLX\"\n      ],\n      \"settings\": {\n        \"webConferencesRecorded\": true,\n        \"preventWebConferenceRecording\": false,\n        \"telephonyCallsImported\": false,\n        \"emailsImported\": true,\n        \"preventEmailImport\": true\n      },\n      \"managerId\": \"string\",\n      \"meetingConsentPageUrl\": \"https://zXWlLdbyuSuzlP.vfxhhh3dkgWT\",\n      \"spokenLanguages\": [\n        {\n          \"language\": \"string\",\n          \"primary\": false\n        },\n        {\n          \"language\": \"string\",\n          \"primary\": false\n        }\n      ],\n      \"active\": false,\n      \"created\": \"1966-04-25T06:02:42.055Z\",\n      \"avatarUrl\": \"http://TrZKJlDfLjZKnmAydLuUzOVMLDblznnbX.btprwfox\",\n      \"trustedEmailAddress\": \"sEcxJ2b@rRdfZTAqGMhurnomsmWCYsEO.ay\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7dcf2902-ba80-4c16-a141-628312c2ced4",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeAvatars",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26842e1b-6231-465d-a12e-9a5aaa2e7c3b",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeAvatars",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3518aca3-00ed-401e-a152-278bee784b03",
+          "name": "Gong Retrieve a specific user",
+          "request": {
+            "name": "Gong Retrieve a specific user",
+            "description": {
+              "content": "Retrieves detailed information about a specific user identified by their unique Gong user ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique Gong user ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "04eb8b10-c51c-4d2b-b039-11c9c55988b3",
+              "name": "Successful response containing the user details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique Gong user ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"user\": {\n    \"id\": \"string\",\n    \"emailAddress\": \"GwF0jFW-tf@ipaVSKofmYvqgXJZG.mhhf\",\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"title\": \"string\",\n    \"phoneNumber\": \"string\",\n    \"extension\": \"string\",\n    \"personalMeetingUrls\": [\n      \"https://HVoYOWjY.hgskWh97Mf2UNkI-GGGQzP6EKWQVPjWOr.ALul8Wo+LwwxDXdQii7Ms9NAvlEP2dJdj\",\n      \"http://fgahlvedNNsZvvXmMcUqIIwve.dtjfafc.5XaLbWF7Z\"\n    ],\n    \"settings\": {\n      \"webConferencesRecorded\": true,\n      \"preventWebConferenceRecording\": false,\n      \"telephonyCallsImported\": true,\n      \"emailsImported\": false,\n      \"preventEmailImport\": false\n    },\n    \"managerId\": \"string\",\n    \"meetingConsentPageUrl\": \"http://vETDwXYVQwvAZFLeERtQbrhVsXHgbk.jaukXkbxSpqIvVc504NGVe8-N9-qBlwgzmr7xMv4.8CGOi\",\n    \"spokenLanguages\": [\n      {\n        \"language\": \"string\",\n        \"primary\": true\n      },\n      {\n        \"language\": \"string\",\n        \"primary\": true\n      }\n    ],\n    \"active\": true,\n    \"created\": \"1978-12-17T05:31:52.605Z\",\n    \"avatarUrl\": \"http://HLZOkGT.pijld5rQC\",\n    \"trustedEmailAddress\": \"Ng6O@Nlfhyfx.ko\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e4534e4-8944-40ac-9b6f-6fa1993a8af2",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique Gong user ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2fa67d8b-de18-4323-9fbf-1f7c4f97d3bb",
+              "name": "User not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique Gong user ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "edfe6b7f-0027-45ee-9232-1e204fc3161e",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique Gong user ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "042230ae-03b1-4386-a61b-0aad02ceb681",
+          "name": "Gong Retrieve user settings history",
+          "request": {
+            "name": "Gong Retrieve user settings history",
+            "description": {
+              "content": "Retrieves the settings change history for a specific user, including changes to their role, permissions, and other configuration settings over time.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":id",
+                "settings-history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique Gong user ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eab605a2-a91c-4a96-92c0-4ce167947586",
+              "name": "Successful response containing the user settings history.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "settings-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique Gong user ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"userSettingsHistory\": [\n    {\n      \"userId\": \"string\",\n      \"settingName\": \"string\",\n      \"previousValue\": \"string\",\n      \"newValue\": \"string\",\n      \"changedAt\": \"1956-05-21T03:50:21.355Z\",\n      \"changedBy\": \"string\"\n    },\n    {\n      \"userId\": \"string\",\n      \"settingName\": \"string\",\n      \"previousValue\": \"string\",\n      \"newValue\": \"string\",\n      \"changedAt\": \"1967-06-04T06:33:20.377Z\",\n      \"changedBy\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3cd3a9f8-f2b9-4ee9-9be8-2a4f13adbc0c",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "settings-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique Gong user ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f65f4007-8e69-45a8-8468-e3c8a8cf2776",
+              "name": "User not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "settings-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique Gong user ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1541b50a-feb0-4083-9a0e-476fff28893c",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":id",
+                    "settings-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique Gong user ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "36074ee2-3f1d-4ee4-934c-831a35b87e1a",
+          "name": "Gong List users by filter",
+          "request": {
+            "name": "Gong List users by filter",
+            "description": {
+              "content": "Retrieves a filtered list of users based on specified criteria such as creation date, user IDs, or other attributes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "filter"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"userIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"createdFromDateTime\": \"<dateTime>\",\n    \"createdToDateTime\": \"<dateTime>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4bc5d235-c322-4ce0-8fee-e203fd24cf4d",
+              "name": "Successful response containing filtered users.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "filter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"userIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"createdFromDateTime\": \"<dateTime>\",\n    \"createdToDateTime\": \"<dateTime>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"records\": {\n    \"totalRecords\": 3897,\n    \"currentPageSize\": 3276,\n    \"currentPageNumber\": 6249,\n    \"cursor\": \"string\"\n  },\n  \"users\": [\n    {\n      \"id\": \"string\",\n      \"emailAddress\": \"IvAIdu05eEGI4q@gi.gp\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"title\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"extension\": \"string\",\n      \"personalMeetingUrls\": [\n        \"http://eLeneKMZSfB.hziCUn3ZSFMFojlMV4+VQacZPrTzTpqQINCsOiybqj\",\n        \"http://JQwnJBEHodmvuigmxyFdmF.nqU,vxnaX.QSE-JNkCjpm4QNZ7PLXxjJrHr+RUu9rS2H0hfokuhjtC+S\"\n      ],\n      \"settings\": {\n        \"webConferencesRecorded\": false,\n        \"preventWebConferenceRecording\": true,\n        \"telephonyCallsImported\": false,\n        \"emailsImported\": true,\n        \"preventEmailImport\": false\n      },\n      \"managerId\": \"string\",\n      \"meetingConsentPageUrl\": \"https://mljiHJv.yubDHsPX\",\n      \"spokenLanguages\": [\n        {\n          \"language\": \"string\",\n          \"primary\": false\n        },\n        {\n          \"language\": \"string\",\n          \"primary\": false\n        }\n      ],\n      \"active\": true,\n      \"created\": \"2006-06-25T01:24:50.569Z\",\n      \"avatarUrl\": \"https://bUrVBvmKDEzimuIkXeqrBHM.rqFN68DlD6Gdhpnb1DqxdZ1,Z5fp+w5KTp.VcuR\",\n      \"trustedEmailAddress\": \"nuHbj@cydhVTGcjNNHXCRhVTJXYNhKREnzqFO.wyah\"\n    },\n    {\n      \"id\": \"string\",\n      \"emailAddress\": \"omg66vMG@iUyQwWhpZvcPsh.flx\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"title\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"extension\": \"string\",\n      \"personalMeetingUrls\": [\n        \"http://ZRTXWNjdRgjRQsnPfOrOwHgCYXP.ychuJcwptQT.0xucGwVL6Z\",\n        \"http://qZfrdhjIXj.pzkLX\"\n      ],\n      \"settings\": {\n        \"webConferencesRecorded\": true,\n        \"preventWebConferenceRecording\": false,\n        \"telephonyCallsImported\": false,\n        \"emailsImported\": true,\n        \"preventEmailImport\": true\n      },\n      \"managerId\": \"string\",\n      \"meetingConsentPageUrl\": \"https://zXWlLdbyuSuzlP.vfxhhh3dkgWT\",\n      \"spokenLanguages\": [\n        {\n          \"language\": \"string\",\n          \"primary\": false\n        },\n        {\n          \"language\": \"string\",\n          \"primary\": false\n        }\n      ],\n      \"active\": false,\n      \"created\": \"1966-04-25T06:02:42.055Z\",\n      \"avatarUrl\": \"http://TrZKJlDfLjZKnmAydLuUzOVMLDblznnbX.btprwfox\",\n      \"trustedEmailAddress\": \"sEcxJ2b@rRdfZTAqGMhurnomsmWCYsEO.ay\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f7b779b-a01a-4a4f-97ca-5154e657f5fa",
+              "name": "Bad request due to invalid filter parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "filter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"userIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"createdFromDateTime\": \"<dateTime>\",\n    \"createdToDateTime\": \"<dateTime>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57283a3b-bf09-40b9-823d-35533fd0a06e",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "filter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"userIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"createdFromDateTime\": \"<dateTime>\",\n    \"createdToDateTime\": \"<dateTime>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ad3945fe-87e1-4c36-9b49-a6b5a075e603",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "filter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"userIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"createdFromDateTime\": \"<dateTime>\",\n    \"createdToDateTime\": \"<dateTime>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gong.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "413a1e39-9a25-4611-8eb7-13c6d4fdd11b",
+    "name": "Gong Users API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Gong Users API allows retrieval of user information, user histories, and filtering of users by various criteria. It provides access to team member profiles and licensing details within the Gong platform.\n\nContact Support:\n Name: Gong\n Email: support@gong.io",
+      "type": "text/plain"
+    }
+  }
+}

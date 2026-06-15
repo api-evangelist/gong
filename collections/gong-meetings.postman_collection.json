@@ -1,0 +1,1163 @@
+{
+  "item": [
+    {
+      "id": "ad27ac00-26b2-445a-945c-58ba09c83e83",
+      "name": "Meetings",
+      "description": {
+        "content": "Operations for managing meetings",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d389fcf2-1fb1-4e18-b316-12ece4010a76",
+          "name": "Create a Gong meeting",
+          "request": {
+            "name": "Create a Gong meeting",
+            "description": {
+              "content": "Creates a new meeting in Gong with the specified details including participants, scheduling information, and meeting configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "meetings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"organizerEmail\": \"<email>\",\n  \"meetingUrl\": \"<uri>\",\n  \"attendees\": [\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"responseStatus\": \"<string>\"\n    },\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"responseStatus\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\",\n  \"meetingProvider\": \"<string>\",\n  \"externalMeetingId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3d38374e-d3ea-4231-b421-9fa0321b751c",
+              "name": "Meeting successfully created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"organizerEmail\": \"<email>\",\n  \"meetingUrl\": \"<uri>\",\n  \"attendees\": [\n    {\n      \"emailAddress\": \"LEma6p2OCnbPXLJ@rEjHCgWDenwVTyHlf.vnen\",\n      \"name\": \"string\",\n      \"responseStatus\": \"Tentative\"\n    },\n    {\n      \"emailAddress\": \"BItL4wfOOJNy3l6@FuukYMWzgl.sh\",\n      \"name\": \"string\",\n      \"responseStatus\": \"NeedsAction\"\n    }\n  ],\n  \"description\": \"<string>\",\n  \"meetingProvider\": \"<string>\",\n  \"externalMeetingId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"meetingId\": \"string\",\n  \"meeting\": {\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"scheduledStart\": \"1979-05-22T06:42:08.158Z\",\n    \"scheduledEnd\": \"2015-02-20T06:54:37.054Z\",\n    \"organizerEmail\": \"JUMPAQjla-gHJ9@JLcUQKCKXwvlgIBDFYoRxPFGauHm.jc\",\n    \"meetingUrl\": \"http://NMaWPyPgvGkIZbxbxiuj.qpeaaZsSl8sCNJ7ZZ09pCERWmhPpr5GDrU9fen\",\n    \"attendees\": [\n      {\n        \"emailAddress\": \"PyS@bjXTTfnvqcqCbCbzLeMCv.cg\",\n        \"name\": \"string\",\n        \"responseStatus\": \"NeedsAction\"\n      },\n      {\n        \"emailAddress\": \"w9GEdPX@wPRMAAeGtvShTTPZz.sgx\",\n        \"name\": \"string\",\n        \"responseStatus\": \"NeedsAction\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d2cc185-a494-4aca-adfc-a74452f0061b",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"organizerEmail\": \"<email>\",\n  \"meetingUrl\": \"<uri>\",\n  \"attendees\": [\n    {\n      \"emailAddress\": \"LEma6p2OCnbPXLJ@rEjHCgWDenwVTyHlf.vnen\",\n      \"name\": \"string\",\n      \"responseStatus\": \"Tentative\"\n    },\n    {\n      \"emailAddress\": \"BItL4wfOOJNy3l6@FuukYMWzgl.sh\",\n      \"name\": \"string\",\n      \"responseStatus\": \"NeedsAction\"\n    }\n  ],\n  \"description\": \"<string>\",\n  \"meetingProvider\": \"<string>\",\n  \"externalMeetingId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92d20c52-2415-46ff-87c3-41084e6b3229",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"organizerEmail\": \"<email>\",\n  \"meetingUrl\": \"<uri>\",\n  \"attendees\": [\n    {\n      \"emailAddress\": \"LEma6p2OCnbPXLJ@rEjHCgWDenwVTyHlf.vnen\",\n      \"name\": \"string\",\n      \"responseStatus\": \"Tentative\"\n    },\n    {\n      \"emailAddress\": \"BItL4wfOOJNy3l6@FuukYMWzgl.sh\",\n      \"name\": \"string\",\n      \"responseStatus\": \"NeedsAction\"\n    }\n  ],\n  \"description\": \"<string>\",\n  \"meetingProvider\": \"<string>\",\n  \"externalMeetingId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28b5edb2-ac73-4cec-b09e-89793f54a9ab",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"organizerEmail\": \"<email>\",\n  \"meetingUrl\": \"<uri>\",\n  \"attendees\": [\n    {\n      \"emailAddress\": \"LEma6p2OCnbPXLJ@rEjHCgWDenwVTyHlf.vnen\",\n      \"name\": \"string\",\n      \"responseStatus\": \"Tentative\"\n    },\n    {\n      \"emailAddress\": \"BItL4wfOOJNy3l6@FuukYMWzgl.sh\",\n      \"name\": \"string\",\n      \"responseStatus\": \"NeedsAction\"\n    }\n  ],\n  \"description\": \"<string>\",\n  \"meetingProvider\": \"<string>\",\n  \"externalMeetingId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "65c1d0f2-53b6-470c-b668-b315592853a8",
+          "name": "Update a Gong meeting",
+          "request": {
+            "name": "Update a Gong meeting",
+            "description": {
+              "content": "Updates an existing Gong meeting with new details such as updated scheduling, participants, or meeting configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "meetings",
+                ":meetingId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "meetingId",
+                  "description": "(Required) The unique identifier of the meeting to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"meetingUrl\": \"<uri>\",\n  \"attendees\": [\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"responseStatus\": \"<string>\"\n    },\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"responseStatus\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f8bda6cf-0b3c-4b80-8bca-2f97565ceca1",
+              "name": "Meeting successfully updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings",
+                    ":meetingId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "meetingId",
+                      "description": "(Required) The unique identifier of the meeting to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"meetingUrl\": \"<uri>\",\n  \"attendees\": [\n    {\n      \"emailAddress\": \"h-xFIKF7jcLl@SdWdGkwEgUln.isw\",\n      \"name\": \"string\",\n      \"responseStatus\": \"Accepted\"\n    },\n    {\n      \"emailAddress\": \"cAyGDkUTwO@DBjotGCZOhBRm.bskz\",\n      \"name\": \"string\",\n      \"responseStatus\": \"Accepted\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"meetingId\": \"string\",\n  \"meeting\": {\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"scheduledStart\": \"1979-05-22T06:42:08.158Z\",\n    \"scheduledEnd\": \"2015-02-20T06:54:37.054Z\",\n    \"organizerEmail\": \"JUMPAQjla-gHJ9@JLcUQKCKXwvlgIBDFYoRxPFGauHm.jc\",\n    \"meetingUrl\": \"http://NMaWPyPgvGkIZbxbxiuj.qpeaaZsSl8sCNJ7ZZ09pCERWmhPpr5GDrU9fen\",\n    \"attendees\": [\n      {\n        \"emailAddress\": \"PyS@bjXTTfnvqcqCbCbzLeMCv.cg\",\n        \"name\": \"string\",\n        \"responseStatus\": \"NeedsAction\"\n      },\n      {\n        \"emailAddress\": \"w9GEdPX@wPRMAAeGtvShTTPZz.sgx\",\n        \"name\": \"string\",\n        \"responseStatus\": \"NeedsAction\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "919f431b-480d-43b2-90ee-2da77a6890c4",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings",
+                    ":meetingId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "meetingId",
+                      "description": "(Required) The unique identifier of the meeting to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"meetingUrl\": \"<uri>\",\n  \"attendees\": [\n    {\n      \"emailAddress\": \"h-xFIKF7jcLl@SdWdGkwEgUln.isw\",\n      \"name\": \"string\",\n      \"responseStatus\": \"Accepted\"\n    },\n    {\n      \"emailAddress\": \"cAyGDkUTwO@DBjotGCZOhBRm.bskz\",\n      \"name\": \"string\",\n      \"responseStatus\": \"Accepted\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6b76f42-d036-4830-96c0-5c5928de83dc",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings",
+                    ":meetingId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "meetingId",
+                      "description": "(Required) The unique identifier of the meeting to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"meetingUrl\": \"<uri>\",\n  \"attendees\": [\n    {\n      \"emailAddress\": \"h-xFIKF7jcLl@SdWdGkwEgUln.isw\",\n      \"name\": \"string\",\n      \"responseStatus\": \"Accepted\"\n    },\n    {\n      \"emailAddress\": \"cAyGDkUTwO@DBjotGCZOhBRm.bskz\",\n      \"name\": \"string\",\n      \"responseStatus\": \"Accepted\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b2b3a15-003e-40f0-99e2-0a65b2674936",
+              "name": "Meeting not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings",
+                    ":meetingId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "meetingId",
+                      "description": "(Required) The unique identifier of the meeting to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"meetingUrl\": \"<uri>\",\n  \"attendees\": [\n    {\n      \"emailAddress\": \"h-xFIKF7jcLl@SdWdGkwEgUln.isw\",\n      \"name\": \"string\",\n      \"responseStatus\": \"Accepted\"\n    },\n    {\n      \"emailAddress\": \"cAyGDkUTwO@DBjotGCZOhBRm.bskz\",\n      \"name\": \"string\",\n      \"responseStatus\": \"Accepted\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a957be26-3573-4ac3-a167-be2e8402ea59",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings",
+                    ":meetingId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "meetingId",
+                      "description": "(Required) The unique identifier of the meeting to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"meetingUrl\": \"<uri>\",\n  \"attendees\": [\n    {\n      \"emailAddress\": \"h-xFIKF7jcLl@SdWdGkwEgUln.isw\",\n      \"name\": \"string\",\n      \"responseStatus\": \"Accepted\"\n    },\n    {\n      \"emailAddress\": \"cAyGDkUTwO@DBjotGCZOhBRm.bskz\",\n      \"name\": \"string\",\n      \"responseStatus\": \"Accepted\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a240f276-711a-48d5-9f51-fd5d07743931",
+          "name": "Delete a Gong meeting",
+          "request": {
+            "name": "Delete a Gong meeting",
+            "description": {
+              "content": "Removes a specific meeting from Gong using its unique meeting ID. This operation is irreversible.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "meetings",
+                ":meetingId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "meetingId",
+                  "description": "(Required) The unique identifier of the meeting to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9ee7f2d0-1c4d-4a35-a406-318a6d83dccf",
+              "name": "Meeting successfully deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings",
+                    ":meetingId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "meetingId",
+                      "description": "(Required) The unique identifier of the meeting to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b07b6dc-511c-44a4-90fe-280c3fdf809a",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings",
+                    ":meetingId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "meetingId",
+                      "description": "(Required) The unique identifier of the meeting to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6a51599-523b-4f12-a3d1-a2da59b3961f",
+              "name": "Meeting not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings",
+                    ":meetingId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "meetingId",
+                      "description": "(Required) The unique identifier of the meeting to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f893d10a-90da-4b9b-a32d-e1f1ba2cbcc4",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings",
+                    ":meetingId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "meetingId",
+                      "description": "(Required) The unique identifier of the meeting to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "71ea1b71-f717-4615-aab1-7b7dce9e5206",
+          "name": "Gong Validate meeting integration status",
+          "request": {
+            "name": "Gong Validate meeting integration status",
+            "description": {
+              "content": "Validates the integration status for a meeting, checking whether the meeting system integration is properly configured and operational.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "meetings",
+                "integration-status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"meetingProvider\": \"<string>\",\n  \"userEmail\": \"<email>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "596eb539-5604-476d-9766-411bbd6a1387",
+              "name": "Successful response containing the meeting integration status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings",
+                    "integration-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"meetingProvider\": \"<string>\",\n  \"userEmail\": \"<email>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"isIntegrated\": false,\n  \"provider\": \"string\",\n  \"status\": \"Inactive\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b89e2bd4-7aac-4fc6-82c0-2c31d4505638",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings",
+                    "integration-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"meetingProvider\": \"<string>\",\n  \"userEmail\": \"<email>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4c9c42f-d923-4fa6-9727-cf9fffc7902c",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings",
+                    "integration-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"meetingProvider\": \"<string>\",\n  \"userEmail\": \"<email>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ea1c6a8-4975-4286-a984-29d2f0217f23",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meetings",
+                    "integration-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"meetingProvider\": \"<string>\",\n  \"userEmail\": \"<email>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gong.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f33bcd9e-83f4-4b02-8da6-4d68b94e4b18",
+    "name": "Gong Meetings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Gong Meetings API provides endpoints to create, update, and delete Gong meetings, as well as validate meeting integration status for scheduling and managing meeting workflows.\n\nContact Support:\n Name: Gong\n Email: support@gong.io",
+      "type": "text/plain"
+    }
+  }
+}

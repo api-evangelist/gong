@@ -1,0 +1,2597 @@
+{
+  "item": [
+    {
+      "id": "9933812f-4db5-4ce9-8fc7-17b2eb51253e",
+      "name": "Calls",
+      "description": {
+        "content": "Operations for managing and retrieving call data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "74a458ca-b72f-4e89-8995-9f8b251fae27",
+          "name": "Gong List calls",
+          "request": {
+            "name": "Gong List calls",
+            "description": {
+              "content": "Retrieves a list of calls that took place during a specified date range. Results are paginated and can be filtered by workspace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calls"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fromDateTime",
+                  "value": "<dateTime>",
+                  "description": "(Required) The start date and time for the calls filter in ISO-8601 format (e.g., 2021-01-01T00:00:00Z)."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDateTime",
+                  "value": "<dateTime>",
+                  "description": "(Required) The end date and time for the calls filter in ISO-8601 format (e.g., 2021-12-31T23:59:59Z)."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "A cursor for pagination. Pass the cursor from the previous response to retrieve the next page of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "workspaceId",
+                  "value": "<string>",
+                  "description": "Optional workspace identifier to filter calls by workspace."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0528d880-eb31-407d-bb5b-6a883186d405",
+              "name": "Successful response containing a list of calls.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "toDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "workspaceId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"records\": {\n    \"totalRecords\": 2727,\n    \"currentPageSize\": 6417,\n    \"currentPageNumber\": 2365,\n    \"cursor\": \"string\"\n  },\n  \"calls\": [\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"url\": \"https://aJvQbbFWqtaTXkAmtw.pyqBxy3yCMFqhRxwL0Fv-6POarHrzlvCnqyYcyEXwwqjIjNFHKIo7zMrfhJm-f-rCCeKcSyMjoqO7kg\",\n      \"scheduled\": \"2021-11-08T09:30:00.707Z\",\n      \"started\": \"2022-09-22T13:17:42.868Z\",\n      \"duration\": 8463.879698509902,\n      \"direction\": \"Conference\",\n      \"scope\": \"Internal\",\n      \"media\": \"Video\",\n      \"language\": \"string\",\n      \"workspaceId\": \"string\",\n      \"primaryUserId\": \"string\",\n      \"parties\": [\n        {\n          \"id\": \"string\",\n          \"emailAddress\": \"6Z3tmwSURN@GB.tv\",\n          \"name\": \"string\",\n          \"title\": \"string\",\n          \"userId\": \"string\",\n          \"speakerId\": \"string\",\n          \"affiliation\": \"Unknown\",\n          \"phoneNumber\": \"string\",\n          \"methods\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"id\": \"string\",\n          \"emailAddress\": \"iNFXL2E@UebuxbVsinMVbBNC.amo\",\n          \"name\": \"string\",\n          \"title\": \"string\",\n          \"userId\": \"string\",\n          \"speakerId\": \"string\",\n          \"affiliation\": \"External\",\n          \"phoneNumber\": \"string\",\n          \"methods\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"url\": \"http://npdMubYdMQYVuQ.dypwaoceYuV\",\n      \"scheduled\": \"1965-02-15T21:42:50.160Z\",\n      \"started\": \"2024-04-07T12:23:05.776Z\",\n      \"duration\": 686.2242186854761,\n      \"direction\": \"Conference\",\n      \"scope\": \"Internal\",\n      \"media\": \"Video\",\n      \"language\": \"string\",\n      \"workspaceId\": \"string\",\n      \"primaryUserId\": \"string\",\n      \"parties\": [\n        {\n          \"id\": \"string\",\n          \"emailAddress\": \"HbU1FDnzmC5a5y@XauXJrAdRsxpphufeWGOlp.hsav\",\n          \"name\": \"string\",\n          \"title\": \"string\",\n          \"userId\": \"string\",\n          \"speakerId\": \"string\",\n          \"affiliation\": \"Internal\",\n          \"phoneNumber\": \"string\",\n          \"methods\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"id\": \"string\",\n          \"emailAddress\": \"0OX@PWNMlY.uwk\",\n          \"name\": \"string\",\n          \"title\": \"string\",\n          \"userId\": \"string\",\n          \"speakerId\": \"string\",\n          \"affiliation\": \"Internal\",\n          \"phoneNumber\": \"string\",\n          \"methods\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e4732c6-0455-477c-919e-9f0481ce46eb",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "toDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "workspaceId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "714a7a77-b5c2-45c3-b39b-789c7108d352",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "toDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "workspaceId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff6460a1-0704-4a9a-bd7c-3c74172663b6",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "toDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "workspaceId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3631bc24-d3f8-4a8f-a1d0-0fb4484b5495",
+          "name": "Gong Add a new call",
+          "request": {
+            "name": "Gong Add a new call",
+            "description": {
+              "content": "Adds a new call record to Gong. Either provide a downloadMediaUrl in the request body or use the returned callId in a follow-up request to /v2/calls/{id}/media to upload the media file.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calls"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"actualStart\": \"<dateTime>\",\n  \"clientUniqueId\": \"<string>\",\n  \"direction\": \"<string>\",\n  \"parties\": [\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"phoneNumber\": \"<string>\",\n      \"userId\": \"<string>\"\n    },\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"phoneNumber\": \"<string>\",\n      \"userId\": \"<string>\"\n    }\n  ],\n  \"primaryUser\": \"<string>\",\n  \"downloadMediaUrl\": \"<uri>\",\n  \"duration\": \"<number>\",\n  \"languageCode\": \"<string>\",\n  \"meetingUrl\": \"<uri>\",\n  \"purpose\": \"<string>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"workspaceId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5ecd9570-27b8-47b0-951e-74a1f10327b1",
+              "name": "Call successfully created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actualStart\": \"<dateTime>\",\n  \"clientUniqueId\": \"<string>\",\n  \"direction\": \"<string>\",\n  \"parties\": [\n    {\n      \"emailAddress\": \"ut6Qo@wpRWUSGkbtHijrVrTsvoKFKZspxe.up\",\n      \"name\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"userId\": \"string\"\n    },\n    {\n      \"emailAddress\": \"LL9WLiZaKTk4LP@ixxLzkCZWHJdabsg.cik\",\n      \"name\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"userId\": \"string\"\n    }\n  ],\n  \"primaryUser\": \"<string>\",\n  \"downloadMediaUrl\": \"<uri>\",\n  \"duration\": \"<number>\",\n  \"languageCode\": \"<string>\",\n  \"meetingUrl\": \"<uri>\",\n  \"purpose\": \"<string>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"workspaceId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"callId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d43c01bf-08c0-49cb-bc97-c90970b3bd2b",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actualStart\": \"<dateTime>\",\n  \"clientUniqueId\": \"<string>\",\n  \"direction\": \"<string>\",\n  \"parties\": [\n    {\n      \"emailAddress\": \"ut6Qo@wpRWUSGkbtHijrVrTsvoKFKZspxe.up\",\n      \"name\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"userId\": \"string\"\n    },\n    {\n      \"emailAddress\": \"LL9WLiZaKTk4LP@ixxLzkCZWHJdabsg.cik\",\n      \"name\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"userId\": \"string\"\n    }\n  ],\n  \"primaryUser\": \"<string>\",\n  \"downloadMediaUrl\": \"<uri>\",\n  \"duration\": \"<number>\",\n  \"languageCode\": \"<string>\",\n  \"meetingUrl\": \"<uri>\",\n  \"purpose\": \"<string>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"workspaceId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d0d2691-872d-48a8-b133-b2fb5a371469",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actualStart\": \"<dateTime>\",\n  \"clientUniqueId\": \"<string>\",\n  \"direction\": \"<string>\",\n  \"parties\": [\n    {\n      \"emailAddress\": \"ut6Qo@wpRWUSGkbtHijrVrTsvoKFKZspxe.up\",\n      \"name\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"userId\": \"string\"\n    },\n    {\n      \"emailAddress\": \"LL9WLiZaKTk4LP@ixxLzkCZWHJdabsg.cik\",\n      \"name\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"userId\": \"string\"\n    }\n  ],\n  \"primaryUser\": \"<string>\",\n  \"downloadMediaUrl\": \"<uri>\",\n  \"duration\": \"<number>\",\n  \"languageCode\": \"<string>\",\n  \"meetingUrl\": \"<uri>\",\n  \"purpose\": \"<string>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"workspaceId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d552b8a-1fc4-43df-bb1a-38ce972c4e34",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actualStart\": \"<dateTime>\",\n  \"clientUniqueId\": \"<string>\",\n  \"direction\": \"<string>\",\n  \"parties\": [\n    {\n      \"emailAddress\": \"ut6Qo@wpRWUSGkbtHijrVrTsvoKFKZspxe.up\",\n      \"name\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"userId\": \"string\"\n    },\n    {\n      \"emailAddress\": \"LL9WLiZaKTk4LP@ixxLzkCZWHJdabsg.cik\",\n      \"name\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"userId\": \"string\"\n    }\n  ],\n  \"primaryUser\": \"<string>\",\n  \"downloadMediaUrl\": \"<uri>\",\n  \"duration\": \"<number>\",\n  \"languageCode\": \"<string>\",\n  \"meetingUrl\": \"<uri>\",\n  \"purpose\": \"<string>\",\n  \"scheduledEnd\": \"<dateTime>\",\n  \"scheduledStart\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"workspaceId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2bb2f622-71b5-4d3f-abc3-05d630ffec04",
+          "name": "Gong Retrieve a specific call",
+          "request": {
+            "name": "Gong Retrieve a specific call",
+            "description": {
+              "content": "Retrieves detailed information about a specific call identified by its unique numeric identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calls",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Gong's unique numeric identifier for the call (up to 20 digits)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "69fd41fd-5c09-4b33-a06e-d1d50c4b665b",
+              "name": "Successful response containing the call details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Gong's unique numeric identifier for the call (up to 20 digits)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"call\": {\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"url\": \"https://IgdzqgOwKAXMkajlnXRFkDeYLJFKYTy.zyyvt7cyNuM.rFQLfrmeD.pchVO8xu+X6VSQZ\",\n    \"scheduled\": \"1982-08-27T02:17:58.396Z\",\n    \"started\": \"1963-03-20T03:06:25.384Z\",\n    \"duration\": 7103.824486554446,\n    \"direction\": \"Inbound\",\n    \"scope\": \"Unknown\",\n    \"media\": \"Video\",\n    \"language\": \"string\",\n    \"workspaceId\": \"string\",\n    \"primaryUserId\": \"string\",\n    \"parties\": [\n      {\n        \"id\": \"string\",\n        \"emailAddress\": \"gNCqo@jFFGIoSLOkLWwxGDKRrBzuhfuI.ke\",\n        \"name\": \"string\",\n        \"title\": \"string\",\n        \"userId\": \"string\",\n        \"speakerId\": \"string\",\n        \"affiliation\": \"Unknown\",\n        \"phoneNumber\": \"string\",\n        \"methods\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"id\": \"string\",\n        \"emailAddress\": \"VsrRprE5Wt53G@GkNsselJlfu.xhj\",\n        \"name\": \"string\",\n        \"title\": \"string\",\n        \"userId\": \"string\",\n        \"speakerId\": \"string\",\n        \"affiliation\": \"Internal\",\n        \"phoneNumber\": \"string\",\n        \"methods\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "531e24e6-17ac-4e10-ad24-7d3116c7fcf1",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Gong's unique numeric identifier for the call (up to 20 digits)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f69599c6-36bd-4548-b7ba-0f002cf5bdbe",
+              "name": "Call not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Gong's unique numeric identifier for the call (up to 20 digits)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "784364ec-937b-4429-95ee-78e38a662cd9",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Gong's unique numeric identifier for the call (up to 20 digits)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b054a18f-0d7a-4b8a-9853-a59b170c01d5",
+          "name": "Gong Retrieve detailed call data",
+          "request": {
+            "name": "Gong Retrieve detailed call data",
+            "description": {
+              "content": "Retrieves extensive call data including participants, topics, trackers, comments, scorecards, and other analytics. Supports filtering by date range, call IDs, or hosting users. Requires the scope api:calls:read:extensive.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calls",
+                "extensive"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"fromDateTime\": \"<dateTime>\",\n    \"toDateTime\": \"<dateTime>\",\n    \"callIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"workspaceId\": \"<string>\"\n  },\n  \"contentSelector\": {\n    \"context\": \"<string>\",\n    \"exposedFields\": {\n      \"collaboration\": \"<boolean>\",\n      \"content\": \"<boolean>\",\n      \"currentSpeakerUserIds\": \"<boolean>\",\n      \"media\": \"<boolean>\",\n      \"parties\": \"<boolean>\",\n      \"publicComments\": \"<boolean>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f6ed3fb2-fa8a-4230-82b7-37dbd799cbe4",
+              "name": "Successful response containing detailed call data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "extensive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"fromDateTime\": \"<dateTime>\",\n    \"toDateTime\": \"<dateTime>\",\n    \"callIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"workspaceId\": \"<string>\"\n  },\n  \"contentSelector\": {\n    \"context\": \"<string>\",\n    \"exposedFields\": {\n      \"collaboration\": \"<boolean>\",\n      \"content\": \"<boolean>\",\n      \"currentSpeakerUserIds\": \"<boolean>\",\n      \"media\": \"<boolean>\",\n      \"parties\": \"<boolean>\",\n      \"publicComments\": \"<boolean>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"records\": {\n    \"totalRecords\": 1620,\n    \"currentPageSize\": 8370,\n    \"cursor\": \"string\"\n  },\n  \"calls\": [\n    {\n      \"value\": \"<Error: Could not resolve allOf schema\"\n    },\n    {\n      \"value\": \"<Error: Could not resolve allOf schema\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cae75607-236e-40cc-981b-657ee88b1554",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "extensive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"fromDateTime\": \"<dateTime>\",\n    \"toDateTime\": \"<dateTime>\",\n    \"callIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"workspaceId\": \"<string>\"\n  },\n  \"contentSelector\": {\n    \"context\": \"<string>\",\n    \"exposedFields\": {\n      \"collaboration\": \"<boolean>\",\n      \"content\": \"<boolean>\",\n      \"currentSpeakerUserIds\": \"<boolean>\",\n      \"media\": \"<boolean>\",\n      \"parties\": \"<boolean>\",\n      \"publicComments\": \"<boolean>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c666307-b491-4110-968e-f987a70d04da",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "extensive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"fromDateTime\": \"<dateTime>\",\n    \"toDateTime\": \"<dateTime>\",\n    \"callIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"workspaceId\": \"<string>\"\n  },\n  \"contentSelector\": {\n    \"context\": \"<string>\",\n    \"exposedFields\": {\n      \"collaboration\": \"<boolean>\",\n      \"content\": \"<boolean>\",\n      \"currentSpeakerUserIds\": \"<boolean>\",\n      \"media\": \"<boolean>\",\n      \"parties\": \"<boolean>\",\n      \"publicComments\": \"<boolean>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "072793a3-f8c8-4c11-9675-1a58dcf16e00",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "extensive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"fromDateTime\": \"<dateTime>\",\n    \"toDateTime\": \"<dateTime>\",\n    \"callIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"workspaceId\": \"<string>\"\n  },\n  \"contentSelector\": {\n    \"context\": \"<string>\",\n    \"exposedFields\": {\n      \"collaboration\": \"<boolean>\",\n      \"content\": \"<boolean>\",\n      \"currentSpeakerUserIds\": \"<boolean>\",\n      \"media\": \"<boolean>\",\n      \"parties\": \"<boolean>\",\n      \"publicComments\": \"<boolean>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5b814e6b-3f9d-49c3-ace3-ee11e60624a6",
+          "name": "Gong List calls manually associated with CRM",
+          "request": {
+            "name": "Gong List calls manually associated with CRM",
+            "description": {
+              "content": "Retrieves a list of calls that were manually associated with CRM objects by users. This endpoint is in beta phase. Results can be filtered by association time.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calls",
+                "manual-crm-associations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fromDateTime",
+                  "value": "<dateTime>",
+                  "description": "Filter by the time the manual association was created, in ISO-8601 format."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "A cursor for pagination. Pass the cursor from the previous response to retrieve the next page of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9de626e8-00b2-482c-ab1b-ebeb84356813",
+              "name": "Successful response containing a list of manually associated calls.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "manual-crm-associations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"records\": {\n    \"totalRecords\": 3916,\n    \"currentPageSize\": 3894,\n    \"cursor\": \"string\"\n  },\n  \"calls\": [\n    {\n      \"callId\": \"string\",\n      \"crmAssociations\": [\n        {\n          \"objectType\": \"string\",\n          \"objectId\": \"string\",\n          \"associatedAt\": \"1989-10-25T08:16:36.935Z\"\n        },\n        {\n          \"objectType\": \"string\",\n          \"objectId\": \"string\",\n          \"associatedAt\": \"1970-12-12T07:36:00.570Z\"\n        }\n      ]\n    },\n    {\n      \"callId\": \"string\",\n      \"crmAssociations\": [\n        {\n          \"objectType\": \"string\",\n          \"objectId\": \"string\",\n          \"associatedAt\": \"1948-06-23T01:13:35.289Z\"\n        },\n        {\n          \"objectType\": \"string\",\n          \"objectId\": \"string\",\n          \"associatedAt\": \"1959-05-29T09:41:10.400Z\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4e39440-248d-411c-9a6a-52974a8a1894",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "manual-crm-associations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ce04091-ec13-43d3-87c6-468052c0c74e",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "manual-crm-associations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDateTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a59a0eba-082e-4d64-a1c7-83304f445c5f",
+          "name": "Gong Retrieve user call access",
+          "request": {
+            "name": "Gong Retrieve user call access",
+            "description": {
+              "content": "Retrieves the list of users who have access to specified calls and their access levels.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calls",
+                "users-access"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"callIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "32675064-4df6-49ba-abff-2cc6af209380",
+              "name": "Successful response containing user call access data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "users-access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"callAccessDetails\": [\n    {\n      \"callId\": \"string\",\n      \"userIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"callId\": \"string\",\n      \"userIds\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48c71a7c-9dc3-4a93-988d-100d7d5ec5fb",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "users-access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc6586dc-3dd9-4a75-8a3a-a53e4c04349d",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "users-access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9491ba48-1d0a-4681-beb7-a1b2acbec4d9",
+          "name": "Gong Give user call access",
+          "request": {
+            "name": "Gong Give user call access",
+            "description": {
+              "content": "Grants specified users access to specified calls within the Gong platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calls",
+                "users-access"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"callIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f7d3020c-801e-43a6-af32-f90479820ee5",
+              "name": "Call access successfully granted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "users-access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f636c65-a41b-4623-8606-0f04325eaddc",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "users-access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d82adc62-e30b-4579-a135-ac8b90c97d2a",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "users-access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5dba4166-a91f-4394-acdf-fbd1024ea0e0",
+          "name": "Gong Remove user call access",
+          "request": {
+            "name": "Gong Remove user call access",
+            "description": {
+              "content": "Removes specified users' access to specified calls within the Gong platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calls",
+                "users-access"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"callIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "301272b7-518c-45cf-9d9b-53b0f15a0d70",
+              "name": "Call access successfully removed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "users-access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a732118-56d1-4e34-ac8d-b59c280bfa75",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "users-access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f511a46-cbdf-4bb7-be9e-1f920b9333b4",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "users-access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "1f566588-aa97-446b-879b-3b41d474f783",
+      "name": "Recordings",
+      "description": {
+        "content": "Operations for managing call recordings and media",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "face93c4-6eaf-4c63-8e27-73e498970b60",
+          "name": "Gong Add call media recording",
+          "request": {
+            "name": "Gong Add call media recording",
+            "description": {
+              "content": "Adds call media (audio or video recording) to a previously created call. Gong accepts recordings in WAV, MP3, MP4, MKV, and FLAC formats up to 1.5GB in size.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calls",
+                ":id",
+                "media"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The callId returned from the Add New Call request."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "mediaFile",
+                  "type": "file",
+                  "description": "(Required) The audio or video file to upload. Supported formats include WAV, MP3, MP4, MKV, and FLAC. Maximum size is 1.5GB."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d82d1d62-3b79-41db-a1be-a2b51c8f1ad1",
+              "name": "Media successfully uploaded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":id",
+                    "media"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The callId returned from the Add New Call request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The audio or video file to upload. Supported formats include WAV, MP3, MP4, MKV, and FLAC. Maximum size is 1.5GB.",
+                        "type": "text/plain"
+                      },
+                      "key": "mediaFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"callId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6301a810-70f9-467d-ab95-9aa51edfada2",
+              "name": "Bad request due to invalid file format or size.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":id",
+                    "media"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The callId returned from the Add New Call request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The audio or video file to upload. Supported formats include WAV, MP3, MP4, MKV, and FLAC. Maximum size is 1.5GB.",
+                        "type": "text/plain"
+                      },
+                      "key": "mediaFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3ff66f0-da4f-4fae-ae45-c3169609aa05",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":id",
+                    "media"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The callId returned from the Add New Call request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The audio or video file to upload. Supported formats include WAV, MP3, MP4, MKV, and FLAC. Maximum size is 1.5GB.",
+                        "type": "text/plain"
+                      },
+                      "key": "mediaFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a9a5746-488a-47d5-955a-a876cc74f9cd",
+              "name": "Call not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":id",
+                    "media"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The callId returned from the Add New Call request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The audio or video file to upload. Supported formats include WAV, MP3, MP4, MKV, and FLAC. Maximum size is 1.5GB.",
+                        "type": "text/plain"
+                      },
+                      "key": "mediaFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f4a0826-8689-49f4-bfad-eca357e30f03",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":id",
+                    "media"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The callId returned from the Add New Call request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The audio or video file to upload. Supported formats include WAV, MP3, MP4, MKV, and FLAC. Maximum size is 1.5GB.",
+                        "type": "text/plain"
+                      },
+                      "key": "mediaFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "0068869d-53d2-4a00-b371-df1ca68c6415",
+      "name": "Transcripts",
+      "description": {
+        "content": "Operations for retrieving call transcripts",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "29f11c32-5d59-4a08-9154-2d51b08d8f8e",
+          "name": "Gong Retrieve call transcripts",
+          "request": {
+            "name": "Gong Retrieve call transcripts",
+            "description": {
+              "content": "Retrieves transcript data for calls matching the specified filter criteria. Transcripts include speaker identification and timing information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calls",
+                "transcript"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"callIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fromDateTime\": \"<dateTime>\",\n    \"toDateTime\": \"<dateTime>\",\n    \"workspaceId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "beea5f89-4090-4b2c-89cf-30e766147f53",
+              "name": "Successful response containing call transcripts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "transcript"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"callIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fromDateTime\": \"<dateTime>\",\n    \"toDateTime\": \"<dateTime>\",\n    \"workspaceId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"records\": {\n    \"totalRecords\": 9077,\n    \"currentPageSize\": 961,\n    \"cursor\": \"string\"\n  },\n  \"callTranscripts\": [\n    {\n      \"callId\": \"string\",\n      \"transcript\": [\n        {\n          \"speakerId\": \"string\",\n          \"topic\": \"string\",\n          \"sentences\": [\n            {\n              \"start\": 1064.8228888343958,\n              \"end\": 3143.076220193579,\n              \"text\": \"string\"\n            },\n            {\n              \"start\": 5720.986569116757,\n              \"end\": 1827.4092948237862,\n              \"text\": \"string\"\n            }\n          ]\n        },\n        {\n          \"speakerId\": \"string\",\n          \"topic\": \"string\",\n          \"sentences\": [\n            {\n              \"start\": 980.3459605437947,\n              \"end\": 613.0184987959209,\n              \"text\": \"string\"\n            },\n            {\n              \"start\": 7261.850298473913,\n              \"end\": 9643.174164887072,\n              \"text\": \"string\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"callId\": \"string\",\n      \"transcript\": [\n        {\n          \"speakerId\": \"string\",\n          \"topic\": \"string\",\n          \"sentences\": [\n            {\n              \"start\": 2072.982810357065,\n              \"end\": 2580.854587957487,\n              \"text\": \"string\"\n            },\n            {\n              \"start\": 3897.681078508052,\n              \"end\": 7209.646691217921,\n              \"text\": \"string\"\n            }\n          ]\n        },\n        {\n          \"speakerId\": \"string\",\n          \"topic\": \"string\",\n          \"sentences\": [\n            {\n              \"start\": 9727.23150841568,\n              \"end\": 1401.821299498407,\n              \"text\": \"string\"\n            },\n            {\n              \"start\": 5389.504629341319,\n              \"end\": 8007.283498377371,\n              \"text\": \"string\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6fc31da-f34c-46dd-be7f-770298fdd9f9",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "transcript"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"callIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fromDateTime\": \"<dateTime>\",\n    \"toDateTime\": \"<dateTime>\",\n    \"workspaceId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e389836b-36c3-4d8c-bc48-1b579d8ddfad",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "transcript"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"callIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fromDateTime\": \"<dateTime>\",\n    \"toDateTime\": \"<dateTime>\",\n    \"workspaceId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b565b6dc-8e27-4f2f-9051-e083ea1cf15a",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    "transcript"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"callIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fromDateTime\": \"<dateTime>\",\n    \"toDateTime\": \"<dateTime>\",\n    \"workspaceId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gong.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9d3ab5c4-61c3-4312-b256-5e3513640e82",
+    "name": "Gong Calls API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Gong Calls API provides endpoints to retrieve, add, and manage call data including recordings, transcripts, and media files. It supports filtering calls by date range, retrieving detailed call analytics, and uploading call recordings from external telephony systems.\n\nContact Support:\n Name: Gong\n Email: support@gong.io",
+      "type": "text/plain"
+    }
+  }
+}

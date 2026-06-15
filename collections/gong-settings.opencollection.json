@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Settings API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scorecards",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Retrieve scorecards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/settings/scorecards"
+          },
+          "docs": "Retrieves all scorecard configurations defined in the Gong account, including their questions, scoring criteria, and associated metadata."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Trackers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Retrieve trackers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/settings/trackers",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "Optional workspace ID to filter trackers by workspace."
+              }
+            ]
+          },
+          "docs": "Retrieves all tracker configurations defined in the Gong account. Trackers are keywords and phrases that Gong identifies during call transcription and analysis."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Workspaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong List company workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/workspaces"
+          },
+          "docs": "Retrieves a list of all workspaces configured in the Gong account. Workspaces are used to organize and segment data within the platform."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

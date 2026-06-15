@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Auditing API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Audit Logs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Retrieve audit logs by type and time range",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/logs",
+            "params": [
+              {
+                "name": "logType",
+                "value": "",
+                "type": "query",
+                "description": "The type of audit log to retrieve (e.g., UserAction, SystemEvent, ConfigChange)."
+              },
+              {
+                "name": "fromDateTime",
+                "value": "",
+                "type": "query",
+                "description": "The start date and time for the log filter in ISO-8601 format."
+              },
+              {
+                "name": "toDateTime",
+                "value": "",
+                "type": "query",
+                "description": "The end date and time for the log filter in ISO-8601 format."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A cursor for pagination. Pass the cursor from the previous response to retrieve the next page of results."
+              }
+            ]
+          },
+          "docs": "Retrieves audit log entries filtered by log type and time range. Provides visibility into user actions, system events, and configuration changes for compliance, security monitoring, and troubleshooting. Results are paginated."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
