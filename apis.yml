@@ -4,7 +4,7 @@ name: Gong
 kind: company
 description: Gong is the revenue intelligence platform that captures and analyzes customer interactions across calls, emails,
   and meetings. APIs expose calls, transcripts, deals, users, and analytics.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Sales
   - Revenue Intelligence
