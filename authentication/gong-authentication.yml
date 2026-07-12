@@ -1,0 +1,44 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/gong-auditing-openapi.yml, openapi/gong-calls-openapi.yml, openapi/gong-crm-openapi.yml,
+  openapi/gong-data-privacy-openapi.yml, openapi/gong-engage-openapi.yml, openapi/gong-engagement-openapi.yml,
+  openapi/gong-library-openapi.yml, openapi/gong-meetings-openapi.yml, openapi/gong-permissions-openapi.yml,
+  openapi/gong-settings-openapi.yml, openapi/gong-stats-openapi.yml, openapi/gong-users-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+  sources:
+  - openapi/gong-auditing-openapi.yml
+  - openapi/gong-calls-openapi.yml
+  - openapi/gong-crm-openapi.yml
+  - openapi/gong-data-privacy-openapi.yml
+  - openapi/gong-engage-openapi.yml
+  - openapi/gong-engagement-openapi.yml
+  - openapi/gong-library-openapi.yml
+  - openapi/gong-meetings-openapi.yml
+  - openapi/gong-permissions-openapi.yml
+  - openapi/gong-settings-openapi.yml
+  - openapi/gong-stats-openapi.yml
+  - openapi/gong-users-openapi.yml
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: OAuth 2.0 Bearer token authentication.
+  sources:
+  - openapi/gong-auditing-openapi.yml
+  - openapi/gong-calls-openapi.yml
+  - openapi/gong-crm-openapi.yml
+  - openapi/gong-data-privacy-openapi.yml
+  - openapi/gong-engage-openapi.yml
+  - openapi/gong-engagement-openapi.yml
+  - openapi/gong-library-openapi.yml
+  - openapi/gong-meetings-openapi.yml
+  - openapi/gong-permissions-openapi.yml
+  - openapi/gong-settings-openapi.yml
+  - openapi/gong-stats-openapi.yml
+  - openapi/gong-users-openapi.yml

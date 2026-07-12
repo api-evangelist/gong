@@ -64,6 +64,12 @@ apis:
     - type: Documentation
       url: https://app.gong.io/settings/api/documentation
 common:
+  - type: TrustCenter
+    url: security/gong-trust-center.yml
+  - type: DomainSecurity
+    url: security/gong-domain-security.yml
+  - type: Authentication
+    url: authentication/gong-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/gong-io
   - type: LinkedIn
