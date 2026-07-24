@@ -1,10 +1,7 @@
 openapi: 3.1.0
 info:
-  title: Gong Library API
-  description: >-
-    The Gong Library API provides access to the library structure and calls
-    stored in specific folders, enabling programmatic browsing and retrieval of
-    curated call content.
+  title: Gong Auditing Audit Logs Library API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
   version: 2.0.0
   contact:
     name: Gong
@@ -15,32 +12,29 @@ info:
     url: https://www.gong.io/terms-of-service/
   termsOfService: https://www.gong.io/terms-of-service/
 servers:
-  - url: https://api.gong.io/v2
-    description: Gong API v2 Production Server
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
 security:
-  - basicAuth: []
-  - bearerAuth: []
+- basicAuth: []
+- bearerAuth: []
 tags:
-  - name: Library
-    description: Operations for browsing and retrieving library content
+- name: Library
+  description: Operations for browsing and retrieving library content
 paths:
   /library/folders:
     get:
       operationId: listLibraryFolders
       summary: Gong Retrieve library folders
-      description: >-
-        Retrieves the library folder structure, listing all folders available in
-        the Gong library. Folders are used to organize curated call content for
-        training and review. Can be filtered by workspace.
+      description: Retrieves the library folder structure, listing all folders available in the Gong library. Folders are used to organize curated call content for training and review. Can be filtered by workspace.
       tags:
-        - Library
+      - Library
       parameters:
-        - name: workspaceId
-          in: query
-          required: false
-          description: Optional workspace ID to filter folders by workspace.
-          schema:
-            type: string
+      - name: workspaceId
+        in: query
+        required: false
+        description: Optional workspace ID to filter folders by workspace.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response containing library folders.
@@ -64,19 +58,16 @@ paths:
     get:
       operationId: listCallsInFolder
       summary: Gong List calls in a library folder
-      description: >-
-        Retrieves a list of calls stored in a specific library folder. Returns
-        call references that can be used to retrieve full call details via the
-        Calls API.
+      description: Retrieves a list of calls stored in a specific library folder. Returns call references that can be used to retrieve full call details via the Calls API.
       tags:
-        - Library
+      - Library
       parameters:
-        - name: folderId
-          in: path
-          required: true
-          description: The unique identifier of the library folder.
-          schema:
-            type: string
+      - name: folderId
+        in: path
+        required: true
+        description: The unique identifier of the library folder.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response containing calls in the folder.
@@ -103,29 +94,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
-      description: >-
-        Basic authentication using your Gong API access key and secret. Format:
-        base64(access_key:access_secret).
-    bearerAuth:
-      type: http
-      scheme: bearer
-      description: OAuth 2.0 Bearer token authentication.
   schemas:
-    LibraryFoldersResponse:
+    LibraryFolderCallsResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        folders:
+        calls:
           type: array
           items:
-            $ref: '#/components/schemas/LibraryFolder'
-          description: List of library folders.
+            $ref: '#/components/schemas/LibraryCall'
+          description: List of calls in the folder.
     LibraryFolder:
       type: object
       properties:
@@ -140,8 +120,7 @@ components:
           description: Description of the library folder.
         parentFolderId:
           type: string
-          description: >-
-            ID of the parent folder. Null for top-level folders.
+          description: ID of the parent folder. Null for top-level folders.
         callCount:
           type: integer
           description: Number of calls stored in this folder.
@@ -152,17 +131,6 @@ components:
           type: string
           format: date-time
           description: When the folder was created.
-    LibraryFolderCallsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        calls:
-          type: array
-          items:
-            $ref: '#/components/schemas/LibraryCall'
-          description: List of calls in the folder.
     LibraryCall:
       type: object
       properties:
@@ -204,3 +172,23 @@ components:
           items:
             type: string
           description: List of error messages.
+    LibraryFoldersResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        folders:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryFolder'
+          description: List of library folders.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.

@@ -1,10 +1,7 @@
 openapi: 3.1.0
 info:
-  title: Gong Auditing API
-  description: >-
-    The Gong Auditing API enables retrieval of audit log data by type and time
-    range, providing visibility into user actions and system events for
-    compliance and security monitoring.
+  title: Gong Auditing Audit Logs API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
   version: 2.0.0
   contact:
     name: Gong
@@ -15,59 +12,49 @@ info:
     url: https://www.gong.io/terms-of-service/
   termsOfService: https://www.gong.io/terms-of-service/
 servers:
-  - url: https://api.gong.io/v2
-    description: Gong API v2 Production Server
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
 security:
-  - basicAuth: []
-  - bearerAuth: []
+- basicAuth: []
+- bearerAuth: []
 tags:
-  - name: Audit Logs
-    description: Operations for retrieving audit log data
+- name: Audit Logs
+  description: Operations for retrieving audit log data
 paths:
   /logs:
     get:
       operationId: retrieveAuditLogs
       summary: Gong Retrieve audit logs by type and time range
-      description: >-
-        Retrieves audit log entries filtered by log type and time range.
-        Provides visibility into user actions, system events, and configuration
-        changes for compliance, security monitoring, and troubleshooting.
-        Results are paginated.
+      description: Retrieves audit log entries filtered by log type and time range. Provides visibility into user actions, system events, and configuration changes for compliance, security monitoring, and troubleshooting. Results are paginated.
       tags:
-        - Audit Logs
+      - Audit Logs
       parameters:
-        - name: logType
-          in: query
-          required: true
-          description: >-
-            The type of audit log to retrieve (e.g., UserAction, SystemEvent,
-            ConfigChange).
-          schema:
-            type: string
-        - name: fromDateTime
-          in: query
-          required: true
-          description: >-
-            The start date and time for the log filter in ISO-8601 format.
-          schema:
-            type: string
-            format: date-time
-        - name: toDateTime
-          in: query
-          required: true
-          description: >-
-            The end date and time for the log filter in ISO-8601 format.
-          schema:
-            type: string
-            format: date-time
-        - name: cursor
-          in: query
-          required: false
-          description: >-
-            A cursor for pagination. Pass the cursor from the previous response
-            to retrieve the next page of results.
-          schema:
-            type: string
+      - name: logType
+        in: query
+        required: true
+        description: The type of audit log to retrieve (e.g., UserAction, SystemEvent, ConfigChange).
+        schema:
+          type: string
+      - name: fromDateTime
+        in: query
+        required: true
+        description: The start date and time for the log filter in ISO-8601 format.
+        schema:
+          type: string
+          format: date-time
+      - name: toDateTime
+        in: query
+        required: true
+        description: The end date and time for the log filter in ISO-8601 format.
+        schema:
+          type: string
+          format: date-time
+      - name: cursor
+        in: query
+        required: false
+        description: A cursor for pagination. Pass the cursor from the previous response to retrieve the next page of results.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response containing audit log entries.
@@ -94,17 +81,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
-      description: >-
-        Basic authentication using your Gong API access key and secret. Format:
-        base64(access_key:access_secret).
-    bearerAuth:
-      type: http
-      scheme: bearer
-      description: OAuth 2.0 Bearer token authentication.
   schemas:
     AuditLogsResponse:
       type: object
@@ -129,6 +105,17 @@ components:
           items:
             $ref: '#/components/schemas/AuditLogEntry'
           description: List of audit log entries.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
     AuditLogEntry:
       type: object
       properties:
@@ -144,9 +131,7 @@ components:
           description: When the event occurred.
         userId:
           type: string
-          description: >-
-            The Gong user ID of the user who performed the action (if
-            applicable).
+          description: The Gong user ID of the user who performed the action (if applicable).
         userEmail:
           type: string
           format: email
@@ -168,14 +153,12 @@ components:
         ipAddress:
           type: string
           description: IP address from which the action was performed.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.

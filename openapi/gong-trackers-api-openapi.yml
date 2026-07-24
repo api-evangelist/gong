@@ -1,0 +1,121 @@
+openapi: 3.1.0
+info:
+  title: Gong Auditing Audit Logs Trackers API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  version: 2.0.0
+  contact:
+    name: Gong
+    url: https://www.gong.io
+    email: support@gong.io
+  license:
+    name: Proprietary
+    url: https://www.gong.io/terms-of-service/
+  termsOfService: https://www.gong.io/terms-of-service/
+servers:
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Trackers
+  description: Operations for retrieving tracker configurations
+paths:
+  /settings/trackers:
+    get:
+      operationId: listTrackers
+      summary: Gong Retrieve trackers
+      description: Retrieves all tracker configurations defined in the Gong account. Trackers are keywords and phrases that Gong identifies during call transcription and analysis.
+      tags:
+      - Trackers
+      parameters:
+      - name: workspaceId
+        in: query
+        required: false
+        description: Optional workspace ID to filter trackers by workspace.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response containing tracker configurations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackersResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Tracker:
+      type: object
+      properties:
+        trackerId:
+          type: string
+          description: Unique identifier for the tracker.
+        trackerName:
+          type: string
+          description: Name of the tracker.
+        keywords:
+          type: array
+          items:
+            type: object
+            properties:
+              keyword:
+                type: string
+                description: The keyword or phrase to track.
+              tag:
+                type: string
+                description: Optional tag for the keyword.
+          description: Keywords and phrases being tracked.
+        workspaceId:
+          type: string
+          description: The workspace the tracker belongs to.
+        created:
+          type: string
+          format: date-time
+          description: When the tracker was created.
+        updated:
+          type: string
+          format: date-time
+          description: When the tracker was last updated.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    TrackersResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        trackers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tracker'
+          description: List of tracker configurations.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.

@@ -1,0 +1,94 @@
+openapi: 3.1.0
+info:
+  title: Gong Auditing Audit Logs Workspaces API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  version: 2.0.0
+  contact:
+    name: Gong
+    url: https://www.gong.io
+    email: support@gong.io
+  license:
+    name: Proprietary
+    url: https://www.gong.io/terms-of-service/
+  termsOfService: https://www.gong.io/terms-of-service/
+servers:
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Workspaces
+  description: Operations for managing workspaces
+paths:
+  /workspaces:
+    get:
+      operationId: listWorkspaces
+      summary: Gong List company workspaces
+      description: Retrieves a list of all workspaces configured in the Gong account. Workspaces are used to organize and segment data within the platform.
+      tags:
+      - Workspaces
+      responses:
+        '200':
+          description: Successful response containing a list of workspaces.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspacesResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    WorkspacesResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        workspaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/Workspace'
+          description: List of workspace objects.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    Workspace:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the workspace.
+        name:
+          type: string
+          description: Name of the workspace.
+        description:
+          type: string
+          description: Description of the workspace.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.

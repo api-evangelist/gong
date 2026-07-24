@@ -1,0 +1,112 @@
+openapi: 3.1.0
+info:
+  title: Gong Auditing Audit Logs Recordings API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  version: 2.0.0
+  contact:
+    name: Gong
+    url: https://www.gong.io
+    email: support@gong.io
+  license:
+    name: Proprietary
+    url: https://www.gong.io/terms-of-service/
+  termsOfService: https://www.gong.io/terms-of-service/
+servers:
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Recordings
+  description: Operations for managing call recordings and media
+paths:
+  /calls/{id}/media:
+    put:
+      operationId: addCallRecording
+      summary: Gong Add call media recording
+      description: Adds call media (audio or video recording) to a previously created call. Gong accepts recordings in WAV, MP3, MP4, MKV, and FLAC formats up to 1.5GB in size.
+      tags:
+      - Recordings
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The callId returned from the Add New Call request.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                mediaFile:
+                  type: string
+                  format: binary
+                  description: The audio or video file to upload. Supported formats include WAV, MP3, MP4, MKV, and FLAC. Maximum size is 1.5GB.
+              required:
+              - mediaFile
+      responses:
+        '200':
+          description: Media successfully uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewCallRecordingResponse'
+        '400':
+          description: Bad request due to invalid file format or size.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Call not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    NewCallRecordingResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        callId:
+          type: string
+          description: The call ID the media was attached to.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.

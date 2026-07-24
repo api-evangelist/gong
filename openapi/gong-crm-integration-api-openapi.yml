@@ -1,0 +1,214 @@
+openapi: 3.1.0
+info:
+  title: Gong Auditing Audit Logs CRM Integration API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  version: 2.0.0
+  contact:
+    name: Gong
+    url: https://www.gong.io
+    email: support@gong.io
+  license:
+    name: Proprietary
+    url: https://www.gong.io/terms-of-service/
+  termsOfService: https://www.gong.io/terms-of-service/
+servers:
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: CRM Integration
+  description: Operations for registering and managing CRM integrations
+paths:
+  /crm/integrations:
+    put:
+      operationId: registerCrmIntegration
+      summary: Gong Register a CRM integration
+      description: Registers a new CRM integration with Gong. A successful registration enables uploading CRM data to Gong. Only one active integration per integration type is allowed.
+      tags:
+      - CRM Integration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrmIntegrationRegistrationRequest'
+      responses:
+        '200':
+          description: CRM integration successfully registered.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CrmIntegrationRegistrationResponse'
+        '400':
+          description: Bad request due to invalid parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      operationId: getCrmIntegrations
+      summary: Gong Get CRM integration details
+      description: Retrieves details about the currently registered CRM integrations for the account.
+      tags:
+      - CRM Integration
+      responses:
+        '200':
+          description: Successful response containing CRM integration details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CrmIntegrationsResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      operationId: deleteCrmIntegration
+      summary: Gong Delete a CRM integration
+      description: Deletes a registered CRM integration and its associated data from Gong.
+      tags:
+      - CRM Integration
+      parameters:
+      - name: integrationId
+        in: query
+        required: true
+        description: The unique identifier of the CRM integration to delete.
+        schema:
+          type: string
+      - name: clientRequestId
+        in: query
+        required: false
+        description: A client-generated request ID for idempotency.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: CRM integration successfully deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Integration not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    BaseResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+    CrmIntegrationRegistrationRequest:
+      type: object
+      required:
+      - integrationId
+      - integrationType
+      properties:
+        integrationId:
+          type: string
+          description: Unique identifier for the CRM integration.
+        integrationType:
+          type: string
+          description: The type of CRM system (e.g., Salesforce, HubSpot, Custom).
+        displayName:
+          type: string
+          description: Display name for the integration.
+        crmInstanceUrl:
+          type: string
+          format: uri
+          description: URL of the CRM instance.
+    CrmIntegrationRegistrationResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        integrationId:
+          type: string
+          description: The registered integration ID.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    CrmIntegrationsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        integrations:
+          type: array
+          items:
+            type: object
+            properties:
+              integrationId:
+                type: string
+                description: Unique identifier for the integration.
+              integrationType:
+                type: string
+                description: The type of CRM system.
+              displayName:
+                type: string
+                description: Display name of the integration.
+              crmInstanceUrl:
+                type: string
+                format: uri
+                description: URL of the CRM instance.
+              status:
+                type: string
+                description: Status of the integration.
+          description: List of registered CRM integrations.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.

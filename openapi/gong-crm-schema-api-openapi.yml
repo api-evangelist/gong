@@ -1,0 +1,194 @@
+openapi: 3.1.0
+info:
+  title: Gong Auditing Audit Logs CRM Schema API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  version: 2.0.0
+  contact:
+    name: Gong
+    url: https://www.gong.io
+    email: support@gong.io
+  license:
+    name: Proprietary
+    url: https://www.gong.io/terms-of-service/
+  termsOfService: https://www.gong.io/terms-of-service/
+servers:
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: CRM Schema
+  description: Operations for managing CRM object schemas
+paths:
+  /crm/entity-schema:
+    post:
+      operationId: uploadObjectSchema
+      summary: Gong Upload CRM object schema
+      description: Uploads the schema definition for a CRM object type including field definitions, labels, and data types. This defines the structure of CRM objects that can be uploaded to Gong.
+      tags:
+      - CRM Schema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrmEntitySchemaUploadRequest'
+      responses:
+        '200':
+          description: Schema successfully uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '400':
+          description: Bad request due to invalid schema definition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      operationId: getSchemaFields
+      summary: Gong List schema fields
+      description: Retrieves the schema fields defined for a specific CRM object type and integration.
+      tags:
+      - CRM Schema
+      parameters:
+      - name: integrationId
+        in: query
+        required: true
+        description: The unique identifier of the CRM integration.
+        schema:
+          type: string
+      - name: objectType
+        in: query
+        required: true
+        description: The type of CRM object to get schema for.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response containing schema fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CrmEntitySchemaResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    CrmEntitySchemaResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        fields:
+          type: array
+          items:
+            type: object
+            properties:
+              uniqueName:
+                type: string
+              label:
+                type: string
+              type:
+                type: string
+              isRequired:
+                type: boolean
+          description: List of schema field definitions.
+    BaseResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+    CrmEntitySchemaUploadRequest:
+      type: object
+      required:
+      - integrationId
+      - objectType
+      - fields
+      properties:
+        integrationId:
+          type: string
+          description: The CRM integration ID.
+        objectType:
+          type: string
+          description: The CRM object type (e.g., Deal, Account, Contact).
+        fields:
+          type: array
+          items:
+            type: object
+            properties:
+              uniqueName:
+                type: string
+                description: Unique field name/key.
+              label:
+                type: string
+                description: Display label for the field.
+              type:
+                type: string
+                enum:
+                - STRING
+                - NUMBER
+                - DATE
+                - DATETIME
+                - BOOLEAN
+                - REFERENCE
+                - CURRENCY
+                - PICKLIST
+                description: Data type of the field.
+              isRequired:
+                type: boolean
+                description: Whether the field is required.
+              referenceObjectType:
+                type: string
+                description: For REFERENCE type fields, the object type being referenced.
+            required:
+            - uniqueName
+            - label
+            - type
+          description: List of field definitions for the CRM object schema.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.

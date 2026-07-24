@@ -1,0 +1,270 @@
+openapi: 3.1.0
+info:
+  title: Gong Auditing Audit Logs Scorecards API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  version: 2.0.0
+  contact:
+    name: Gong
+    url: https://www.gong.io
+    email: support@gong.io
+  license:
+    name: Proprietary
+    url: https://www.gong.io/terms-of-service/
+  termsOfService: https://www.gong.io/terms-of-service/
+servers:
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Scorecards
+  description: Operations for retrieving scorecard configurations
+paths:
+  /settings/scorecards:
+    get:
+      operationId: listScorecards
+      summary: Gong Retrieve scorecards
+      description: Retrieves all scorecard configurations defined in the Gong account, including their questions, scoring criteria, and associated metadata.
+      tags:
+      - Scorecards
+      responses:
+        '200':
+          description: Successful response containing scorecard configurations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScorecardsResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /stats/scorecards:
+    post:
+      operationId: retrieveAnsweredScorecards
+      summary: Gong Retrieve answered scorecards
+      description: Retrieves answered scorecard data for calls, including scores and evaluations by reviewers for the specified time period and users.
+      tags:
+      - Scorecards
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnsweredScorecardsRequest'
+      responses:
+        '200':
+          description: Successful response containing answered scorecard data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnsweredScorecardsResponse'
+        '400':
+          description: Bad request due to invalid parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    AnsweredScorecard:
+      type: object
+      properties:
+        callId:
+          type: string
+          description: The call ID the scorecard was answered for.
+        scorecardId:
+          type: string
+          description: The scorecard template ID.
+        scorecardName:
+          type: string
+          description: The name of the scorecard.
+        reviewedUserId:
+          type: string
+          description: The user ID of the person being reviewed.
+        reviewerUserId:
+          type: string
+          description: The user ID of the reviewer.
+        answeredAt:
+          type: string
+          format: date-time
+          description: When the scorecard was answered.
+        overallScore:
+          type: number
+          format: float
+          description: The overall score given.
+        questions:
+          type: array
+          items:
+            type: object
+            properties:
+              questionId:
+                type: string
+              questionText:
+                type: string
+              answer:
+                type: string
+              score:
+                type: number
+                format: float
+              isNotApplicable:
+                type: boolean
+          description: Individual question answers and scores.
+    ScorecardQuestion:
+      type: object
+      properties:
+        questionId:
+          type: string
+          description: Unique identifier for the question.
+        questionText:
+          type: string
+          description: The question text.
+        questionType:
+          type: string
+          enum:
+          - YesNo
+          - Scale
+          - FreeText
+          - SingleChoice
+          - MultipleChoice
+          description: The type of question.
+        isRequired:
+          type: boolean
+          description: Whether the question requires an answer.
+        options:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              label:
+                type: string
+          description: Available answer options (for choice-type questions).
+    Scorecard:
+      type: object
+      properties:
+        scorecardId:
+          type: string
+          description: Unique identifier for the scorecard.
+        scorecardName:
+          type: string
+          description: Name of the scorecard.
+        enabled:
+          type: boolean
+          description: Whether the scorecard is currently enabled.
+        workspaceId:
+          type: string
+          description: The workspace the scorecard belongs to.
+        created:
+          type: string
+          format: date-time
+          description: When the scorecard was created.
+        updated:
+          type: string
+          format: date-time
+          description: When the scorecard was last updated.
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScorecardQuestion'
+          description: List of questions in the scorecard.
+    ScorecardsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        scorecards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Scorecard'
+          description: List of scorecard configurations.
+    AnsweredScorecardsRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: Cursor for pagination.
+        filter:
+          type: object
+          properties:
+            fromDateTime:
+              type: string
+              format: date-time
+              description: Start of the date range.
+            toDateTime:
+              type: string
+              format: date-time
+              description: End of the date range.
+            userIds:
+              type: array
+              items:
+                type: string
+              description: Filter by specific user IDs.
+            scorecardIds:
+              type: array
+              items:
+                type: string
+              description: Filter by specific scorecard IDs.
+          description: Filter criteria for answered scorecards.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    AnsweredScorecardsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+            currentPageSize:
+              type: integer
+            cursor:
+              type: string
+        answeredScorecards:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnsweredScorecard'
+          description: List of answered scorecards.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.

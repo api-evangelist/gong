@@ -1,0 +1,119 @@
+openapi: 3.1.0
+info:
+  title: Gong Auditing Audit Logs Folders API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  version: 2.0.0
+  contact:
+    name: Gong
+    url: https://www.gong.io
+    email: support@gong.io
+  license:
+    name: Proprietary
+    url: https://www.gong.io/terms-of-service/
+  termsOfService: https://www.gong.io/terms-of-service/
+servers:
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Folders
+  description: Operations for managing flow folders
+paths:
+  /flows/folders:
+    get:
+      operationId: listFlowFolders
+      summary: Gong List flow folders
+      description: Retrieves all company flow folders, plus personal flow folders and flow folders shared with the specified user. Used to organize and categorize Engage flows.
+      tags:
+      - Folders
+      parameters:
+      - name: userEmail
+        in: query
+        required: false
+        description: Email of the user to include personal and shared folders for.
+        schema:
+          type: string
+          format: email
+      - name: workspaceId
+        in: query
+        required: false
+        description: Filter folders by workspace ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response containing flow folders.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowFoldersResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    FlowFolder:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the folder.
+        name:
+          type: string
+          description: Name of the folder.
+        type:
+          type: string
+          enum:
+          - Company
+          - Personal
+          - Shared
+          description: Type of the folder.
+        ownerEmail:
+          type: string
+          format: email
+          description: Email of the folder owner.
+        flowCount:
+          type: integer
+          description: Number of flows in the folder.
+    FlowFoldersResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        folders:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowFolder'
+          description: List of flow folders.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.

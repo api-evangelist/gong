@@ -1,0 +1,161 @@
+openapi: 3.1.0
+info:
+  title: Gong Auditing Audit Logs Transcripts API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  version: 2.0.0
+  contact:
+    name: Gong
+    url: https://www.gong.io
+    email: support@gong.io
+  license:
+    name: Proprietary
+    url: https://www.gong.io/terms-of-service/
+  termsOfService: https://www.gong.io/terms-of-service/
+servers:
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Transcripts
+  description: Operations for retrieving call transcripts
+paths:
+  /calls/transcript:
+    post:
+      operationId: getCallTranscripts
+      summary: Gong Retrieve call transcripts
+      description: Retrieves transcript data for calls matching the specified filter criteria. Transcripts include speaker identification and timing information.
+      tags:
+      - Transcripts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CallTranscriptRequest'
+      responses:
+        '200':
+          description: Successful response containing call transcripts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallTranscriptsResponse'
+        '400':
+          description: Bad request due to invalid parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    CallTranscriptsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+            currentPageSize:
+              type: integer
+            cursor:
+              type: string
+        callTranscripts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CallTranscript'
+          description: List of call transcripts.
+    CallTranscriptRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: Cursor for pagination.
+        filter:
+          type: object
+          properties:
+            callIds:
+              type: array
+              items:
+                type: string
+              description: List of call IDs to retrieve transcripts for.
+            fromDateTime:
+              type: string
+              format: date-time
+              description: Start of the date range filter.
+            toDateTime:
+              type: string
+              format: date-time
+              description: End of the date range filter.
+            workspaceId:
+              type: string
+              description: Filter by workspace.
+          description: Filter criteria for transcript retrieval.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    CallTranscript:
+      type: object
+      properties:
+        callId:
+          type: string
+          description: The call ID this transcript belongs to.
+        transcript:
+          type: array
+          items:
+            type: object
+            properties:
+              speakerId:
+                type: string
+                description: ID of the speaker.
+              topic:
+                type: string
+                description: Topic of the segment.
+              sentences:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    start:
+                      type: number
+                      description: Start time in seconds.
+                    end:
+                      type: number
+                      description: End time in seconds.
+                    text:
+                      type: string
+                      description: The transcribed text.
+          description: Transcript segments with speaker and timing data.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.

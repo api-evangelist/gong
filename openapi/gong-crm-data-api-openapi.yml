@@ -1,0 +1,263 @@
+openapi: 3.1.0
+info:
+  title: Gong Auditing Audit Logs CRM Data API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  version: 2.0.0
+  contact:
+    name: Gong
+    url: https://www.gong.io
+    email: support@gong.io
+  license:
+    name: Proprietary
+    url: https://www.gong.io/terms-of-service/
+  termsOfService: https://www.gong.io/terms-of-service/
+servers:
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: CRM Data
+  description: Operations for uploading and retrieving CRM data
+paths:
+  /crm/entities:
+    post:
+      operationId: uploadCrmObjects
+      summary: Gong Upload CRM objects
+      description: Uploads CRM objects (such as deals, accounts, contacts, or leads) to Gong for association with call data. Objects are uploaded for a specific integration and object type.
+      tags:
+      - CRM Data
+      parameters:
+      - name: integrationId
+        in: query
+        required: true
+        description: The unique identifier of the CRM integration.
+        schema:
+          type: string
+      - name: objectType
+        in: query
+        required: true
+        description: The type of CRM object being uploaded (e.g., Deal, Account, Contact, Lead).
+        schema:
+          type: string
+      - name: clientRequestId
+        in: query
+        required: false
+        description: A client-generated request ID for tracking.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrmEntitiesUploadRequest'
+      responses:
+        '200':
+          description: CRM objects successfully uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CrmEntitiesUploadResponse'
+        '400':
+          description: Bad request due to invalid parameters or data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /crm/objects:
+    get:
+      operationId: getCrmObjects
+      summary: Gong Get CRM objects
+      description: Retrieves CRM objects that have been uploaded to Gong for a specific integration and object type.
+      tags:
+      - CRM Data
+      parameters:
+      - name: integrationId
+        in: query
+        required: true
+        description: The unique identifier of the CRM integration.
+        schema:
+          type: string
+      - name: objectType
+        in: query
+        required: true
+        description: The type of CRM object to retrieve.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response containing CRM objects.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CrmObjectsResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /crm/upload-status:
+    get:
+      operationId: getUploadStatus
+      summary: Gong Get upload request status
+      description: Retrieves the status of a previous CRM data upload request using the integration ID and client request ID.
+      tags:
+      - CRM Data
+      parameters:
+      - name: integrationId
+        in: query
+        required: true
+        description: The unique identifier of the CRM integration.
+        schema:
+          type: string
+      - name: clientRequestId
+        in: query
+        required: true
+        description: The client request ID from the original upload request.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response containing the upload status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadStatusResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Upload request not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    UploadStatusResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        status:
+          type: string
+          enum:
+          - Queued
+          - Processing
+          - Complete
+          - Failed
+          description: Current status of the upload request.
+        entitiesProcessed:
+          type: integer
+          description: Number of entities processed so far.
+        entitiesFailed:
+          type: integer
+          description: Number of entities that failed processing.
+        errors:
+          type: array
+          items:
+            type: string
+          description: Error messages for failed entities.
+    CrmObjectsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        objects:
+          type: array
+          items:
+            type: object
+            properties:
+              objectId:
+                type: string
+              objectType:
+                type: string
+              fields:
+                type: object
+                additionalProperties:
+                  type: string
+          description: List of CRM objects.
+    CrmEntitiesUploadRequest:
+      type: object
+      properties:
+        entities:
+          type: array
+          items:
+            type: object
+            properties:
+              objectId:
+                type: string
+                description: The unique identifier of the CRM object in the source CRM.
+              fields:
+                type: object
+                additionalProperties:
+                  type: string
+                description: Key-value pairs representing the fields of the CRM object.
+            required:
+            - objectId
+            - fields
+          description: List of CRM entity objects to upload.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    CrmEntitiesUploadResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        clientRequestId:
+          type: string
+          description: The client-provided request ID for tracking.
+        status:
+          type: string
+          description: Status of the upload (e.g., Queued, Processing, Complete).
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.

@@ -1,0 +1,148 @@
+openapi: 3.1.0
+info:
+  title: Gong Auditing Audit Logs Digital Interactions API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  version: 2.0.0
+  contact:
+    name: Gong
+    url: https://www.gong.io
+    email: support@gong.io
+  license:
+    name: Proprietary
+    url: https://www.gong.io/terms-of-service/
+  termsOfService: https://www.gong.io/terms-of-service/
+servers:
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Digital Interactions
+  description: Operations for posting digital interaction data
+paths:
+  /digital-interactions:
+    post:
+      operationId: postDigitalInteraction
+      summary: Gong Post digital interaction
+      description: Posts a digital interaction event to Gong, recording structured data about digital communications such as emails, chat messages, or other text-based interactions with customers.
+      tags:
+      - Digital Interactions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DigitalInteractionRequest'
+      responses:
+        '201':
+          description: Digital interaction successfully posted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DigitalInteractionResponse'
+        '400':
+          description: Bad request due to invalid parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    DigitalInteractionResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        interactionId:
+          type: string
+          description: The Gong-assigned identifier for the digital interaction.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    DigitalInteractionRequest:
+      type: object
+      required:
+      - interactionType
+      - participants
+      - timestamp
+      properties:
+        interactionType:
+          type: string
+          enum:
+          - Email
+          - Chat
+          - SMS
+          - SocialMedia
+          - Other
+          description: The type of digital interaction.
+        subject:
+          type: string
+          description: Subject of the interaction (e.g., email subject).
+        body:
+          type: string
+          description: Body content of the interaction.
+        timestamp:
+          type: string
+          format: date-time
+          description: When the interaction occurred.
+        direction:
+          type: string
+          enum:
+          - Inbound
+          - Outbound
+          description: Direction of the interaction.
+        participants:
+          type: array
+          items:
+            type: object
+            properties:
+              emailAddress:
+                type: string
+                format: email
+              name:
+                type: string
+              role:
+                type: string
+                enum:
+                - Sender
+                - Recipient
+                - CC
+                - BCC
+          description: Participants in the interaction.
+        workspaceId:
+          type: string
+          description: The workspace to associate the interaction with.
+        clientUniqueId:
+          type: string
+          description: Client-provided unique ID to prevent duplicate submissions.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.

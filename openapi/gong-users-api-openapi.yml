@@ -1,10 +1,7 @@
 openapi: 3.1.0
 info:
-  title: Gong Users API
-  description: >-
-    The Gong Users API allows retrieval of user information, user histories, and
-    filtering of users by various criteria. It provides access to team member
-    profiles and licensing details within the Gong platform.
+  title: Gong Auditing Audit Logs Users API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
   version: 2.0.0
   contact:
     name: Gong
@@ -15,41 +12,36 @@ info:
     url: https://www.gong.io/terms-of-service/
   termsOfService: https://www.gong.io/terms-of-service/
 servers:
-  - url: https://api.gong.io/v2
-    description: Gong API v2 Production Server
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
 security:
-  - basicAuth: []
-  - bearerAuth: []
+- basicAuth: []
+- bearerAuth: []
 tags:
-  - name: Users
-    description: Operations for managing and retrieving user data
+- name: Users
+  description: Operations for managing and retrieving user data
 paths:
   /users:
     get:
       operationId: listUsers
       summary: Gong List all users
-      description: >-
-        Retrieves a list of all users in the Gong account. Results are paginated
-        and can optionally include user avatar images.
+      description: Retrieves a list of all users in the Gong account. Results are paginated and can optionally include user avatar images.
       tags:
-        - Users
+      - Users
       parameters:
-        - name: cursor
-          in: query
-          required: false
-          description: >-
-            A cursor for pagination. Pass the cursor from the previous response
-            to retrieve the next page of results.
-          schema:
-            type: string
-        - name: includeAvatars
-          in: query
-          required: false
-          description: >-
-            When set to true, the response includes user avatar image URLs.
-          schema:
-            type: boolean
-            default: false
+      - name: cursor
+        in: query
+        required: false
+        description: A cursor for pagination. Pass the cursor from the previous response to retrieve the next page of results.
+        schema:
+          type: string
+      - name: includeAvatars
+        in: query
+        required: false
+        description: When set to true, the response includes user avatar image URLs.
+        schema:
+          type: boolean
+          default: false
       responses:
         '200':
           description: Successful response containing a list of users.
@@ -73,18 +65,16 @@ paths:
     get:
       operationId: getUser
       summary: Gong Retrieve a specific user
-      description: >-
-        Retrieves detailed information about a specific user identified by their
-        unique Gong user ID.
+      description: Retrieves detailed information about a specific user identified by their unique Gong user ID.
       tags:
-        - Users
+      - Users
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: The unique Gong user ID.
-          schema:
-            type: string
+      - name: id
+        in: path
+        required: true
+        description: The unique Gong user ID.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response containing the user details.
@@ -114,19 +104,16 @@ paths:
     get:
       operationId: getUserSettingsHistory
       summary: Gong Retrieve user settings history
-      description: >-
-        Retrieves the settings change history for a specific user, including
-        changes to their role, permissions, and other configuration settings over
-        time.
+      description: Retrieves the settings change history for a specific user, including changes to their role, permissions, and other configuration settings over time.
       tags:
-        - Users
+      - Users
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: The unique Gong user ID.
-          schema:
-            type: string
+      - name: id
+        in: path
+        required: true
+        description: The unique Gong user ID.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response containing the user settings history.
@@ -156,11 +143,9 @@ paths:
     post:
       operationId: listUsersByFilter
       summary: Gong List users by filter
-      description: >-
-        Retrieves a filtered list of users based on specified criteria such as
-        creation date, user IDs, or other attributes.
+      description: Retrieves a filtered list of users based on specified criteria such as creation date, user IDs, or other attributes.
       tags:
-        - Users
+      - Users
       requestBody:
         required: true
         content:
@@ -193,44 +178,30 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
-      description: >-
-        Basic authentication using your Gong API access key and secret. Format:
-        base64(access_key:access_secret).
-    bearerAuth:
-      type: http
-      scheme: bearer
-      description: OAuth 2.0 Bearer token authentication.
   schemas:
-    UsersResponse:
+    UsersFilterRequest:
       type: object
       properties:
-        requestId:
+        cursor:
           type: string
-          description: A unique identifier for the request.
-        records:
+          description: Cursor for pagination.
+        filter:
           type: object
           properties:
-            totalRecords:
-              type: integer
-              description: Total number of user records.
-            currentPageSize:
-              type: integer
-              description: Number of records in the current page.
-            currentPageNumber:
-              type: integer
-              description: The current page number.
-            cursor:
+            userIds:
+              type: array
+              items:
+                type: string
+              description: Filter by specific user IDs.
+            createdFromDateTime:
               type: string
-              description: Cursor value for retrieving the next page.
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
-          description: List of user objects.
+              format: date-time
+              description: Filter users created after this date.
+            createdToDateTime:
+              type: string
+              format: date-time
+              description: Filter users created before this date.
+          description: Filter criteria for users.
     UserResponse:
       type: object
       properties:
@@ -321,29 +292,43 @@ components:
           type: string
           format: email
           description: The user's trusted email address for SSO.
-    UsersFilterRequest:
+    ErrorResponse:
       type: object
       properties:
-        cursor:
+        requestId:
           type: string
-          description: Cursor for pagination.
-        filter:
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    UsersResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
           type: object
           properties:
-            userIds:
-              type: array
-              items:
-                type: string
-              description: Filter by specific user IDs.
-            createdFromDateTime:
+            totalRecords:
+              type: integer
+              description: Total number of user records.
+            currentPageSize:
+              type: integer
+              description: Number of records in the current page.
+            currentPageNumber:
+              type: integer
+              description: The current page number.
+            cursor:
               type: string
-              format: date-time
-              description: Filter users created after this date.
-            createdToDateTime:
-              type: string
-              format: date-time
-              description: Filter users created before this date.
-          description: Filter criteria for users.
+              description: Cursor value for retrieving the next page.
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+          description: List of user objects.
     UserSettingsHistoryResponse:
       type: object
       properties:
@@ -375,14 +360,12 @@ components:
                 type: string
                 description: Who made the change.
           description: List of settings changes for the user.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.

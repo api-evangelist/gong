@@ -1,0 +1,234 @@
+openapi: 3.1.0
+info:
+  title: Gong Auditing Audit Logs Flows API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  version: 2.0.0
+  contact:
+    name: Gong
+    url: https://www.gong.io
+    email: support@gong.io
+  license:
+    name: Proprietary
+    url: https://www.gong.io/terms-of-service/
+  termsOfService: https://www.gong.io/terms-of-service/
+servers:
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Flows
+  description: Operations for managing Engage flows
+paths:
+  /flows:
+    get:
+      operationId: listEngageFlows
+      summary: Gong List Engage flows
+      description: Retrieves a list of all available Engage flows. Results can be filtered by flow owner email and workspace, and are paginated.
+      tags:
+      - Flows
+      parameters:
+      - name: flowOwnerEmail
+        in: query
+        required: false
+        description: Filter flows by the owner's email address.
+        schema:
+          type: string
+          format: email
+      - name: cursor
+        in: query
+        required: false
+        description: A cursor for pagination. Pass the cursor from the previous response to retrieve the next page of results.
+        schema:
+          type: string
+      - name: workspaceId
+        in: query
+        required: false
+        description: Filter flows by workspace ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response containing a list of Engage flows.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowsResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /flows/{flowId}/content-override:
+    put:
+      operationId: overrideFlowContent
+      summary: Gong Override flow content
+      description: Overrides the content of specific steps in an Engage flow to tailor messaging for specific campaigns or workflows. Allows customizing email subjects, bodies, and other step content.
+      tags:
+      - Flows
+      parameters:
+      - name: flowId
+        in: path
+        required: true
+        description: The unique identifier of the Engage flow.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FlowContentOverrideRequest'
+      responses:
+        '200':
+          description: Flow content successfully overridden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '400':
+          description: Bad request due to invalid parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Flow not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    BaseResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+    FlowsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+              description: Total number of flows.
+            currentPageSize:
+              type: integer
+              description: Number of records in the current page.
+            cursor:
+              type: string
+              description: Cursor for pagination.
+        flows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Flow'
+          description: List of Engage flow objects.
+    FlowContentOverrideRequest:
+      type: object
+      required:
+      - steps
+      properties:
+        steps:
+          type: array
+          items:
+            type: object
+            properties:
+              stepIndex:
+                type: integer
+                description: The zero-based index of the step to override.
+              subject:
+                type: string
+                description: The overridden email subject line.
+              body:
+                type: string
+                description: The overridden email body content.
+            required:
+            - stepIndex
+          description: List of step content overrides.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    Flow:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the flow.
+        name:
+          type: string
+          description: Name of the flow.
+        ownerEmail:
+          type: string
+          format: email
+          description: Email of the flow owner.
+        folderId:
+          type: string
+          description: ID of the folder containing the flow.
+        status:
+          type: string
+          enum:
+          - Active
+          - Paused
+          - Archived
+          - Draft
+          description: Current status of the flow.
+        stepsCount:
+          type: integer
+          description: Number of steps in the flow.
+        prospectsCount:
+          type: integer
+          description: Number of prospects currently in the flow.
+        workspaceId:
+          type: string
+          description: The workspace the flow belongs to.
+        created:
+          type: string
+          format: date-time
+          description: When the flow was created.
+        modified:
+          type: string
+          format: date-time
+          description: When the flow was last modified.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.

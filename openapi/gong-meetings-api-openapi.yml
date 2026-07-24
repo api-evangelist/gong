@@ -1,10 +1,7 @@
 openapi: 3.1.0
 info:
-  title: Gong Meetings API
-  description: >-
-    The Gong Meetings API provides endpoints to create, update, and delete Gong
-    meetings, as well as validate meeting integration status for scheduling and
-    managing meeting workflows.
+  title: Gong Auditing Audit Logs Meetings API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
   version: 2.0.0
   contact:
     name: Gong
@@ -15,24 +12,22 @@ info:
     url: https://www.gong.io/terms-of-service/
   termsOfService: https://www.gong.io/terms-of-service/
 servers:
-  - url: https://api.gong.io/v2
-    description: Gong API v2 Production Server
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
 security:
-  - basicAuth: []
-  - bearerAuth: []
+- basicAuth: []
+- bearerAuth: []
 tags:
-  - name: Meetings
-    description: Operations for managing meetings
+- name: Meetings
+  description: Operations for managing meetings
 paths:
   /meetings:
     post:
       operationId: createMeeting
       summary: Create a Gong meeting
-      description: >-
-        Creates a new meeting in Gong with the specified details including
-        participants, scheduling information, and meeting configuration.
+      description: Creates a new meeting in Gong with the specified details including participants, scheduling information, and meeting configuration.
       tags:
-        - Meetings
+      - Meetings
       requestBody:
         required: true
         content:
@@ -68,18 +63,16 @@ paths:
     put:
       operationId: updateMeeting
       summary: Update a Gong meeting
-      description: >-
-        Updates an existing Gong meeting with new details such as updated
-        scheduling, participants, or meeting configuration.
+      description: Updates an existing Gong meeting with new details such as updated scheduling, participants, or meeting configuration.
       tags:
-        - Meetings
+      - Meetings
       parameters:
-        - name: meetingId
-          in: path
-          required: true
-          description: The unique identifier of the meeting to update.
-          schema:
-            type: string
+      - name: meetingId
+        in: path
+        required: true
+        description: The unique identifier of the meeting to update.
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -120,18 +113,16 @@ paths:
     delete:
       operationId: deleteMeeting
       summary: Delete a Gong meeting
-      description: >-
-        Removes a specific meeting from Gong using its unique meeting ID.
-        This operation is irreversible.
+      description: Removes a specific meeting from Gong using its unique meeting ID. This operation is irreversible.
       tags:
-        - Meetings
+      - Meetings
       parameters:
-        - name: meetingId
-          in: path
-          required: true
-          description: The unique identifier of the meeting to delete.
-          schema:
-            type: string
+      - name: meetingId
+        in: path
+        required: true
+        description: The unique identifier of the meeting to delete.
+        schema:
+          type: string
       responses:
         '200':
           description: Meeting successfully deleted.
@@ -161,11 +152,9 @@ paths:
     post:
       operationId: validateMeetingIntegrationStatus
       summary: Gong Validate meeting integration status
-      description: >-
-        Validates the integration status for a meeting, checking whether the
-        meeting system integration is properly configured and operational.
+      description: Validates the integration status for a meeting, checking whether the meeting system integration is properly configured and operational.
       tags:
-        - Meetings
+      - Meetings
       requestBody:
         required: true
         content:
@@ -174,8 +163,7 @@ paths:
               $ref: '#/components/schemas/MeetingIntegrationStatusRequest'
       responses:
         '200':
-          description: >-
-            Successful response containing the meeting integration status.
+          description: Successful response containing the meeting integration status.
           content:
             application/json:
               schema:
@@ -199,61 +187,84 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
-      description: >-
-        Basic authentication using your Gong API access key and secret. Format:
-        base64(access_key:access_secret).
-    bearerAuth:
-      type: http
-      scheme: bearer
-      description: OAuth 2.0 Bearer token authentication.
   schemas:
-    CreateMeetingRequest:
+    BaseResponse:
       type: object
-      required:
-        - title
-        - scheduledStart
-        - scheduledEnd
-        - organizerEmail
       properties:
-        title:
+        requestId:
           type: string
-          description: Title of the meeting.
-        scheduledStart:
+          description: A unique identifier for the request.
+    MeetingIntegrationStatusResponse:
+      type: object
+      properties:
+        requestId:
           type: string
-          format: date-time
-          description: Scheduled start time of the meeting in ISO-8601 format.
-        scheduledEnd:
+          description: A unique identifier for the request.
+        isIntegrated:
+          type: boolean
+          description: Whether the meeting integration is properly configured.
+        provider:
           type: string
-          format: date-time
-          description: Scheduled end time of the meeting in ISO-8601 format.
-        organizerEmail:
+          description: The meeting provider checked.
+        status:
           type: string
-          format: email
-          description: Email of the meeting organizer.
-        meetingUrl:
+          enum:
+          - Active
+          - Inactive
+          - Error
+          description: Current status of the integration.
+        details:
           type: string
-          format: uri
-          description: URL of the meeting (conferencing link).
-        attendees:
+          description: Additional details about the integration status.
+    MeetingResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        meetingId:
+          type: string
+          description: The Gong-assigned meeting identifier.
+        meeting:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique meeting identifier.
+            title:
+              type: string
+              description: Title of the meeting.
+            scheduledStart:
+              type: string
+              format: date-time
+              description: Scheduled start time.
+            scheduledEnd:
+              type: string
+              format: date-time
+              description: Scheduled end time.
+            organizerEmail:
+              type: string
+              format: email
+              description: Email of the organizer.
+            meetingUrl:
+              type: string
+              format: uri
+              description: Meeting URL.
+            attendees:
+              type: array
+              items:
+                $ref: '#/components/schemas/MeetingAttendee'
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/MeetingAttendee'
-          description: List of meeting attendees.
-        description:
-          type: string
-          description: Description or agenda for the meeting.
-        meetingProvider:
-          type: string
-          description: >-
-            The meeting provider (e.g., Zoom, Google Meet, Microsoft Teams).
-        externalMeetingId:
-          type: string
-          description: >-
-            External meeting ID from the conferencing system.
+            type: string
+          description: List of error messages.
     UpdateMeetingRequest:
       type: object
       properties:
@@ -293,49 +304,11 @@ components:
         responseStatus:
           type: string
           enum:
-            - Accepted
-            - Declined
-            - Tentative
-            - NeedsAction
+          - Accepted
+          - Declined
+          - Tentative
+          - NeedsAction
           description: The attendee's RSVP response status.
-    MeetingResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        meetingId:
-          type: string
-          description: The Gong-assigned meeting identifier.
-        meeting:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique meeting identifier.
-            title:
-              type: string
-              description: Title of the meeting.
-            scheduledStart:
-              type: string
-              format: date-time
-              description: Scheduled start time.
-            scheduledEnd:
-              type: string
-              format: date-time
-              description: Scheduled end time.
-            organizerEmail:
-              type: string
-              format: email
-              description: Email of the organizer.
-            meetingUrl:
-              type: string
-              format: uri
-              description: Meeting URL.
-            attendees:
-              type: array
-              items:
-                $ref: '#/components/schemas/MeetingAttendee'
     MeetingIntegrationStatusRequest:
       type: object
       properties:
@@ -346,42 +319,53 @@ components:
           type: string
           format: email
           description: Email of the user to check integration for.
-    MeetingIntegrationStatusResponse:
+    CreateMeetingRequest:
       type: object
+      required:
+      - title
+      - scheduledStart
+      - scheduledEnd
+      - organizerEmail
       properties:
-        requestId:
+        title:
           type: string
-          description: A unique identifier for the request.
-        isIntegrated:
-          type: boolean
-          description: Whether the meeting integration is properly configured.
-        provider:
+          description: Title of the meeting.
+        scheduledStart:
           type: string
-          description: The meeting provider checked.
-        status:
+          format: date-time
+          description: Scheduled start time of the meeting in ISO-8601 format.
+        scheduledEnd:
           type: string
-          enum:
-            - Active
-            - Inactive
-            - Error
-          description: Current status of the integration.
-        details:
+          format: date-time
+          description: Scheduled end time of the meeting in ISO-8601 format.
+        organizerEmail:
           type: string
-          description: Additional details about the integration status.
-    BaseResponse:
-      type: object
-      properties:
-        requestId:
+          format: email
+          description: Email of the meeting organizer.
+        meetingUrl:
           type: string
-          description: A unique identifier for the request.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
+          format: uri
+          description: URL of the meeting (conferencing link).
+        attendees:
           type: array
           items:
-            type: string
-          description: List of error messages.
+            $ref: '#/components/schemas/MeetingAttendee'
+          description: List of meeting attendees.
+        description:
+          type: string
+          description: Description or agenda for the meeting.
+        meetingProvider:
+          type: string
+          description: The meeting provider (e.g., Zoom, Google Meet, Microsoft Teams).
+        externalMeetingId:
+          type: string
+          description: External meeting ID from the conferencing system.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.

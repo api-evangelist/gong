@@ -1,0 +1,299 @@
+openapi: 3.1.0
+info:
+  title: Gong Auditing Audit Logs Prospects API
+  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  version: 2.0.0
+  contact:
+    name: Gong
+    url: https://www.gong.io
+    email: support@gong.io
+  license:
+    name: Proprietary
+    url: https://www.gong.io/terms-of-service/
+  termsOfService: https://www.gong.io/terms-of-service/
+servers:
+- url: https://api.gong.io/v2
+  description: Gong API v2 Production Server
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Prospects
+  description: Operations for managing prospects in Engage flows
+paths:
+  /flows/prospects/assign:
+    post:
+      operationId: assignProspectsToFlow
+      summary: Gong Assign prospects to Engage flow
+      description: Assigns one or more prospects to a specified Engage flow. Prospects will begin receiving the flow's outreach sequence upon assignment.
+      tags:
+      - Prospects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignProspectsRequest'
+      responses:
+        '200':
+          description: Prospects successfully assigned to the flow.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignProspectsResponse'
+        '400':
+          description: Bad request due to invalid parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /flows/prospects/unassign:
+    post:
+      operationId: unassignProspectsFromFlow
+      summary: Gong Unassign prospects from Engage flow
+      description: Removes one or more prospects from specified Engage flows. You can remove prospects from up to 100 flows in a single request. The response returns the flow instance IDs the prospect was successfully removed from.
+      tags:
+      - Prospects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnassignProspectsRequest'
+      responses:
+        '200':
+          description: Prospects successfully unassigned from the flow.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnassignProspectsResponse'
+        '400':
+          description: Bad request due to invalid parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /flows/prospects:
+    post:
+      operationId: listAssignedFlowsForProspects
+      summary: Gong List assigned flows for prospects
+      description: Retrieves the list of Engage flows that specified prospects are currently assigned to.
+      tags:
+      - Prospects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProspectsFlowsRequest'
+      responses:
+        '200':
+          description: Successful response containing the flows assigned to each prospect.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProspectsFlowsResponse'
+        '400':
+          description: Bad request due to invalid parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid or missing authentication credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    UnassignProspectsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        unassignedFlowInstanceIds:
+          type: array
+          items:
+            type: string
+          description: Flow instance IDs the prospect was successfully removed from.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    UnassignProspectsRequest:
+      type: object
+      required:
+      - flowInstanceIds
+      properties:
+        flowInstanceIds:
+          type: array
+          items:
+            type: string
+          description: List of flow instance IDs to unassign. Up to 100 per request.
+    ProspectsFlowsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        prospectsFlows:
+          type: array
+          items:
+            type: object
+            properties:
+              prospectEmail:
+                type: string
+                format: email
+              assignedFlows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    flowId:
+                      type: string
+                    flowInstanceId:
+                      type: string
+                    flowName:
+                      type: string
+                    assignedAt:
+                      type: string
+                      format: date-time
+          description: Flow assignments for each prospect.
+    Prospect:
+      type: object
+      required:
+      - emailAddress
+      properties:
+        emailAddress:
+          type: string
+          format: email
+          description: The prospect's email address.
+        firstName:
+          type: string
+          description: The prospect's first name.
+        lastName:
+          type: string
+          description: The prospect's last name.
+        company:
+          type: string
+          description: The prospect's company name.
+        title:
+          type: string
+          description: The prospect's job title.
+        phoneNumber:
+          type: string
+          description: The prospect's phone number.
+        linkedInUrl:
+          type: string
+          format: uri
+          description: The prospect's LinkedIn profile URL.
+        customFields:
+          type: object
+          additionalProperties:
+            type: string
+          description: Custom field key-value pairs for the prospect.
+    ProspectsFlowsRequest:
+      type: object
+      required:
+      - prospectEmails
+      properties:
+        prospectEmails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: List of prospect email addresses to check.
+    AssignProspectsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        assignedProspects:
+          type: array
+          items:
+            type: object
+            properties:
+              emailAddress:
+                type: string
+                format: email
+              flowInstanceId:
+                type: string
+          description: List of successfully assigned prospects with their flow instance IDs.
+        failedProspects:
+          type: array
+          items:
+            type: object
+            properties:
+              emailAddress:
+                type: string
+                format: email
+              reason:
+                type: string
+          description: List of prospects that failed to be assigned.
+    AssignProspectsRequest:
+      type: object
+      required:
+      - flowId
+      - prospects
+      properties:
+        flowId:
+          type: string
+          description: The ID of the Engage flow to assign prospects to.
+        prospects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Prospect'
+          description: List of prospects to assign.
+        senderEmail:
+          type: string
+          format: email
+          description: The email address to send flow messages from.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token authentication.
