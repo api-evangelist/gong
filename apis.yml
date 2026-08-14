@@ -2,11 +2,18 @@ aid: gong
 url: https://raw.githubusercontent.com/api-evangelist/gong/refs/heads/main/apis.yml
 name: Gong
 kind: company
-description: Gong is the revenue intelligence platform that captures and analyzes customer interactions
-  across calls, emails, and meetings. APIs expose calls, transcripts, deals, users, and analytics.
+description: Gong is the revenue intelligence platform that captures and analyzes customer
+  interactions across calls, emails, meetings and web conferencing, then applies AI to surface
+  deal risk, coaching signal and forecast correction for B2B go-to-market teams. Its public REST
+  v2 API at api.gong.io exposes 57 operations covering calls, transcripts, recordings, users,
+  permission profiles, workspaces, statistics, scorecards, trackers, library content, Engage
+  flows and prospects, engagement events, meetings, audit logs, generic CRM ingestion and
+  GDPR/CCPA data-privacy erasure. Gong also runs an official remote MCP server at mcp.gong.io
+  for external AI agents, a rule-driven outbound webhook surface for calls, and a frontend SDK
+  for partner apps embedded in the Gong UI.
 accessModel:
-  pricing: unknown
-  onboarding: self-serve
+  pricing: contact-sales
+  onboarding: sales-gated
   trial: false
   try_now: false
   public: false
@@ -15,8 +22,13 @@ accessModel:
   source:
   - plans
   - authentication
-  generated: '2026-07-22'
-  method: derived
+  generated: '2026-08-13'
+  method: searched
+  note: >-
+    Corrected 2026-08-13 from the 2026-07-22 derive. www.gong.io/pricing publishes
+    no prices or tiers — it is a lead form that routes to a custom proposal, and a
+    Gong sandbox/developer instance is provisioned by a Revenue Architect or a
+    partner application, not self-serve.
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/gong.png
 tags:
 - Sales
@@ -24,8 +36,14 @@ tags:
 - Conversation
 - Analytics
 - AI
+- Conversation Intelligence
+- Sales Engagement
+- CRM
+- Forecasting
+- Transcription
+- Agents
 created: '2026-05-08'
-modified: '2026-08-08'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 apis:
 - name: Gong Calls API
@@ -86,6 +104,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-audit-logs-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-audit-logs-api-overlay.yaml
 - aid: gong:gong-calls-api
   name: Gong Calls API
   description: Operations for managing and retrieving call data
@@ -96,6 +116,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-calls-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-calls-api-overlay.yaml
 - aid: gong:gong-crm-data-api
   name: Gong CRM Data API
   description: Operations for uploading and retrieving CRM data
@@ -106,6 +128,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-crm-data-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-crm-data-api-overlay.yaml
 - aid: gong:gong-crm-integration-api
   name: Gong CRM Integration API
   description: Operations for registering and managing CRM integrations
@@ -116,6 +140,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-crm-integration-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-crm-integration-api-overlay.yaml
 - aid: gong:gong-crm-schema-api
   name: Gong CRM Schema API
   description: Operations for managing CRM object schemas
@@ -126,6 +152,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-crm-schema-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-crm-schema-api-overlay.yaml
 - aid: gong:gong-data-privacy-api
   name: Gong Data Privacy API
   description: Operations for data privacy management and compliance
@@ -136,6 +164,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-data-privacy-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-data-privacy-api-overlay.yaml
 - aid: gong:gong-digital-interactions-api
   name: Gong Digital Interactions API
   description: Operations for posting digital interaction data
@@ -146,6 +176,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-digital-interactions-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-digital-interactions-api-overlay.yaml
 - aid: gong:gong-engagement-events-api
   name: Gong Engagement Events API
   description: Operations for reporting customer engagement events
@@ -156,6 +188,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-engagement-events-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-engagement-events-api-overlay.yaml
 - aid: gong:gong-flows-api
   name: Gong Flows API
   description: Operations for managing Engage flows
@@ -166,6 +200,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-flows-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-flows-api-overlay.yaml
 - aid: gong:gong-folders-api
   name: Gong Folders API
   description: Operations for managing flow folders
@@ -176,6 +212,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-folders-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-folders-api-overlay.yaml
 - aid: gong:gong-library-api
   name: Gong Library API
   description: Operations for browsing and retrieving library content
@@ -186,6 +224,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-library-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-library-api-overlay.yaml
 - aid: gong:gong-meetings-api
   name: Gong Meetings API
   description: Operations for managing meetings
@@ -196,6 +236,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-meetings-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-meetings-api-overlay.yaml
 - aid: gong:gong-permission-profiles-api
   name: Gong Permission Profiles API
   description: Operations for managing permission profiles
@@ -206,6 +248,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-permission-profiles-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-permission-profiles-api-overlay.yaml
 - aid: gong:gong-prospects-api
   name: Gong Prospects API
   description: Operations for managing prospects in Engage flows
@@ -216,6 +260,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-prospects-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-prospects-api-overlay.yaml
 - aid: gong:gong-recordings-api
   name: Gong Recordings API
   description: Operations for managing call recordings and media
@@ -226,6 +272,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-recordings-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-recordings-api-overlay.yaml
 - aid: gong:gong-scorecards-api
   name: Gong Scorecards API
   description: Operations for retrieving scorecard configurations
@@ -236,6 +284,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-scorecards-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-scorecards-api-overlay.yaml
 - aid: gong:gong-statistics-api
   name: Gong Statistics API
   description: Operations for retrieving activity and performance statistics
@@ -246,6 +296,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-statistics-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-statistics-api-overlay.yaml
 - aid: gong:gong-trackers-api
   name: Gong Trackers API
   description: Operations for retrieving tracker configurations
@@ -256,6 +308,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-trackers-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-trackers-api-overlay.yaml
 - aid: gong:gong-transcripts-api
   name: Gong Transcripts API
   description: Operations for retrieving call transcripts
@@ -266,6 +320,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-transcripts-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-transcripts-api-overlay.yaml
 - aid: gong:gong-users-api
   name: Gong Users API
   description: Operations for managing and retrieving user data
@@ -276,6 +332,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-users-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-users-api-overlay.yaml
 - aid: gong:gong-workspaces-api
   name: Gong Workspaces API
   description: Operations for managing workspaces
@@ -286,6 +344,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gong-workspaces-api-openapi.yml
+  - type: Overlay
+    url: overlays/gong-workspaces-api-overlay.yaml
 common:
 - type: AgenticAccess
   url: agentic-access/gong-agentic-access.yml
@@ -335,8 +395,61 @@ common:
   url: https://github.com/gong-io
 - type: Twitter
   url: https://x.com/gong_io
+- type: Packages
+  url: packages/gong-packages.yml
+- type: SDKs
+  url: packages/gong-packages.yml
+- type: WellKnown
+  url: well-known/gong-well-known.yml
+- type: MCPServer
+  url: mcp/gong-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/gong-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/gong-llms.txt
+- type: Conformance
+  url: conformance/gong-conformance.yml
+- type: Compliance
+  url: https://www.gong.io/security
+- type: ErrorCatalog
+  url: errors/gong-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/gong-lifecycle.yml
+- type: StatusPage
+  url: https://status.gong.io
+- type: Deprecation
+  url: https://help.gong.io/docs/public-api-change-deprecating-call-action-items-in-the-extensive-endpoint
+- type: OAuthScopes
+  url: scopes/gong-scopes.yml
+- type: VulnerabilityDisclosure
+  url: security/gong-vulnerability-disclosure.yml
+- type: Sandbox
+  url: sandbox/gong-sandbox.yml
+- type: Conventions
+  url: conventions/gong-conventions.yml
+- type: ChangeLog
+  url: changelog/gong-changelog.yml
+- type: Components
+  url: components/gong-components.yml
+- type: DataModel
+  url: data-model/gong-data-model.yml
+- type: Webhooks
+  url: asyncapi/gong-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DeveloperPortal
+  url: https://help.gong.io/docs/how-to-use-the-gong-developers-hub
+- type: Support
+  url: https://contact.gong.io/hc/en-us/requests/new
+- type: HelpCenter
+  url: https://help.gong.io/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 x-merged-from:
 - gong-io
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 46
+  pass: local-v1
