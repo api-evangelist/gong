@@ -1,0 +1,65 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Auditing Audit Logs CRM Schema API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CRM Schema",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong List schema fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/crm/entity-schema",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the CRM integration."
+              },
+              {
+                "name": "objectType",
+                "value": "",
+                "type": "query",
+                "description": "The type of CRM object to get schema for."
+              }
+            ]
+          },
+          "docs": "Retrieves the schema fields defined for a specific CRM object type and integration."
+        },
+        {
+          "info": {
+            "name": "Gong Upload CRM object schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/crm/entity-schema",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Uploads the schema definition for a CRM object type including field definitions, labels, and data types. This defines the structure of CRM objects that can be uploaded to Gong."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

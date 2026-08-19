@@ -1,0 +1,72 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://help.gong.io/docs/faqs-sandbox,
+  https://help.gong.io/docs/set-up-a-developer-instance,
+  https://help.gong.io/docs/create-an-app-for-gong
+docs: https://help.gong.io/docs/faqs-sandbox
+model: separate-instance
+test_mode_separation:
+  style: separate tenant, not a test-mode key
+  note: >-
+    Gong has NO test/live key prefixes, no test-mode flag on a request and no
+    sandbox host. Isolation is achieved by provisioning a whole second Gong
+    instance. Consequently there is nothing in a credential or a base URL that
+    tells a caller whether it is pointed at production — a caller must track
+    that out of band, per instance.
+environments:
+- name: Sandbox
+  purpose: Test integrations, workflows and configuration without touching production data.
+  cost: free
+  provisioning: >-
+    Not self-serve. Request it through your Gong Revenue Architect (RA), who
+    submits a provisioning request to Gong RevOps.
+  seeded_data: none — starts as a clean, empty instance
+  data_replication: not supported; production data cannot be copied in
+  license_limits: none (no paid subscription or license limits)
+- name: Developer instance
+  purpose: Build and test a Gong Collective app / integration.
+  cost: free
+  provisioning: >-
+    Apply via the partner form at
+    https://collective.gong.io/application_forms/become-a-gong-technology-partner/partner_applications/new
+  lead_time: up to five working days
+  seeded_data: none
+  note: >-
+    Gong states there is NO technical difference between a Sandbox and a
+    developer instance — the two names describe intended usage and audience.
+    Developers building against the API are pointed at the developer portal path.
+setup_requirements:
+  identity: >-
+    Email addresses must be unique across ALL Gong instances. Gong recommends
+    plus-addressing (john.doe+sandbox@yourdomain.com) or alternate addresses;
+    production emails must not be reused.
+  domain: >-
+    Employee test accounts must match the primary domain configured on the
+    company's Gong account.
+  crm: >-
+    A sandbox must be connected to a SANDBOX of the supported CRM, not to a
+    production CRM. Salesforce and HubSpot developer accounts are the documented
+    options.
+  seeding_procedure:
+  - Create three mailboxes — a VP Sales (FLM), an AE, and an external prospect.
+  - Create the VP Sales and AE users in Gong with the VP as the AE's manager, and turn on call recording and email sync for both.
+  - Create the same two users in the CRM developer instance, plus an account, an opportunity with a near-future close date, and a contact using the prospect address.
+  - Exchange a few emails between the AE and prospect mailboxes.
+  - Schedule a web-conference meeting (e.g. a Zoom link) 1-2 hours ahead so Gong can join and record it.
+  - Sign in as the VP Sales and comment on the recorded call to generate coaching statistics.
+test_values:
+  magic_identifiers: none published
+  test_cards: not applicable
+  note: >-
+    Gong publishes no magic test identifiers, no fixture generator and no
+    trigger tooling. Test data is produced by actually exercising the product —
+    sending real email and recording a real meeting into an empty instance.
+    There is nothing to record verbatim here because Gong publishes no test
+    values, and none have been invented.
+time_simulation:
+  supported: false
+gaps:
+- Sandbox provisioning is human-gated (RA request or a partner application with a five-day lead time), so an integrator cannot self-serve an environment.
+- No seeded dataset, so first-call-to-first-useful-response requires building a conversation corpus by hand.
+- No test-mode credential or host, so no in-band production/non-production signal.

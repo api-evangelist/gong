@@ -1,0 +1,95 @@
+generated: '2026-08-13'
+method: searched
+status: published
+source: >-
+  https://help.gong.io/docs/about-gong-mcp,
+  https://help.gong.io/docs/create-an-integration-to-connect-to-the-mcp-server,
+  https://help.gong.io/docs/how-mcp-server-tools-and-apis-consume-credits,
+  https://mcp.gong.io/.well-known/oauth-authorization-server
+deployment:
+  mode: remote
+  endpoint: https://mcp.gong.io/mcp
+  auth: oauth
+  verified: probed
+server:
+  name: Gong MCP server
+  transport: http
+  url: https://mcp.gong.io/mcp
+  vendor: Gong
+  announced: '2026-05'
+  docs: https://help.gong.io/docs/about-gong-mcp
+  service_version_header: MCPGatewayWebApi
+authorization:
+  protocol: OAuth 2.0
+  issuer: https://mcp.gong.io
+  authorization_endpoint: https://app.gong.io/oauth2/authorize
+  token_endpoint: https://app.gong.io/oauth2/generate-mcp-token
+  grant_types: [authorization_code, refresh_token]
+  pkce: [S256]
+  token_endpoint_auth_methods: [client_secret_basic, client_secret_post]
+  scopes:
+  - mcp:ai-ask:read
+  - mcp:ai-briefer:read
+  - mcp:ai-assistant:read
+  resource_metadata: https://mcp.gong.io/.well-known/oauth-protected-resource/mcp
+  registration: >-
+    No dynamic client registration. A Gong tech admin registers an "MCP
+    integration" in Admin center > Settings > Ecosystem > API, chooses Personal
+    access (per-user data, the default, recommended for Claude/ChatGPT/Copilot)
+    or Shared access (whole-organization data, for backend agents), supplies the
+    client's redirect URI, and receives a client ID and client secret. The
+    authorization context cannot be changed after submission.
+access_control:
+  seat_required: paid Gong seat; Collaborators cannot use the MCP server
+  admin_role: Tech admin
+  metering: >-
+    MCP tool calls consume Gong credits on the same model as the equivalent
+    REST call — consumption tracks the volume of calls and emails analyzed, not
+    the access method.
+tools:
+- name: ask_account
+  description: Answer questions about an account from its associated calls and emails.
+  backing_api: ask-entity API
+  consumes_credits: true
+  source: https://help.gong.io/docs/how-mcp-server-tools-and-apis-consume-credits
+- name: ask_deal
+  description: Answer questions about a specific deal/opportunity from its associated calls and emails.
+  backing_api: ask-entity API
+  consumes_credits: true
+  source: https://help.gong.io/docs/how-mcp-server-tools-and-apis-consume-credits
+- name: generate_brief
+  description: >-
+    Generate a structured, sectioned summary (brief) for an account, deal or
+    contact. Each open-ended section performs its own analysis pass.
+  backing_api: get-brief API
+  consumes_credits: true
+  source: https://help.gong.io/docs/how-mcp-server-tools-and-apis-consume-credits
+tools_note: >-
+  This tool list is taken verbatim from Gong's own credit-consumption
+  documentation, which is the only place Gong names its MCP tools. A live
+  tools/list probe against https://mcp.gong.io/mcp returned HTTP 401 with
+  `WWW-Authenticate: Bearer realm="mcp"`, so the authoritative tool set and the
+  per-tool inputSchema require an authenticated introspection. The list above
+  may therefore be incomplete and carries no input schemas. Gong's docs also
+  describe the server's capability envelope as: ask questions about accounts and
+  deals, generate summaries, and retrieve AI-generated insights.
+mcp_client:
+  note: >-
+    Gong also ships an MCP CLIENT — Gong AI agents (e.g. AI Briefer) can connect
+    outward to external MCP servers configured by a business admin. That is a
+    consumption surface, not a surface an external agent can call, and is
+    recorded here only for completeness.
+x-evidence:
+- url: https://mcp.gong.io/mcp
+  method: POST tools/list
+  http_status: 401
+  detail: 'www-authenticate: Bearer realm="mcp", resource_metadata=https://mcp.gong.io/.well-known/oauth-protected-resource/mcp'
+  fetched: '2026-08-13'
+- url: https://mcp.gong.io/.well-known/oauth-authorization-server
+  http_status: 200
+  content_type: application/json
+  fetched: '2026-08-13'
+- url: https://mcp.gong.io/.well-known/oauth-protected-resource/mcp
+  http_status: 200
+  content_type: application/json
+  fetched: '2026-08-13'

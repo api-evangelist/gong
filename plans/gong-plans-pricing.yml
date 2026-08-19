@@ -4,8 +4,12 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Gong
 providerId: gong
 created: '2026-05-08'
-modified: '2026-05-08'
-reconciled: false
+modified: '2026-08-13'
+generated: '2026-08-13'
+method: searched
+reconciled: true
+source: https://www.gong.io/pricing
+docs: https://www.gong.io/pricing
 tags:
 - Sales
 - Revenue Intelligence
@@ -13,31 +17,59 @@ tags:
 - Analytics
 - AI
 - Plans
-description: Placeholder plans/pricing artifact for Gong. Replace with real published pricing once the pipeline researches
-  the provider's plans page.
-notes: "Initial scaffold \u2014 plans/pricing have not yet been reconciled against the provider's documentation."
-sources:
-- https://www.gong.io/
-- https://app.gong.io/settings/api/documentation
-- https://app.gong.io/settings/api/documentation
-plans:
-- id: gong-default
-  name: To Be Reconciled
-  type: enterprise
-  description: Initial scaffold; replace with provider plan tiers once pricing is reconciled.
-  entries:
-  - label: API Access
-    name: api_access
-    type: flat
-    metric: varies
-    limit: -1
-    timeFrame: usage
-    geo: global
-    unit: 1
-    price: see https://www.gong.io/
-    userMultiplied: false
-  elements:
-  - name: Pending Reconciliation
+description: >-
+  Gong publishes NO prices, NO named tiers and NO public plan table. The
+  pricing page is a lead form — prospects choose a company-size band (1-50,
+  51-1,000, 1,001-9,999, 10,000+) and Gong prepares a custom proposal. Gong does
+  describe the SHAPE of the commercial model in prose: a per-user license fee
+  plus a platform fee scaled to the number of supported users, with integrations
+  to an existing tech stack included at no extra charge.
+plan_count: 0
+pricing_model: contact-sales
+published_prices: false
+free_tier: false
+trial: false
+self_serve_signup: false
+model:
+  components:
+  - name: Per-user license fee
+    basis: user
+    price: not published
+  - name: Platform fee
+    basis: number of supported users
+    price: not published
+  - name: Integrations
+    basis: included
+    price: '0'
+    note: Gong states existing tech-stack integrations are integrated free.
+  currency: not published
+  billing_period: not published
+api_access:
+  gated_by: plan and assigned seat
+  note: >-
+    API and MCP access are not sold separately. The public REST API is available
+    to all customers and partners; webhook automation rules require Gong
+    Foundation; the MCP server requires a paid seat (Collaborators are excluded).
+    Which product surfaces a given token can reach depends on the company's plan
+    and the user's assigned seats.
+  sources:
+  - https://help.gong.io/docs/what-the-gong-api-provides
+  - https://help.gong.io/docs/create-an-integration-to-connect-to-the-mcp-server
+  - https://help.gong.io/docs/create-a-webhook-rule
+consumption:
+  unit: Gong credits
+  applies_to:
+  - ask-entity API (ask_account, ask_deal)
+  - get-brief API (generate_brief)
+  basis: volume of calls and emails analyzed, plus the number of open-ended brief sections
+  note: >-
+    Credits are metered identically whether a request arrives over MCP or over
+    the equivalent API. Gong publishes optimization guidance but no credit
+    price, no included allowance and no overage rate.
+  sources:
+  - https://help.gong.io/docs/how-mcp-server-tools-and-apis-consume-credits
+  - https://help.gong.io/docs/guide-optimize-credit-consumption-for-mcp-server-tools-and-apis
+plans: []
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

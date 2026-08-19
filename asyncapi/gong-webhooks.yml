@@ -1,0 +1,75 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://help.gong.io/docs/create-a-webhook-rule,
+  https://help.gong.io/docs/payload-sent-to-webhooks,
+  https://help.gong.io/docs/prepare-your-receiving-application-to-receive-a-webhook-jwt-header
+spec_type: none
+asyncapi_published: false
+asyncapi_note: >-
+  Gong publishes no AsyncAPI document. It does publish a real, outbound webhook
+  surface, captured here as a webhook catalog. NOTHING has been fabricated into
+  AsyncAPI shape — the event surface is rule-driven rather than event-typed,
+  which is precisely why an AsyncAPI would be a poor fit today.
+surface:
+  kind: rule-driven-webhook
+  configuration: Admin center > Settings > Ecosystem > Automation rules
+  admin_role: Tech admin
+  plan: Gong Foundation
+  docs: https://help.gong.io/docs/create-a-webhook-rule
+  model: >-
+    There is no subscribable event-type catalog. An admin creates an automation
+    rule whose action is "Fire webhook", attaches the same call filters used by
+    Gong search, and names a destination URL. Every call matching the filter is
+    POSTed to that URL. The event vocabulary is therefore the filter language,
+    not a list of topics, and it is defined per tenant rather than by Gong.
+events:
+- name: call.matched-rule
+  trigger: A call matches an enabled automation rule's filters
+  direction: outbound
+  transport: HTTPS POST
+  content_type: application/json
+  destination: customer-supplied URL
+  filterable_by: the Gong call search filter set (see https://help.gong.io/docs/search-for-calls)
+  payload:
+    fields:
+    - name: callData
+      description: The call object, identical in structure and element definitions to the REST call payload (GET /v2/calls).
+    - name: isTest
+      type: boolean
+      description: True when the delivery was fired from the "Test now" button in the rule editor rather than by a live call.
+    top_level_call_blocks: [metaData, context, parties, content, interaction, collaboration, media]
+    schema_reference: >-
+      Gong states the call data structure and element definitions are identical
+      to the API, so json-schema/gong-call-schema.json and
+      json-schema/gong-detailedcall-schema.json in this repo describe the
+      payload body.
+    sample: https://help.gong.io/docs/payload-sent-to-webhooks
+security:
+  methods:
+  - method: url-includes-key
+    description: Gong appends a secure random token to the destination URL; the receiver checks it.
+  - method: signed-jwt-header
+    description: >-
+      Gong signs the delivery and sends a JWT header. The tenant copies Gong's
+      public key from the rule editor ("Show public key") and verifies the
+      signature on receipt.
+    verification_docs: https://help.gong.io/docs/prepare-your-receiving-application-to-receive-a-webhook-jwt-header
+    key_distribution: per-tenant public key, displayed in the Automation rules UI
+  replay_protection: not documented
+  retry_policy: not documented
+  delivery_guarantee: not documented
+testing:
+  mechanism: >-
+    The rule editor selects one real call that matches the filters and offers
+    "Test now" to fire a single delivery. The resulting payload carries
+    isTest: true so the receiver can distinguish it.
+forward_compatibility: >-
+  Gong repeats the API's warning for webhooks: fields may be added to the JSON
+  without prior warning, so receivers must ignore unknown fields.
+gaps:
+- No AsyncAPI or other machine-readable event contract.
+- No event-type catalog — the only event is "a call matched a rule".
+- No documented retry, backoff, ordering or at-least-once guarantee.
+- No published signature header name or JWT claim set (only the verification sample code).
+- The surface covers calls only; CRM, user, flow and meeting changes emit nothing.

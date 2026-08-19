@@ -1,0 +1,40 @@
+generated: '2026-08-13'
+method: generated
+source: openapi/*.yml, conventions/gong-conventions.yml, errors/gong-problem-types.yml, rate-limits/gong-rate-limits.yml, help.gong.io
+note: >-
+  Gong publishes no AGENTS.md or provider-authored skill files — searched first,
+  found none. These six are generated from the 21 harvested OpenAPI documents
+  and the conventions/errors/rate-limit artifacts in this repo. Every
+  operationId below was verified verbatim against the specs; none was invented.
+  The recurring theme across all six is that Gong has NO idempotency contract,
+  so every skill states the retry hazard explicitly.
+skills:
+- file: gong-pull-calls-and-transcripts.md
+  name: Pull Gong calls and transcripts
+  api: openapi/gong-calls-api-openapi.yml
+  operations: [listCalls, listCallsExtensive, getCall, getCallTranscripts]
+- file: gong-upload-an-external-call.md
+  name: Upload an externally recorded call to Gong
+  api: openapi/gong-calls-api-openapi.yml
+  operations: [addCall, addCallRecording, getCall]
+- file: gong-sync-crm-data.md
+  name: Push CRM data into Gong
+  api: openapi/gong-crm-data-api-openapi.yml
+  operations: [registerCrmIntegration, getCrmIntegrations, uploadObjectSchema, getSchemaFields,
+    uploadCrmObjects, getUploadStatus, getCrmObjects, deleteCrmIntegration]
+- file: gong-manage-engage-flows.md
+  name: Manage Gong Engage flows and prospects
+  api: openapi/gong-flows-api-openapi.yml
+  operations: [listEngageFlows, listFlowFolders, listAssignedFlowsForProspects, assignProspectsToFlow,
+    unassignProspectsFromFlow, overrideFlowContent]
+- file: gong-handle-data-subject-request.md
+  name: Handle a Gong data subject erasure request
+  api: openapi/gong-data-privacy-api-openapi.yml
+  operations: [retrieveEmailReferences, retrievePhoneReferences, deleteEmailAddressData,
+    deletePhoneNumberData]
+- file: gong-audit-users-and-access.md
+  name: Audit Gong users, permissions and admin activity
+  api: openapi/gong-users-api-openapi.yml
+  operations: [listWorkspaces, listUsers, listUsersByFilter, getUser, getUserSettingsHistory,
+    listPermissionProfiles, getPermissionProfile, listUsersByPermissionProfile, retrieveUserCallAccess,
+    giveUserCallAccess, removeUserCallAccess, retrieveAuditLogs]

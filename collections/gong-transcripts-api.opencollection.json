@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Auditing Audit Logs Transcripts API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transcripts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Retrieve call transcripts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/calls/transcript",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves transcript data for calls matching the specified filter criteria. Transcripts include speaker identification and timing information."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

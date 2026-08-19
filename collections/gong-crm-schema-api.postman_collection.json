@@ -1,0 +1,510 @@
+{
+  "item": [
+    {
+      "id": "96ac480b-ddb0-40c7-a764-94c3968adce2",
+      "name": "CRM Schema",
+      "description": {
+        "content": "Operations for managing CRM object schemas",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "89809672-099b-493d-b607-28ef56c38850",
+          "name": "Gong Upload CRM object schema",
+          "request": {
+            "name": "Gong Upload CRM object schema",
+            "description": {
+              "content": "Uploads the schema definition for a CRM object type including field definitions, labels, and data types. This defines the structure of CRM objects that can be uploaded to Gong.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "crm",
+                "entity-schema"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"integrationId\": \"<string>\",\n  \"objectType\": \"<string>\",\n  \"fields\": [\n    {\n      \"uniqueName\": \"<string>\",\n      \"label\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isRequired\": \"<boolean>\",\n      \"referenceObjectType\": \"<string>\"\n    },\n    {\n      \"uniqueName\": \"<string>\",\n      \"label\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isRequired\": \"<boolean>\",\n      \"referenceObjectType\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aeed2225-77ef-4400-a085-93167ee09d02",
+              "name": "Schema successfully uploaded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crm",
+                    "entity-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"integrationId\": \"<string>\",\n  \"objectType\": \"<string>\",\n  \"fields\": [\n    {\n      \"uniqueName\": \"<string>\",\n      \"label\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isRequired\": \"<boolean>\",\n      \"referenceObjectType\": \"<string>\"\n    },\n    {\n      \"uniqueName\": \"<string>\",\n      \"label\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isRequired\": \"<boolean>\",\n      \"referenceObjectType\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbff4521-3c34-4482-bbdb-4c815fdf5bf1",
+              "name": "Bad request due to invalid schema definition.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crm",
+                    "entity-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"integrationId\": \"<string>\",\n  \"objectType\": \"<string>\",\n  \"fields\": [\n    {\n      \"uniqueName\": \"<string>\",\n      \"label\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isRequired\": \"<boolean>\",\n      \"referenceObjectType\": \"<string>\"\n    },\n    {\n      \"uniqueName\": \"<string>\",\n      \"label\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isRequired\": \"<boolean>\",\n      \"referenceObjectType\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98051ffa-f276-413e-873e-b558d40b4c5d",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crm",
+                    "entity-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"integrationId\": \"<string>\",\n  \"objectType\": \"<string>\",\n  \"fields\": [\n    {\n      \"uniqueName\": \"<string>\",\n      \"label\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isRequired\": \"<boolean>\",\n      \"referenceObjectType\": \"<string>\"\n    },\n    {\n      \"uniqueName\": \"<string>\",\n      \"label\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isRequired\": \"<boolean>\",\n      \"referenceObjectType\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "664c2666-c162-47b3-8025-4cd5d9cb22a1",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crm",
+                    "entity-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"integrationId\": \"<string>\",\n  \"objectType\": \"<string>\",\n  \"fields\": [\n    {\n      \"uniqueName\": \"<string>\",\n      \"label\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isRequired\": \"<boolean>\",\n      \"referenceObjectType\": \"<string>\"\n    },\n    {\n      \"uniqueName\": \"<string>\",\n      \"label\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isRequired\": \"<boolean>\",\n      \"referenceObjectType\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "064acadc-1fc7-49b5-8ab9-308c59fed55f",
+          "name": "Gong List schema fields",
+          "request": {
+            "name": "Gong List schema fields",
+            "description": {
+              "content": "Retrieves the schema fields defined for a specific CRM object type and integration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "crm",
+                "entity-schema"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "integrationId",
+                  "value": "<string>",
+                  "description": "(Required) The unique identifier of the CRM integration."
+                },
+                {
+                  "disabled": false,
+                  "key": "objectType",
+                  "value": "<string>",
+                  "description": "(Required) The type of CRM object to get schema for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "99d60952-de2d-4d28-80ff-e6bafc0276e9",
+              "name": "Successful response containing schema fields.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crm",
+                    "entity-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "integrationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "objectType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"fields\": [\n    {\n      \"uniqueName\": \"string\",\n      \"label\": \"string\",\n      \"type\": \"string\",\n      \"isRequired\": false\n    },\n    {\n      \"uniqueName\": \"string\",\n      \"label\": \"string\",\n      \"type\": \"string\",\n      \"isRequired\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6f3658e-adea-4770-9e19-d67de4b30746",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crm",
+                    "entity-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "integrationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "objectType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "261df6c6-30b4-4d84-a763-97d921c1b22d",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crm",
+                    "entity-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "integrationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "objectType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gong.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fa2948a7-921f-4b49-98b3-1f38f59d375c",
+    "name": "Gong Auditing Audit Logs CRM Schema API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.\n\nContact Support:\n Name: Gong\n Email: support@gong.io",
+      "type": "text/plain"
+    }
+  }
+}

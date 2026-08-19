@@ -1,15 +1,32 @@
-generated: '2026-07-11'
+generated: '2026-08-13'
 method: searched
 probe: true
-source: https://trust.gong.io/
+source: https://trust.gong.io/, https://www.gong.io/security, https://www.gong.io/trust-center
 url: https://trust.gong.io/
+pages:
+- {url: 'https://trust.gong.io/', status: 200, kind: trust-center}
+- {url: 'https://www.gong.io/trust-center', status: 200, kind: trust-overview}
+- {url: 'https://www.gong.io/security', status: 200, kind: security-program}
+- {url: 'https://help.gong.io/docs/pci-dss-compliance', status: 200, kind: pci-scope-and-responsibilities}
 certifications:
-- SOC 2
-- ISO 27001
-- ISO 27017
-- ISO 27018
-- PCI DSS
+- SOC 2 Type 2
+- ISO/IEC 27001:2022
+- ISO/IEC 27017
+- ISO/IEC 27018
+- ISO/IEC 27701
+- ISO/IEC 42001:2023
+- PCI DSS (SAQ D)
 - CSA STAR
+- EU-U.S. Data Privacy Framework
+ai_governance:
+  standard: ISO/IEC 42001:2023
+  claim: Customer data is never used to train generative models.
+  source: https://www.gong.io/security
+availability_claim:
+  uptime: '99.5%'
+  source: https://www.gong.io/security
+  status_page: https://status.gong.io
+vulnerability_disclosure: security/gong-vulnerability-disclosure.yml
 evidence:
 - source: https://trust.gong.io/
   keywords:
@@ -18,3 +35,16 @@ evidence:
   - pci dss
   - trust center
   - csa star
+- source: https://www.gong.io/security
+  keywords:
+  - soc 2 type 2
+  - iso/iec 42001
+  - iso/iec 27701
+  - eu-u.s. data privacy framework
+  - vulnerability disclosure
+note: >-
+  Upgraded 2026-08-13 from the 2026-07-11 probe, which found six certifications
+  from trust.gong.io alone. Reading the public security page added ISO/IEC 27701
+  (privacy information management), ISO/IEC 42001:2023 (AI management system),
+  the EU-U.S. Data Privacy Framework listing, the SOC 2 Type 2 qualifier and the
+  99.5% uptime claim.

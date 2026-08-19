@@ -1,0 +1,87 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/*.yml (57 operations across 21 documents),
+  https://help.gong.io/apidocs/introduction-2,
+  https://help.gong.io/docs/receive-access-to-the-api
+format: vendor-json
+rfc9457: false
+envelope:
+  content_type: application/json
+  schema: ErrorResponse
+  fields:
+  - name: requestId
+    type: string
+    description: Unique identifier for the request; quote it when contacting Gong support.
+  - name: errors
+    type: array of string
+    description: Human-readable error messages. Not machine-classifiable — there is no code, type URI or field pointer.
+  note: >-
+    Every 4xx/5xx across all 21 specs returns the same ErrorResponse shape. It
+    is a flat list of English strings, so a client cannot branch on an error
+    class without string matching. Adopting RFC 9457 problem+json (a stable
+    `type` URI per failure mode) is the highest-value change Gong could make for
+    agent consumers.
+coverage:
+  operations_total: 57
+  operations_with_400: 33
+  operations_with_401: 57
+  operations_with_404: 14
+  operations_with_429: 57
+problems:
+- status: 400
+  title: Bad request due to invalid parameters
+  media_type: application/json
+  schema: ErrorResponse
+  occurrences: 33
+  remediation: >-
+    Validate the request body/query against the operation schema. Gong returns
+    the specific complaint in errors[]; there is no field pointer, so map the
+    message text to the offending field.
+- status: 401
+  title: Unauthorized — invalid or missing authentication credentials
+  media_type: application/json
+  schema: ErrorResponse
+  occurrences: 57
+  remediation: >-
+    Re-check the Authorization header. For Basic auth the token is
+    Base64(accessKey:accessKeySecret); for OAuth the Bearer token expires after
+    1 day by default and must be refreshed with the refresh token. OAuth clients
+    must also call the per-customer host from api_base_url_for_customer — calling
+    the generic api.gong.io host with a customer token is a common 401 cause.
+- status: 403
+  title: Forbidden — request originated from an untrusted IP address
+  media_type: application/json
+  schema: ErrorResponse
+  occurrences: 0
+  in_spec: false
+  source: https://help.gong.io/docs/receive-access-to-the-api
+  remediation: >-
+    Documented by Gong but absent from every OpenAPI. An API key may carry a
+    Trusted IPs allowlist; a request from any other address is rejected with 403.
+    Add the caller's egress IP/CIDR to the key (changes take up to five minutes)
+    or clear the allowlist.
+- status: 404
+  title: Resource not found
+  media_type: application/json
+  schema: ErrorResponse
+  occurrences: 14
+  remediation: >-
+    The addressed entity does not exist or is not visible to the credential.
+    Gong specifically documents that assignProspectsToFlow returns 404 when the
+    flowId does not exist or the flow has been deleted.
+- status: 429
+  title: Rate limit exceeded
+  media_type: application/json
+  schema: ErrorResponse
+  occurrences: 57
+  headers: [Retry-After]
+  remediation: >-
+    Sleep for Retry-After seconds, then retry. Budget against 3 requests/second
+    and 10,000 requests/day per company. Because Gong publishes no idempotency
+    contract, retrying a write after a 429 that may have partially applied is
+    the caller's risk to manage.
+gaps:
+- No 5xx responses are declared on any of the 57 operations, so server-fault handling is undocumented.
+- No error codes, error type URIs, or per-field validation pointers.
+- 403 (trusted-IP rejection) is documented in the help centre but declared in no spec.

@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Auditing Audit Logs Scorecards API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scorecards",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Retrieve scorecards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/settings/scorecards"
+          },
+          "docs": "Retrieves all scorecard configurations defined in the Gong account, including their questions, scoring criteria, and associated metadata."
+        },
+        {
+          "info": {
+            "name": "Gong Retrieve answered scorecards",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/stats/scorecards",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves answered scorecard data for calls, including scores and evaluations by reviewers for the specified time period and users."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

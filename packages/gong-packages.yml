@@ -1,0 +1,58 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.npmjs.com/package/@gong.io/frontend-sdk,
+  https://registry.npmjs.org/@gong.io%2Ffrontend-sdk,
+  https://help.gong.io/docs/build-an-app-to-display-content-in-the-gong-email-composer,
+  https://api.github.com/orgs/gong-io/repos
+note: >-
+  Gong publishes exactly one first-party client library: the browser-side
+  frontend SDK used by iframe apps embedded in the Gong email composer and
+  account/pipeline pages. It is published under the npm scope @gong.io, which
+  Gong controls, and is the package Gong's own help docs tell partners to
+  import. There is NO first-party server-side SDK for the REST API in any
+  language — npm, PyPI, RubyGems, Maven Central, NuGet, crates.io and
+  pkg.go.dev were all checked and the only Gong-named packages are
+  community/third-party wrappers and MCP servers. The github.com/gong-io
+  organization publishes research and annotation tooling (gecko, doccano,
+  call-playbook), not API clients.
+packages:
+- language: javascript
+  registry: npm
+  name: '@gong.io/frontend-sdk'
+  url: https://www.npmjs.com/package/@gong.io/frontend-sdk
+  install: npm install @gong.io/frontend-sdk
+  official: true
+  version: 0.9.7
+  published: '2024-04-11'
+  first_published: '2024-04-10'
+  scope_of_use: >-
+    Frontend/iframe SDK for Gong Collective apps — init(), GongFrontendApi,
+    ready(), close(), closeWithContent(). Not a client for the REST API at
+    api.gong.io.
+  docs: https://help.gong.io/docs/build-an-app-to-display-content-in-the-gong-email-composer
+  currency_note: >-
+    Latest release 0.9.7 predates the current Gong public API surface by more
+    than two years and the package is still pre-1.0. Five versions total
+    (0.9.3-0.9.7), all shipped in April 2024.
+registries_checked:
+- registry: npm
+  result: one official package found under the @gong.io scope
+- registry: pypi
+  result: no first-party package (gong, gong-api, gongio all 404; pygong is unrelated third-party)
+- registry: rubygems
+  result: no first-party package
+- registry: maven-central
+  result: no first-party package
+- registry: nuget
+  result: no first-party package
+- registry: crates.io
+  result: no first-party package
+- registry: pkg.go.dev
+  result: no first-party package
+third_party_note: >-
+  A large community ecosystem wraps the Gong API — @bgrgndzz/gong-mcp,
+  gong-mcp-server, @tailoredai/gong-mcp-server, @pipeworx/mcp-gong,
+  @oztamir/gong-cli, @pipedream/gong, @fusebit-int/gong-connector — none of
+  which are published or endorsed by Gong. They are recorded here only so a
+  future pass does not mistake one for an official SDK.

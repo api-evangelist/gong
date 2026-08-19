@@ -1,0 +1,297 @@
+{
+  "item": [
+    {
+      "id": "6867d8e8-3636-457b-9eba-2197291a258c",
+      "name": "Digital Interactions",
+      "description": {
+        "content": "Operations for posting digital interaction data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "86253c40-af42-4dab-a47f-ed926e7a7edc",
+          "name": "Gong Post digital interaction",
+          "request": {
+            "name": "Gong Post digital interaction",
+            "description": {
+              "content": "Posts a digital interaction event to Gong, recording structured data about digital communications such as emails, chat messages, or other text-based interactions with customers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "digital-interactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"interactionType\": \"<string>\",\n  \"participants\": [\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    },\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"timestamp\": \"<dateTime>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"direction\": \"<string>\",\n  \"workspaceId\": \"<string>\",\n  \"clientUniqueId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "92af61ec-46cc-4105-8c5e-147ecfe6924f",
+              "name": "Digital interaction successfully posted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital-interactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"interactionType\": \"<string>\",\n  \"participants\": [\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    },\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"timestamp\": \"<dateTime>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"direction\": \"<string>\",\n  \"workspaceId\": \"<string>\",\n  \"clientUniqueId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"interactionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67c70cd7-2655-4454-b74a-53707e28322b",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital-interactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"interactionType\": \"<string>\",\n  \"participants\": [\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    },\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"timestamp\": \"<dateTime>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"direction\": \"<string>\",\n  \"workspaceId\": \"<string>\",\n  \"clientUniqueId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9fbd9e38-4ff8-4202-95fd-b5fa910251cc",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital-interactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"interactionType\": \"<string>\",\n  \"participants\": [\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    },\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"timestamp\": \"<dateTime>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"direction\": \"<string>\",\n  \"workspaceId\": \"<string>\",\n  \"clientUniqueId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b763b4e-000a-4a6b-a036-80405f70db12",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "digital-interactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"interactionType\": \"<string>\",\n  \"participants\": [\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    },\n    {\n      \"emailAddress\": \"<email>\",\n      \"name\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"timestamp\": \"<dateTime>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"direction\": \"<string>\",\n  \"workspaceId\": \"<string>\",\n  \"clientUniqueId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gong.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7a1650b8-75bb-4913-a3ae-d1140e618513",
+    "name": "Gong Auditing Audit Logs Digital Interactions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.\n\nContact Support:\n Name: Gong\n Email: support@gong.io",
+      "type": "text/plain"
+    }
+  }
+}

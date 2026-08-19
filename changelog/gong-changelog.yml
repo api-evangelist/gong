@@ -1,0 +1,60 @@
+generated: '2026-08-13'
+method: searched
+source: https://help.gong.io/docs/release-notes
+url: https://help.gong.io/docs/release-notes
+scheme: monthly-dated-notes
+current_version: v2
+api_specific: false
+note: >-
+  Gong publishes one monthly "Release notes" page covering the whole product,
+  with an explicit "Planned change management" table for changes that require
+  customer action. It is NOT an API changelog — API-affecting changes appear
+  only when they happen to require an admin-settings change, and standalone API
+  breaks are published as separate "Public API change" articles instead (see
+  lifecycle/gong-lifecycle.yml). There is no per-release version number and no
+  machine-readable feed for the release notes themselves.
+planned_changes:
+- change: Use call brief metrics instead of spotlight usage data in the Feature Utilization report and Gong data cloud
+  announced: '2025-02'
+  release: '2025-04'
+  breaking: true
+- change: Remove END_TIMETIME from the CALL_RECORDINGS table in the Gong data cloud; use END_DATE_TIME instead
+  announced: '2026-01'
+  release: '2026-02'
+  breaking: true
+entries:
+- date: '2026-08'
+  breaking: true
+  highlights:
+  - The previous version of the utilization report is no longer supported.
+  - 'Two columns added to the utilization report: Has Enable Essentials seat, Last update.'
+- date: '2026-07'
+  breaking: false
+  highlights:
+  - Microsoft Dynamics CRM setting changes now run as an asynchronous backfill; real-time sync of new data is unaffected.
+  - New "View all answered scorecards" permission on permission profiles (off by default on existing profiles).
+  - CRM fields can now be designated for associating contacts and leads with Gong activities.
+  - Utilization report gained Gong Assistant and meeting-prep usage metrics.
+- date: '2026-06'
+  breaking: false
+  highlights:
+  - New "Manage AI Tracker" permission split out of "Manage general business settings".
+  - New Gong Assistant permissions for building assets and creating documents.
+  - New "Manage Automations" permission covering call, Engage flow and brief automations.
+  - Business admins can now customize the account console view.
+  - HubSpot configuration page redesigned.
+- date: '2026-05'
+  breaking: false
+  api_relevant: true
+  highlights:
+  - Gong MCP client and server announced as coming soon — the first appearance of the MCP surface in the release notes.
+  - Consent profiles can be set up for multiple web providers (Google Calendar).
+  - New "Record calls on mobile" permission split out of "Manually schedule and upload calls".
+- date: '2026-04'
+  breaking: false
+  highlights:
+  - Email-export-to-CRM settings moved from the CRM settings page to the team member profile / provisioning assignment.
+  - Activity association can now pick the most recent deal or the deal closest to the activity date.
+  - MS Dynamics export of meeting invites and web conference calls can be set to tasks or phone calls.
+  - Call status report now includes calls that were not scheduled to be recorded.
+window: 'recent window only — 2026-04 through 2026-08 plus the standing planned-change table'

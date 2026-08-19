@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Auditing Audit Logs Trackers API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Trackers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Retrieve trackers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/settings/trackers",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "Optional workspace ID to filter trackers by workspace."
+              }
+            ]
+          },
+          "docs": "Retrieves all tracker configurations defined in the Gong account. Trackers are keywords and phrases that Gong identifies during call transcription and analysis."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

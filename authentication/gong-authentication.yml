@@ -1,44 +1,108 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/gong-auditing-openapi.yml, openapi/gong-calls-openapi.yml, openapi/gong-crm-openapi.yml,
-  openapi/gong-data-privacy-openapi.yml, openapi/gong-engage-openapi.yml, openapi/gong-engagement-openapi.yml,
-  openapi/gong-library-openapi.yml, openapi/gong-meetings-openapi.yml, openapi/gong-permissions-openapi.yml,
-  openapi/gong-settings-openapi.yml, openapi/gong-stats-openapi.yml, openapi/gong-users-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: openapi/*.yml
+docs: https://help.gong.io/apidocs/introduction-2
+docs_oauth: https://help.gong.io/docs/create-an-app-for-gong
+docs_keys: https://help.gong.io/docs/receive-access-to-the-api
+note: >-
+  Upgraded 2026-08-13 from a derive-only pass. The OpenAPI declares only two
+  HTTP schemes (basic, bearer); the docs carry the rest of the model — how keys
+  are issued, the TTL and Trusted-IP controls on them, the full OAuth 2.0 flow,
+  the per-customer API host, and the entirely separate OAuth surface that fronts
+  the MCP server.
 summary:
-  types:
-  - http
+  types: [http, oauth2]
+  http_schemes: [basic, bearer]
+  oauth2_flows: [authorizationCode]
+  surfaces: 2
+  note: >-
+    Two credential systems that do not interoperate. A REST credential
+    (api:* scopes or an Access Key) cannot call mcp.gong.io, and an MCP token
+    (mcp:* scopes) cannot call api.gong.io.
 schemes:
 - name: basicAuth
   type: http
   scheme: basic
-  description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
-  sources:
-  - openapi/gong-auditing-openapi.yml
-  - openapi/gong-calls-openapi.yml
-  - openapi/gong-crm-openapi.yml
-  - openapi/gong-data-privacy-openapi.yml
-  - openapi/gong-engage-openapi.yml
-  - openapi/gong-engagement-openapi.yml
-  - openapi/gong-library-openapi.yml
-  - openapi/gong-meetings-openapi.yml
-  - openapi/gong-permissions-openapi.yml
-  - openapi/gong-settings-openapi.yml
-  - openapi/gong-stats-openapi.yml
-  - openapi/gong-users-openapi.yml
+  surface: REST v2
+  description: >-
+    HTTP Basic (RFC 7617) using a Gong Access Key and Access Key Secret:
+    Base64(accessKey:accessKeySecret).
+  issuance: >-
+    Admin center > Settings > Ecosystem > API > "+ Get API key" (Tech admin
+    only). Optional TTL in days and an optional Trusted IPs allowlist (IPv4,
+    IPv6, CIDR, ranges). The secret is displayed once and cannot be retrieved
+    again; keys can be edited or deleted, and deletion revokes access immediately.
+  ip_allowlist:
+    supported: true
+    rejection_status: 403
+    propagation: up to five minutes
+  rotation: Manual — create a new key and delete the old one. No overlap/grace mechanism is documented.
+  sources: [openapi/*.yml, 'https://help.gong.io/docs/receive-access-to-the-api']
 - name: bearerAuth
   type: http
   scheme: bearer
-  description: OAuth 2.0 Bearer token authentication.
-  sources:
-  - openapi/gong-auditing-openapi.yml
-  - openapi/gong-calls-openapi.yml
-  - openapi/gong-crm-openapi.yml
-  - openapi/gong-data-privacy-openapi.yml
-  - openapi/gong-engage-openapi.yml
-  - openapi/gong-engagement-openapi.yml
-  - openapi/gong-library-openapi.yml
-  - openapi/gong-meetings-openapi.yml
-  - openapi/gong-permissions-openapi.yml
-  - openapi/gong-settings-openapi.yml
-  - openapi/gong-stats-openapi.yml
-  - openapi/gong-users-openapi.yml
+  surface: REST v2
+  description: OAuth 2.0 Bearer token (RFC 6750) obtained through Gong's authorization-code flow.
+  sources: [openapi/*.yml, 'https://help.gong.io/docs/create-an-app-for-gong']
+- name: GongOAuth2
+  type: oauth2
+  surface: REST v2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://app.gong.io/oauth2/authorize
+    tokenUrl: https://app.gong.io/oauth2/generate-customer-token
+    refreshUrl: https://app.gong.io/oauth2/generate-customer-token
+    scope_delimiter: space
+  client_registration: >-
+    Manual. A Gong tech admin creates the integration in Admin center >
+    Settings > Ecosystem > API, selects required authorization scopes, supplies
+    redirect URIs, privacy/terms/help links and organization domains, and
+    receives a Client ID and Client Secret.
+  client_authentication: HTTP Basic, Base64(client_id:client_secret)
+  authorization_code_ttl: 10 minutes
+  access_token_ttl: 1 day by default; override with validity_duration (seconds)
+  refresh: refresh_token grant against the same endpoint
+  user_level_oauth: false
+  user_level_note: >-
+    Gong explicitly states it does not support user-level OAuth — authorization
+    happens once at a global (company) level. There is no per-end-user consent
+    or per-user token on the REST surface.
+  per_customer_base_url:
+    field: api_base_url_for_customer
+    example: https://company-17.api.gong.io
+    rule: >-
+      The token response names the host the caller must use. It differs per
+      customer and must be stored as part of that customer's context; requests
+      to the generic api.gong.io host with a customer token fail.
+  scopes: scopes/gong-scopes.yml
+  sources: ['https://help.gong.io/docs/create-an-app-for-gong']
+- name: GongMCPOAuth2
+  type: oauth2
+  surface: MCP (https://mcp.gong.io/mcp)
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://app.gong.io/oauth2/authorize
+    tokenUrl: https://app.gong.io/oauth2/generate-mcp-token
+    pkce: [S256]
+  client_authentication: [client_secret_basic, client_secret_post]
+  dynamic_client_registration: false
+  discovery:
+    authorization_server_metadata: https://mcp.gong.io/.well-known/oauth-authorization-server
+    protected_resource_metadata: https://mcp.gong.io/.well-known/oauth-protected-resource/mcp
+    challenge: 'WWW-Authenticate: Bearer realm="mcp", resource_metadata=...'
+  authorization_context:
+    modes: [Personal access, Shared access]
+    default: Personal access
+    note: >-
+      Set once at integration registration and immutable afterwards. Personal
+      access limits the agent to the authorizing user's own data and permissions
+      (recommended for Claude/ChatGPT/Copilot); Shared access grants
+      organization-wide data (for backend/reporting agents).
+  seat_requirement: paid Gong seat; Collaborators excluded
+  scopes: [mcp:ai-ask:read, mcp:ai-briefer:read, mcp:ai-assistant:read]
+  sources: ['https://mcp.gong.io/.well-known/oauth-authorization-server', 'https://help.gong.io/docs/create-an-integration-to-connect-to-the-mcp-server']
+gaps:
+- No OpenID Connect — no /.well-known/openid-configuration on any host, no id_token.
+- No per-user OAuth on the REST surface, so per-seat least privilege is not achievable there.
+- No published api:* scope catalogue outside the authenticated app (see scopes/gong-scopes.yml).
+- No documented key-rotation grace window.

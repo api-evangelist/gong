@@ -1,0 +1,36 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Auditing Audit Logs Workspaces API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workspaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong List company workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/workspaces"
+          },
+          "docs": "Retrieves a list of all workspaces configured in the Gong account. Workspaces are used to organize and segment data within the platform."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

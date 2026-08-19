@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Auditing Audit Logs Prospects API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Prospects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Assign prospects to Engage flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/flows/prospects/assign",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assigns one or more prospects to a specified Engage flow. Prospects will begin receiving the flow's outreach sequence upon assignment."
+        },
+        {
+          "info": {
+            "name": "Gong Unassign prospects from Engage flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/flows/prospects/unassign",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes one or more prospects from specified Engage flows. You can remove prospects from up to 100 flows in a single request. The response returns the flow instance IDs the prospect was successfully removed from."
+        },
+        {
+          "info": {
+            "name": "Gong List assigned flows for prospects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/flows/prospects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves the list of Engage flows that specified prospects are currently assigned to."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,470 @@
+{
+  "item": [
+    {
+      "id": "50191589-5e1d-41db-acc1-1b948e108fe1",
+      "name": "Scorecards",
+      "description": {
+        "content": "Operations for retrieving scorecard configurations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e801a3f2-8fc7-48ab-9abd-ce719faaf009",
+          "name": "Gong Retrieve scorecards",
+          "request": {
+            "name": "Gong Retrieve scorecards",
+            "description": {
+              "content": "Retrieves all scorecard configurations defined in the Gong account, including their questions, scoring criteria, and associated metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "scorecards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9bffcef1-a69e-4877-9a6d-2dc4d0bfafed",
+              "name": "Successful response containing scorecard configurations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "scorecards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"scorecards\": [\n    {\n      \"scorecardId\": \"string\",\n      \"scorecardName\": \"string\",\n      \"enabled\": false,\n      \"workspaceId\": \"string\",\n      \"created\": \"1953-07-16T05:51:16.075Z\",\n      \"updated\": \"1946-11-12T09:35:50.138Z\",\n      \"questions\": [\n        {\n          \"questionId\": \"string\",\n          \"questionText\": \"string\",\n          \"questionType\": \"FreeText\",\n          \"isRequired\": false,\n          \"options\": [\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            },\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            }\n          ]\n        },\n        {\n          \"questionId\": \"string\",\n          \"questionText\": \"string\",\n          \"questionType\": \"Scale\",\n          \"isRequired\": false,\n          \"options\": [\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            },\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"scorecardId\": \"string\",\n      \"scorecardName\": \"string\",\n      \"enabled\": true,\n      \"workspaceId\": \"string\",\n      \"created\": \"2002-09-18T14:53:51.422Z\",\n      \"updated\": \"2015-03-08T08:03:10.134Z\",\n      \"questions\": [\n        {\n          \"questionId\": \"string\",\n          \"questionText\": \"string\",\n          \"questionType\": \"FreeText\",\n          \"isRequired\": true,\n          \"options\": [\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            },\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            }\n          ]\n        },\n        {\n          \"questionId\": \"string\",\n          \"questionText\": \"string\",\n          \"questionType\": \"FreeText\",\n          \"isRequired\": false,\n          \"options\": [\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            },\n            {\n              \"value\": \"string\",\n              \"label\": \"string\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81faeddf-4244-4b59-8887-3974378ebe3d",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "scorecards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80a3d4d0-7eb5-4970-b737-e3bfa5fbda00",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "scorecards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "32ab54ae-d4cf-47f0-ab57-3da0e1f2c80c",
+          "name": "Gong Retrieve answered scorecards",
+          "request": {
+            "name": "Gong Retrieve answered scorecards",
+            "description": {
+              "content": "Retrieves answered scorecard data for calls, including scores and evaluations by reviewers for the specified time period and users.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stats",
+                "scorecards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"fromDateTime\": \"<dateTime>\",\n    \"toDateTime\": \"<dateTime>\",\n    \"userIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"scorecardIds\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "34e311ad-cbe6-435a-89ff-3965fa81c1ba",
+              "name": "Successful response containing answered scorecard data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stats",
+                    "scorecards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"fromDateTime\": \"<dateTime>\",\n    \"toDateTime\": \"<dateTime>\",\n    \"userIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"scorecardIds\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"records\": {\n    \"totalRecords\": 8441,\n    \"currentPageSize\": 716,\n    \"cursor\": \"string\"\n  },\n  \"answeredScorecards\": [\n    {\n      \"callId\": \"string\",\n      \"scorecardId\": \"string\",\n      \"scorecardName\": \"string\",\n      \"reviewedUserId\": \"string\",\n      \"reviewerUserId\": \"string\",\n      \"answeredAt\": \"1965-11-25T18:09:47.638Z\",\n      \"overallScore\": 3625.09644676806,\n      \"questions\": [\n        {\n          \"questionId\": \"string\",\n          \"questionText\": \"string\",\n          \"answer\": \"string\",\n          \"score\": 9835.029654844018,\n          \"isNotApplicable\": true\n        },\n        {\n          \"questionId\": \"string\",\n          \"questionText\": \"string\",\n          \"answer\": \"string\",\n          \"score\": 6149.976722056433,\n          \"isNotApplicable\": true\n        }\n      ]\n    },\n    {\n      \"callId\": \"string\",\n      \"scorecardId\": \"string\",\n      \"scorecardName\": \"string\",\n      \"reviewedUserId\": \"string\",\n      \"reviewerUserId\": \"string\",\n      \"answeredAt\": \"1996-10-13T22:25:38.358Z\",\n      \"overallScore\": 4083.663507671458,\n      \"questions\": [\n        {\n          \"questionId\": \"string\",\n          \"questionText\": \"string\",\n          \"answer\": \"string\",\n          \"score\": 5558.1765331036395,\n          \"isNotApplicable\": false\n        },\n        {\n          \"questionId\": \"string\",\n          \"questionText\": \"string\",\n          \"answer\": \"string\",\n          \"score\": 1841.8351128502964,\n          \"isNotApplicable\": true\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b67c416d-deab-4b4f-a228-16a3caec415e",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stats",
+                    "scorecards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"fromDateTime\": \"<dateTime>\",\n    \"toDateTime\": \"<dateTime>\",\n    \"userIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"scorecardIds\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "540dc7ab-c46d-4120-9e34-9daf76685a9d",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stats",
+                    "scorecards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"fromDateTime\": \"<dateTime>\",\n    \"toDateTime\": \"<dateTime>\",\n    \"userIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"scorecardIds\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ce29db5-6524-4c1a-a2da-7e5a4df9535d",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stats",
+                    "scorecards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"filter\": {\n    \"fromDateTime\": \"<dateTime>\",\n    \"toDateTime\": \"<dateTime>\",\n    \"userIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"scorecardIds\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gong.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9a5130c3-a7dc-4947-bdb5-2dc05e2421c7",
+    "name": "Gong Auditing Audit Logs Scorecards API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.\n\nContact Support:\n Name: Gong\n Email: support@gong.io",
+      "type": "text/plain"
+    }
+  }
+}

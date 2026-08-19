@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Auditing Audit Logs Folders API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Folders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong List flow folders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/flows/folders",
+            "params": [
+              {
+                "name": "userEmail",
+                "value": "",
+                "type": "query",
+                "description": "Email of the user to include personal and shared folders for."
+              },
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "Filter folders by workspace ID."
+              }
+            ]
+          },
+          "docs": "Retrieves all company flow folders, plus personal flow folders and flow folders shared with the specified user. Used to organize and categorize Engage flows."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,88 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://help.gong.io/docs/release-notes,
+  https://help.gong.io/docs/public-api-change-deprecating-call-action-items-in-the-extensive-endpoint,
+  https://help.gong.io/apidocs/introduction-2,
+  https://status.gong.io,
+  https://www.gong.io/security
+versioning:
+  scheme: uri-path
+  current: v2
+  docs: https://help.gong.io/apidocs/introduction-2
+  note: >-
+    A single major version, v2, on the path. No header or date-pinned
+    versioning. Gong reserves the right to add response fields without notice
+    (see conventions/gong-conventions.yml forward_compatibility), so v2 is a
+    non-breaking-additions contract rather than a frozen one.
+deprecation:
+  policy_url: https://help.gong.io/docs/public-api-change-deprecating-call-action-items-in-the-extensive-endpoint
+  formal_policy: false
+  sunset_header: false
+  deprecation_header: false
+  notice_channel: >-
+    Individual "Public API change" articles in the help centre, plus a "Planned
+    change management" table at the top of the monthly release notes listing
+    upcoming changes with an announcement date and a release date.
+  advance_notice: >-
+    Variable and per-change. The two entries currently in the planned-change
+    table gave roughly one to two months (announced February 2025 / released
+    April 2025; announced January 2026 / released February 2026). The one
+    documented API deprecation gave no separate lead time — the article is dated
+    the same day the deprecation took effect.
+  note: >-
+    Gong publishes no versioning or deprecation POLICY document — no stated
+    minimum notice period, no RFC 8594 Sunset or Deprecation response headers,
+    and no machine-readable deprecation signal. What exists is a per-change
+    announcement practice, which is real and worth crediting, but a client
+    cannot detect a pending removal from a response.
+  events:
+  - date: '2025-01-23'
+    type: field-removal
+    breaking: true
+    operation: listCallsExtensive
+    path: POST /v2/calls/extensive
+    removed:
+    - request: contentSelector.exposedFields.pointOfInterest
+    - response: content.pointsOfInterest (call action items)
+    replacement: >-
+      Set contentSelector.exposedFields.highlights = true; next steps are
+      returned under content.highlights (the Next Steps model in Highlights).
+    url: https://help.gong.io/docs/public-api-change-deprecating-call-action-items-in-the-extensive-endpoint
+  - date: '2026-02'
+    announced: '2026-01'
+    type: field-removal
+    breaking: true
+    surface: Gong data cloud
+    removed: END_TIMETIME column on the CALL_RECORDINGS table
+    replacement: END_DATE_TIME
+    url: https://help.gong.io/docs/release-notes
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in any of the 21 OpenAPI documents carries `deprecated: true`.
+  The one known API deprecation was a field inside listCallsExtensive, not a
+  whole operation, and it is not reflected in the spec.
+beta_surfaces:
+- surface: Meetings API
+  label: BETA
+  operations: [createMeeting, updateMeeting, deleteMeeting, validateMeetingIntegrationStatus]
+  source: https://help.gong.io/apidocs/meetings-1
+status_page:
+  url: https://status.gong.io
+  platform: incident.io
+  feeds:
+  - https://status.gong.io/feed.rss
+  - https://status.gong.io/feed.atom
+  http_status: 200
+sla:
+  uptime_target: '99.5%'
+  source: https://www.gong.io/security
+  contract_url: null
+  note: >-
+    99.5% uptime is stated on Gong's public security page as a platform claim.
+    Gong publishes no customer-facing SLA document, no credit schedule and no
+    API-specific availability target.
+support:
+  url: https://contact.gong.io/hc/en-us/requests/new
+  note: Rate-limit increases are handled by contacting support, not self-serve.
+changelog: changelog/gong-changelog.yml

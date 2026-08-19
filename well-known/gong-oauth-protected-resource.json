@@ -1,0 +1,1 @@
+{"authorization_servers":["https://mcp.gong.io"],"resource":"https://mcp.gong.io/mcp","scopes_supported":["mcp:ai-ask:read","mcp:ai-briefer:read","mcp:ai-assistant:read"]}

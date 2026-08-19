@@ -1,0 +1,235 @@
+{
+  "item": [
+    {
+      "id": "408183d5-e6ac-4b7c-b36f-f3fa51297f0d",
+      "name": "Trackers",
+      "description": {
+        "content": "Operations for retrieving tracker configurations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f5312a88-e2fb-460c-9e09-410028862535",
+          "name": "Gong Retrieve trackers",
+          "request": {
+            "name": "Gong Retrieve trackers",
+            "description": {
+              "content": "Retrieves all tracker configurations defined in the Gong account. Trackers are keywords and phrases that Gong identifies during call transcription and analysis.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings",
+                "trackers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workspaceId",
+                  "value": "<string>",
+                  "description": "Optional workspace ID to filter trackers by workspace."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "955bb061-ff86-4525-b3fc-9e7f1d57725b",
+              "name": "Successful response containing tracker configurations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "trackers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspaceId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"trackers\": [\n    {\n      \"trackerId\": \"string\",\n      \"trackerName\": \"string\",\n      \"keywords\": [\n        {\n          \"keyword\": \"string\",\n          \"tag\": \"string\"\n        },\n        {\n          \"keyword\": \"string\",\n          \"tag\": \"string\"\n        }\n      ],\n      \"workspaceId\": \"string\",\n      \"created\": \"1957-08-22T23:36:47.172Z\",\n      \"updated\": \"2019-11-01T01:58:05.601Z\"\n    },\n    {\n      \"trackerId\": \"string\",\n      \"trackerName\": \"string\",\n      \"keywords\": [\n        {\n          \"keyword\": \"string\",\n          \"tag\": \"string\"\n        },\n        {\n          \"keyword\": \"string\",\n          \"tag\": \"string\"\n        }\n      ],\n      \"workspaceId\": \"string\",\n      \"created\": \"1960-11-20T09:48:16.651Z\",\n      \"updated\": \"1963-03-30T07:59:01.983Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e72a6fc-0e0f-4e30-a1f7-78c935762a0e",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "trackers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspaceId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "233fbf41-8fbc-42d1-a250-23c93f17bc15",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings",
+                    "trackers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspaceId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gong.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ca6ac5c8-bdad-4729-90f1-592b0bd8edc0",
+    "name": "Gong Auditing Audit Logs Trackers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.\n\nContact Support:\n Name: Gong\n Email: support@gong.io",
+      "type": "text/plain"
+    }
+  }
+}

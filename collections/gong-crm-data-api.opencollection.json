@@ -1,0 +1,110 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Auditing Audit Logs CRM Data API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CRM Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Upload CRM objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gong.io/v2/crm/entities",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the CRM integration."
+              },
+              {
+                "name": "objectType",
+                "value": "",
+                "type": "query",
+                "description": "The type of CRM object being uploaded (e.g., Deal, Account, Contact, Lead)."
+              },
+              {
+                "name": "clientRequestId",
+                "value": "",
+                "type": "query",
+                "description": "A client-generated request ID for tracking."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Uploads CRM objects (such as deals, accounts, contacts, or leads) to Gong for association with call data. Objects are uploaded for a specific integration and object type."
+        },
+        {
+          "info": {
+            "name": "Gong Get CRM objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/crm/objects",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the CRM integration."
+              },
+              {
+                "name": "objectType",
+                "value": "",
+                "type": "query",
+                "description": "The type of CRM object to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves CRM objects that have been uploaded to Gong for a specific integration and object type."
+        },
+        {
+          "info": {
+            "name": "Gong Get upload request status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/crm/upload-status",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the CRM integration."
+              },
+              {
+                "name": "clientRequestId",
+                "value": "",
+                "type": "query",
+                "description": "The client request ID from the original upload request."
+              }
+            ]
+          },
+          "docs": "Retrieves the status of a previous CRM data upload request using the integration ID and client request ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,64 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://help.gong.io/docs/build-an-app-to-display-content-in-the-gong-email-composer,
+  https://help.gong.io/docs/create-an-app-for-gong,
+  https://www.npmjs.com/package/@gong.io/frontend-sdk
+docs: https://help.gong.io/docs/build-an-app-to-display-content-in-the-gong-email-composer
+model: inverted-embedding
+model_note: >-
+  Gong's component surface runs the OPPOSITE way to the usual embeddable-UI
+  pattern. A vendor does not drop a Gong widget into their own product; the
+  partner hosts a web app and GONG embeds it, in a sandboxed iframe, inside the
+  Gong UI. The @gong.io/frontend-sdk package is the postMessage bridge the
+  hosted partner page uses to talk back to its Gong host frame. There is no
+  Gong-supplied visual widget, element library or design system for third-party
+  pages.
+families:
+- family: Gong frontend iframe apps
+  loader: '@gong.io/frontend-sdk'
+  registry: npm
+  version: 0.9.7
+  published: '2024-04-11'
+  install: npm install @gong.io/frontend-sdk
+  import: 'import { init, GongFrontendApi } from "@gong.io/frontend-sdk";'
+  official: true
+  surfaces:
+  - surface: Email composer
+    description: >-
+      Adds a button to the Gong email composer. Clicking it opens the partner's
+      URL in an iframe; the partner returns HTML which Gong sanitizes and embeds
+      into the email draft.
+    configuration: Admin center > Settings > Ecosystem > API > iframe Integration > Email composer
+  - surface: Account information
+    description: >-
+      Renders partner content relevant to an account inside the Gong Engage
+      account and pipeline pages, from a partner-supplied URL.
+    configuration: Admin center > Settings > Ecosystem > API > iframe Integration > Account information
+  api:
+  - name: init
+    description: Initializes the SDK inside the iframe; takes the customer's api_base_url_for_customer when tenant sub-domains are registered.
+  - name: ready
+    description: Notifies Gong the partner app loaded successfully.
+  - name: close
+    description: Closes the iframe without embedding any content (user cancelled).
+  - name: closeWithContent
+    description: Closes the iframe and passes an HTML string for Gong to sanitize and embed.
+  security:
+    iframe_sandbox_tokens: [allow-forms, allow-scripts, allow-same-origin, allow-popups]
+    allowed_origins: >-
+      An explicit https origin allowlist per integration. Wildcard (*) origins
+      are rejected and third-party origins are rejected. All origins must sit
+      under the partner domain registered on the integration.
+    content_handling: Gong sanitizes returned HTML before embedding it in the email draft.
+distribution:
+  marketplace: Gong Collective
+  url: https://www.gong.io/collective/
+  flow: >-
+    Build against a sandbox/developer instance, submit integration details, then
+    publish to the Gong Collective so customers can install it on their own
+    instance.
+gaps:
+- No hosted checkout/auth/embedded-dashboard components — the SDK does exactly three things (ready, close, closeWithContent).
+- The loader has not shipped a release since April 2024 and is still pre-1.0.
+- No public type documentation or reference for GongFrontendApi beyond the one help article.

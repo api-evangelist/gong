@@ -1,0 +1,101 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://help.gong.io/docs/create-an-app-for-gong,
+  https://help.gong.io/docs/gong-engage-api-capabilities,
+  https://mcp.gong.io/.well-known/oauth-authorization-server
+docs: https://help.gong.io/docs/create-an-app-for-gong
+note: >-
+  Gong runs TWO disjoint OAuth 2.0 scope families against two different token
+  endpoints. The api:* family authorizes the REST v2 surface at
+  api.gong.io/v2; the mcp:* family authorizes the MCP server at
+  mcp.gong.io/mcp. The complete api:* scope catalogue is NOT published: Gong's
+  own OAuth guide says "Check the API documentation to see which APIs use which
+  scopes", and that API documentation sits behind a Gong login at
+  app.gong.io/settings/api/documentation. Only the scopes Gong states in public
+  documentation are recorded as provider-published below; scopes attested only
+  by integrators are kept in a separate, clearly-labelled block and are NOT
+  presented as Gong's own list. derive-oauth-scopes.py returned nothing because
+  the harvested OpenAPI files declare HTTP basic/bearer securitySchemes rather
+  than an oauth2 scheme with a scopes map.
+schemes:
+- name: GongOAuth2 (REST v2)
+  flow: authorizationCode
+  authorizationUrl: https://app.gong.io/oauth2/authorize
+  tokenUrl: https://app.gong.io/oauth2/generate-customer-token
+  refreshUrl: https://app.gong.io/oauth2/generate-customer-token
+  client_auth: HTTP Basic, Base64(client_id:client_secret)
+  scope_delimiter: space
+  token_default_validity: 1 day (override with validity_duration, in seconds)
+  authorization_code_validity: 10 minutes
+  per_customer_base_url: >-
+    The token response carries api_base_url_for_customer (e.g.
+    https://company-17.api.gong.io). Requests MUST be directed at that host, not
+    at the generic api.gong.io, and it must be stored per customer.
+  user_level_oauth: >-
+    Not supported. Gong states authorization happens once at a global (company)
+    level, so there is no per-end-user consent model on the REST surface.
+  source: https://help.gong.io/docs/create-an-app-for-gong
+- name: GongMCPOAuth2
+  flow: authorizationCode
+  pkce: [S256]
+  issuer: https://mcp.gong.io
+  authorizationUrl: https://app.gong.io/oauth2/authorize
+  tokenUrl: https://app.gong.io/oauth2/generate-mcp-token
+  client_auth: [client_secret_basic, client_secret_post]
+  resource: https://mcp.gong.io/mcp
+  source: https://mcp.gong.io/.well-known/oauth-authorization-server
+scopes:
+- scope: mcp:ai-ask:read
+  family: mcp
+  description: Read access to Gong's ASK synthesis over accounts and deals (ask_account, ask_deal).
+  schemes: [GongMCPOAuth2]
+  sources: [https://mcp.gong.io/.well-known/oauth-authorization-server]
+- scope: mcp:ai-briefer:read
+  family: mcp
+  description: Read access to generated briefs (generate_brief / AI Briefer).
+  schemes: [GongMCPOAuth2]
+  sources: [https://mcp.gong.io/.well-known/oauth-authorization-server]
+- scope: mcp:ai-assistant:read
+  family: mcp
+  description: Read access to Gong Assistant AI insights over the MCP server.
+  schemes: [GongMCPOAuth2]
+  sources: [https://mcp.gong.io/.well-known/oauth-authorization-server]
+- scope: api:flows:read
+  family: api
+  description: >-
+    Read Gong Engage flows and flow folders, and list flows assigned to
+    prospects. Required by GET /v2/flows, GET /v2/flows/folders and
+    POST /v2/flows/prospects when using Bearer token authorization.
+  schemes: [GongOAuth2 (REST v2)]
+  operations: [listEngageFlows, listFlowFolders, listAssignedFlowsForProspects]
+  sources: [https://help.gong.io/docs/gong-engage-api-capabilities]
+- scope: api:calls:read:basic
+  family: api
+  description: Basic read access to call records. Named in Gong's documented token response example.
+  schemes: [GongOAuth2 (REST v2)]
+  sources: [https://help.gong.io/docs/create-an-app-for-gong]
+- scope: api:calls:create
+  family: api
+  description: Create/upload calls. Named in Gong's documented token response example.
+  schemes: [GongOAuth2 (REST v2)]
+  sources: [https://help.gong.io/docs/create-an-app-for-gong]
+third_party_attested:
+  note: >-
+    Scope strings published by integrators who have completed Gong's OAuth
+    review, NOT by Gong. Recorded for completeness and traceability; they are
+    not treated as provider-published and should be re-verified against Gong's
+    gated API reference before being relied on.
+  scopes:
+  - {scope: 'api:calls:read:extensive', source: 'https://docs.airbyte.com/integrations/sources/gong'}
+  - {scope: 'api:calls:read:transcript', source: 'https://docs.airbyte.com/integrations/sources/gong'}
+  - {scope: 'api:users:read', source: 'https://docs.airbyte.com/integrations/sources/gong'}
+  - {scope: 'api:stats:scorecards', source: 'https://docs.airbyte.com/integrations/sources/gong'}
+  - {scope: 'api:stats:interaction', source: 'https://docs.airbyte.com/integrations/sources/gong'}
+  - {scope: 'api:settings:scorecards:read', source: 'https://docs.airbyte.com/integrations/sources/gong'}
+gap: >-
+  Gong publishes no consolidated scope/permission reference outside the
+  authenticated app. This is the single most useful thing Gong could publish for
+  agent and integrator onboarding: the mcp:* family is discoverable anonymously
+  from RFC 8414 metadata, while the far larger api:* family is not discoverable
+  at all.

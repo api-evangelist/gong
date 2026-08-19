@@ -1,0 +1,93 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  mcp/gong-mcp.yml, openapi/*.yml,
+  https://help.gong.io/docs/how-mcp-server-tools-and-apis-consume-credits
+note: >-
+  The crosswalk's headline finding is a clean SURFACE SPLIT, not an overlap.
+  Gong's MCP server exposes three AI-synthesis tools backed by two APIs
+  (ask-entity, get-brief) that are NOT part of the documented public REST v2
+  surface and appear in no OpenAPI in this repo. The REST surface is 57
+  record-level CRUD/retrieval operations. There is therefore ZERO binding
+  between the two: every MCP tool is mcp_only and every REST operation is
+  rest_only. An agent that can reach mcp.gong.io cannot list a call, and an
+  agent holding a REST key cannot ask a question about a deal.
+surfaces:
+  openapi:
+    files: openapi/*.yml
+    count: 21
+    operations: 57
+    base: https://api.gong.io/v2
+    gated: >-
+      The spec files are public in this repo, but the interactive reference at
+      app.gong.io/settings/api/documentation requires a Gong login, and the API
+      host itself answers 401 to every anonymous request.
+  mcp:
+    url: https://mcp.gong.io/mcp
+    gated: true
+    detail: tools/list returns HTTP 401; tool names taken from Gong's published docs, no inputSchema available
+  graphql:
+    present: false
+crosswalk: []
+mcp_only:
+- tool: ask_account
+  reason: >-
+    Backed by the ask-entity API, an AI-synthesis endpoint Gong does not publish
+    in the REST v2 reference. No OpenAPI operation in this repo answers natural
+    language questions over an account's conversations.
+- tool: ask_deal
+  reason: >-
+    Same ask-entity backing API, scoped to an opportunity. The nearest REST
+    relatives (listCallsExtensive, getCallTranscripts) return raw call records,
+    not an answer, so this is a genuine capability divergence rather than a
+    naming difference.
+- tool: generate_brief
+  reason: >-
+    Backed by the get-brief API. No REST operation produces a sectioned brief;
+    retrieveAggregatedActivity and retrieveAnsweredScorecards are statistical
+    rollups, not narrative summaries.
+rest_only:
+- capability: Calls
+  operations: [listCalls, addCall, getCall, listCallsExtensive, listManualCrmAssociations,
+    retrieveUserCallAccess, giveUserCallAccess, removeUserCallAccess]
+- capability: Recordings and transcripts
+  operations: [addCallRecording, getCallTranscripts]
+- capability: Users and permissions
+  operations: [listUsers, getUser, getUserSettingsHistory, listUsersByFilter, listPermissionProfiles,
+    createPermissionProfile, getPermissionProfile, updatePermissionProfile, listUsersByPermissionProfile]
+- capability: CRM
+  operations: [uploadCrmObjects, getCrmObjects, getUploadStatus, registerCrmIntegration,
+    getCrmIntegrations, deleteCrmIntegration, uploadObjectSchema, getSchemaFields]
+- capability: Statistics and scorecards
+  operations: [retrieveAggregatedActivity, retrieveDailyActivity, retrieveInteractionStats,
+    listCoachingMetrics, listScorecards, retrieveAnsweredScorecards]
+- capability: Engage flows and prospects
+  operations: [listEngageFlows, overrideFlowContent, listFlowFolders, assignProspectsToFlow,
+    unassignProspectsFromFlow, listAssignedFlowsForProspects]
+- capability: Engagement events and digital interactions
+  operations: [reportContentShareEvent, reportContentViewEvent, reportCustomActionEvent,
+    configureIntegrationSettings, postDigitalInteraction]
+- capability: Meetings
+  operations: [createMeeting, updateMeeting, deleteMeeting, validateMeetingIntegrationStatus]
+- capability: Library and workspaces
+  operations: [listLibraryFolders, listCallsInFolder, listWorkspaces]
+- capability: Data privacy
+  operations: [retrieveEmailReferences, retrievePhoneReferences, deleteEmailAddressData,
+    deletePhoneNumberData]
+- capability: Auditing
+  operations: [retrieveAuditLogs]
+- capability: Trackers
+  operations: [listTrackers]
+coverage:
+  tools_named: 3
+  tools_bound_to_rest: 0
+  mcp_only: 3
+  rest_operations_total: 57
+  rest_operations_with_a_tool: 0
+  overlap_ratio: 0.0
+scope_note: >-
+  The auth surfaces are split as cleanly as the capabilities. REST v2 uses
+  api:* scopes (api:calls:read:basic, api:flows:read, ...) or an Access
+  Key/Secret over HTTP Basic; the MCP server uses a disjoint mcp:* scope family
+  (mcp:ai-ask:read, mcp:ai-briefer:read, mcp:ai-assistant:read) issued from a
+  separate token endpoint. A credential for one surface never works on the other.

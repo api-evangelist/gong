@@ -4,8 +4,14 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Gong
 providerId: gong
 created: '2026-05-08'
-modified: '2026-05-08'
-reconciled: false
+modified: '2026-08-13'
+generated: '2026-08-13'
+method: searched
+reconciled: true
+source: >-
+  https://help.gong.io/apidocs/introduction-2,
+  https://help.gong.io/docs/what-the-gong-api-provides
+docs: https://help.gong.io/docs/what-the-gong-api-provides
 tags:
 - Sales
 - Revenue Intelligence
@@ -15,23 +21,64 @@ tags:
 - Rate Limiting
 - Quotas
 - Throttling
-description: Placeholder rate-limit artifact for Gong. Replace with real limits once researched.
-notes: "Initial scaffold \u2014 limits have not yet been reconciled."
+description: >-
+  Gong publishes a single company-wide rate limit on the public REST API: 3
+  requests per second and 10,000 requests per day. Both are stated identically
+  in the API reference introduction and in the help centre. Exhaustion returns
+  HTTP 429 with a Retry-After header giving the seconds to wait. Limits are
+  raised by contacting Gong support, not self-serve.
+limit_count: 2
 sources:
-- https://www.gong.io/
-- https://app.gong.io/settings/api/documentation
-- https://app.gong.io/settings/api/documentation
+- https://help.gong.io/apidocs/introduction-2
+- https://help.gong.io/docs/what-the-gong-api-provides
 responseCodes:
   throttled: 429
+responseHeaders:
+- name: Retry-After
+  description: Seconds to wait before issuing a new request after a 429.
+  observed: documented
+budget_headers_published: false
+budget_headers_note: >-
+  Gong publishes no X-RateLimit-* or RateLimit-* headers, so a client has no way
+  to see remaining quota or the window reset before it trips the limit. The only
+  runtime signal is the 429 itself plus Retry-After. For an agent this is the
+  meaningful gap: the daily budget in particular (10,000/day) cannot be tracked
+  from the responses.
 limits:
-- name: Default
+- name: Requests per second
   scope: account
-  metric: varies
-  limit: see provider documentation
-  notes: Pending reconciliation.
+  applies_to: company
+  metric: requests
+  limit: 3
+  window: 1s
+  burst: not documented
+  notes: Default; raised on request via Gong support.
+- name: Requests per day
+  scope: account
+  applies_to: company
+  metric: requests
+  limit: 10000
+  window: 1d
+  burst: not documented
+  notes: Default; raised on request via Gong support.
+adjustment:
+  self_serve: false
+  process: Contact Gong support to change these limits.
+  url: https://contact.gong.io/hc/en-us/requests/new
+metering_note: >-
+  Separate from request-rate limiting, Gong's AI synthesis surfaces (the
+  ask-entity and get-brief APIs, and the ask_account / ask_deal /
+  generate_brief MCP tools) consume Gong CREDITS in proportion to the volume of
+  calls and emails analyzed. That is a consumption meter, not a rate limit, and
+  is captured in finops/gong-finops.yml and mcp/gong-mcp.yml.
 policies:
 - name: Backoff Strategy
-  description: Clients should implement exponential backoff with jitter and honor any Retry-After header.
+  description: Honor the Retry-After header on a 429; otherwise use exponential backoff with jitter.
+- name: Retry safety
+  description: >-
+    Gong documents no idempotency contract, so a retried write (addCall,
+    uploadCrmObjects, createMeeting, assignProspectsToFlow) may duplicate. Treat
+    429 retries on write operations as at-risk and reconcile afterwards.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

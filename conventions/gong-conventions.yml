@@ -1,0 +1,110 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://help.gong.io/apidocs/introduction-2,
+  https://help.gong.io/docs/what-the-gong-api-provides,
+  https://help.gong.io/docs/create-an-app-for-gong,
+  openapi/*.yml
+docs: https://help.gong.io/apidocs/introduction-2
+authentication:
+  styles:
+  - style: http-basic
+    header: 'Authorization: Basic Base64(accessKey:accessKeySecret)'
+    spec: RFC 7617
+    issuance: >-
+      Admin center > Settings > Ecosystem > API > "+ Get API key". Keys carry an
+      optional TTL in days and an optional Trusted IPs allowlist (IPv4/IPv6,
+      CIDR and ranges). The secret is shown once and cannot be retrieved again.
+    ip_allowlist: >-
+      A request from an IP that is not on the key's trusted list is rejected
+      with 403 Forbidden. Trusted-IP changes take up to five minutes to apply;
+      all other key edits are immediate.
+  - style: oauth2-bearer
+    header: 'Authorization: Bearer <token>'
+    spec: RFC 6750
+    note: See scopes/gong-scopes.yml. Token default validity 1 day; no user-level OAuth.
+  per_customer_host: >-
+    OAuth tokens are bound to a per-customer API host returned as
+    api_base_url_for_customer (e.g. https://company-17.api.gong.io). Clients must
+    persist it per customer instead of hard-coding api.gong.io.
+versioning:
+  scheme: uri-path
+  current: v2
+  base: https://api.gong.io/v2
+  header_versioning: false
+  date_versioning: false
+pagination:
+  style: opaque-cursor
+  request_param: cursor
+  response_object: records
+  response_fields: [totalRecords, currentPageSize, currentPageNumber, cursor]
+  rule: >-
+    List endpoints cap the records returned per call. The response carries a
+    `records` object with the page size, the page number and the total. When
+    more records remain, `records.cursor` is present; repeat the identical
+    request with `cursor` set to that value and every other input unchanged.
+    Absence of `cursor` means the last page.
+  source: https://help.gong.io/apidocs/introduction-2
+idempotency:
+  supported: false
+  note: >-
+    Gong documents no idempotency key, no request-deduplication window and no
+    Idempotency-Key parameter, and none of the 57 operations in openapi/ declares
+    one. Write operations (addCall, uploadCrmObjects, createMeeting,
+    assignProspectsToFlow) are therefore not safe to blind-retry. This is a
+    genuine gap, not an omission in this artifact, and no Idempotency pointer is
+    emitted in apis.yml.
+rate_limit_signaling:
+  status: 429
+  headers: [Retry-After]
+  note: >-
+    Gong returns 429 with Retry-After (seconds) on exhaustion. It publishes no
+    X-RateLimit-*/RateLimit-* budget headers, so a client cannot see remaining
+    quota before it is exhausted. See rate-limits/gong-rate-limits.yml.
+error_envelope:
+  content_type: application/json
+  rfc9457: false
+  shape: >-
+    JSON body with a requestId and an errors array of human-readable strings.
+    Not RFC 9457 problem+json. See errors/gong-problem-types.yml.
+  request_id_field: requestId
+request_tracing:
+  request_id_header: false
+  response_field: requestId
+  note: >-
+    Gong echoes a requestId in error payloads for support correlation, but
+    publishes no client-supplied correlation/trace header.
+forward_compatibility:
+  policy: additive-fields-without-notice
+  statement: >-
+    "When coding a system to accept Gong data, take into account that Gong may,
+    without prior warning, add fields to the JSON output. It is recommended to
+    future proof your code so that it disregards all JSON fields you don't
+    actually use."
+  applies_to: [REST API responses, webhook payloads]
+  source: https://help.gong.io/apidocs/introduction-2
+field_expansion:
+  style: explicit-selector
+  mechanism: >-
+    Rather than a generic ?expand= parameter, the extensive endpoints take a
+    contentSelector object in the request body. contentSelector.exposedFields
+    toggles which blocks (parties, content, highlights, trackers, topics,
+    collaboration, media, ...) are returned. This is Gong's sparse-fieldset
+    equivalent and is the primary lever on both payload size and cost.
+  operations: [listCallsExtensive, listUsersByFilter]
+metadata:
+  custom_fields: >-
+    No arbitrary key/value metadata bag on Gong-owned objects. Customer-defined
+    structure enters through the CRM surface instead: uploadObjectSchema defines
+    fields on a CRM object type and uploadCrmObjects populates them.
+bulk_and_async:
+  note: >-
+    CRM uploads are asynchronous. uploadCrmObjects returns a request identifier
+    and getUploadStatus (/v2/crm/upload-status) is polled for completion, so CRM
+    ingestion must be written as a submit-then-poll flow, not request/response.
+cross_links:
+  errors: errors/gong-problem-types.yml
+  lifecycle: lifecycle/gong-lifecycle.yml
+  authentication: authentication/gong-authentication.yml
+  rate_limits: rate-limits/gong-rate-limits.yml
+  scopes: scopes/gong-scopes.yml

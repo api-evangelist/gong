@@ -1,0 +1,89 @@
+generated: '2026-08-13'
+method: probed
+source: live probe of every Gong host in apis.yml plus the MCP host
+note: >-
+  Gong serves no /.well-known/ documents from its marketing, app or API hosts —
+  www.gong.io and app.gong.io 404 every path, and api.gong.io answers 401 to
+  every path because the whole API host is behind Basic/Bearer auth. The real
+  discovery surface is on the MCP host, mcp.gong.io, which serves an RFC 8414
+  authorization-server metadata document and an RFC 9728 protected-resource
+  metadata document anonymously. Those two 200s are the only genuine documents
+  found and are what earns the WellKnown pointer; no security.txt is served
+  anywhere, so no SecurityTxt pointer is emitted.
+hosts:
+- host: https://mcp.gong.io
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: gong-oauth-authorization-server.json
+    spec: RFC 8414
+  - path: /.well-known/oauth-protected-resource/mcp
+    status: 200
+    file: gong-oauth-protected-resource.json
+    spec: RFC 9728
+  - path: /.well-known/oauth-protected-resource
+    status: 401
+  - path: /.well-known/openid-configuration
+    status: 401
+  - path: /.well-known/agent-card.json
+    status: 401
+  - path: /.well-known/agent.json
+    status: 401
+- host: https://api.gong.io
+  note: every path returns 401; the API host requires credentials before routing
+  documents:
+  - path: /.well-known/security.txt
+    status: 401
+  - path: /.well-known/openid-configuration
+    status: 401
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 401
+  - path: /.well-known/ai-plugin.json
+    status: 401
+  - path: /.well-known/agent-card.json
+    status: 401
+  - path: /.well-known/agent.json
+    status: 401
+- host: https://www.gong.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://app.gong.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://help.gong.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+checked: '2026-08-13'

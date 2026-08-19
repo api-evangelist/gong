@@ -1,0 +1,76 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gong Auditing Audit Logs CRM Integration API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CRM Integration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gong Get CRM integration details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gong.io/v2/crm/integrations"
+          },
+          "docs": "Retrieves details about the currently registered CRM integrations for the account."
+        },
+        {
+          "info": {
+            "name": "Gong Register a CRM integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.gong.io/v2/crm/integrations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers a new CRM integration with Gong. A successful registration enables uploading CRM data to Gong. Only one active integration per integration type is allowed."
+        },
+        {
+          "info": {
+            "name": "Gong Delete a CRM integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.gong.io/v2/crm/integrations",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the CRM integration to delete."
+              },
+              {
+                "name": "clientRequestId",
+                "value": "",
+                "type": "query",
+                "description": "A client-generated request ID for idempotency."
+              }
+            ]
+          },
+          "docs": "Deletes a registered CRM integration and its associated data from Gong."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

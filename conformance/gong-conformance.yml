@@ -1,0 +1,107 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.gong.io/security,
+  https://trust.gong.io/,
+  https://help.gong.io/docs/create-an-app-for-gong,
+  https://mcp.gong.io/.well-known/oauth-authorization-server,
+  openapi/*.yml
+standards:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    Authorization-code flow documented at app.gong.io/oauth2/authorize with
+    token exchange at /oauth2/generate-customer-token, HTTP Basic client
+    authentication, refresh tokens and a space-delimited scope parameter. Gong
+    cites RFC 6749 explicitly.
+  source: https://help.gong.io/docs/create-an-app-for-gong
+- id: rfc6750-bearer-token
+  conforms: true
+  evidence: 'Authorization: Bearer <token>; Gong cites RFC 6750. The MCP server returns a compliant WWW-Authenticate Bearer challenge.'
+- id: rfc7617-http-basic
+  conforms: true
+  evidence: 'Authorization: Basic Base64(accessKey:accessKeySecret); Gong cites RFC 7617.'
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: https://mcp.gong.io/.well-known/oauth-authorization-server returns 200 with issuer, authorization_endpoint, token_endpoint, grant_types_supported, scopes_supported and code_challenge_methods_supported.
+  scope: MCP surface only — the REST v2 surface publishes no such metadata.
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: true
+  evidence: https://mcp.gong.io/.well-known/oauth-protected-resource/mcp returns 200 with authorization_servers, resource and scopes_supported, and is advertised in the 401 WWW-Authenticate challenge.
+  scope: MCP surface only.
+- id: rfc7636-pkce
+  conforms: true
+  evidence: 'code_challenge_methods_supported: [S256] on the MCP authorization server metadata.'
+  scope: MCP surface only.
+- id: mcp
+  conforms: true
+  evidence: Official remote MCP server at https://mcp.gong.io/mcp with OAuth authorization; announced May 2026, documented at help.gong.io/docs/about-gong-mcp.
+- id: openidconnect
+  conforms: false
+  evidence: No /.well-known/openid-configuration on any Gong host; no id_token in the documented token response.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors are application/json with a requestId plus an errors[] array of strings; no application/problem+json anywhere in the 21 specs.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation response headers; deprecations are announced only in help-centre articles.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on www.gong.io and app.gong.io and 401 on api.gong.io, although a vulnerability disclosure portal exists at vdp.gong.io.
+- id: idempotency-key
+  conforms: false
+  evidence: No idempotency header, parameter or documented dedupe window on any of the 57 operations.
+- id: openapi
+  conforms: true
+  evidence: 21 OpenAPI 3.1.0 documents covering 57 operations in openapi/.
+  note: >-
+    These are API Evangelist-refined documents. Gong's own interactive reference
+    is served from app.gong.io behind a login; Gong does not publish a
+    downloadable spec at an anonymous URL.
+- id: asyncapi
+  conforms: false
+  evidence: No AsyncAPI document; the event surface is a rule-driven webhook (see asyncapi/gong-webhooks.yml).
+- id: json-api
+  conforms: false
+  evidence: Responses are a bespoke envelope (requestId + records + a named collection array), not JSON:API.
+- id: odata
+  conforms: false
+- id: scim
+  conforms: false
+  evidence: >-
+    User provisioning is available in Gong but no SCIM 2.0 endpoints appear in
+    the public API surface; user management goes through /v2/users and
+    /v2/permission-profiles.
+- id: fhir-r4
+  conforms: false
+- id: fapi
+  conforms: false
+- id: psd2
+  conforms: false
+compliance_program:
+  published: true
+  url: https://www.gong.io/security
+  trust_center: https://trust.gong.io/
+  certifications:
+  - SOC 2 Type 2
+  - ISO/IEC 27001:2022
+  - ISO/IEC 27017
+  - ISO/IEC 27018
+  - ISO/IEC 27701
+  - ISO/IEC 42001:2023
+  - PCI DSS (SAQ D)
+  - CSA STAR Registry
+  - EU-U.S. Data Privacy Framework
+  note: >-
+    ISO/IEC 42001:2023 (AI management system) is the notable one for an AI-first
+    revenue platform, and Gong pairs it with a stated commitment that customer
+    data is never used to train generative models.
+  scope_docs: https://help.gong.io/docs/pci-dss-compliance
+data_privacy_api:
+  note: >-
+    Gong ships GDPR/CCPA erasure as first-class API operations rather than only
+    a support process: deleteEmailAddressData, deletePhoneNumberData,
+    retrieveEmailReferences and retrievePhoneReferences under
+    /v2/data-privacy/*. That is a genuine regulatory-conformance surface an
+    automated data-subject-request pipeline can call.
+  operations: [retrieveEmailReferences, retrievePhoneReferences, deleteEmailAddressData, deletePhoneNumberData]

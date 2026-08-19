@@ -1,0 +1,826 @@
+{
+  "item": [
+    {
+      "id": "bcc5db6f-247a-4ea5-93bd-02a83201a02d",
+      "name": "Prospects",
+      "description": {
+        "content": "Operations for managing prospects in Engage flows",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4dcc1a7e-f25f-4bb3-abbc-cc5df2e7a9e1",
+          "name": "Gong Assign prospects to Engage flow",
+          "request": {
+            "name": "Gong Assign prospects to Engage flow",
+            "description": {
+              "content": "Assigns one or more prospects to a specified Engage flow. Prospects will begin receiving the flow's outreach sequence upon assignment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "flows",
+                "prospects",
+                "assign"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flowId\": \"<string>\",\n  \"prospects\": [\n    {\n      \"emailAddress\": \"<email>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"company\": \"<string>\",\n      \"title\": \"<string>\",\n      \"phoneNumber\": \"<string>\",\n      \"linkedInUrl\": \"<uri>\",\n      \"customFields\": {\n        \"key_0\": \"<string>\"\n      }\n    },\n    {\n      \"emailAddress\": \"<email>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"company\": \"<string>\",\n      \"title\": \"<string>\",\n      \"phoneNumber\": \"<string>\",\n      \"linkedInUrl\": \"<uri>\",\n      \"customFields\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\",\n        \"key_2\": \"<string>\"\n      }\n    }\n  ],\n  \"senderEmail\": \"<email>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "524f2a04-243c-49ea-8a70-1faaa41b1223",
+              "name": "Prospects successfully assigned to the flow.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flows",
+                    "prospects",
+                    "assign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"flowId\": \"<string>\",\n  \"prospects\": [\n    {\n      \"emailAddress\": \"TTexC6PVZJSjHIr@UwzvUvfzQEJlhdAiTEeXwjeRLsSRSuCWp.ubn\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"company\": \"string\",\n      \"title\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"linkedInUrl\": \"https://QAmCkImOidnIyUxqLTnNt.trK95Fjez-6arlP,rLoBQVn3O8ZScXi6rzNiTZroEkhgg8TJvr6,WFP8NGIYeSJkV\",\n      \"customFields\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    },\n    {\n      \"emailAddress\": \"uG1@MQgHklQCNANFCOnkQWvnbezIN.qekk\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"company\": \"string\",\n      \"title\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"linkedInUrl\": \"http://wOW.ujgYoQSJFHCXQJcTMIoddNpqPKBB\",\n      \"customFields\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    }\n  ],\n  \"senderEmail\": \"<email>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"assignedProspects\": [\n    {\n      \"emailAddress\": \"BEMW3eS@NekVCI.xzgx\",\n      \"flowInstanceId\": \"string\"\n    },\n    {\n      \"emailAddress\": \"fTkgWt52PGMZCw@nSrrRdBtVviOCniIlh.cmeh\",\n      \"flowInstanceId\": \"string\"\n    }\n  ],\n  \"failedProspects\": [\n    {\n      \"emailAddress\": \"xZj7@ZyzRUqhvSTHxFeSoXGDhKjcgXi.zt\",\n      \"reason\": \"string\"\n    },\n    {\n      \"emailAddress\": \"A7dV2swwzpX@HMxSeYBLEwEkJZxdNGwnIY.lb\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "739369d2-4802-434a-b247-6bc6af6aa7e4",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flows",
+                    "prospects",
+                    "assign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"flowId\": \"<string>\",\n  \"prospects\": [\n    {\n      \"emailAddress\": \"TTexC6PVZJSjHIr@UwzvUvfzQEJlhdAiTEeXwjeRLsSRSuCWp.ubn\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"company\": \"string\",\n      \"title\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"linkedInUrl\": \"https://QAmCkImOidnIyUxqLTnNt.trK95Fjez-6arlP,rLoBQVn3O8ZScXi6rzNiTZroEkhgg8TJvr6,WFP8NGIYeSJkV\",\n      \"customFields\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    },\n    {\n      \"emailAddress\": \"uG1@MQgHklQCNANFCOnkQWvnbezIN.qekk\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"company\": \"string\",\n      \"title\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"linkedInUrl\": \"http://wOW.ujgYoQSJFHCXQJcTMIoddNpqPKBB\",\n      \"customFields\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    }\n  ],\n  \"senderEmail\": \"<email>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa8bf5e8-0dc0-43f7-b61d-4eaacfbabea3",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flows",
+                    "prospects",
+                    "assign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"flowId\": \"<string>\",\n  \"prospects\": [\n    {\n      \"emailAddress\": \"TTexC6PVZJSjHIr@UwzvUvfzQEJlhdAiTEeXwjeRLsSRSuCWp.ubn\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"company\": \"string\",\n      \"title\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"linkedInUrl\": \"https://QAmCkImOidnIyUxqLTnNt.trK95Fjez-6arlP,rLoBQVn3O8ZScXi6rzNiTZroEkhgg8TJvr6,WFP8NGIYeSJkV\",\n      \"customFields\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    },\n    {\n      \"emailAddress\": \"uG1@MQgHklQCNANFCOnkQWvnbezIN.qekk\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"company\": \"string\",\n      \"title\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"linkedInUrl\": \"http://wOW.ujgYoQSJFHCXQJcTMIoddNpqPKBB\",\n      \"customFields\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    }\n  ],\n  \"senderEmail\": \"<email>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6785c7f2-dc66-42be-9cb1-f8e709b33753",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flows",
+                    "prospects",
+                    "assign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"flowId\": \"<string>\",\n  \"prospects\": [\n    {\n      \"emailAddress\": \"TTexC6PVZJSjHIr@UwzvUvfzQEJlhdAiTEeXwjeRLsSRSuCWp.ubn\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"company\": \"string\",\n      \"title\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"linkedInUrl\": \"https://QAmCkImOidnIyUxqLTnNt.trK95Fjez-6arlP,rLoBQVn3O8ZScXi6rzNiTZroEkhgg8TJvr6,WFP8NGIYeSJkV\",\n      \"customFields\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    },\n    {\n      \"emailAddress\": \"uG1@MQgHklQCNANFCOnkQWvnbezIN.qekk\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"company\": \"string\",\n      \"title\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"linkedInUrl\": \"http://wOW.ujgYoQSJFHCXQJcTMIoddNpqPKBB\",\n      \"customFields\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    }\n  ],\n  \"senderEmail\": \"<email>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5ea7b6df-baf0-474d-9fd1-96502e580f22",
+          "name": "Gong Unassign prospects from Engage flow",
+          "request": {
+            "name": "Gong Unassign prospects from Engage flow",
+            "description": {
+              "content": "Removes one or more prospects from specified Engage flows. You can remove prospects from up to 100 flows in a single request. The response returns the flow instance IDs the prospect was successfully removed from.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "flows",
+                "prospects",
+                "unassign"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flowInstanceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aab7b7b6-ba2d-4df8-b4c0-afe540870d73",
+              "name": "Prospects successfully unassigned from the flow.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flows",
+                    "prospects",
+                    "unassign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"flowInstanceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"unassignedFlowInstanceIds\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b72eb3e5-d595-457d-a718-22636832c97b",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flows",
+                    "prospects",
+                    "unassign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"flowInstanceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "166c4256-a9ff-400a-bdab-9c0d23accd3c",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flows",
+                    "prospects",
+                    "unassign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"flowInstanceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82a2782e-8494-469e-823b-8a7be1064973",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flows",
+                    "prospects",
+                    "unassign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"flowInstanceIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "586c85e9-300a-442e-afe6-27d04edbca86",
+          "name": "Gong List assigned flows for prospects",
+          "request": {
+            "name": "Gong List assigned flows for prospects",
+            "description": {
+              "content": "Retrieves the list of Engage flows that specified prospects are currently assigned to.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "flows",
+                "prospects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prospectEmails\": [\n    \"<email>\",\n    \"<email>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7a662028-1ca0-417c-8ef1-b37e88c15ba7",
+              "name": "Successful response containing the flows assigned to each prospect.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flows",
+                    "prospects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prospectEmails\": [\n    \"<email>\",\n    \"<email>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"prospectsFlows\": [\n    {\n      \"prospectEmail\": \"7gYKjAk6GJ@hLV.nuq\",\n      \"assignedFlows\": [\n        {\n          \"flowId\": \"string\",\n          \"flowInstanceId\": \"string\",\n          \"flowName\": \"string\",\n          \"assignedAt\": \"1981-10-23T16:48:42.710Z\"\n        },\n        {\n          \"flowId\": \"string\",\n          \"flowInstanceId\": \"string\",\n          \"flowName\": \"string\",\n          \"assignedAt\": \"1959-08-16T02:53:49.782Z\"\n        }\n      ]\n    },\n    {\n      \"prospectEmail\": \"hOTuc3ZGmf@hzUoUkBwjyyjXM.dqbm\",\n      \"assignedFlows\": [\n        {\n          \"flowId\": \"string\",\n          \"flowInstanceId\": \"string\",\n          \"flowName\": \"string\",\n          \"assignedAt\": \"1965-01-01T17:02:36.524Z\"\n        },\n        {\n          \"flowId\": \"string\",\n          \"flowInstanceId\": \"string\",\n          \"flowName\": \"string\",\n          \"assignedAt\": \"2007-08-14T10:02:56.088Z\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8ee26c4-e3bf-494b-af9f-2488e246ef16",
+              "name": "Bad request due to invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flows",
+                    "prospects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prospectEmails\": [\n    \"<email>\",\n    \"<email>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "942e7703-3f0e-4a41-8ef4-b6404042244a",
+              "name": "Unauthorized - invalid or missing authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flows",
+                    "prospects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prospectEmails\": [\n    \"<email>\",\n    \"<email>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3eb738a1-4f75-47d1-958c-dbf0897939f2",
+              "name": "Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "flows",
+                    "prospects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prospectEmails\": [\n    \"<email>\",\n    \"<email>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gong.io/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "77ddc3ec-13cd-44b0-a6d7-a1df455912e7",
+    "name": "Gong Auditing Audit Logs Prospects API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.\n\nContact Support:\n Name: Gong\n Email: support@gong.io",
+      "type": "text/plain"
+    }
+  }
+}

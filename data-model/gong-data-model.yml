@@ -1,0 +1,179 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/*.yml (95 component schemas across 21 documents), json-schema/
+note: >-
+  Derived mechanically from schema $ref links and id-reference field names in
+  the harvested OpenAPI. Gong publishes no object reference outside its
+  authenticated app, so id formats are described from the spec only. Gong ids
+  are long unprefixed numeric strings (e.g. "5599332235511222779") — there is no
+  Stripe-style type prefix, so an id is NOT self-describing and a caller must
+  track which entity an id belongs to.
+id_convention:
+  format: numeric string
+  prefixed: false
+  example_source: https://help.gong.io/docs/payload-sent-to-webhooks
+  implication: >-
+    Because ids carry no type prefix, an agent cannot infer the entity type from
+    an identifier alone. Every id must be carried with its field name.
+root_entities:
+- Workspace
+- User
+- Call
+- Flow
+- Scorecard
+- Tracker
+- PermissionProfile
+- LibraryFolder
+- FlowFolder
+entities:
+- name: Workspace
+  key: id
+  description: Top-level tenant partition. Almost every other entity is scoped to a workspace.
+  operations: [listWorkspaces]
+  relationships:
+  - {type: has_many, target: Call, via: workspaceId}
+  - {type: has_many, target: Flow, via: workspaceId}
+  - {type: has_many, target: Scorecard, via: workspaceId}
+  - {type: has_many, target: Tracker, via: workspaceId}
+  - {type: has_many, target: PermissionProfile, via: workspaceId}
+- name: User
+  key: id
+  description: A Gong team member.
+  operations: [listUsers, getUser, listUsersByFilter, getUserSettingsHistory]
+  relationships:
+  - {type: belongs_to, target: User, via: managerId, note: self-referential manager hierarchy}
+  - {type: has_many, target: Call, via: primaryUserId, note: calls this user owns}
+  - {type: has_one, target: UserAggregatedActivity, via: userId}
+  - {type: has_one, target: UserInteractionStats, via: userId}
+  - {type: has_many, target: PermissionProfile, via: 'listUsersByPermissionProfile (join)'}
+- name: Call
+  key: id
+  description: The central object. A recorded or uploaded conversation with metadata, parties, content and media.
+  operations: [listCalls, getCall, addCall, listCallsExtensive, listManualCrmAssociations]
+  relationships:
+  - {type: belongs_to, target: Workspace, via: workspaceId}
+  - {type: belongs_to, target: User, via: primaryUserId}
+  - {type: has_many, target: CallParty, via: '$ref CallParty'}
+  - {type: has_one, target: CallTranscript, via: callId}
+  - {type: has_many, target: AnsweredScorecard, via: callId}
+  - {type: has_many, target: LibraryCall, via: callId}
+  extensions:
+  - {schema: DetailedCall, via: '$ref Call', note: 'the /calls/extensive projection — superset of Call'}
+  - {schema: NewCallAddingRequest, note: 'upload shape; carries clientUniqueId for caller-side dedupe'}
+- name: CallParty
+  key: id
+  description: A participant on a call. Bridges an external attendee to an internal Gong user and to a diarization speaker.
+  relationships:
+  - {type: belongs_to, target: Call, via: '$ref from Call'}
+  - {type: belongs_to, target: User, via: userId, note: null for external parties}
+  - {type: has_one, target: 'transcript speaker', via: speakerId}
+- name: CallTranscript
+  key: callId
+  description: Diarized transcript sentences for one call, keyed by speakerId back to CallParty.
+  operations: [getCallTranscripts]
+  relationships:
+  - {type: belongs_to, target: Call, via: callId}
+- name: Scorecard
+  key: scorecardId
+  description: A coaching scorecard definition.
+  operations: [listScorecards]
+  relationships:
+  - {type: belongs_to, target: Workspace, via: workspaceId}
+  - {type: has_many, target: ScorecardQuestion, via: '$ref ScorecardQuestion'}
+  - {type: has_many, target: AnsweredScorecard, via: scorecardId}
+- name: AnsweredScorecard
+  key: 'composite (scorecardId + callId + reviewerUserId)'
+  description: A completed scorecard review of one call.
+  operations: [retrieveAnsweredScorecards]
+  relationships:
+  - {type: belongs_to, target: Scorecard, via: scorecardId}
+  - {type: belongs_to, target: Call, via: callId}
+  - {type: belongs_to, target: User, via: reviewedUserId}
+  - {type: belongs_to, target: User, via: reviewerUserId}
+- name: Tracker
+  key: trackerId
+  description: A keyword/AI tracker definition applied to conversations.
+  operations: [listTrackers]
+  relationships:
+  - {type: belongs_to, target: Workspace, via: workspaceId}
+- name: LibraryFolder
+  key: id
+  description: A folder of curated calls. Self-nesting.
+  operations: [listLibraryFolders, listCallsInFolder]
+  relationships:
+  - {type: belongs_to, target: LibraryFolder, via: parentFolderId, note: self-referential tree}
+  - {type: has_many, target: LibraryCall, via: 'listCallsInFolder(folderId)'}
+- name: LibraryCall
+  key: callId
+  description: A call as it appears inside a library folder.
+  relationships:
+  - {type: belongs_to, target: Call, via: callId}
+  - {type: belongs_to, target: User, via: primaryUserId}
+- name: Flow
+  key: id
+  description: A Gong Engage outreach flow.
+  operations: [listEngageFlows, overrideFlowContent]
+  relationships:
+  - {type: belongs_to, target: FlowFolder, via: folderId}
+  - {type: belongs_to, target: Workspace, via: workspaceId}
+  - {type: has_many, target: 'flow instance', via: flowInstanceIds}
+- name: FlowFolder
+  key: id
+  operations: [listFlowFolders]
+  relationships:
+  - {type: has_many, target: Flow, via: folderId}
+- name: Prospect
+  key: 'CRM prospect id (contact or lead)'
+  description: A CRM contact or lead assignable to an Engage flow. Identified by CRM id, not a Gong id.
+  operations: [assignProspectsToFlow, unassignProspectsFromFlow, listAssignedFlowsForProspects]
+  relationships:
+  - {type: has_many, target: Flow, via: 'flow instance assignment'}
+  note: >-
+    Assignment is capped at 100 prospects per request, and a flow instance
+    carries a flowInstanceOwnerEmail identifying the Gong user who owns the
+    to-dos. Unassignment can be addressed either by CRM prospect id or by flow
+    instance id — two different key spaces for the same association.
+- name: PermissionProfile
+  key: profileId
+  operations: [listPermissionProfiles, createPermissionProfile, getPermissionProfile, updatePermissionProfile, listUsersByPermissionProfile]
+  relationships:
+  - {type: belongs_to, target: Workspace, via: workspaceId}
+  - {type: has_many, target: User, via: 'listUsersByPermissionProfile (join)'}
+- name: CrmIntegration
+  key: integrationId
+  description: A registered generic CRM integration and its uploaded object schema/objects.
+  operations: [registerCrmIntegration, getCrmIntegrations, deleteCrmIntegration, uploadObjectSchema, getSchemaFields, uploadCrmObjects, getCrmObjects, getUploadStatus]
+  relationships:
+  - {type: has_many, target: 'CRM object schema', via: integrationId}
+  - {type: has_many, target: 'CRM object', via: integrationId}
+  async: uploadCrmObjects returns clientRequestId; poll getUploadStatus for completion
+- name: Meeting
+  key: meetingId
+  description: A Gong-scheduled meeting (BETA surface).
+  operations: [createMeeting, updateMeeting, deleteMeeting, validateMeetingIntegrationStatus]
+  relationships:
+  - {type: has_many, target: MeetingAttendee, via: '$ref MeetingAttendee'}
+  - {type: has_one, target: 'external calendar event', via: externalMeetingId}
+- name: AuditLogEntry
+  key: id
+  operations: [retrieveAuditLogs]
+  relationships:
+  - {type: belongs_to, target: User, via: userId}
+  - {type: polymorphic_belongs_to, target: any, via: resourceId}
+- name: DataReference
+  key: id
+  description: A pointer to any object holding a given email address or phone number, used for data-subject requests.
+  operations: [retrieveEmailReferences, retrievePhoneReferences]
+envelope_note: >-
+  Every *Response schema is an envelope, not an entity: requestId plus an
+  optional `records` pagination block plus a named collection array. They are
+  excluded from the entity graph above. 95 component schemas resolve to roughly
+  18 real entities.
+caller_supplied_keys:
+  note: >-
+    Two operations accept a caller-generated key — NewCallAddingRequest.
+    clientUniqueId and DigitalInteractionRequest.clientUniqueId. These are the
+    closest thing Gong has to an idempotency mechanism, but Gong documents no
+    dedupe semantics for them, so they must be treated as correlation ids rather
+    than an idempotency guarantee.
+render: null
