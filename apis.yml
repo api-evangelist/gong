@@ -35,6 +35,18 @@ tags:
 - Revenue Intelligence
 - Conversation
 - Analytics
+- Artificial Intelligence
+- Conversation Intelligence
+- Sales Engagement
+- CRM
+- Forecasting
+- Transcription
+- Agents
+tags_raw:
+- Sales
+- Revenue Intelligence
+- Conversation
+- Analytics
 - AI
 - Conversation Intelligence
 - Sales Engagement
@@ -61,6 +73,8 @@ apis:
   humanURL: https://app.gong.io/settings/api/documentation
   baseURL: https://api.gong.io/v2
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: Documentation
@@ -328,6 +342,8 @@ apis:
   humanURL: https://app.gong.io/settings/api/documentation
   baseURL: https://api.gong.io/v2
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
