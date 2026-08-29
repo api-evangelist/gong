@@ -11,6 +11,18 @@ description: Gong is the revenue intelligence platform that captures and analyze
   GDPR/CCPA data-privacy erasure. Gong also runs an official remote MCP server at mcp.gong.io
   for external AI agents, a rule-driven outbound webhook surface for calls, and a frontend SDK
   for partner apps embedded in the Gong UI.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: contact-sales
   onboarding: sales-gated
