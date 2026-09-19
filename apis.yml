@@ -45,7 +45,7 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/gong.png
 tags:
 - Sales
 - Revenue Intelligence
-- Conversation
+- Conversations
 - Analytics
 - Artificial Intelligence
 - Conversation Intelligence
@@ -222,6 +222,8 @@ apis:
   humanURL: https://app.gong.io/settings/api/documentation
   baseURL: https://api.gong.io/v2
   tags:
+  - Flow
+  tags_raw:
   - Flows
   properties:
   - type: OpenAPI
@@ -294,6 +296,8 @@ apis:
   humanURL: https://app.gong.io/settings/api/documentation
   baseURL: https://api.gong.io/v2
   tags:
+  - Recording
+  tags_raw:
   - Recordings
   properties:
   - type: OpenAPI
@@ -368,6 +372,8 @@ apis:
   humanURL: https://app.gong.io/settings/api/documentation
   baseURL: https://api.gong.io/v2
   tags:
+  - Workspace
+  tags_raw:
   - Workspaces
   properties:
   - type: OpenAPI
