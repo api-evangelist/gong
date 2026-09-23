@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Gong Auditing Audit Logs Permission Profiles API
-  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  title: Gong Permissions Permission Profiles API
+  description: The Gong Permissions API manages access controls through permission profiles and user call access assignments, enabling programmatic configuration of who can access specific calls and features.
   version: 2.0.0
   contact:
     name: Gong
@@ -235,56 +235,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    PermissionProfilesResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        permissionProfiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/PermissionProfile'
-          description: List of permission profiles.
-    CreatePermissionProfileRequest:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name for the new permission profile.
-        description:
-          type: string
-          description: Description of the permission profile.
-        permissions:
-          type: object
-          properties:
-            viewOwnCalls:
-              type: boolean
-            viewTeamCalls:
-              type: boolean
-            viewAllCalls:
-              type: boolean
-            downloadRecordings:
-              type: boolean
-            shareExternally:
-              type: boolean
-            createScorecards:
-              type: boolean
-            manageUsers:
-              type: boolean
-            manageSettings:
-              type: boolean
-          description: Permission flags to set.
-    PermissionProfileResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        permissionProfile:
-          $ref: '#/components/schemas/PermissionProfile'
     UpdatePermissionProfileRequest:
       type: object
       properties:
@@ -314,17 +264,42 @@ components:
             manageSettings:
               type: boolean
           description: Updated permission flags.
-    ErrorResponse:
+    PermissionProfilesResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        errors:
+        permissionProfiles:
           type: array
           items:
-            type: string
-          description: List of error messages.
+            $ref: '#/components/schemas/PermissionProfile'
+          description: List of permission profiles.
+    PermissionProfileUsersResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        users:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: string
+                description: The Gong user ID.
+              emailAddress:
+                type: string
+                format: email
+                description: The user's email address.
+              firstName:
+                type: string
+                description: The user's first name.
+              lastName:
+                type: string
+                description: The user's last name.
+          description: Users assigned to the permission profile.
     PermissionProfile:
       type: object
       properties:
@@ -371,31 +346,56 @@ components:
         userCount:
           type: integer
           description: Number of users assigned to this profile.
-    PermissionProfileUsersResponse:
+    ErrorResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        users:
+        errors:
           type: array
           items:
-            type: object
-            properties:
-              userId:
-                type: string
-                description: The Gong user ID.
-              emailAddress:
-                type: string
-                format: email
-                description: The user's email address.
-              firstName:
-                type: string
-                description: The user's first name.
-              lastName:
-                type: string
-                description: The user's last name.
-          description: Users assigned to the permission profile.
+            type: string
+          description: List of error messages.
+    PermissionProfileResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        permissionProfile:
+          $ref: '#/components/schemas/PermissionProfile'
+    CreatePermissionProfileRequest:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name for the new permission profile.
+        description:
+          type: string
+          description: Description of the permission profile.
+        permissions:
+          type: object
+          properties:
+            viewOwnCalls:
+              type: boolean
+            viewTeamCalls:
+              type: boolean
+            viewAllCalls:
+              type: boolean
+            downloadRecordings:
+              type: boolean
+            shareExternally:
+              type: boolean
+            createScorecards:
+              type: boolean
+            manageUsers:
+              type: boolean
+            manageSettings:
+              type: boolean
+          description: Permission flags to set.
   securitySchemes:
     basicAuth:
       type: http

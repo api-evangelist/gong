@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Gong Auditing Audit Logs Users API
-  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  title: Gong Users API
+  description: The Gong Users API allows retrieval of user information, user histories, and filtering of users by various criteria. It provides access to team member profiles and licensing details within the Gong platform.
   version: 2.0.0
   contact:
     name: Gong
@@ -210,6 +210,74 @@ components:
           description: A unique identifier for the request.
         user:
           $ref: '#/components/schemas/User'
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    UsersResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+              description: Total number of user records.
+            currentPageSize:
+              type: integer
+              description: Number of records in the current page.
+            currentPageNumber:
+              type: integer
+              description: The current page number.
+            cursor:
+              type: string
+              description: Cursor value for retrieving the next page.
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+          description: List of user objects.
+    UserSettingsHistoryResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        userSettingsHistory:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: string
+                description: The user ID.
+              settingName:
+                type: string
+                description: Name of the setting that changed.
+              previousValue:
+                type: string
+                description: The previous value of the setting.
+              newValue:
+                type: string
+                description: The new value of the setting.
+              changedAt:
+                type: string
+                format: date-time
+                description: When the setting was changed.
+              changedBy:
+                type: string
+                description: Who made the change.
+          description: List of settings changes for the user.
     User:
       type: object
       properties:
@@ -292,74 +360,6 @@ components:
           type: string
           format: email
           description: The user's trusted email address for SSO.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
-    UsersResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-              description: Total number of user records.
-            currentPageSize:
-              type: integer
-              description: Number of records in the current page.
-            currentPageNumber:
-              type: integer
-              description: The current page number.
-            cursor:
-              type: string
-              description: Cursor value for retrieving the next page.
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
-          description: List of user objects.
-    UserSettingsHistoryResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        userSettingsHistory:
-          type: array
-          items:
-            type: object
-            properties:
-              userId:
-                type: string
-                description: The user ID.
-              settingName:
-                type: string
-                description: Name of the setting that changed.
-              previousValue:
-                type: string
-                description: The previous value of the setting.
-              newValue:
-                type: string
-                description: The new value of the setting.
-              changedAt:
-                type: string
-                format: date-time
-                description: When the setting was changed.
-              changedBy:
-                type: string
-                description: Who made the change.
-          description: List of settings changes for the user.
   securitySchemes:
     basicAuth:
       type: http

@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Gong Auditing Audit Logs Transcripts API
-  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  title: Gong Calls Transcripts API
+  description: The Gong Calls API provides endpoints to retrieve, add, and manage call data including recordings, transcripts, and media files. It supports filtering calls by date range, retrieving detailed call analytics, and uploading call recordings from external telephony systems.
   version: 2.0.0
   contact:
     name: Gong
@@ -61,26 +61,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    CallTranscriptsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-            currentPageSize:
-              type: integer
-            cursor:
-              type: string
-        callTranscripts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CallTranscript'
-          description: List of call transcripts.
     CallTranscriptRequest:
       type: object
       properties:
@@ -107,17 +87,6 @@ components:
               type: string
               description: Filter by workspace.
           description: Filter criteria for transcript retrieval.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
     CallTranscript:
       type: object
       properties:
@@ -150,6 +119,37 @@ components:
                       type: string
                       description: The transcribed text.
           description: Transcript segments with speaker and timing data.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    CallTranscriptsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+            currentPageSize:
+              type: integer
+            cursor:
+              type: string
+        callTranscripts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CallTranscript'
+          description: List of call transcripts.
   securitySchemes:
     basicAuth:
       type: http

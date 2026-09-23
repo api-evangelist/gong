@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Gong Auditing Audit Logs CRM Schema API
-  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  title: Gong CRM CRM Schema API
+  description: The Gong CRM API enables integration with CRM systems by providing endpoints to register integrations, upload CRM objects and schemas, map users and fields, and manage associations between calls and CRM records.
   version: 2.0.0
   contact:
     name: Gong
@@ -99,17 +99,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
     CrmEntitySchemaResponse:
       type: object
       properties:
@@ -130,12 +119,17 @@ components:
               isRequired:
                 type: boolean
           description: List of schema field definitions.
-    BaseResponse:
+    ErrorResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
     CrmEntitySchemaUploadRequest:
       type: object
       required:
@@ -183,6 +177,12 @@ components:
             - label
             - type
           description: List of field definitions for the CRM object schema.
+    BaseResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
   securitySchemes:
     basicAuth:
       type: http

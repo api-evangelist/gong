@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Gong Auditing Audit Logs Folders API
-  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  title: Gong Engage Folders API
+  description: The Gong Engage API lets you manage and customize Engage flows at scale, with endpoints to list available flows and folders, assign or unassign prospects, and override flow content to tailor messaging for specific campaigns or workflows.
   version: 2.0.0
   contact:
     name: Gong
@@ -63,6 +63,17 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    FlowFoldersResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        folders:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowFolder'
+          description: List of flow folders.
     FlowFolder:
       type: object
       properties:
@@ -86,17 +97,6 @@ components:
         flowCount:
           type: integer
           description: Number of flows in the folder.
-    FlowFoldersResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        folders:
-          type: array
-          items:
-            $ref: '#/components/schemas/FlowFolder'
-          description: List of flow folders.
     ErrorResponse:
       type: object
       properties:

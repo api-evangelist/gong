@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Gong Auditing Audit Logs Prospects API
-  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  title: Gong Engage Prospects API
+  description: The Gong Engage API lets you manage and customize Engage flows at scale, with endpoints to list available flows and folders, assign or unassign prospects, and override flow content to tailor messaging for specific campaigns or workflows.
   version: 2.0.0
   contact:
     name: Gong
@@ -137,28 +137,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    UnassignProspectsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        unassignedFlowInstanceIds:
-          type: array
-          items:
-            type: string
-          description: Flow instance IDs the prospect was successfully removed from.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
     UnassignProspectsRequest:
       type: object
       required:
@@ -169,6 +147,34 @@ components:
           items:
             type: string
           description: List of flow instance IDs to unassign. Up to 100 per request.
+    AssignProspectsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        assignedProspects:
+          type: array
+          items:
+            type: object
+            properties:
+              emailAddress:
+                type: string
+                format: email
+              flowInstanceId:
+                type: string
+          description: List of successfully assigned prospects with their flow instance IDs.
+        failedProspects:
+          type: array
+          items:
+            type: object
+            properties:
+              emailAddress:
+                type: string
+                format: email
+              reason:
+                type: string
+          description: List of prospects that failed to be assigned.
     ProspectsFlowsResponse:
       type: object
       properties:
@@ -198,6 +204,35 @@ components:
                       type: string
                       format: date-time
           description: Flow assignments for each prospect.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    AssignProspectsRequest:
+      type: object
+      required:
+      - flowId
+      - prospects
+      properties:
+        flowId:
+          type: string
+          description: The ID of the Engage flow to assign prospects to.
+        prospects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Prospect'
+          description: List of prospects to assign.
+        senderEmail:
+          type: string
+          format: email
+          description: The email address to send flow messages from.
     Prospect:
       type: object
       required:
@@ -242,52 +277,17 @@ components:
             type: string
             format: email
           description: List of prospect email addresses to check.
-    AssignProspectsResponse:
+    UnassignProspectsResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        assignedProspects:
+        unassignedFlowInstanceIds:
           type: array
           items:
-            type: object
-            properties:
-              emailAddress:
-                type: string
-                format: email
-              flowInstanceId:
-                type: string
-          description: List of successfully assigned prospects with their flow instance IDs.
-        failedProspects:
-          type: array
-          items:
-            type: object
-            properties:
-              emailAddress:
-                type: string
-                format: email
-              reason:
-                type: string
-          description: List of prospects that failed to be assigned.
-    AssignProspectsRequest:
-      type: object
-      required:
-      - flowId
-      - prospects
-      properties:
-        flowId:
-          type: string
-          description: The ID of the Engage flow to assign prospects to.
-        prospects:
-          type: array
-          items:
-            $ref: '#/components/schemas/Prospect'
-          description: List of prospects to assign.
-        senderEmail:
-          type: string
-          format: email
-          description: The email address to send flow messages from.
+            type: string
+          description: Flow instance IDs the prospect was successfully removed from.
   securitySchemes:
     basicAuth:
       type: http

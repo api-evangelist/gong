@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Gong Auditing Audit Logs Engagement Events API
-  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  title: Gong Engagement Engagement Events API
+  description: The Gong Engagement API reports customer engagement events including content sharing, content viewing, and custom actions, providing visibility into how prospects interact with shared materials.
   version: 2.0.0
   contact:
     name: Gong
@@ -215,57 +215,6 @@ components:
           additionalProperties:
             type: string
           description: Custom properties for the view event.
-    BaseResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-    CustomActionEventRequest:
-      type: object
-      required:
-      - actionName
-      - actorEmailAddress
-      - eventTimestamp
-      properties:
-        actionName:
-          type: string
-          description: Name of the custom action.
-        actorEmailAddress:
-          type: string
-          format: email
-          description: Email of the person who performed the action.
-        targetEmailAddress:
-          type: string
-          format: email
-          description: Email of the target of the action.
-        eventTimestamp:
-          type: string
-          format: date-time
-          description: When the action occurred in ISO-8601 format.
-        actionDetails:
-          type: string
-          description: Additional details about the action.
-        customProperties:
-          type: object
-          additionalProperties:
-            type: string
-          description: Custom properties for the action event.
-    IntegrationSettingsRequest:
-      type: object
-      properties:
-        integrationName:
-          type: string
-          description: Name of the integration.
-        enableContentTracking:
-          type: boolean
-          description: Enable tracking of content sharing and viewing.
-        enableActionTracking:
-          type: boolean
-          description: Enable tracking of custom actions.
-        crmAssociationEnabled:
-          type: boolean
-          description: Enable automatic CRM record association.
     ErrorResponse:
       type: object
       properties:
@@ -323,6 +272,57 @@ components:
               type: string
               description: CRM object identifier.
           description: CRM context for associating the event with CRM records.
+    BaseResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+    CustomActionEventRequest:
+      type: object
+      required:
+      - actionName
+      - actorEmailAddress
+      - eventTimestamp
+      properties:
+        actionName:
+          type: string
+          description: Name of the custom action.
+        actorEmailAddress:
+          type: string
+          format: email
+          description: Email of the person who performed the action.
+        targetEmailAddress:
+          type: string
+          format: email
+          description: Email of the target of the action.
+        eventTimestamp:
+          type: string
+          format: date-time
+          description: When the action occurred in ISO-8601 format.
+        actionDetails:
+          type: string
+          description: Additional details about the action.
+        customProperties:
+          type: object
+          additionalProperties:
+            type: string
+          description: Custom properties for the action event.
+    IntegrationSettingsRequest:
+      type: object
+      properties:
+        integrationName:
+          type: string
+          description: Name of the integration.
+        enableContentTracking:
+          type: boolean
+          description: Enable tracking of content sharing and viewing.
+        enableActionTracking:
+          type: boolean
+          description: Enable tracking of custom actions.
+        crmAssociationEnabled:
+          type: boolean
+          description: Enable automatic CRM record association.
   securitySchemes:
     basicAuth:
       type: http

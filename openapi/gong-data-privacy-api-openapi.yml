@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Gong Auditing Audit Logs Data Privacy API
-  description: The Gong Auditing API enables retrieval of audit log data by type and time range, providing visibility into user actions and system events for compliance and security monitoring.
+  title: Gong Data Privacy API
+  description: The Gong Data Privacy API provides data protection capabilities including finding references to email addresses and phone numbers, and purging associated data to support compliance with privacy regulations such as GDPR and CCPA.
   version: 2.0.0
   contact:
     name: Gong
@@ -178,6 +178,21 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    EmailReferencesResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        emailAddress:
+          type: string
+          format: email
+          description: The email address that was searched.
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataReference'
+          description: List of references to the email address.
     DataDeletionResponse:
       type: object
       properties:
@@ -191,6 +206,34 @@ components:
           - Processing
           - Complete
           description: Status of the deletion request.
+    EmailDeleteRequest:
+      type: object
+      required:
+      - emailAddress
+      properties:
+        emailAddress:
+          type: string
+          format: email
+          description: The email address whose associated data should be deleted.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    PhoneDeleteRequest:
+      type: object
+      required:
+      - phoneNumber
+      properties:
+        phoneNumber:
+          type: string
+          description: The phone number whose associated data should be deleted.
     DataReference:
       type: object
       properties:
@@ -213,41 +256,6 @@ components:
         details:
           type: string
           description: Additional details about the reference.
-    EmailDeleteRequest:
-      type: object
-      required:
-      - emailAddress
-      properties:
-        emailAddress:
-          type: string
-          format: email
-          description: The email address whose associated data should be deleted.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
-    EmailReferencesResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        emailAddress:
-          type: string
-          format: email
-          description: The email address that was searched.
-        references:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataReference'
-          description: List of references to the email address.
     PhoneReferencesResponse:
       type: object
       properties:
@@ -262,14 +270,6 @@ components:
           items:
             $ref: '#/components/schemas/DataReference'
           description: List of references to the phone number.
-    PhoneDeleteRequest:
-      type: object
-      required:
-      - phoneNumber
-      properties:
-        phoneNumber:
-          type: string
-          description: The phone number whose associated data should be deleted.
   securitySchemes:
     basicAuth:
       type: http
