@@ -61,6 +61,17 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
     CallTranscriptRequest:
       type: object
       properties:
@@ -87,6 +98,26 @@ components:
               type: string
               description: Filter by workspace.
           description: Filter criteria for transcript retrieval.
+    CallTranscriptsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+            currentPageSize:
+              type: integer
+            cursor:
+              type: string
+        callTranscripts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CallTranscript'
+          description: List of call transcripts.
     CallTranscript:
       type: object
       properties:
@@ -119,37 +150,6 @@ components:
                       type: string
                       description: The transcribed text.
           description: Transcript segments with speaker and timing data.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
-    CallTranscriptsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-            currentPageSize:
-              type: integer
-            cursor:
-              type: string
-        callTranscripts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CallTranscript'
-          description: List of call transcripts.
   securitySchemes:
     basicAuth:
       type: http

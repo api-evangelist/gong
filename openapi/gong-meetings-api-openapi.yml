@@ -188,6 +188,45 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    MeetingIntegrationStatusRequest:
+      type: object
+      properties:
+        meetingProvider:
+          type: string
+          description: The meeting provider to check (e.g., Zoom, Google Meet).
+        userEmail:
+          type: string
+          format: email
+          description: Email of the user to check integration for.
+    MeetingAttendee:
+      type: object
+      properties:
+        emailAddress:
+          type: string
+          format: email
+          description: The attendee's email address.
+        name:
+          type: string
+          description: The attendee's display name.
+        responseStatus:
+          type: string
+          enum:
+          - Accepted
+          - Declined
+          - Tentative
+          - NeedsAction
+          description: The attendee's RSVP response status.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
     UpdateMeetingRequest:
       type: object
       properties:
@@ -214,45 +253,6 @@ components:
         description:
           type: string
           description: Updated meeting description.
-    MeetingAttendee:
-      type: object
-      properties:
-        emailAddress:
-          type: string
-          format: email
-          description: The attendee's email address.
-        name:
-          type: string
-          description: The attendee's display name.
-        responseStatus:
-          type: string
-          enum:
-          - Accepted
-          - Declined
-          - Tentative
-          - NeedsAction
-          description: The attendee's RSVP response status.
-    MeetingIntegrationStatusRequest:
-      type: object
-      properties:
-        meetingProvider:
-          type: string
-          description: The meeting provider to check (e.g., Zoom, Google Meet).
-        userEmail:
-          type: string
-          format: email
-          description: Email of the user to check integration for.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
     CreateMeetingRequest:
       type: object
       required:
@@ -300,28 +300,6 @@ components:
         requestId:
           type: string
           description: A unique identifier for the request.
-    MeetingIntegrationStatusResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        isIntegrated:
-          type: boolean
-          description: Whether the meeting integration is properly configured.
-        provider:
-          type: string
-          description: The meeting provider checked.
-        status:
-          type: string
-          enum:
-          - Active
-          - Inactive
-          - Error
-          description: Current status of the integration.
-        details:
-          type: string
-          description: Additional details about the integration status.
     MeetingResponse:
       type: object
       properties:
@@ -360,6 +338,28 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/MeetingAttendee'
+    MeetingIntegrationStatusResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        isIntegrated:
+          type: boolean
+          description: Whether the meeting integration is properly configured.
+        provider:
+          type: string
+          description: The meeting provider checked.
+        status:
+          type: string
+          enum:
+          - Active
+          - Inactive
+          - Error
+          description: Current status of the integration.
+        details:
+          type: string
+          description: Additional details about the integration status.
   securitySchemes:
     basicAuth:
       type: http

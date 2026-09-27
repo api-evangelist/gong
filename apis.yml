@@ -186,6 +186,8 @@ apis:
   humanURL: https://app.gong.io/settings/api/documentation
   baseURL: https://api.gong.io/v2
   tags:
+  - Privacy
+  tags_raw:
   - Data Privacy
   properties:
   - type: OpenAPI

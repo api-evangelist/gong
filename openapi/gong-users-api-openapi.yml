@@ -179,6 +179,32 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    UsersResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+              description: Total number of user records.
+            currentPageSize:
+              type: integer
+              description: Number of records in the current page.
+            currentPageNumber:
+              type: integer
+              description: The current page number.
+            cursor:
+              type: string
+              description: Cursor value for retrieving the next page.
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+          description: List of user objects.
     UsersFilterRequest:
       type: object
       properties:
@@ -210,43 +236,6 @@ components:
           description: A unique identifier for the request.
         user:
           $ref: '#/components/schemas/User'
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
-    UsersResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-              description: Total number of user records.
-            currentPageSize:
-              type: integer
-              description: Number of records in the current page.
-            currentPageNumber:
-              type: integer
-              description: The current page number.
-            cursor:
-              type: string
-              description: Cursor value for retrieving the next page.
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
-          description: List of user objects.
     UserSettingsHistoryResponse:
       type: object
       properties:
@@ -278,6 +267,17 @@ components:
                 type: string
                 description: Who made the change.
           description: List of settings changes for the user.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
     User:
       type: object
       properties:

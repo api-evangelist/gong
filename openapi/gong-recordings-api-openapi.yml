@@ -81,15 +81,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    NewCallRecordingResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        callId:
-          type: string
-          description: The call ID the media was attached to.
     ErrorResponse:
       type: object
       properties:
@@ -101,6 +92,15 @@ components:
           items:
             type: string
           description: List of error messages.
+    NewCallRecordingResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        callId:
+          type: string
+          description: The call ID the media was attached to.
   securitySchemes:
     basicAuth:
       type: http

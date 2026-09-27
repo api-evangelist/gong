@@ -93,6 +93,28 @@ paths:
       description: Gong API v2 Production Server
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    ScorecardsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        scorecards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Scorecard'
+          description: List of scorecard configurations.
     ScorecardQuestion:
       type: object
       properties:
@@ -124,28 +146,6 @@ components:
               label:
                 type: string
           description: Available answer options (for choice-type questions).
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
-    ScorecardsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        scorecards:
-          type: array
-          items:
-            $ref: '#/components/schemas/Scorecard'
-          description: List of scorecard configurations.
     Scorecard:
       type: object
       properties:
@@ -174,6 +174,49 @@ components:
           items:
             $ref: '#/components/schemas/ScorecardQuestion'
           description: List of questions in the scorecard.
+    AnsweredScorecard:
+      type: object
+      properties:
+        callId:
+          type: string
+          description: The call ID the scorecard was answered for.
+        scorecardId:
+          type: string
+          description: The scorecard template ID.
+        scorecardName:
+          type: string
+          description: The name of the scorecard.
+        reviewedUserId:
+          type: string
+          description: The user ID of the person being reviewed.
+        reviewerUserId:
+          type: string
+          description: The user ID of the reviewer.
+        answeredAt:
+          type: string
+          format: date-time
+          description: When the scorecard was answered.
+        overallScore:
+          type: number
+          format: float
+          description: The overall score given.
+        questions:
+          type: array
+          items:
+            type: object
+            properties:
+              questionId:
+                type: string
+              questionText:
+                type: string
+              answer:
+                type: string
+              score:
+                type: number
+                format: float
+              isNotApplicable:
+                type: boolean
+          description: Individual question answers and scores.
     AnsweredScorecardsResponse:
       type: object
       properties:
@@ -222,49 +265,6 @@ components:
                 type: string
               description: Filter by specific scorecard IDs.
           description: Filter criteria for answered scorecards.
-    AnsweredScorecard:
-      type: object
-      properties:
-        callId:
-          type: string
-          description: The call ID the scorecard was answered for.
-        scorecardId:
-          type: string
-          description: The scorecard template ID.
-        scorecardName:
-          type: string
-          description: The name of the scorecard.
-        reviewedUserId:
-          type: string
-          description: The user ID of the person being reviewed.
-        reviewerUserId:
-          type: string
-          description: The user ID of the reviewer.
-        answeredAt:
-          type: string
-          format: date-time
-          description: When the scorecard was answered.
-        overallScore:
-          type: number
-          format: float
-          description: The overall score given.
-        questions:
-          type: array
-          items:
-            type: object
-            properties:
-              questionId:
-                type: string
-              questionText:
-                type: string
-              answer:
-                type: string
-              score:
-                type: number
-                format: float
-              isNotApplicable:
-                type: boolean
-          description: Individual question answers and scores.
   securitySchemes:
     basicAuth:
       type: http

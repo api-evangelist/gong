@@ -184,31 +184,6 @@ components:
             - objectId
             - fields
           description: List of CRM entity objects to upload.
-    UploadStatusResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        status:
-          type: string
-          enum:
-          - Queued
-          - Processing
-          - Complete
-          - Failed
-          description: Current status of the upload request.
-        entitiesProcessed:
-          type: integer
-          description: Number of entities processed so far.
-        entitiesFailed:
-          type: integer
-          description: Number of entities that failed processing.
-        errors:
-          type: array
-          items:
-            type: string
-          description: Error messages for failed entities.
     ErrorResponse:
       type: object
       properties:
@@ -240,6 +215,31 @@ components:
                 additionalProperties:
                   type: string
           description: List of CRM objects.
+    UploadStatusResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        status:
+          type: string
+          enum:
+          - Queued
+          - Processing
+          - Complete
+          - Failed
+          description: Current status of the upload request.
+        entitiesProcessed:
+          type: integer
+          description: Number of entities processed so far.
+        entitiesFailed:
+          type: integer
+          description: Number of entities that failed processing.
+        errors:
+          type: array
+          items:
+            type: string
+          description: Error messages for failed entities.
     CrmEntitiesUploadResponse:
       type: object
       properties:

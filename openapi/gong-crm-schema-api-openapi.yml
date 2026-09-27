@@ -99,26 +99,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    CrmEntitySchemaResponse:
+    BaseResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        fields:
-          type: array
-          items:
-            type: object
-            properties:
-              uniqueName:
-                type: string
-              label:
-                type: string
-              type:
-                type: string
-              isRequired:
-                type: boolean
-          description: List of schema field definitions.
     ErrorResponse:
       type: object
       properties:
@@ -177,12 +163,26 @@ components:
             - label
             - type
           description: List of field definitions for the CRM object schema.
-    BaseResponse:
+    CrmEntitySchemaResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
+        fields:
+          type: array
+          items:
+            type: object
+            properties:
+              uniqueName:
+                type: string
+              label:
+                type: string
+              type:
+                type: string
+              isRequired:
+                type: boolean
+          description: List of schema field definitions.
   securitySchemes:
     basicAuth:
       type: http
