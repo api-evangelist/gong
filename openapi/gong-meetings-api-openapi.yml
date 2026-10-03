@@ -188,6 +188,32 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    UpdateMeetingRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Updated title of the meeting.
+        scheduledStart:
+          type: string
+          format: date-time
+          description: Updated scheduled start time.
+        scheduledEnd:
+          type: string
+          format: date-time
+          description: Updated scheduled end time.
+        meetingUrl:
+          type: string
+          format: uri
+          description: Updated meeting URL.
+        attendees:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeetingAttendee'
+          description: Updated list of attendees.
+        description:
+          type: string
+          description: Updated meeting description.
     MeetingIntegrationStatusRequest:
       type: object
       properties:
@@ -198,6 +224,72 @@ components:
           type: string
           format: email
           description: Email of the user to check integration for.
+    MeetingIntegrationStatusResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        isIntegrated:
+          type: boolean
+          description: Whether the meeting integration is properly configured.
+        provider:
+          type: string
+          description: The meeting provider checked.
+        status:
+          type: string
+          enum:
+          - Active
+          - Inactive
+          - Error
+          description: Current status of the integration.
+        details:
+          type: string
+          description: Additional details about the integration status.
+    MeetingResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        meetingId:
+          type: string
+          description: The Gong-assigned meeting identifier.
+        meeting:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique meeting identifier.
+            title:
+              type: string
+              description: Title of the meeting.
+            scheduledStart:
+              type: string
+              format: date-time
+              description: Scheduled start time.
+            scheduledEnd:
+              type: string
+              format: date-time
+              description: Scheduled end time.
+            organizerEmail:
+              type: string
+              format: email
+              description: Email of the organizer.
+            meetingUrl:
+              type: string
+              format: uri
+              description: Meeting URL.
+            attendees:
+              type: array
+              items:
+                $ref: '#/components/schemas/MeetingAttendee'
+    BaseResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
     MeetingAttendee:
       type: object
       properties:
@@ -227,32 +319,6 @@ components:
           items:
             type: string
           description: List of error messages.
-    UpdateMeetingRequest:
-      type: object
-      properties:
-        title:
-          type: string
-          description: Updated title of the meeting.
-        scheduledStart:
-          type: string
-          format: date-time
-          description: Updated scheduled start time.
-        scheduledEnd:
-          type: string
-          format: date-time
-          description: Updated scheduled end time.
-        meetingUrl:
-          type: string
-          format: uri
-          description: Updated meeting URL.
-        attendees:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeetingAttendee'
-          description: Updated list of attendees.
-        description:
-          type: string
-          description: Updated meeting description.
     CreateMeetingRequest:
       type: object
       required:
@@ -294,72 +360,6 @@ components:
         externalMeetingId:
           type: string
           description: External meeting ID from the conferencing system.
-    BaseResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-    MeetingResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        meetingId:
-          type: string
-          description: The Gong-assigned meeting identifier.
-        meeting:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique meeting identifier.
-            title:
-              type: string
-              description: Title of the meeting.
-            scheduledStart:
-              type: string
-              format: date-time
-              description: Scheduled start time.
-            scheduledEnd:
-              type: string
-              format: date-time
-              description: Scheduled end time.
-            organizerEmail:
-              type: string
-              format: email
-              description: Email of the organizer.
-            meetingUrl:
-              type: string
-              format: uri
-              description: Meeting URL.
-            attendees:
-              type: array
-              items:
-                $ref: '#/components/schemas/MeetingAttendee'
-    MeetingIntegrationStatusResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        isIntegrated:
-          type: boolean
-          description: Whether the meeting integration is properly configured.
-        provider:
-          type: string
-          description: The meeting provider checked.
-        status:
-          type: string
-          enum:
-          - Active
-          - Inactive
-          - Error
-          description: Current status of the integration.
-        details:
-          type: string
-          description: Additional details about the integration status.
   securitySchemes:
     basicAuth:
       type: http

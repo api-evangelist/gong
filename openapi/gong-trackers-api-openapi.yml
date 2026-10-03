@@ -56,28 +56,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
-    TrackersResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        trackers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tracker'
-          description: List of tracker configurations.
     Tracker:
       type: object
       properties:
@@ -110,6 +88,28 @@ components:
           type: string
           format: date-time
           description: When the tracker was last updated.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    TrackersResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        trackers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tracker'
+          description: List of tracker configurations.
   securitySchemes:
     basicAuth:
       type: http

@@ -130,6 +130,21 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    CrmIntegrationRegistrationResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        integrationId:
+          type: string
+          description: The registered integration ID.
+    BaseResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
     CrmIntegrationRegistrationRequest:
       type: object
       required:
@@ -149,6 +164,17 @@ components:
           type: string
           format: uri
           description: URL of the CRM instance.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
     CrmIntegrationsResponse:
       type: object
       properties:
@@ -177,32 +203,6 @@ components:
                 type: string
                 description: Status of the integration.
           description: List of registered CRM integrations.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
-    CrmIntegrationRegistrationResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        integrationId:
-          type: string
-          description: The registered integration ID.
-    BaseResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
   securitySchemes:
     basicAuth:
       type: http

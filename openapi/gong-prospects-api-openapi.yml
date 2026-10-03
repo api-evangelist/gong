@@ -147,6 +147,17 @@ components:
           items:
             type: string
           description: List of flow instance IDs to unassign. Up to 100 per request.
+    UnassignProspectsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        unassignedFlowInstanceIds:
+          type: array
+          items:
+            type: string
+          description: Flow instance IDs the prospect was successfully removed from.
     AssignProspectsResponse:
       type: object
       properties:
@@ -175,6 +186,24 @@ components:
               reason:
                 type: string
           description: List of prospects that failed to be assigned.
+    AssignProspectsRequest:
+      type: object
+      required:
+      - flowId
+      - prospects
+      properties:
+        flowId:
+          type: string
+          description: The ID of the Engage flow to assign prospects to.
+        prospects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Prospect'
+          description: List of prospects to assign.
+        senderEmail:
+          type: string
+          format: email
+          description: The email address to send flow messages from.
     Prospect:
       type: object
       required:
@@ -208,28 +237,6 @@ components:
           additionalProperties:
             type: string
           description: Custom field key-value pairs for the prospect.
-    ProspectsFlowsRequest:
-      type: object
-      required:
-      - prospectEmails
-      properties:
-        prospectEmails:
-          type: array
-          items:
-            type: string
-            format: email
-          description: List of prospect email addresses to check.
-    UnassignProspectsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        unassignedFlowInstanceIds:
-          type: array
-          items:
-            type: string
-          description: Flow instance IDs the prospect was successfully removed from.
     ErrorResponse:
       type: object
       properties:
@@ -270,24 +277,17 @@ components:
                       type: string
                       format: date-time
           description: Flow assignments for each prospect.
-    AssignProspectsRequest:
+    ProspectsFlowsRequest:
       type: object
       required:
-      - flowId
-      - prospects
+      - prospectEmails
       properties:
-        flowId:
-          type: string
-          description: The ID of the Engage flow to assign prospects to.
-        prospects:
+        prospectEmails:
           type: array
           items:
-            $ref: '#/components/schemas/Prospect'
-          description: List of prospects to assign.
-        senderEmail:
-          type: string
-          format: email
-          description: The email address to send flow messages from.
+            type: string
+            format: email
+          description: List of prospect email addresses to check.
   securitySchemes:
     basicAuth:
       type: http

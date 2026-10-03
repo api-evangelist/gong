@@ -93,17 +93,6 @@ paths:
       description: Gong API v2 Production Server
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
     ScorecardsResponse:
       type: object
       properties:
@@ -146,6 +135,17 @@ components:
               label:
                 type: string
           description: Available answer options (for choice-type questions).
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
     Scorecard:
       type: object
       properties:
@@ -217,26 +217,6 @@ components:
               isNotApplicable:
                 type: boolean
           description: Individual question answers and scores.
-    AnsweredScorecardsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-            currentPageSize:
-              type: integer
-            cursor:
-              type: string
-        answeredScorecards:
-          type: array
-          items:
-            $ref: '#/components/schemas/AnsweredScorecard'
-          description: List of answered scorecards.
     AnsweredScorecardsRequest:
       type: object
       properties:
@@ -265,6 +245,26 @@ components:
                 type: string
               description: Filter by specific scorecard IDs.
           description: Filter criteria for answered scorecards.
+    AnsweredScorecardsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+            currentPageSize:
+              type: integer
+            cursor:
+              type: string
+        answeredScorecards:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnsweredScorecard'
+          description: List of answered scorecards.
   securitySchemes:
     basicAuth:
       type: http

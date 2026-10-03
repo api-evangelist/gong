@@ -343,7 +343,7 @@ components:
           items:
             type: string
           description: List of user IDs to grant or revoke access.
-    ExtensiveCallsResponse:
+    ManualAssociationResponse:
       type: object
       properties:
         requestId:
@@ -354,27 +354,31 @@ components:
           properties:
             totalRecords:
               type: integer
-              description: Total number of matching records.
             currentPageSize:
               type: integer
-              description: Number of records in the current page.
             cursor:
               type: string
-              description: Cursor for retrieving the next page.
         calls:
           type: array
           items:
-            $ref: '#/components/schemas/DetailedCall'
-          description: List of detailed call objects.
-    NewCallAddingResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        callId:
-          type: string
-          description: The Gong-assigned unique identifier for the newly created call.
+            type: object
+            properties:
+              callId:
+                type: string
+                description: The call ID.
+              crmAssociations:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    objectType:
+                      type: string
+                    objectId:
+                      type: string
+                    associatedAt:
+                      type: string
+                      format: date-time
+          description: Calls with their manual CRM associations.
     UserCallAccessResponse:
       type: object
       properties:
@@ -419,6 +423,12 @@ components:
           items:
             $ref: '#/components/schemas/Call'
           description: List of call objects.
+    BaseResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
     Call:
       type: object
       properties:
@@ -478,109 +488,6 @@ components:
           items:
             $ref: '#/components/schemas/CallParty'
           description: The participants in the call.
-    UserCallAccessRequest:
-      type: object
-      properties:
-        callIds:
-          type: array
-          items:
-            type: string
-          description: List of call IDs to check access for.
-    ExtensiveCallsRequest:
-      type: object
-      properties:
-        cursor:
-          type: string
-          description: Cursor for pagination.
-        filter:
-          type: object
-          properties:
-            fromDateTime:
-              type: string
-              format: date-time
-              description: Start of the date range filter.
-            toDateTime:
-              type: string
-              format: date-time
-              description: End of the date range filter.
-            callIds:
-              type: array
-              items:
-                type: string
-              description: Specific call IDs to retrieve.
-            workspaceId:
-              type: string
-              description: Filter by workspace.
-          description: Filter criteria for calls.
-        contentSelector:
-          type: object
-          properties:
-            context:
-              type: string
-              enum:
-              - None
-              - Extended
-              - Full
-              description: Level of context to include.
-            exposedFields:
-              type: object
-              properties:
-                collaboration:
-                  type: boolean
-                  description: Include collaboration data.
-                content:
-                  type: boolean
-                  description: Include content data.
-                currentSpeakerUserIds:
-                  type: boolean
-                  description: Include speaker user IDs.
-                media:
-                  type: boolean
-                  description: Include media URLs (requires api:calls:read:media-url scope).
-                parties:
-                  type: boolean
-                  description: Include party information.
-                publicComments:
-                  type: boolean
-                  description: Include public comments.
-              description: Fields to include in the response.
-          description: Selector for what content to include in the response.
-    ManualAssociationResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-            currentPageSize:
-              type: integer
-            cursor:
-              type: string
-        calls:
-          type: array
-          items:
-            type: object
-            properties:
-              callId:
-                type: string
-                description: The call ID.
-              crmAssociations:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    objectType:
-                      type: string
-                    objectId:
-                      type: string
-                    associatedAt:
-                      type: string
-                      format: date-time
-          description: Calls with their manual CRM associations.
     DetailedCall:
       allOf:
       - $ref: '#/components/schemas/Call'
@@ -686,6 +593,14 @@ components:
                 format: uri
                 description: URL for the video recording.
             description: Media URLs for the call recording.
+    UserCallAccessRequest:
+      type: object
+      properties:
+        callIds:
+          type: array
+          items:
+            type: string
+          description: List of call IDs to check access for.
     NewCallParty:
       type: object
       properties:
@@ -702,6 +617,65 @@ components:
         userId:
           type: string
           description: Gong user ID of the participant (if applicable).
+    ExtensiveCallsRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: Cursor for pagination.
+        filter:
+          type: object
+          properties:
+            fromDateTime:
+              type: string
+              format: date-time
+              description: Start of the date range filter.
+            toDateTime:
+              type: string
+              format: date-time
+              description: End of the date range filter.
+            callIds:
+              type: array
+              items:
+                type: string
+              description: Specific call IDs to retrieve.
+            workspaceId:
+              type: string
+              description: Filter by workspace.
+          description: Filter criteria for calls.
+        contentSelector:
+          type: object
+          properties:
+            context:
+              type: string
+              enum:
+              - None
+              - Extended
+              - Full
+              description: Level of context to include.
+            exposedFields:
+              type: object
+              properties:
+                collaboration:
+                  type: boolean
+                  description: Include collaboration data.
+                content:
+                  type: boolean
+                  description: Include content data.
+                currentSpeakerUserIds:
+                  type: boolean
+                  description: Include speaker user IDs.
+                media:
+                  type: boolean
+                  description: Include media URLs (requires api:calls:read:media-url scope).
+                parties:
+                  type: boolean
+                  description: Include party information.
+                publicComments:
+                  type: boolean
+                  description: Include public comments.
+              description: Fields to include in the response.
+          description: Selector for what content to include in the response.
     ErrorResponse:
       type: object
       properties:
@@ -713,12 +687,46 @@ components:
           items:
             type: string
           description: List of error messages.
-    BaseResponse:
+    ExtensiveCallsResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+              description: Total number of matching records.
+            currentPageSize:
+              type: integer
+              description: Number of records in the current page.
+            cursor:
+              type: string
+              description: Cursor for retrieving the next page.
+        calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/DetailedCall'
+          description: List of detailed call objects.
+    SpecificCallResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        call:
+          $ref: '#/components/schemas/Call'
+    NewCallAddingResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        callId:
+          type: string
+          description: The Gong-assigned unique identifier for the newly created call.
     CallParty:
       type: object
       properties:
@@ -756,14 +764,6 @@ components:
           items:
             type: string
           description: Communication methods used by the party.
-    SpecificCallResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        call:
-          $ref: '#/components/schemas/Call'
     NewCallAddingRequest:
       type: object
       required:

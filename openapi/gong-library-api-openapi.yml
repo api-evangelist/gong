@@ -95,6 +95,28 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    LibraryFolderCallsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryCall'
+          description: List of calls in the folder.
+    LibraryFoldersResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        folders:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryFolder'
+          description: List of library folders.
     LibraryFolder:
       type: object
       properties:
@@ -120,28 +142,6 @@ components:
           type: string
           format: date-time
           description: When the folder was created.
-    LibraryFoldersResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        folders:
-          type: array
-          items:
-            $ref: '#/components/schemas/LibraryFolder'
-          description: List of library folders.
-    LibraryFolderCallsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        calls:
-          type: array
-          items:
-            $ref: '#/components/schemas/LibraryCall'
-          description: List of calls in the folder.
     ErrorResponse:
       type: object
       properties:

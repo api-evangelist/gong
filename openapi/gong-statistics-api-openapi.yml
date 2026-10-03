@@ -196,6 +196,107 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    CoachingMetricsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        metrics:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: string
+                description: The user ID.
+              callsListenedTo:
+                type: integer
+                description: Number of direct report calls listened to.
+              commentsGiven:
+                type: integer
+                description: Number of comments given to direct reports.
+              scorecardsFilled:
+                type: integer
+                description: Number of scorecards filled for direct reports.
+          description: Coaching metrics data.
+    DailyActivityRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: Cursor for pagination.
+        filter:
+          type: object
+          properties:
+            fromDateTime:
+              type: string
+              format: date-time
+              description: Start of the date range.
+            toDateTime:
+              type: string
+              format: date-time
+              description: End of the date range.
+            userIds:
+              type: array
+              items:
+                type: string
+              description: Filter by specific user IDs.
+          description: Filter criteria for daily activity.
+    AggregatedActivityRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: Cursor for pagination.
+        filter:
+          type: object
+          properties:
+            fromDateTime:
+              type: string
+              format: date-time
+              description: Start of the date range.
+            toDateTime:
+              type: string
+              format: date-time
+              description: End of the date range.
+            userIds:
+              type: array
+              items:
+                type: string
+              description: Filter by specific user IDs.
+          description: Filter criteria for activity retrieval.
+    InteractionStatsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+            currentPageSize:
+              type: integer
+            cursor:
+              type: string
+        usersInteractionStats:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserInteractionStats'
+          description: Interaction statistics per user.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
     UserAggregatedActivity:
       type: object
       properties:
@@ -226,6 +327,34 @@ components:
         othersCallsListenedTo:
           type: integer
           description: Number of others' calls the user listened to.
+    UserInteractionStats:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: The Gong user ID.
+        callsCount:
+          type: integer
+          description: Total number of calls.
+        talkRatio:
+          type: number
+          format: float
+          description: Average talk ratio (percentage of time the user spoke).
+        longestMonologue:
+          type: number
+          description: Longest uninterrupted speaking duration in seconds.
+        interactivity:
+          type: number
+          format: float
+          description: Average interactivity score.
+        patience:
+          type: number
+          format: float
+          description: Average patience metric.
+        questionRate:
+          type: number
+          format: float
+          description: Average question rate per call.
     InteractionStatsRequest:
       type: object
       properties:
@@ -290,29 +419,6 @@ components:
                     callsAccessedRecording:
                       type: integer
           description: Daily activity breakdown per user.
-    AggregatedActivityRequest:
-      type: object
-      properties:
-        cursor:
-          type: string
-          description: Cursor for pagination.
-        filter:
-          type: object
-          properties:
-            fromDateTime:
-              type: string
-              format: date-time
-              description: Start of the date range.
-            toDateTime:
-              type: string
-              format: date-time
-              description: End of the date range.
-            userIds:
-              type: array
-              items:
-                type: string
-              description: Filter by specific user IDs.
-          description: Filter criteria for activity retrieval.
     AggregatedActivityResponse:
       type: object
       properties:
@@ -333,112 +439,6 @@ components:
           items:
             $ref: '#/components/schemas/UserAggregatedActivity'
           description: List of aggregated activity per user.
-    UserInteractionStats:
-      type: object
-      properties:
-        userId:
-          type: string
-          description: The Gong user ID.
-        callsCount:
-          type: integer
-          description: Total number of calls.
-        talkRatio:
-          type: number
-          format: float
-          description: Average talk ratio (percentage of time the user spoke).
-        longestMonologue:
-          type: number
-          description: Longest uninterrupted speaking duration in seconds.
-        interactivity:
-          type: number
-          format: float
-          description: Average interactivity score.
-        patience:
-          type: number
-          format: float
-          description: Average patience metric.
-        questionRate:
-          type: number
-          format: float
-          description: Average question rate per call.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
-    CoachingMetricsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        metrics:
-          type: array
-          items:
-            type: object
-            properties:
-              userId:
-                type: string
-                description: The user ID.
-              callsListenedTo:
-                type: integer
-                description: Number of direct report calls listened to.
-              commentsGiven:
-                type: integer
-                description: Number of comments given to direct reports.
-              scorecardsFilled:
-                type: integer
-                description: Number of scorecards filled for direct reports.
-          description: Coaching metrics data.
-    DailyActivityRequest:
-      type: object
-      properties:
-        cursor:
-          type: string
-          description: Cursor for pagination.
-        filter:
-          type: object
-          properties:
-            fromDateTime:
-              type: string
-              format: date-time
-              description: Start of the date range.
-            toDateTime:
-              type: string
-              format: date-time
-              description: End of the date range.
-            userIds:
-              type: array
-              items:
-                type: string
-              description: Filter by specific user IDs.
-          description: Filter criteria for daily activity.
-    InteractionStatsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-            currentPageSize:
-              type: integer
-            cursor:
-              type: string
-        usersInteractionStats:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserInteractionStats'
-          description: Interaction statistics per user.
   securitySchemes:
     basicAuth:
       type: http

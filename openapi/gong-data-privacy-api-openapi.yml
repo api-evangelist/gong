@@ -178,20 +178,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    PhoneReferencesResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        phoneNumber:
-          type: string
-          description: The phone number that was searched.
-        references:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataReference'
-          description: List of references to the phone number.
     PhoneDeleteRequest:
       type: object
       required:
@@ -200,6 +186,43 @@ components:
         phoneNumber:
           type: string
           description: The phone number whose associated data should be deleted.
+    EmailDeleteRequest:
+      type: object
+      required:
+      - emailAddress
+      properties:
+        emailAddress:
+          type: string
+          format: email
+          description: The email address whose associated data should be deleted.
+    DataDeletionResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        status:
+          type: string
+          enum:
+          - Accepted
+          - Processing
+          - Complete
+          description: Status of the deletion request.
+    EmailReferencesResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        emailAddress:
+          type: string
+          format: email
+          description: The email address that was searched.
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataReference'
+          description: List of references to the email address.
     DataReference:
       type: object
       properties:
@@ -233,43 +256,20 @@ components:
           items:
             type: string
           description: List of error messages.
-    EmailReferencesResponse:
+    PhoneReferencesResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        emailAddress:
+        phoneNumber:
           type: string
-          format: email
-          description: The email address that was searched.
+          description: The phone number that was searched.
         references:
           type: array
           items:
             $ref: '#/components/schemas/DataReference'
-          description: List of references to the email address.
-    EmailDeleteRequest:
-      type: object
-      required:
-      - emailAddress
-      properties:
-        emailAddress:
-          type: string
-          format: email
-          description: The email address whose associated data should be deleted.
-    DataDeletionResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        status:
-          type: string
-          enum:
-          - Accepted
-          - Processing
-          - Complete
-          description: Status of the deletion request.
+          description: List of references to the phone number.
   securitySchemes:
     basicAuth:
       type: http

@@ -61,17 +61,26 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
+    CallTranscriptsResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        errors:
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+            currentPageSize:
+              type: integer
+            cursor:
+              type: string
+        callTranscripts:
           type: array
           items:
-            type: string
-          description: List of error messages.
+            $ref: '#/components/schemas/CallTranscript'
+          description: List of call transcripts.
     CallTranscriptRequest:
       type: object
       properties:
@@ -98,26 +107,17 @@ components:
               type: string
               description: Filter by workspace.
           description: Filter criteria for transcript retrieval.
-    CallTranscriptsResponse:
+    ErrorResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-            currentPageSize:
-              type: integer
-            cursor:
-              type: string
-        callTranscripts:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/CallTranscript'
-          description: List of call transcripts.
+            type: string
+          description: List of error messages.
     CallTranscript:
       type: object
       properties:
