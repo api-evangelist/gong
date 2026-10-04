@@ -1,0 +1,36 @@
+slug: gong
+provider: Gong
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Data Privacy
+  spec_file: gong-data-privacy-api-openapi.yml
+  capability_id: BC-130.50
+  capability_id_l1: BC-130
+  capability_name: Privacy & Data Protection Management
+  confidence: 0.85
+  evidence: '''finding references to email addresses and phone numbers, and purging associated data to
+    support compliance with privacy regulations such as GDPR and CCPA'''
+  reason: Operations locate and delete personal data references explicitly to satisfy GDPR/CCPA data-subject
+    erasure — squarely Privacy & Data Protection Management.
+- tag: Permission Profiles
+  spec_file: gong-permission-profiles-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: '''manages access controls through permission profiles and user call access assignments, enabling
+    programmatic configuration of who can access specific calls and features'''
+  reason: Create/update permission profiles and list users by profile is role-based access administration
+    — Identity & Access Management. Some ambiguity in that it is application-scoped authorisation rather
+    than enterprise IAM.

@@ -383,6 +383,9 @@ apis:
   - type: Overlay
     url: overlays/gong-workspaces-api-overlay.yaml
 common:
+- type: CapabilityMap
+  url: capabilities/gong-capability-edges.yml
+  name: Gong Business Capability Map
 - type: AgenticAccess
   url: agentic-access/gong-agentic-access.yml
 - type: TrustCenter
