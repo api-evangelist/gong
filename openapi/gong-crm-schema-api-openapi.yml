@@ -119,6 +119,12 @@ components:
               isRequired:
                 type: boolean
           description: List of schema field definitions.
+    BaseResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
     ErrorResponse:
       type: object
       properties:
@@ -130,12 +136,6 @@ components:
           items:
             type: string
           description: List of error messages.
-    BaseResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
     CrmEntitySchemaUploadRequest:
       type: object
       required:

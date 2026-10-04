@@ -196,6 +196,99 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    AggregatedActivityRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: Cursor for pagination.
+        filter:
+          type: object
+          properties:
+            fromDateTime:
+              type: string
+              format: date-time
+              description: Start of the date range.
+            toDateTime:
+              type: string
+              format: date-time
+              description: End of the date range.
+            userIds:
+              type: array
+              items:
+                type: string
+              description: Filter by specific user IDs.
+          description: Filter criteria for activity retrieval.
+    AggregatedActivityResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+            currentPageSize:
+              type: integer
+            cursor:
+              type: string
+        usersAggregatedActivity:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAggregatedActivity'
+          description: List of aggregated activity per user.
+    InteractionStatsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+            currentPageSize:
+              type: integer
+            cursor:
+              type: string
+        usersInteractionStats:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserInteractionStats'
+          description: Interaction statistics per user.
+    UserAggregatedActivity:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: The Gong user ID.
+        callsAsHost:
+          type: integer
+          description: Number of calls where the user was the host.
+        callsAttended:
+          type: integer
+          description: Number of calls the user attended.
+        callsGaveComments:
+          type: integer
+          description: Number of calls where the user gave comments.
+        callsReceivedComments:
+          type: integer
+          description: Number of calls where the user received comments.
+        callsAccessedRecording:
+          type: integer
+          description: Number of calls where the user accessed the recording.
+        callsScored:
+          type: integer
+          description: Number of calls scored by the user.
+        ownCallsListenedTo:
+          type: integer
+          description: Number of own calls the user listened to.
+        othersCallsListenedTo:
+          type: integer
+          description: Number of others' calls the user listened to.
     CoachingMetricsResponse:
       type: object
       properties:
@@ -243,90 +336,6 @@ components:
                 type: string
               description: Filter by specific user IDs.
           description: Filter criteria for daily activity.
-    AggregatedActivityRequest:
-      type: object
-      properties:
-        cursor:
-          type: string
-          description: Cursor for pagination.
-        filter:
-          type: object
-          properties:
-            fromDateTime:
-              type: string
-              format: date-time
-              description: Start of the date range.
-            toDateTime:
-              type: string
-              format: date-time
-              description: End of the date range.
-            userIds:
-              type: array
-              items:
-                type: string
-              description: Filter by specific user IDs.
-          description: Filter criteria for activity retrieval.
-    InteractionStatsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-            currentPageSize:
-              type: integer
-            cursor:
-              type: string
-        usersInteractionStats:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserInteractionStats'
-          description: Interaction statistics per user.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
-    UserAggregatedActivity:
-      type: object
-      properties:
-        userId:
-          type: string
-          description: The Gong user ID.
-        callsAsHost:
-          type: integer
-          description: Number of calls where the user was the host.
-        callsAttended:
-          type: integer
-          description: Number of calls the user attended.
-        callsGaveComments:
-          type: integer
-          description: Number of calls where the user gave comments.
-        callsReceivedComments:
-          type: integer
-          description: Number of calls where the user received comments.
-        callsAccessedRecording:
-          type: integer
-          description: Number of calls where the user accessed the recording.
-        callsScored:
-          type: integer
-          description: Number of calls scored by the user.
-        ownCallsListenedTo:
-          type: integer
-          description: Number of own calls the user listened to.
-        othersCallsListenedTo:
-          type: integer
-          description: Number of others' calls the user listened to.
     UserInteractionStats:
       type: object
       properties:
@@ -355,29 +364,6 @@ components:
           type: number
           format: float
           description: Average question rate per call.
-    InteractionStatsRequest:
-      type: object
-      properties:
-        cursor:
-          type: string
-          description: Cursor for pagination.
-        filter:
-          type: object
-          properties:
-            fromDateTime:
-              type: string
-              format: date-time
-              description: Start of the date range.
-            toDateTime:
-              type: string
-              format: date-time
-              description: End of the date range.
-            userIds:
-              type: array
-              items:
-                type: string
-              description: Filter by specific user IDs.
-          description: Filter criteria for interaction statistics.
     DailyActivityResponse:
       type: object
       properties:
@@ -419,26 +405,40 @@ components:
                     callsAccessedRecording:
                       type: integer
           description: Daily activity breakdown per user.
-    AggregatedActivityResponse:
+    InteractionStatsRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: Cursor for pagination.
+        filter:
+          type: object
+          properties:
+            fromDateTime:
+              type: string
+              format: date-time
+              description: Start of the date range.
+            toDateTime:
+              type: string
+              format: date-time
+              description: End of the date range.
+            userIds:
+              type: array
+              items:
+                type: string
+              description: Filter by specific user IDs.
+          description: Filter criteria for interaction statistics.
+    ErrorResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-            currentPageSize:
-              type: integer
-            cursor:
-              type: string
-        usersAggregatedActivity:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/UserAggregatedActivity'
-          description: List of aggregated activity per user.
+            type: string
+          description: List of error messages.
   securitySchemes:
     basicAuth:
       type: http

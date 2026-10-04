@@ -164,6 +164,46 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    CrmObjectsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        objects:
+          type: array
+          items:
+            type: object
+            properties:
+              objectId:
+                type: string
+              objectType:
+                type: string
+              fields:
+                type: object
+                additionalProperties:
+                  type: string
+          description: List of CRM objects.
+    CrmEntitiesUploadRequest:
+      type: object
+      properties:
+        entities:
+          type: array
+          items:
+            type: object
+            properties:
+              objectId:
+                type: string
+                description: The unique identifier of the CRM object in the source CRM.
+              fields:
+                type: object
+                additionalProperties:
+                  type: string
+                description: Key-value pairs representing the fields of the CRM object.
+            required:
+            - objectId
+            - fields
+          description: List of CRM entity objects to upload.
     UploadStatusResponse:
       type: object
       properties:
@@ -201,26 +241,6 @@ components:
         status:
           type: string
           description: Status of the upload (e.g., Queued, Processing, Complete).
-    CrmObjectsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        objects:
-          type: array
-          items:
-            type: object
-            properties:
-              objectId:
-                type: string
-              objectType:
-                type: string
-              fields:
-                type: object
-                additionalProperties:
-                  type: string
-          description: List of CRM objects.
     ErrorResponse:
       type: object
       properties:
@@ -232,26 +252,6 @@ components:
           items:
             type: string
           description: List of error messages.
-    CrmEntitiesUploadRequest:
-      type: object
-      properties:
-        entities:
-          type: array
-          items:
-            type: object
-            properties:
-              objectId:
-                type: string
-                description: The unique identifier of the CRM object in the source CRM.
-              fields:
-                type: object
-                additionalProperties:
-                  type: string
-                description: Key-value pairs representing the fields of the CRM object.
-            required:
-            - objectId
-            - fields
-          description: List of CRM entity objects to upload.
   securitySchemes:
     basicAuth:
       type: http

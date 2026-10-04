@@ -60,17 +60,6 @@ components:
           items:
             type: string
           description: List of error messages.
-    WorkspacesResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        workspaces:
-          type: array
-          items:
-            $ref: '#/components/schemas/Workspace'
-          description: List of workspace objects.
     Workspace:
       type: object
       properties:
@@ -83,6 +72,17 @@ components:
         description:
           type: string
           description: Description of the workspace.
+    WorkspacesResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        workspaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/Workspace'
+          description: List of workspace objects.
   securitySchemes:
     basicAuth:
       type: http

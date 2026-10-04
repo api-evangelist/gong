@@ -188,6 +188,75 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    MeetingAttendee:
+      type: object
+      properties:
+        emailAddress:
+          type: string
+          format: email
+          description: The attendee's email address.
+        name:
+          type: string
+          description: The attendee's display name.
+        responseStatus:
+          type: string
+          enum:
+          - Accepted
+          - Declined
+          - Tentative
+          - NeedsAction
+          description: The attendee's RSVP response status.
+    MeetingIntegrationStatusRequest:
+      type: object
+      properties:
+        meetingProvider:
+          type: string
+          description: The meeting provider to check (e.g., Zoom, Google Meet).
+        userEmail:
+          type: string
+          format: email
+          description: Email of the user to check integration for.
+    CreateMeetingRequest:
+      type: object
+      required:
+      - title
+      - scheduledStart
+      - scheduledEnd
+      - organizerEmail
+      properties:
+        title:
+          type: string
+          description: Title of the meeting.
+        scheduledStart:
+          type: string
+          format: date-time
+          description: Scheduled start time of the meeting in ISO-8601 format.
+        scheduledEnd:
+          type: string
+          format: date-time
+          description: Scheduled end time of the meeting in ISO-8601 format.
+        organizerEmail:
+          type: string
+          format: email
+          description: Email of the meeting organizer.
+        meetingUrl:
+          type: string
+          format: uri
+          description: URL of the meeting (conferencing link).
+        attendees:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeetingAttendee'
+          description: List of meeting attendees.
+        description:
+          type: string
+          description: Description or agenda for the meeting.
+        meetingProvider:
+          type: string
+          description: The meeting provider (e.g., Zoom, Google Meet, Microsoft Teams).
+        externalMeetingId:
+          type: string
+          description: External meeting ID from the conferencing system.
     UpdateMeetingRequest:
       type: object
       properties:
@@ -214,16 +283,6 @@ components:
         description:
           type: string
           description: Updated meeting description.
-    MeetingIntegrationStatusRequest:
-      type: object
-      properties:
-        meetingProvider:
-          type: string
-          description: The meeting provider to check (e.g., Zoom, Google Meet).
-        userEmail:
-          type: string
-          format: email
-          description: Email of the user to check integration for.
     MeetingIntegrationStatusResponse:
       type: object
       properties:
@@ -284,30 +343,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/MeetingAttendee'
-    BaseResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-    MeetingAttendee:
-      type: object
-      properties:
-        emailAddress:
-          type: string
-          format: email
-          description: The attendee's email address.
-        name:
-          type: string
-          description: The attendee's display name.
-        responseStatus:
-          type: string
-          enum:
-          - Accepted
-          - Declined
-          - Tentative
-          - NeedsAction
-          description: The attendee's RSVP response status.
     ErrorResponse:
       type: object
       properties:
@@ -319,47 +354,12 @@ components:
           items:
             type: string
           description: List of error messages.
-    CreateMeetingRequest:
+    BaseResponse:
       type: object
-      required:
-      - title
-      - scheduledStart
-      - scheduledEnd
-      - organizerEmail
       properties:
-        title:
+        requestId:
           type: string
-          description: Title of the meeting.
-        scheduledStart:
-          type: string
-          format: date-time
-          description: Scheduled start time of the meeting in ISO-8601 format.
-        scheduledEnd:
-          type: string
-          format: date-time
-          description: Scheduled end time of the meeting in ISO-8601 format.
-        organizerEmail:
-          type: string
-          format: email
-          description: Email of the meeting organizer.
-        meetingUrl:
-          type: string
-          format: uri
-          description: URL of the meeting (conferencing link).
-        attendees:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeetingAttendee'
-          description: List of meeting attendees.
-        description:
-          type: string
-          description: Description or agenda for the meeting.
-        meetingProvider:
-          type: string
-          description: The meeting provider (e.g., Zoom, Google Meet, Microsoft Teams).
-        externalMeetingId:
-          type: string
-          description: External meeting ID from the conferencing system.
+          description: A unique identifier for the request.
   securitySchemes:
     basicAuth:
       type: http

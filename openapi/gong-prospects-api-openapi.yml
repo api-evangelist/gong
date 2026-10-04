@@ -137,16 +137,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    UnassignProspectsRequest:
-      type: object
-      required:
-      - flowInstanceIds
-      properties:
-        flowInstanceIds:
-          type: array
-          items:
-            type: string
-          description: List of flow instance IDs to unassign. Up to 100 per request.
     UnassignProspectsResponse:
       type: object
       properties:
@@ -158,52 +148,46 @@ components:
           items:
             type: string
           description: Flow instance IDs the prospect was successfully removed from.
-    AssignProspectsResponse:
+    ProspectsFlowsResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        assignedProspects:
+        prospectsFlows:
           type: array
           items:
             type: object
             properties:
-              emailAddress:
+              prospectEmail:
                 type: string
                 format: email
-              flowInstanceId:
-                type: string
-          description: List of successfully assigned prospects with their flow instance IDs.
-        failedProspects:
-          type: array
-          items:
-            type: object
-            properties:
-              emailAddress:
-                type: string
-                format: email
-              reason:
-                type: string
-          description: List of prospects that failed to be assigned.
-    AssignProspectsRequest:
+              assignedFlows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    flowId:
+                      type: string
+                    flowInstanceId:
+                      type: string
+                    flowName:
+                      type: string
+                    assignedAt:
+                      type: string
+                      format: date-time
+          description: Flow assignments for each prospect.
+    ErrorResponse:
       type: object
-      required:
-      - flowId
-      - prospects
       properties:
-        flowId:
+        requestId:
           type: string
-          description: The ID of the Engage flow to assign prospects to.
-        prospects:
+          description: A unique identifier for the request.
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/Prospect'
-          description: List of prospects to assign.
-        senderEmail:
-          type: string
-          format: email
-          description: The email address to send flow messages from.
+            type: string
+          description: List of error messages.
     Prospect:
       type: object
       required:
@@ -237,46 +221,44 @@ components:
           additionalProperties:
             type: string
           description: Custom field key-value pairs for the prospect.
-    ErrorResponse:
+    AssignProspectsResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
-    ProspectsFlowsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        prospectsFlows:
+        assignedProspects:
           type: array
           items:
             type: object
             properties:
-              prospectEmail:
+              emailAddress:
                 type: string
                 format: email
-              assignedFlows:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    flowId:
-                      type: string
-                    flowInstanceId:
-                      type: string
-                    flowName:
-                      type: string
-                    assignedAt:
-                      type: string
-                      format: date-time
-          description: Flow assignments for each prospect.
+              flowInstanceId:
+                type: string
+          description: List of successfully assigned prospects with their flow instance IDs.
+        failedProspects:
+          type: array
+          items:
+            type: object
+            properties:
+              emailAddress:
+                type: string
+                format: email
+              reason:
+                type: string
+          description: List of prospects that failed to be assigned.
+    UnassignProspectsRequest:
+      type: object
+      required:
+      - flowInstanceIds
+      properties:
+        flowInstanceIds:
+          type: array
+          items:
+            type: string
+          description: List of flow instance IDs to unassign. Up to 100 per request.
     ProspectsFlowsRequest:
       type: object
       required:
@@ -288,6 +270,24 @@ components:
             type: string
             format: email
           description: List of prospect email addresses to check.
+    AssignProspectsRequest:
+      type: object
+      required:
+      - flowId
+      - prospects
+      properties:
+        flowId:
+          type: string
+          description: The ID of the Engage flow to assign prospects to.
+        prospects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Prospect'
+          description: List of prospects to assign.
+        senderEmail:
+          type: string
+          format: email
+          description: The email address to send flow messages from.
   securitySchemes:
     basicAuth:
       type: http

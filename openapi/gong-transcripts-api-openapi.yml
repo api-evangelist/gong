@@ -81,6 +81,17 @@ components:
           items:
             $ref: '#/components/schemas/CallTranscript'
           description: List of call transcripts.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
     CallTranscriptRequest:
       type: object
       properties:
@@ -107,17 +118,6 @@ components:
               type: string
               description: Filter by workspace.
           description: Filter criteria for transcript retrieval.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
     CallTranscript:
       type: object
       properties:

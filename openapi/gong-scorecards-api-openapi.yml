@@ -93,17 +93,17 @@ paths:
       description: Gong API v2 Production Server
 components:
   schemas:
-    ScorecardsResponse:
+    ErrorResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        scorecards:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/Scorecard'
-          description: List of scorecard configurations.
+            type: string
+          description: List of error messages.
     ScorecardQuestion:
       type: object
       properties:
@@ -135,17 +135,6 @@ components:
               label:
                 type: string
           description: Available answer options (for choice-type questions).
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
     Scorecard:
       type: object
       properties:
@@ -174,6 +163,37 @@ components:
           items:
             $ref: '#/components/schemas/ScorecardQuestion'
           description: List of questions in the scorecard.
+    ScorecardsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        scorecards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Scorecard'
+          description: List of scorecard configurations.
+    AnsweredScorecardsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+            currentPageSize:
+              type: integer
+            cursor:
+              type: string
+        answeredScorecards:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnsweredScorecard'
+          description: List of answered scorecards.
     AnsweredScorecard:
       type: object
       properties:
@@ -245,26 +265,6 @@ components:
                 type: string
               description: Filter by specific scorecard IDs.
           description: Filter criteria for answered scorecards.
-    AnsweredScorecardsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-            currentPageSize:
-              type: integer
-            cursor:
-              type: string
-        answeredScorecards:
-          type: array
-          items:
-            $ref: '#/components/schemas/AnsweredScorecard'
-          description: List of answered scorecards.
   securitySchemes:
     basicAuth:
       type: http
