@@ -1,20 +1,24 @@
-generated: '2026-07-15'
+generated: '2026-09-23'
 method: generated
-source: openapi/gong-auditing-openapi.yml, openapi/gong-calls-openapi.yml, openapi/gong-crm-openapi.yml,
-  openapi/gong-data-privacy-openapi.yml, openapi/gong-engage-openapi.yml, openapi/gong-engagement-openapi.yml,
-  openapi/gong-library-openapi.yml, openapi/gong-meetings-openapi.yml, openapi/gong-permissions-openapi.yml,
-  openapi/gong-settings-openapi.yml, openapi/gong-stats-openapi.yml, openapi/gong-users-openapi.yml
+source: openapi/gong-audit-logs-api-openapi.yml, openapi/gong-calls-api-openapi.yml, openapi/gong-crm-data-api-openapi.yml,
+  openapi/gong-crm-integration-api-openapi.yml, openapi/gong-crm-schema-api-openapi.yml, openapi/gong-data-privacy-api-openapi.yml,
+  openapi/gong-digital-interactions-api-openapi.yml, openapi/gong-engagement-events-api-openapi.yml,
+  openapi/gong-flows-api-openapi.yml, openapi/gong-folders-api-openapi.yml, openapi/gong-library-api-openapi.yml,
+  openapi/gong-meetings-api-openapi.yml, openapi/gong-permission-profiles-api-openapi.yml, openapi/gong-prospects-api-openapi.yml,
+  openapi/gong-recordings-api-openapi.yml, openapi/gong-scorecards-api-openapi.yml, openapi/gong-statistics-api-openapi.yml,
+  openapi/gong-trackers-api-openapi.yml, openapi/gong-transcripts-api-openapi.yml, openapi/gong-users-api-openapi.yml,
+  openapi/gong-workspaces-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 57
   by_action_class:
-    connected: 24
-    acting: 33
+    connected: 33
+    acting: 24
   by_consequence:
-    read: 24
-    write: 32
+    read: 33
+    write: 23
     safety-critical: 1
   human_in_the_loop_required: 1
 operations:
@@ -64,54 +68,16 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /calls/{id}/media
-  method: put
-  operationId: addCallRecording
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /calls/extensive
   method: post
   operationId: listCallsExtensive
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /calls/transcript
-  method: post
-  operationId: getCallTranscripts
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /calls/manual-crm-associations
   method: get
   operationId: listManualCrmAssociations
@@ -126,18 +92,12 @@ operations:
   method: post
   operationId: retrieveUserCallAccess
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /calls/users-access
   method: put
   operationId: giveUserCallAccess
@@ -170,6 +130,42 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /crm/entities
+  method: post
+  operationId: uploadCrmObjects
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /crm/objects
+  method: get
+  operationId: getCrmObjects
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crm/upload-status
+  method: get
+  operationId: getUploadStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /crm/integrations
   method: put
   operationId: registerCrmIntegration
@@ -212,32 +208,6 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /crm/entities
-  method: post
-  operationId: uploadCrmObjects
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /crm/objects
-  method: get
-  operationId: getCrmObjects
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
 - path: /crm/entity-schema
   method: post
   operationId: uploadObjectSchema
@@ -257,16 +227,6 @@ operations:
 - path: /crm/entity-schema
   method: get
   operationId: getSchemaFields
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /crm/upload-status
-  method: get
-  operationId: getUploadStatus
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -326,29 +286,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /flows
-  method: get
-  operationId: listEngageFlows
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /flows/folders
-  method: get
-  operationId: listFlowFolders
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /flows/prospects/assign
+- path: /digital-interactions
   method: post
-  operationId: assignProspectsToFlow
+  operationId: postDigitalInteraction
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -361,54 +301,6 @@ operations:
       triggers:
       - abnormal
       - high-value
-    audit: required
-- path: /flows/prospects/unassign
-  method: post
-  operationId: unassignProspectsFromFlow
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /flows/prospects
-  method: post
-  operationId: listAssignedFlowsForProspects
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /flows/{flowId}/content-override
-  method: put
-  operationId: overrideFlowContent
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
     audit: required
 - path: /customer-engagement/share
   method: put
@@ -458,22 +350,6 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /digital-interactions
-  method: post
-  operationId: postDigitalInteraction
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /integration-settings
   method: post
   operationId: configureIntegrationSettings
@@ -490,6 +366,42 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /flows
+  method: get
+  operationId: listEngageFlows
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /flows/{flowId}/content-override
+  method: put
+  operationId: overrideFlowContent
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /flows/folders
+  method: get
+  operationId: listFlowFolders
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /library/folders
   method: get
   operationId: listLibraryFolders
@@ -636,9 +548,117 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /flows/prospects/assign
+  method: post
+  operationId: assignProspectsToFlow
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /flows/prospects/unassign
+  method: post
+  operationId: unassignProspectsFromFlow
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /flows/prospects
+  method: post
+  operationId: listAssignedFlowsForProspects
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /calls/{id}/media
+  method: put
+  operationId: addCallRecording
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
 - path: /settings/scorecards
   method: get
   operationId: listScorecards
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /stats/scorecards
+  method: post
+  operationId: retrieveAnsweredScorecards
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /stats/activity/aggregated
+  method: post
+  operationId: retrieveAggregatedActivity
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /stats/activity/day-by-day
+  method: post
+  operationId: retrieveDailyActivity
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /stats/interaction
+  method: post
+  operationId: retrieveInteractionStats
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /coaching/metrics
+  method: get
+  operationId: listCoachingMetrics
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -656,83 +676,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /workspaces
-  method: get
-  operationId: listWorkspaces
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /stats/activity/aggregated
+- path: /calls/transcript
   method: post
-  operationId: retrieveAggregatedActivity
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /stats/activity/day-by-day
-  method: post
-  operationId: retrieveDailyActivity
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /stats/interaction
-  method: post
-  operationId: retrieveInteractionStats
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /stats/scorecards
-  method: post
-  operationId: retrieveAnsweredScorecards
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /coaching/metrics
-  method: get
-  operationId: listCoachingMetrics
+  operationId: getCallTranscripts
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -774,15 +720,19 @@ operations:
   method: post
   operationId: listUsersByFilter
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
+- path: /workspaces
+  method: get
+  operationId: listWorkspaces
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
