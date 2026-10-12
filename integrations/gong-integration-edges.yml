@@ -1,0 +1,1019 @@
+generated: '2026-10-12'
+method: searched
+source:
+- https://zapier.com/apps/gong/integrations
+- https://n8n.io/integrations/gong/
+- https://composio.dev/toolkits/gong
+checked:
+- https://composio.dev/toolkits/gong
+- https://monid.ai/tools/gong
+- https://n8n.io/integrations/gong/
+- https://zapier.com/apps/gong/integrations
+summary: null
+marketplace_apps:
+- marketplace: zapier
+  channel: ipaas-listing
+  app: gong
+  url: https://zapier.com/apps/gong/integrations
+  external_url: https://www.gong.io/
+  partner_tier: BRONZE
+  triggers:
+  - key: new_call_webhook
+    label: New Call
+  actions:
+  - key: engagement_data_content_shared
+    label: Add a "Content Shared" Event Into Gong's Activity Timeline
+  - key: engagement_data_content_viewed
+    label: Add a "Content Viewed" Event Into Gong's Activity Timeline
+  - key: engagement_data_custom_action
+    label: Add a "Custom Action" Event Into Gong's Activity Timeline
+  searches: []
+- marketplace: n8n
+  channel: open-source-node
+  app: gong
+  url: https://n8n.io/integrations/gong/
+  identity: title
+  pair_pages: 503
+  pairs:
+  - google-ads
+  - google-ai-studio-gemini
+  - google-analytics
+  - google-bigquery
+  - google-books
+  - google-business-profile
+  - google-calendar
+  - google-chat
+  - google-cloud
+  - google-cloud-firestore
+  - google-cloud-natural-language
+  - google-cloud-realtime-database
+  - google-cloud-storage
+  - google-contacts
+  - google-docs
+  - google-drive
+  - google-forms
+  - google-gemini-chat-model
+  - google-perspective
+  - google-sheets
+  - google-slides
+  - google-tables
+  - google-tasks
+  - google-translate
+  - google-vertex-ai
+  - google-workspace-admin
+  - gotify
+  - gotowebinar
+  - gptea
+  - grafana
+  - grain
+  - graphql
+  - gravity-forms
+  - grid
+  - grist
+  - growbots
+  - gumroad
+  - gupshup
+  - guru
+  - hacker-news
+  - halopsa
+  - handwrytten
+  - hansei
+  - harry-potter-api
+  - harvest
+  - headless-testing
+  - helcim
+  - helpscout
+  - heysummit
+  - highlevel
+  - home-assistant
+  - http-request
+  - hub-planner
+  - hubspot
+  - hugging-face
+  - humantic-ai
+  - hunter
+  - hybrid-analysis
+  - iauditor-by-safetyculture
+  - idealpostcodes
+  - idealspot
+  - ideta
+  - imgbb
+  - imgur
+  - imperva-waf
+  - impira
+  - industryselect
+  - influxdb-cloud
+  - infolobby
+  - instabot
+  - instabug
+  - intakeq
+  - intercom
+  - invoice-ninja
+  - invoiced
+  - ip2location
+  - ipinfo
+  - ipregistry
+  - iris-dfir
+  - isn
+  - iterable
+  - jama
+  - jasper
+  - jenkins
+  - jina-ai
+  - jira-software
+  - jwt
+  - kadoa
+  - kafka
+  - kaggle
+  - kanban-tool
+  - karbon
+  - keap
+  - keygen
+  - keyzy
+  - kibana
+  - kitemaker
+  - klaviyo
+  - klazify
+  - knack
+  - knowbe4
+  - kobotoolbox
+  - kraftful
+  - lagrowthmachine
+  - lambdatest
+  - landbot
+  - laposta
+  - launch27
+  - launchdarkly
+  - ldap
+  - leadboxer
+  - leadpops
+  - lemlist
+  - lets-enhance
+  - libraria
+  - lighthouse
+  - lime-go
+  - line
+  - linear
+  - lingvanex
+  - linkedin
+  - linkish
+  - linode
+  - liveagent
+  - localazy
+  - loginradius
+  - lokalise
+  - lonescale
+  - lucidchart
+  - magento-2
+  - mailcheck
+  - mailchimp
+  - mailerlite
+  - mailersend
+  - mailgun
+  - mailify
+  - mailjet
+  - mailmodo
+  - malcore
+  - mandrill
+  - marcom-robot
+  - marketing-master-io
+  - marketplacer
+  - marketstack
+  - mastodon
+  - matrix
+  - mattermost
+  - mautic
+  - mav
+  - maverick
+  - medium
+  - mem
+  - messagebird
+  - metabase
+  - metatextai-inference-api
+  - mews
+  - microsoft-azure-monitor
+  - microsoft-dynamics-365-business-central-api
+  - microsoft-dynamics-crm
+  - microsoft-entra-id
+  - microsoft-entra-id-azure-active-directory
+  - microsoft-excel
+  - microsoft-graph-security
+  - microsoft-onedrive
+  - microsoft-outlook
+  - microsoft-sharepoint
+  - microsoft-sql
+  - microsoft-teams
+  - microsoft-teams-admin
+  - microsoft-to-do
+  - miestro
+  - mindee
+  - miro
+  - misp
+  - missive
+  - mist
+  - mistral-ai
+  - mixpanel
+  - mocean
+  - mondaycom
+  - mongodb
+  - monica-crm
+  - moonclerk
+  - moonmail
+  - morph
+  - mqtt
+  - msg91
+  - mux
+  - mx-toolbox
+  - my-askai
+  - myphoner
+  - mysql
+  - nanonets-ocr
+  - nasa
+  - ncscale
+  - netlify
+  - nextcloud
+  - nightfallai
+  - ninox
+  - nmkr
+  - nocodb
+  - notion
+  - nozbe-teams
+  - npm
+  - nuclia
+  - nusii-proposals
+  - nyckel
+  - nyota
+  - occasion
+  - ocrspace
+  - odoo
+  - offalerts
+  - okta
+  - omeda
+  - omniconvert
+  - omnimind
+  - on2air
+  - one-ai
+  - one-simple-api
+  - onfleet
+  - openai
+  - opencti
+  - openthesaurus
+  - openweathermap
+  - opn-formerly-omise
+  - oracle-database
+  - orbit
+  - order-desk
+  - ortto
+  - oura
+  - paddle
+  - pagerduty
+  - paperform
+  - papyrs
+  - parsehub
+  - parseprompt
+  - passcreator
+  - passslot
+  - patreon
+  - paymo
+  - paypal
+  - peekalink
+  - perplexity
+  - persio
+  - personal-ai
+  - phantombuster
+  - philips-hue
+  - phrase
+  - pinata
+  - pinboard
+  - pinterest
+  - pipedrive
+  - pipefy
+  - pirate-weather
+  - pitchly
+  - pivotal-tracker
+  - planview-leankit
+  - planyo-online-booking
+  - platformly
+  - plecto
+  - plivo
+  - postbin
+  - postgres
+  - posthog
+  - practitest
+  - predisai
+  - prodia
+  - product-hunt
+  - profitwell
+  - project-bubble-proprofs-project
+  - prompthub
+  - prospe-ai
+  - pushbullet
+  - pushcut
+  - pusher
+  - pushover
+  - qradar
+  - qualaroo
+  - qualys
+  - quentn
+  - questdb
+  - quick-base
+  - quickbooks-online
+  - quickchart
+  - quintadb
+  - rabbitmq
+  - radar
+  - raindrop
+  - rapid7-insightvm
+  - raven-tools
+  - rawg-video-games-database
+  - read-ai
+  - realphonevalidation
+  - recharge
+  - recorded-future
+  - redash
+  - reddit
+  - redis
+  - relevance-ai
+  - relink-url-shortener
+  - relysia
+  - replyio
+  - retable
+  - reverse-contact
+  - rewardful
+  - ritekit
+  - roboflow
+  - robolytix
+  - roboresponseai
+  - rocketchat
+  - rollbar
+  - rootly
+  - route4me
+  - rundeck
+  - s3
+  - sales-simplify
+  - salesforce
+  - salesmaa
+  - salesmate
+  - salesmsg
+  - salesrocks
+  - samsung-smartthings
+  - scrape-itcloud
+  - scrapeninja
+  - seamless-ai
+  - search-and-save
+  - seatable
+  - securityscorecard
+  - segment
+  - sekoia
+  - sellix
+  - sembly-ai
+  - sendgrid
+  - sendy
+  - sentryio
+  - servicenow
+  - sharly-ai
+  - shiphero
+  - shipstation
+  - shopify
+  - shortio
+  - shuffler
+  - sierra-interactive
+  - sifter
+  - signaturit
+  - signl4
+  - signrequest
+  - simpleem
+  - simplehash
+  - simplekpi
+  - simplelocalize
+  - simplero
+  - simpletexting
+  - sitecreatorio
+  - sitespeakai
+  - slack
+  - smaily
+  - smartreach
+  - smartsuite
+  - sms-it
+  - sms-magic
+  - sms77
+  - snapdocs
+  - snatchbot
+  - snipcart
+  - snowflake
+  - solve-data
+  - specter
+  - splunk
+  - spondyr
+  - spontit
+  - sportsdata
+  - spotify
+  - spydra
+  - sslmate-cert-spotter-api
+  - stackby
+  - stammerai
+  - starton
+  - statuscake
+  - storyblok
+  - strapi
+  - strava
+  - stripe
+  - studio-by-ai21-labs
+  - suitedash
+  - supabase
+  - supernormal
+  - superpowered
+  - supportivekoala
+  - survicate
+  - swagup
+  - switchboard
+  - syncly
+  - syncromsp
+  - synthesia
+  - taiga
+  - talentlms
+  - talknotes
+  - tapfiliate
+  - td-ameritrade
+  - teachable
+  - team-up
+  - teamdeck
+  - teamgate
+  - teknoir
+  - telegram
+  - testmonitor
+  - textcortex-ai
+  - textgain
+  - textkit
+  - textmagic
+  - thankster
+  - the-customer-factor
+  - the-leap
+  - thehive
+  - thehive-5
+  - thoughtfulgpt
+  - thrivecart
+  - tidb-cloud
+  - tierion
+  - tilda
+  - timescaledb
+  - timetonic
+  - tinyurl
+  - tisane-labs
+  - todoist
+  - token-metrics
+  - toket
+  - totango
+  - trackvia
+  - transifex
+  - travisci
+  - trellix-epo
+  - trello
+  - trengo
+  - trevorio
+  - turbohire
+  - tuskr
+  - tuulio
+  - twake
+  - twilio
+  - twist
+  - twitter
+  - unbounce
+  - unisender
+  - unleashed-software
+  - upkeep
+  - uplead
+  - uproc
+  - uptimerobot
+  - uptimetoolbox
+  - urlscanio
+  - uservoice
+  - venafi-tls-protect-cloud
+  - venafi-tls-protect-datacenter
+  - venly
+  - verifalia
+  - vero
+  - vimeo
+  - virustotal
+  - vivifyscrum
+  - voicit
+  - vonage
+  - vowel
+  - watchsignals
+  - waveline-extract
+  - webex-by-cisco
+  - webflow
+  - webscraperio
+  - wekan
+  - whal3s
+  - whatconverts
+  - whatsapp-business-cloud
+  - wise
+  - wizychat
+  - wonderchat
+  - wondercraft
+  - woocommerce
+  - woodpeckerco
+  - wordpress
+  - workast
+  - workboard
+  - woxo
+  - writesonic
+  - wubook-ratechecker
+  - xero
+  - xtractly
+  - ybug
+  - ycode
+  - yodiz
+  - yourls
+  - youtube
+  - zabbix
+  - zammad
+  - zendesk
+  - zenrows
+  - zoho-books
+  - zoho-crm
+  - zoho-desk
+  - zonka-feedback
+  - zoom
+  - zscaler-zia
+  - zulip
+- marketplace: composio
+  channel: agent-gateway
+  app: gong
+  url: https://composio.dev/toolkits/gong
+  identity: action-prefix
+  actions:
+  - key: GONG_ADD_CALL_MEDIA_V2_CALLS_ID_MEDIA
+  - key: GONG_ADD_NEW_CALL_V2_CALLS
+  - key: GONG_AGGREGATE_ACTIVITY_BY_PERIOD_VIA_API
+  - key: GONG_AGGREGATE_USER_ACTIVITY_STATISTICS
+  - key: GONG_ASSIGN_PROSPECTS_TO_FLOW
+  - key: GONG_CREATE_ACTIVITY_SCORECARDS_REPORT
+  - key: GONG_CREATE_A_NEW_GONG_MEETING_V2_MEETINGS
+  - key: GONG_CREATE_PERMISSION_PROFILE_V2_PERMISSION_PROFILE
+  - key: GONG_DATA_PRIVACY_FOR_PHONE_NUMBER
+  - key: GONG_DELETE_A_GENERIC_CRM_INTEGRATION_V2_CRM_INTEGRATIONS
+  - key: GONG_DELETE_MEETING
+  - key: GONG_DELETE_USERS_FROM_CALL_ACCESS_LIST
+  - key: GONG_ERASE_DATA_FOR_EMAIL_ADDRESS
+  - key: GONG_ERASE_DATA_FOR_PHONE_NUMBER
+  - key: GONG_FETCH_ALL_PERMISSION_PROFILES
+  - key: GONG_GET_CALL_BY_ID
+  - key: GONG_GET_CALL_TRANSCRIPT
+  - key: GONG_GET_CRM_INTEGRATION_DETAILS
+  - key: GONG_GET_CRM_OBJECTS_V2_CRM_ENTITIES
+  - key: GONG_GET_FLOW_PROSPECTS
+  - key: GONG_GET_INTERACTION_STATISTICS
+  - key: GONG_GET_PERMISSION_PROFILE
+  - key: GONG_GET_REQUEST_STATUS_V2_CRM_REQUEST_STATUS
+  - key: GONG_GET_USER_BY_ID
+  - key: GONG_GET_USER_SETTINGS_HISTORY
+  - key: GONG_LIST_ALL_COACHING_METRICS_V2_COACHING
+  - key: GONG_LIST_ALL_COMPANY_WORKSPACES_V2_WORKSPACES
+  - key: GONG_LIST_ALL_USERS_V2_USERS
+  - key: GONG_LIST_CALL_OUTCOMES
+  - key: GONG_LIST_FLOW_FOLDERS
+  - key: GONG_LIST_FOLDER_CALLS
+  - key: GONG_LIST_GONG_ENGAGE_FLOWS_V2_FLOWS
+  - key: GONG_LIST_SCHEMA_FIELDS_V2_CRM_ENTITY_SCHEMA
+  - key: GONG_LIST_SCORECARDS
+  - key: GONG_LIST_TASKS
+  - key: GONG_LIST_USERS_BY_FILTER_V2_USERS_EXTENSIVE
+  - key: GONG_MANAGE_USER_CALL_ACCESS
+  - key: GONG_POST_A_DIGITAL_INTERACTION_V2_DIGITAL_INTERACTION
+  - key: GONG_POST_DAY_BY_DAY_ACTIVITY_STATS
+  - key: GONG_REGISTER_CRM_INTEGRATION
+  - key: GONG_REPORT_CONTENT_SHARE_EVENT
+  - key: GONG_REPORT_CONTENT_VIEW_EVENT
+  - key: GONG_REPORT_CUSTOM_ENGAGEMENT_EVENT
+  - key: GONG_RETRIEVE_CALL_DATA_BY_DATE_RANGE_V2_CALLS
+  - key: GONG_RETRIEVE_DATA_PRIVACY_INFO_FOR_EMAIL_ADDRESS
+  - key: GONG_RETRIEVE_FILTERED_CALL_DETAILS
+  - key: GONG_RETRIEVE_LIBRARY_FOLDERS_V2_LIBRARY_FOLDERS
+  - key: GONG_RETRIEVE_LOGS_DATA_BY_TYPE_AND_TIME_RANGE_V2_LOGS
+  - key: GONG_RETRIEVE_MANUAL_CRM_CALL_ASSOCIATIONS
+  - key: GONG_RETRIEVE_TRACKER_DETAILS_V2_SETTINGS_TRACKERS
+  - key: GONG_RETRIEVE_USERS_FROM_PERMISSION_PROFILE
+  - key: GONG_SET_USER_CALL_ACCESS
+  - key: GONG_UNASSIGN_FLOWS_BY_CRM_ID
+  - key: GONG_UPDATE_A_GONG_MEETING_V2_MEETINGS_MEETING_ID
+  - key: GONG_UPDATE_PERMISSION_PROFILE_V2_PERMISSION_PROFILE
+  - key: GONG_UPLOAD_CRM_OBJECTS_V2_CRM_ENTITIES
+  - key: GONG_VALIDATE_MEETING_INTEGRATION
+edges:
+- partner_name: HubSpot
+  partner: hubspot
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/hubspot
+  direction: third-party
+  category: Marketing Automation
+  partner_url: http://www.hubspot.com/
+- partner_name: Notion
+  partner: notion
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/notion
+  direction: third-party
+  category: Task Management
+  partner_url: https://www.notion.so/
+- partner_name: Slack
+  partner: slack
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/slack
+  direction: third-party
+  category: Team Chat
+  partner_url: https://slack.com/
+- partner_name: Gmail
+  partner: gmail
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/gmail
+  direction: third-party
+  category: Email
+  partner_url: https://mail.google.com/
+- partner_name: ChatGPT (OpenAI)
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/chatgpt
+  direction: third-party
+  category: AI Assistants
+  partner_url: https://chat.openai.com/chat
+- partner_name: Google Docs
+  partner: google-docs
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/google-docs
+  direction: third-party
+  category: Documents
+  partner_url: http://google.com/
+- partner_name: Anthropic (Claude)
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/anthropic-claude
+  direction: third-party
+  category: AI Models
+  partner_url: https://www.anthropic.com/
+- partner_name: Google Drive
+  partner: google-drive
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/google-drive
+  direction: third-party
+  category: File Management & Storage
+  partner_url: https://www.google.com/drive/
+- partner_name: Google AI Studio (Gemini)
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/google-ai-studio
+  direction: third-party
+  category: AI Models
+  partner_url: https://developers.generativeai.google/products/makersuite
+- partner_name: Google Sheets
+  partner: google-sheets
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/google-sheets
+  direction: third-party
+  category: Google
+  partner_url: http://sheets.google.com/
+- partner_name: Salesforce
+  partner: salesforce
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/salesforce
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: https://www.salesforce.com/
+- partner_name: Vitally
+  partner: vitally
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/vitally
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: https://vitally.io/
+- partner_name: Attio
+  partner: attio
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/attio
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: https://attio.com/
+- partner_name: monday.com
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/monday
+  direction: third-party
+  category: Project Management
+  partner_url: https://monday.com/
+- partner_name: Google Calendar
+  partner: google-calendar
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/google-calendar
+  direction: third-party
+  category: Calendar
+  partner_url: https://calendar.google.com/
+- partner_name: Airtable
+  partner: airtable
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/airtable
+  direction: third-party
+  category: Databases
+  partner_url: https://airtable.com/
+- partner_name: Microsoft Outlook
+  partner: microsoft-outlook
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/microsoft-outlook
+  direction: third-party
+  category: Calendar
+  partner_url: https://outlook.live.com/
+- partner_name: Base64 Encoder/Decoder
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/base64-encoderdecoder
+  direction: third-party
+  category: Productivity
+  partner_url: https://thebase64.com/
+- partner_name: Google Vertex AI
+  partner: google-vertex-ai
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/google-vertex-ai
+  direction: third-party
+  category: AI Models
+  partner_url: https://cloud.google.com/vertex-ai
+- partner_name: Human in the Loop
+  partner: null
+  partner_match: null
+  partner_candidate: zapier
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/human-in-the-loop
+  direction: third-party
+  category: AI Assistants
+  partner_url: https://zapier.com/blog/human-in-the-loop-guide/
+- partner_name: Jira Software Cloud
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/jira-software-cloud
+  direction: third-party
+  category: Project Management
+  partner_url: https://www.atlassian.com/software/jira
+- partner_name: Affinity
+  partner: affinity
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/affinity
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: https://zapier.com/affinity.co
+- partner_name: Asana
+  partner: asana
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/asana
+  direction: third-party
+  category: Project Management
+  partner_url: http://asana.com/
+- partner_name: Zoom
+  partner: zoom
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/zoom
+  direction: third-party
+  category: Video Conferencing
+  partner_url: https://www.zoom.us/
+- partner_name: Pipedrive
+  partner: pipedrive
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/pipedrive
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: https://pipedrive.com/
+- partner_name: Google Tasks
+  partner: google-tasks
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/google-tasks
+  direction: third-party
+  category: Google
+  partner_url: https://google.com/
+- partner_name: Outreach
+  partner: outreach
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/outreach
+  direction: third-party
+  category: Sales & CRM
+  partner_url: https://www.outreach.io/
+- partner_name: Fathom
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/fathom
+  direction: third-party
+  category: AI Meeting Assistants
+  partner_url: https://fathom.video/users/sign_up?utm_campaign=apipartners&utm_source=apipartner&utm_medium=CTA&utm_content=zapierlisting&utm_date=260714
+- partner_name: Fireflies.ai
+  partner: fireflies
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/fireflies
+  direction: third-party
+  category: Transcription
+  partner_url: https://fireflies.ai/
+- partner_name: Flowdash
+  partner: flowdash
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/gong/integrations/flowdash
+  direction: third-party
+  category: Task Management
+  partner_url: https://flowdash.com/
+- partner_name: supaglue
+  partner: supaglue
+  partner_match: domain
+  type: contract
+  channel: partner-built
+  relationship: processor-connection
+  direction: partner-built
+  evidence: https://github.com/api-evangelist/supaglue/blob/main/openapi/supaglue-syncconfigs-api-openapi.yml
+  contract_reference:
+    repo: supaglue
+    spec_file: supaglue-syncconfigs-api-openapi.yml
+    value: gong
+    property: components.schemas.provider_name
+    detected_by: detect-payment-method-edges.py
+    detected: '2026-10-12'
+templates:
+- title: Summarize Gong calls using ChatGPT
+  url: https://zapier.com/apps/gong/integrations/slack/255602275/summarize-gong-calls-using-chatgpt
+  apps:
+  - gong
+  - formatter
+  - chatgpt
+  - slack
+- title: Create a note in Vitally when a new Gong call is summarized by ChatGPT
+  url: https://zapier.com/apps/gong/integrations/slack/1695822/create-a-note-in-vitally-when-a-new-gong-call-is-summarized-by-chatgpt
+  apps:
+  - gong
+  - formatter
+  - chatgpt
+  - slack
+  - vitally
+  - webhook
+- title: Create Dovetail notes for new Gong calls
+  url: https://zapier.com/apps/dovetail/integrations/gong/927940/create-dovetail-notes-for-new-gong-calls
+  apps:
+  - gong
+  - dovetail
+- title: Send Slack channel messages for new calls in Gong
+  url: https://zapier.com/apps/gong/integrations/slack/176685/send-slack-channel-messages-for-new-calls-in-gong
+  apps:
+  - gong
+  - slack
+- title: Create data points in Dovetail when new Gong calls are transcribed
+  url: https://zapier.com/apps/dovetail/integrations/gong/255640113/create-data-points-in-dovetail-when-new-gong-calls-are-transcribed
+  apps:
+  - gong
+  - dovetail
+- title: Summarize Gong calls using OpenAI
+  url: https://zapier.com/apps/gong/integrations/slack/1376366/summarize-gong-calls-using-openai
+  apps:
+  - gong
+  - formatter
+  - slack
+  - openai
+- title: Copy info from new Gong calls to Pitchly
+  url: https://zapier.com/apps/gong/integrations/pitchly/113095/copy-info-from-new-gong-calls-to-pitchly
+  apps:
+  - gong
+  - pitchly
+- title: Share updates from Gong as funnel events to Facebook Conversions
+  url: https://zapier.com/apps/facebook-conversions/integrations/gong/789606/share-updates-from-gong-as-funnel-events-to-facebook-conversions
+  apps:
+  - gong
+  - facebook-conversions
+- title: Send funnel events to Facebook Conversions from Gong
+  url: https://zapier.com/apps/facebook-conversions/integrations/gong/1130128/send-funnel-events-to-facebook-conversions-from-gong
+  apps:
+  - gong
+  - facebook-conversions
+- title: Log new Gong calls as rows in a Google Sheets spreadsheet
+  url: https://zapier.com/apps/gong/integrations/google-sheets/1312750/log-new-gong-calls-as-rows-in-a-google-sheets-spreadsheet
+  apps:
+  - gong
+  - google-sheets
+- title: Create new PostgreSQL rows for Gong calls
+  url: https://zapier.com/apps/gong/integrations/postgresql/1395752/create-new-postgresql-rows-for-gong-calls
+  apps:
+  - gong
+  - postgresql
+- title: Add new Gong call transcripts to Kraftful
+  url: https://zapier.com/apps/gong/integrations/kraftful/1552140/add-new-gong-call-transcripts-to-kraftful
+  apps:
+  - gong
+  - kraftful
+template_total: 35
