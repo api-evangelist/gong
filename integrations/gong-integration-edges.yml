@@ -5,6 +5,7 @@ source:
 - https://n8n.io/integrations/gong/
 - https://composio.dev/toolkits/gong
 checked:
+- https://azuremarketplace.microsoft.com/
 - https://composio.dev/toolkits/gong
 - https://monid.ai/tools/gong
 - https://n8n.io/integrations/gong/
@@ -947,6 +948,21 @@ edges:
     property: components.schemas.provider_name
     detected_by: detect-payment-method-edges.py
     detected: '2026-10-12'
+- partner_name: Microsoft Azure Marketplace
+  partner: microsoft-azure
+  partner_match: aggregator
+  type: marketplace
+  marketplace: azure-marketplace
+  channel: distribution
+  relationship: platform-app
+  direction: provider-built
+  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=Gong.io
+  listing_count: 1
+  apps:
+  - Gong Revenue AI OS
+  seller_name: Gong.io
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
 templates:
 - title: Summarize Gong calls using ChatGPT
   url: https://zapier.com/apps/gong/integrations/slack/255602275/summarize-gong-calls-using-chatgpt

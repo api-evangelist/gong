@@ -191,7 +191,6 @@
   arazzo: null
 - slug: gong-monday-com
   label: monday.com
-  partner: monday-com
   partner_name: monday.com
   category: Project Management
   type: marketplace
@@ -199,7 +198,7 @@
   channel: ipaas-usage
   evidence: https://zapier.com/apps/gong/integrations/monday
   source: edge
-  status: pending-generation
+  status: pending-partner-spec
   arazzo: null
 - slug: gong-google-calendar
   label: Google Calendar
@@ -356,7 +355,6 @@
   arazzo: null
 - slug: gong-fathom
   label: Fathom
-  partner: fathom
   partner_name: Fathom
   category: AI Meeting Assistants
   type: marketplace
@@ -364,7 +362,7 @@
   channel: ipaas-usage
   evidence: https://zapier.com/apps/gong/integrations/fathom
   source: edge
-  status: pending-generation
+  status: pending-partner-spec
   arazzo: null
 - slug: gong-fireflies-ai
   label: Fireflies.ai
@@ -406,5 +404,17 @@
     property: components.schemas.provider_name
     detected_by: detect-payment-method-edges.py
     detected: '2026-10-12'
+  status: not-a-workflow
+  arazzo: null
+- slug: gong-microsoft-azure-marketplace
+  label: Microsoft Azure Marketplace
+  partner: microsoft-azure
+  partner_name: Microsoft Azure Marketplace
+  type: marketplace
+  marketplace: azure-marketplace
+  channel: distribution
+  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=Gong.io
+  source: edge
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null
