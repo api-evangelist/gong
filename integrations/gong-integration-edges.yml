@@ -11,6 +11,7 @@ checked:
 - https://monid.ai/tools/gong
 - https://n8n.io/integrations/gong/
 - https://zapier.com/apps/gong/integrations
+- okta/integrations/okta-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -982,6 +983,33 @@ edges:
       status: released
   detected_by: sweep-cdp.py
   first_seen: '2026-10-14'
+- partner_name: Okta (own)
+  partner: okta
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.okta.com/integrations/gong/
+  mirror_of: okta/integrations/okta-integration-edges.yml
+  apps:
+  - Gong
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Single Sign-On
+  badges:
+  - OKTA_VERIFIED
+  features:
+  - CREATE
+  - DEACTIVATE
+  - GROUP_LINKING
+  - GROUP_PUSH
+  - SAML
+  - SWA
+  - UPDATE
 templates:
 - title: Summarize Gong calls using ChatGPT
   url: https://zapier.com/apps/gong/integrations/slack/255602275/summarize-gong-calls-using-chatgpt
