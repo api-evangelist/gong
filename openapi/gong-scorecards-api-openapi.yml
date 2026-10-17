@@ -93,17 +93,6 @@ paths:
       description: Gong API v2 Production Server
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
     ScorecardQuestion:
       type: object
       properties:
@@ -174,26 +163,45 @@ components:
           items:
             $ref: '#/components/schemas/Scorecard'
           description: List of scorecard configurations.
-    AnsweredScorecardsResponse:
+    ErrorResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-            currentPageSize:
-              type: integer
-            cursor:
-              type: string
-        answeredScorecards:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/AnsweredScorecard'
-          description: List of answered scorecards.
+            type: string
+          description: List of error messages.
+    AnsweredScorecardsRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: Cursor for pagination.
+        filter:
+          type: object
+          properties:
+            fromDateTime:
+              type: string
+              format: date-time
+              description: Start of the date range.
+            toDateTime:
+              type: string
+              format: date-time
+              description: End of the date range.
+            userIds:
+              type: array
+              items:
+                type: string
+              description: Filter by specific user IDs.
+            scorecardIds:
+              type: array
+              items:
+                type: string
+              description: Filter by specific scorecard IDs.
+          description: Filter criteria for answered scorecards.
     AnsweredScorecard:
       type: object
       properties:
@@ -237,34 +245,26 @@ components:
               isNotApplicable:
                 type: boolean
           description: Individual question answers and scores.
-    AnsweredScorecardsRequest:
+    AnsweredScorecardsResponse:
       type: object
       properties:
-        cursor:
+        requestId:
           type: string
-          description: Cursor for pagination.
-        filter:
+          description: A unique identifier for the request.
+        records:
           type: object
           properties:
-            fromDateTime:
+            totalRecords:
+              type: integer
+            currentPageSize:
+              type: integer
+            cursor:
               type: string
-              format: date-time
-              description: Start of the date range.
-            toDateTime:
-              type: string
-              format: date-time
-              description: End of the date range.
-            userIds:
-              type: array
-              items:
-                type: string
-              description: Filter by specific user IDs.
-            scorecardIds:
-              type: array
-              items:
-                type: string
-              description: Filter by specific scorecard IDs.
-          description: Filter criteria for answered scorecards.
+        answeredScorecards:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnsweredScorecard'
+          description: List of answered scorecards.
   securitySchemes:
     basicAuth:
       type: http

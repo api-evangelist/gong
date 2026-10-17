@@ -95,28 +95,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    LibraryFoldersResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        folders:
-          type: array
-          items:
-            $ref: '#/components/schemas/LibraryFolder'
-          description: List of library folders.
-    LibraryFolderCallsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        calls:
-          type: array
-          items:
-            $ref: '#/components/schemas/LibraryCall'
-          description: List of calls in the folder.
     LibraryCall:
       type: object
       properties:
@@ -147,6 +125,39 @@ components:
         addedBy:
           type: string
           description: User ID of who added the call to the library.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    LibraryFoldersResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        folders:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryFolder'
+          description: List of library folders.
+    LibraryFolderCallsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryCall'
+          description: List of calls in the folder.
     LibraryFolder:
       type: object
       properties:
@@ -172,17 +183,6 @@ components:
           type: string
           format: date-time
           description: When the folder was created.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
   securitySchemes:
     basicAuth:
       type: http

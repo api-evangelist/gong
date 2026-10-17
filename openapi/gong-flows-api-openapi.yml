@@ -120,6 +120,68 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    FlowContentOverrideRequest:
+      type: object
+      required:
+      - steps
+      properties:
+        steps:
+          type: array
+          items:
+            type: object
+            properties:
+              stepIndex:
+                type: integer
+                description: The zero-based index of the step to override.
+              subject:
+                type: string
+                description: The overridden email subject line.
+              body:
+                type: string
+                description: The overridden email body content.
+            required:
+            - stepIndex
+          description: List of step content overrides.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    BaseResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+    FlowsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+              description: Total number of flows.
+            currentPageSize:
+              type: integer
+              description: Number of records in the current page.
+            cursor:
+              type: string
+              description: Cursor for pagination.
+        flows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Flow'
+          description: List of Engage flow objects.
     Flow:
       type: object
       properties:
@@ -161,68 +223,6 @@ components:
           type: string
           format: date-time
           description: When the flow was last modified.
-    FlowContentOverrideRequest:
-      type: object
-      required:
-      - steps
-      properties:
-        steps:
-          type: array
-          items:
-            type: object
-            properties:
-              stepIndex:
-                type: integer
-                description: The zero-based index of the step to override.
-              subject:
-                type: string
-                description: The overridden email subject line.
-              body:
-                type: string
-                description: The overridden email body content.
-            required:
-            - stepIndex
-          description: List of step content overrides.
-    FlowsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-              description: Total number of flows.
-            currentPageSize:
-              type: integer
-              description: Number of records in the current page.
-            cursor:
-              type: string
-              description: Cursor for pagination.
-        flows:
-          type: array
-          items:
-            $ref: '#/components/schemas/Flow'
-          description: List of Engage flow objects.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
-    BaseResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
   securitySchemes:
     basicAuth:
       type: http

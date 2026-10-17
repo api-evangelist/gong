@@ -82,17 +82,29 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
+    AuditLogsResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        errors:
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+              description: Total number of log entries matching the filter.
+            currentPageSize:
+              type: integer
+              description: Number of entries in the current page.
+            cursor:
+              type: string
+              description: Cursor for retrieving the next page.
+        logs:
           type: array
           items:
-            type: string
-          description: List of error messages.
+            $ref: '#/components/schemas/AuditLogEntry'
+          description: List of audit log entries.
     AuditLogEntry:
       type: object
       properties:
@@ -130,29 +142,17 @@ components:
         ipAddress:
           type: string
           description: IP address from which the action was performed.
-    AuditLogsResponse:
+    ErrorResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-              description: Total number of log entries matching the filter.
-            currentPageSize:
-              type: integer
-              description: Number of entries in the current page.
-            cursor:
-              type: string
-              description: Cursor for retrieving the next page.
-        logs:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/AuditLogEntry'
-          description: List of audit log entries.
+            type: string
+          description: List of error messages.
   securitySchemes:
     basicAuth:
       type: http

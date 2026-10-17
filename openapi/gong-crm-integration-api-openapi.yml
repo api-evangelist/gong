@@ -130,25 +130,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    CrmIntegrationRegistrationRequest:
-      type: object
-      required:
-      - integrationId
-      - integrationType
-      properties:
-        integrationId:
-          type: string
-          description: Unique identifier for the CRM integration.
-        integrationType:
-          type: string
-          description: The type of CRM system (e.g., Salesforce, HubSpot, Custom).
-        displayName:
-          type: string
-          description: Display name for the integration.
-        crmInstanceUrl:
-          type: string
-          format: uri
-          description: URL of the CRM instance.
     CrmIntegrationsResponse:
       type: object
       properties:
@@ -197,6 +178,25 @@ components:
           items:
             type: string
           description: List of error messages.
+    CrmIntegrationRegistrationRequest:
+      type: object
+      required:
+      - integrationId
+      - integrationType
+      properties:
+        integrationId:
+          type: string
+          description: Unique identifier for the CRM integration.
+        integrationType:
+          type: string
+          description: The type of CRM system (e.g., Salesforce, HubSpot, Custom).
+        displayName:
+          type: string
+          description: Display name for the integration.
+        crmInstanceUrl:
+          type: string
+          format: uri
+          description: URL of the CRM instance.
     BaseResponse:
       type: object
       properties:

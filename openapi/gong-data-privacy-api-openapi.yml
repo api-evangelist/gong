@@ -178,6 +178,59 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    PhoneReferencesResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        phoneNumber:
+          type: string
+          description: The phone number that was searched.
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataReference'
+          description: List of references to the phone number.
+    EmailDeleteRequest:
+      type: object
+      required:
+      - emailAddress
+      properties:
+        emailAddress:
+          type: string
+          format: email
+          description: The email address whose associated data should be deleted.
+    PhoneDeleteRequest:
+      type: object
+      required:
+      - phoneNumber
+      properties:
+        phoneNumber:
+          type: string
+          description: The phone number whose associated data should be deleted.
+    DataReference:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Call
+          - Meeting
+          - Email
+          - EngageFlow
+          - User
+          description: The type of record containing the reference.
+        id:
+          type: string
+          description: The unique identifier of the record.
+        date:
+          type: string
+          format: date-time
+          description: Date associated with the reference.
+        details:
+          type: string
+          description: Additional details about the reference.
     EmailReferencesResponse:
       type: object
       properties:
@@ -204,51 +257,6 @@ components:
           items:
             type: string
           description: List of error messages.
-    DataReference:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Call
-          - Meeting
-          - Email
-          - EngageFlow
-          - User
-          description: The type of record containing the reference.
-        id:
-          type: string
-          description: The unique identifier of the record.
-        date:
-          type: string
-          format: date-time
-          description: Date associated with the reference.
-        details:
-          type: string
-          description: Additional details about the reference.
-    EmailDeleteRequest:
-      type: object
-      required:
-      - emailAddress
-      properties:
-        emailAddress:
-          type: string
-          format: email
-          description: The email address whose associated data should be deleted.
-    PhoneReferencesResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        phoneNumber:
-          type: string
-          description: The phone number that was searched.
-        references:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataReference'
-          description: List of references to the phone number.
     DataDeletionResponse:
       type: object
       properties:
@@ -262,14 +270,6 @@ components:
           - Processing
           - Complete
           description: Status of the deletion request.
-    PhoneDeleteRequest:
-      type: object
-      required:
-      - phoneNumber
-      properties:
-        phoneNumber:
-          type: string
-          description: The phone number whose associated data should be deleted.
   securitySchemes:
     basicAuth:
       type: http

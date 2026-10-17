@@ -196,7 +196,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    AggregatedActivityRequest:
+    DailyActivityRequest:
       type: object
       properties:
         cursor:
@@ -218,77 +218,7 @@ components:
               items:
                 type: string
               description: Filter by specific user IDs.
-          description: Filter criteria for activity retrieval.
-    AggregatedActivityResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-            currentPageSize:
-              type: integer
-            cursor:
-              type: string
-        usersAggregatedActivity:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserAggregatedActivity'
-          description: List of aggregated activity per user.
-    InteractionStatsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-            currentPageSize:
-              type: integer
-            cursor:
-              type: string
-        usersInteractionStats:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserInteractionStats'
-          description: Interaction statistics per user.
-    UserAggregatedActivity:
-      type: object
-      properties:
-        userId:
-          type: string
-          description: The Gong user ID.
-        callsAsHost:
-          type: integer
-          description: Number of calls where the user was the host.
-        callsAttended:
-          type: integer
-          description: Number of calls the user attended.
-        callsGaveComments:
-          type: integer
-          description: Number of calls where the user gave comments.
-        callsReceivedComments:
-          type: integer
-          description: Number of calls where the user received comments.
-        callsAccessedRecording:
-          type: integer
-          description: Number of calls where the user accessed the recording.
-        callsScored:
-          type: integer
-          description: Number of calls scored by the user.
-        ownCallsListenedTo:
-          type: integer
-          description: Number of own calls the user listened to.
-        othersCallsListenedTo:
-          type: integer
-          description: Number of others' calls the user listened to.
+          description: Filter criteria for daily activity.
     CoachingMetricsResponse:
       type: object
       properties:
@@ -313,7 +243,27 @@ components:
                 type: integer
                 description: Number of scorecards filled for direct reports.
           description: Coaching metrics data.
-    DailyActivityRequest:
+    AggregatedActivityResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+            currentPageSize:
+              type: integer
+            cursor:
+              type: string
+        usersAggregatedActivity:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAggregatedActivity'
+          description: List of aggregated activity per user.
+    InteractionStatsRequest:
       type: object
       properties:
         cursor:
@@ -335,7 +285,18 @@ components:
               items:
                 type: string
               description: Filter by specific user IDs.
-          description: Filter criteria for daily activity.
+          description: Filter criteria for interaction statistics.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
     UserInteractionStats:
       type: object
       properties:
@@ -405,7 +366,57 @@ components:
                     callsAccessedRecording:
                       type: integer
           description: Daily activity breakdown per user.
-    InteractionStatsRequest:
+    InteractionStatsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        records:
+          type: object
+          properties:
+            totalRecords:
+              type: integer
+            currentPageSize:
+              type: integer
+            cursor:
+              type: string
+        usersInteractionStats:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserInteractionStats'
+          description: Interaction statistics per user.
+    UserAggregatedActivity:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: The Gong user ID.
+        callsAsHost:
+          type: integer
+          description: Number of calls where the user was the host.
+        callsAttended:
+          type: integer
+          description: Number of calls the user attended.
+        callsGaveComments:
+          type: integer
+          description: Number of calls where the user gave comments.
+        callsReceivedComments:
+          type: integer
+          description: Number of calls where the user received comments.
+        callsAccessedRecording:
+          type: integer
+          description: Number of calls where the user accessed the recording.
+        callsScored:
+          type: integer
+          description: Number of calls scored by the user.
+        ownCallsListenedTo:
+          type: integer
+          description: Number of own calls the user listened to.
+        othersCallsListenedTo:
+          type: integer
+          description: Number of others' calls the user listened to.
+    AggregatedActivityRequest:
       type: object
       properties:
         cursor:
@@ -427,18 +438,7 @@ components:
               items:
                 type: string
               description: Filter by specific user IDs.
-          description: Filter criteria for interaction statistics.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
+          description: Filter criteria for activity retrieval.
   securitySchemes:
     basicAuth:
       type: http

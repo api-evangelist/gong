@@ -61,17 +61,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
     DigitalInteractionResponse:
       type: object
       properties:
@@ -137,6 +126,17 @@ components:
         clientUniqueId:
           type: string
           description: Client-provided unique ID to prevent duplicate submissions.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
   securitySchemes:
     basicAuth:
       type: http

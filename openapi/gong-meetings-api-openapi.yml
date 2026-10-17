@@ -206,16 +206,28 @@ components:
           - Tentative
           - NeedsAction
           description: The attendee's RSVP response status.
-    MeetingIntegrationStatusRequest:
+    MeetingIntegrationStatusResponse:
       type: object
       properties:
-        meetingProvider:
+        requestId:
           type: string
-          description: The meeting provider to check (e.g., Zoom, Google Meet).
-        userEmail:
+          description: A unique identifier for the request.
+        isIntegrated:
+          type: boolean
+          description: Whether the meeting integration is properly configured.
+        provider:
           type: string
-          format: email
-          description: Email of the user to check integration for.
+          description: The meeting provider checked.
+        status:
+          type: string
+          enum:
+          - Active
+          - Inactive
+          - Error
+          description: Current status of the integration.
+        details:
+          type: string
+          description: Additional details about the integration status.
     CreateMeetingRequest:
       type: object
       required:
@@ -257,6 +269,33 @@ components:
         externalMeetingId:
           type: string
           description: External meeting ID from the conferencing system.
+    MeetingIntegrationStatusRequest:
+      type: object
+      properties:
+        meetingProvider:
+          type: string
+          description: The meeting provider to check (e.g., Zoom, Google Meet).
+        userEmail:
+          type: string
+          format: email
+          description: Email of the user to check integration for.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+    BaseResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
     UpdateMeetingRequest:
       type: object
       properties:
@@ -283,28 +322,6 @@ components:
         description:
           type: string
           description: Updated meeting description.
-    MeetingIntegrationStatusResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        isIntegrated:
-          type: boolean
-          description: Whether the meeting integration is properly configured.
-        provider:
-          type: string
-          description: The meeting provider checked.
-        status:
-          type: string
-          enum:
-          - Active
-          - Inactive
-          - Error
-          description: Current status of the integration.
-        details:
-          type: string
-          description: Additional details about the integration status.
     MeetingResponse:
       type: object
       properties:
@@ -343,23 +360,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/MeetingAttendee'
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
-    BaseResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
   securitySchemes:
     basicAuth:
       type: http

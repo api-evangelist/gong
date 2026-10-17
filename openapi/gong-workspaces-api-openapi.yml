@@ -49,17 +49,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
     Workspace:
       type: object
       properties:
@@ -83,6 +72,17 @@ components:
           items:
             $ref: '#/components/schemas/Workspace'
           description: List of workspace objects.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
   securitySchemes:
     basicAuth:
       type: http

@@ -137,46 +137,34 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    UnassignProspectsResponse:
+    AssignProspectsResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        unassignedFlowInstanceIds:
-          type: array
-          items:
-            type: string
-          description: Flow instance IDs the prospect was successfully removed from.
-    ProspectsFlowsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        prospectsFlows:
+        assignedProspects:
           type: array
           items:
             type: object
             properties:
-              prospectEmail:
+              emailAddress:
                 type: string
                 format: email
-              assignedFlows:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    flowId:
-                      type: string
-                    flowInstanceId:
-                      type: string
-                    flowName:
-                      type: string
-                    assignedAt:
-                      type: string
-                      format: date-time
-          description: Flow assignments for each prospect.
+              flowInstanceId:
+                type: string
+          description: List of successfully assigned prospects with their flow instance IDs.
+        failedProspects:
+          type: array
+          items:
+            type: object
+            properties:
+              emailAddress:
+                type: string
+                format: email
+              reason:
+                type: string
+          description: List of prospects that failed to be assigned.
     ErrorResponse:
       type: object
       properties:
@@ -221,34 +209,17 @@ components:
           additionalProperties:
             type: string
           description: Custom field key-value pairs for the prospect.
-    AssignProspectsResponse:
+    UnassignProspectsResponse:
       type: object
       properties:
         requestId:
           type: string
           description: A unique identifier for the request.
-        assignedProspects:
+        unassignedFlowInstanceIds:
           type: array
           items:
-            type: object
-            properties:
-              emailAddress:
-                type: string
-                format: email
-              flowInstanceId:
-                type: string
-          description: List of successfully assigned prospects with their flow instance IDs.
-        failedProspects:
-          type: array
-          items:
-            type: object
-            properties:
-              emailAddress:
-                type: string
-                format: email
-              reason:
-                type: string
-          description: List of prospects that failed to be assigned.
+            type: string
+          description: Flow instance IDs the prospect was successfully removed from.
     UnassignProspectsRequest:
       type: object
       required:
@@ -259,6 +230,35 @@ components:
           items:
             type: string
           description: List of flow instance IDs to unassign. Up to 100 per request.
+    ProspectsFlowsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        prospectsFlows:
+          type: array
+          items:
+            type: object
+            properties:
+              prospectEmail:
+                type: string
+                format: email
+              assignedFlows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    flowId:
+                      type: string
+                    flowInstanceId:
+                      type: string
+                    flowName:
+                      type: string
+                    assignedAt:
+                      type: string
+                      format: date-time
+          description: Flow assignments for each prospect.
     ProspectsFlowsRequest:
       type: object
       required:

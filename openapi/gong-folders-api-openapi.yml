@@ -63,17 +63,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
     FlowFolder:
       type: object
       properties:
@@ -97,6 +86,17 @@ components:
         flowCount:
           type: integer
           description: Number of flows in the folder.
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
     FlowFoldersResponse:
       type: object
       properties:
