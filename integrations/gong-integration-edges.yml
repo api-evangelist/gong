@@ -5,6 +5,7 @@ source:
 - https://n8n.io/integrations/gong/
 - https://composio.dev/toolkits/gong
 checked:
+- google-workspace/integrations/google-workspace-integration-edges.yml
 - https://azuremarketplace.microsoft.com/
 - https://composio.dev/toolkits/gong
 - https://connectors.airbyte.com/files/registries/v0/cloud_registry.json
@@ -19,7 +20,10 @@ checked:
 - https://n8n.io/integrations/gong/
 - https://zapier.com/api/v4/apps/
 - https://zapier.com/apps/gong/integrations
+- microsoft-teams/integrations/microsoft-teams-integration-edges.yml
 - okta/integrations/okta-integration-edges.yml
+- slack/integrations/slack-integration-edges.yml
+- zoom/integrations/zoom-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -1188,6 +1192,76 @@ edges:
     builder: 'community (Meltano Hub variant maintainers: airbyte, symon-ai)'
   detected_by: sweep-data-integration.py
   first_seen: '2026-10-18'
+- partner_name: Google Workspace (own)
+  partner: google-workspace
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://workspace.google.com/marketplace/app/gongio/465092758304
+  mirror_of: google-workspace/integrations/google-workspace-integration-edges.yml
+  apps:
+  - Gong.io
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Google Workspace app
+- partner_name: Microsoft Teams (own)
+  partner: microsoft-teams
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://appsource.microsoft.com/en-us/product/office/WA200009841
+  mirror_of: microsoft-teams/integrations/microsoft-teams-integration-edges.yml
+  apps:
+  - Gong Notifications
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Microsoft Teams app
+  publisher_verified:
+  - Microsoft 365 Publisher Attestation
+- partner_name: Slack (own)
+  partner: slack
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://slack.com/marketplace/A015UHNUHGV-gong
+  mirror_of: slack/integrations/slack-integration-edges.yml
+  apps:
+  - Gong
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Slack app
+- partner_name: Zoom (own)
+  partner: zoom
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.zoom.us/apps/lYBbJtPRRxOc41YxlRox-A
+  mirror_of: zoom/integrations/zoom-integration-edges.yml
+  apps:
+  - Gong for Zoom Meetings
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Zoom app
 templates:
 - title: Summarize Gong calls using ChatGPT
   url: https://zapier.com/apps/gong/integrations/slack/255602275/summarize-gong-calls-using-chatgpt
