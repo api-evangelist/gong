@@ -1,0 +1,1238 @@
+openapi: 3.2.0
+info:
+  title: Gong Engagement (Legacy – See “Digital Interactions”) API
+  description: 'Overview
+
+
+    The Gong API allows you to:
+
+
+    Receive the following information from Gong:
+
+
+    Your company''s calls in Gong
+
+
+    Your company''s users in Gong
+
+
+    Your company''s user stats in Gong
+
+
+    Your company''s user settings in Gong
+
+
+    Your company''s libraries in Gong
+
+
+    Upload new or
+
+    update
+
+    call recordings in Gong, in order to support cases where you have an internal system that records
+
+    calls or obtains them from a third-party entity.
+
+
+    Data Privacy:
+
+    Delete users and all their associated elements.
+
+
+    Upload CRM data into Gong.
+
+
+    Check here what''s your base URL for all API calls.
+
+
+    Authentication
+
+
+    There are two ways to retrieve credentials to the Gong Public API:
+
+
+    Retrieve Manually:
+
+
+    In the Gong API Page (you
+
+    must be a technical administrator in Gong), click "Create" to receive an Access Key
+
+    and an Access Key Secret.
+
+
+    Use the Basic Authorization HTTP header (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Basic <token>
+
+
+    To create the basic token, combine the Access Key and the Access Key Secret with
+
+    colon (:) and then encode in Base64 as following:
+
+
+    Base64(<accessKey> : <accessKeySecret>)
+
+
+    Retrieve through OAuth
+
+
+    To obtain the Bearer token, follow the steps described in the Gong OAuth Guide.
+
+
+    After obtaining the token, use the Bearer Authorization HTTP header
+
+    (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Bearer <token>
+
+
+    Limits
+
+
+    By default Gong limits your company''s access to the service to 3 API calls per second, and 10,000 API calls per day.
+
+
+    When the rate of API calls exceeds these limits an HTTP status code 429 is returned and a Retry-After header indicates
+
+    how many seconds to wait before making a new request.
+
+
+    If required, contact help.gong.io to change these limits.
+
+
+    Cursors
+
+
+    Some API calls that return a list are limited in the amount of records they may return, so multiple API calls may be
+
+    required to bring all records. Such an API call also returns a records field, which contains the number of records
+
+    in the current page, the current page number and the total number of records.
+
+
+    In cases where the total number of records exceeds the number of records thus far retrieved, the records field will also
+
+    contain a cursor field which can be used to access the next page of records. To retrieve the next page, repeat the API call with
+
+    the cursor value as supplied by the previous API call. All other request inputs should remain the same.
+
+
+    Forward Compatibility
+
+
+    When coding a system to accept Gong data, take into account that Gong may, without prior warning, add fields to the JSON output.
+
+    It is recommended to future proof your code so that it disregards all JSON fields you don''t actually use.'
+  version: V2
+servers:
+- url: https://127.0.0.1:8443
+  description: Generated server url
+tags:
+- name: Engagement (Legacy – See “Digital Interactions”)
+  description: 'Limited release - contact integration.requests@gong.io for more information.
+
+
+    Gong’s "Engagement" API endpoints allow you to push engagement events into Gong and display them as events in Gong’s activity timeline.
+
+
+    There are currently 3 types of events:
+
+
+    "Content Shared" Event Type - Use this event type to push engagement events into Gong when a Gong user shares content with external participants (for example, a contract was “shared” by the account executive with his prospects)
+
+
+    "Content Viewed" Event Type - Use this event type to push engagement events into Gong when a content is viewed by an external participant (for example, a contract was “viewed” by the prospect)
+
+
+    "Custom Action" Event Type - Use this event type to push engagement events into Gong when a content is engaged by an external participant (for example, a contract was “signed” by the prospect)'
+paths:
+  /v2/customer-engagement/content/viewed:
+    put:
+      tags:
+      - Engagement (Legacy – See “Digital Interactions”)
+      summary: Report event of a content view (/v2/customer-engagement/content/viewed)
+      description: 'Push engagement events into Gong and display them as events in Gong’s activity timeline, when a content is viewed by an external participant (for example, a contract was “viewed” by the prospect)
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:engagement-data:write''.'
+      operationId: contentViewed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContentViewedEvent'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RegisterGenericCrmResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '409':
+          description: Conflict - Event was already reported in the past.
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '413':
+          description: Event is too large to be processed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/customer-engagement/content/shared:
+    put:
+      tags:
+      - Engagement (Legacy – See “Digital Interactions”)
+      summary: Report event of a content share (/v2/customer-engagement/content/shared)
+      description: 'Push engagement events into Gong and display them as events in Gong’s activity timeline, when a Gong user shares content with external participants (for example, a contract was “shared” by the account executive with his prospects)
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:engagement-data:write''.'
+      operationId: contentShared
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContentSharedEvent'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RegisterGenericCrmResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '409':
+          description: Conflict - Event was already reported in the past.
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '413':
+          description: Event is too large to be processed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/customer-engagement/action:
+    put:
+      tags:
+      - Engagement (Legacy – See “Digital Interactions”)
+      summary: Report event of a custom action (/v2/customer-engagement/action)
+      description: 'Push engagement events into Gong and display them as events in Gong’s activity timeline, when a content is engaged by an external participant (for example, a contract was “signed” by the prospect)
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:engagement-data:write''.'
+      operationId: customAction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomActionEvent'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RegisterGenericCrmResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '409':
+          description: Conflict - Event was already reported in the past.
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '413':
+          description: Event is too large to be processed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+components:
+  schemas:
+    ExternalCrmPartyObject:
+      required:
+      - objectId
+      - objectType
+      type: object
+      properties:
+        objectType:
+          type: string
+          description: Object Type. Valid only for non-company parties. e.g. Lead.
+          example: Contact
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Lead
+          - Contact
+          - Account
+          - Opportunity
+          - User
+          - Lead,Contact
+        objectId:
+          type: string
+          description: Object ID. For Salesforce both case-sensitive and case-insensitive formats are supported.
+          example: 0013601230sV7grAAC
+          exampleSetFlag: true
+          types:
+          - string
+        fields:
+          type: array
+          description: Object fields. Intended for future use only.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CrmPartyContextField'
+            exampleSetFlag: false
+          types:
+          - array
+      description: External object associated with the party
+      exampleSetFlag: false
+      types:
+      - object
+    Generic_Property:
+      required:
+      - dataType
+      - name
+      - value
+      type: object
+      properties:
+        name:
+          type: string
+          description: Property name.
+          exampleSetFlag: false
+          types:
+          - string
+        value:
+          type: string
+          description: Property value. Value format should match dataType. If dataType is "number", value should be passed in JSON number format, e.g. 3.14. If dataType is "date", the value should be passed in JSON date format, e.g. 2021-02-17T02:30:00-08:00. If the dataType is "url", the value should be valid URL, e.g. "https://example.com/example?q=v"
+          example: string
+          exampleSetFlag: true
+          types:
+          - string
+        dataType:
+          type: string
+          description: Property data type.
+          example: string
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - number, string, url, date
+      description: A list of additional properties for the event
+      exampleSetFlag: false
+      types:
+      - object
+    ExternalCrmCallObject:
+      required:
+      - objectId
+      - objectType
+      type: object
+      properties:
+        objectType:
+          type: string
+          description: Object Type. e.g. Account.
+          example: Account
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Opportunity
+          - Account
+          - Lead
+          - Contact
+          - User
+          - Opportunity,Account
+        objectId:
+          type: string
+          description: Object ID. For Salesforce both case-sensitive and case-insensitive formats are supported.
+          example: 0013601230sV7grAAC
+          exampleSetFlag: true
+          types:
+          - string
+        fields:
+          type: array
+          description: Object fields. Intended for future use only.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ContextField'
+            exampleSetFlag: false
+          types:
+          - array
+      description: External object associated with the call
+      exampleSetFlag: false
+      types:
+      - object
+    ContentViewedEvent:
+      required:
+      - contentId
+      - contentTitle
+      - contentUrl
+      - eventTimestamp
+      - reportingSystem
+      type: object
+      properties:
+        reportingSystem:
+          type: string
+          description: The unique identifier of the reporting system. It is the same value in all events originating from the same system.
+          example: abc123
+          exampleSetFlag: true
+          types:
+          - string
+        eventTimestamp:
+          type: string
+          description: The date and time when the event happened in the ISO-8601 format (e.g., '2021-08-01T02:30:00+05:00' or '2021-08-01T08:00:00Z', where Z stands for UTC);
+          example: '2021-02-17T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        eventId:
+          type: string
+          description: The original id of the event as designated in the reporting system.
+          example: abc123
+          exampleSetFlag: true
+          types:
+          - string
+        contentId:
+          type: string
+          description: The id of the content that was viewed in the reporting system.
+          example: doc_123456789
+          exampleSetFlag: true
+          types:
+          - string
+        contentUrl:
+          type: string
+          description: The url of the content that was viewed in the reporting system. This is the url that is was accessed by the viewer.
+          example: https://example.com/doc_123456789
+          exampleSetFlag: true
+          types:
+          - string
+        contentTitle:
+          type: string
+          description: Human readable title of the content.
+          example: Features & Spec V.1
+          exampleSetFlag: true
+          types:
+          - string
+        viewActionTitle:
+          type: string
+          description: The name of the action like "Document Viewed" or "Presentation Opened".
+          example: My Title
+          exampleSetFlag: true
+          types:
+          - string
+        shareId:
+          type: string
+          description: The id of the share action that corresponds to this view event, in case there can be more than one share per content.
+          example: abc123
+          exampleSetFlag: true
+          types:
+          - string
+        viewInfoUrl:
+          type: string
+          description: The link to a page that presents additional information about this event.
+          example: https://example.com/path/to/a/page
+          exampleSetFlag: true
+          types:
+          - string
+        viewer:
+          $ref: '#/components/schemas/Actor'
+          exampleSetFlag: false
+        crmContext:
+          type: array
+          description: A list of references to external systems such as CRM, Telephony System, Case Management, etc.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CallUploadContext'
+            exampleSetFlag: false
+          types:
+          - array
+        contentProperties:
+          type: array
+          description: A list of additional properties for the content
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Generic_Property'
+            exampleSetFlag: false
+          types:
+          - array
+        eventProperties:
+          type: array
+          description: A list of additional properties for the event
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Generic_Property'
+            exampleSetFlag: false
+          types:
+          - array
+        userAgent:
+          type: string
+          description: '"User-Agent" header value for browser based interaction'
+          exampleSetFlag: false
+          types:
+          - string
+        mobileAppId:
+          type: string
+          description: The application identification string in case of interaction via mobile application (bundle identifier or package name).
+          exampleSetFlag: false
+          types:
+          - string
+        agentPlatform:
+          type: string
+          description: Platform on which the interaction was made
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - Windows, Linux, MacOS, iOS, Android
+        workspaceId:
+          type: string
+          description: Optional workspace identifier. If specified, the event will be placed into this workspace, otherwise, the default algorithm for workspace placement will be applied.
+          example: '623457276584334'
+          exampleSetFlag: true
+          types:
+          - string
+        trackingId:
+          type: string
+          description: The ID used for tracking the person who did the event. Must be null if a viewer is sent instead.
+          exampleSetFlag: false
+          types:
+          - string
+        nonCompanyParticipants:
+          type: array
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Actor'
+            exampleSetFlag: false
+          types:
+          - array
+        moreInfoUrl:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        actionName:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        sharingMessageBody:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        sharingMessageSubject:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        sharer:
+          $ref: '#/components/schemas/Sharer'
+          exampleSetFlag: false
+      description: Content Viewed event
+      exampleSetFlag: false
+      types:
+      - object
+    ContextField:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'Field name. For Account supported fields are: Name, Website, Industry and all the custom fields. For Opportunity supported fields are Name, LeadSource, Type, StageName, Probability, Amount, CloseDate and all the custom fields.'
+          example: name
+          exampleSetFlag: true
+          types:
+          - string
+        value:
+          type: object
+          description: Field value
+          example: Gong Inc.
+          exampleSetFlag: true
+          types:
+          - object
+      description: External object data
+      exampleSetFlag: false
+      types:
+      - object
+    CustomActionEvent:
+      required:
+      - eventTimestamp
+      - reportingSystem
+      type: object
+      properties:
+        reportingSystem:
+          type: string
+          description: The unique identifier of the reporting system. It is the same value in all events originating from the same system.
+          example: abc123
+          exampleSetFlag: true
+          types:
+          - string
+        eventTimestamp:
+          type: string
+          description: The date and time when the event happened in the ISO-8601 format (e.g., '2021-08-01T02:30:00+05:00' or '2021-08-01T08:00:00Z', where Z stands for UTC);
+          example: '2021-02-17T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        eventId:
+          type: string
+          description: The original id of the event as designated in the reporting system.
+          example: abc123
+          exampleSetFlag: true
+          types:
+          - string
+        contentId:
+          type: string
+          description: The id of the content that was viewed in the reporting system.
+          example: doc_123456789
+          exampleSetFlag: true
+          types:
+          - string
+        contentUrl:
+          type: string
+          description: The url of the content that was viewed in the reporting system. This is the url that is was accessed by the viewer.
+          example: https://example.com/doc_123456789
+          exampleSetFlag: true
+          types:
+          - string
+        contentTitle:
+          type: string
+          description: Human readable title of the content.
+          example: Features & Spec V.1
+          exampleSetFlag: true
+          types:
+          - string
+        actionName:
+          type: string
+          description: The name of the action like "Document Viewed" or "Presentation Opened".
+          example: My Title
+          exampleSetFlag: true
+          types:
+          - string
+        eventInfoUrl:
+          type: string
+          description: The link to a page that presents additional information about this event.
+          example: https://example.com/path/to/a/page
+          exampleSetFlag: true
+          types:
+          - string
+        actor:
+          $ref: '#/components/schemas/Actor'
+          exampleSetFlag: false
+        crmContext:
+          type: array
+          description: A list of references to external systems such as CRM, Telephony System, Case Management, etc.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CallUploadContext'
+            exampleSetFlag: false
+          types:
+          - array
+        contentProperties:
+          type: array
+          description: A list of additional properties for the content
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Generic_Property'
+            exampleSetFlag: false
+          types:
+          - array
+        eventProperties:
+          type: array
+          description: A list of additional properties for the event
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Generic_Property'
+            exampleSetFlag: false
+          types:
+          - array
+        userAgent:
+          type: string
+          description: '"User-Agent" header value for browser based interaction'
+          exampleSetFlag: false
+          types:
+          - string
+        mobileAppId:
+          type: string
+          description: The application identification string in case of interaction via mobile application (bundle identifier or package name).
+          exampleSetFlag: false
+          types:
+          - string
+        agentPlatform:
+          type: string
+          description: Platform on which the interaction was made
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - Windows, Linux, MacOS, iOS, Android
+        workspaceId:
+          type: string
+          description: Optional workspace identifier. If specified, the event will be placed into this workspace, otherwise, the default algorithm for workspace placement will be applied.
+          example: '623457276584334'
+          exampleSetFlag: true
+          types:
+          - string
+        nonCompanyParticipants:
+          type: array
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Actor'
+            exampleSetFlag: false
+          types:
+          - array
+        moreInfoUrl:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        shareId:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        trackingId:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        sharingMessageBody:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        sharingMessageSubject:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        sharer:
+          $ref: '#/components/schemas/Sharer'
+          exampleSetFlag: false
+      description: Custom Action Event
+      exampleSetFlag: false
+      types:
+      - object
+    ContentSharedEvent:
+      required:
+      - contentId
+      - contentTitle
+      - contentUrl
+      - eventTimestamp
+      - reportingSystem
+      type: object
+      properties:
+        reportingSystem:
+          type: string
+          description: The unique identifier of the reporting system. It is the same value in all events originating from the same system.
+          example: abc123
+          exampleSetFlag: true
+          types:
+          - string
+        eventTimestamp:
+          type: string
+          description: The date and time when the event happened in the ISO-8601 format (e.g., '2021-08-01T02:30:00+05:00' or '2021-08-01T08:00:00Z', where Z stands for UTC);
+          example: '2021-02-17T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        eventId:
+          type: string
+          description: The original id of the event as designated in the reporting system.
+          example: abc123
+          exampleSetFlag: true
+          types:
+          - string
+        contentId:
+          type: string
+          description: The id of the content that was shared in the reporting system.
+          example: doc_123456789
+          exampleSetFlag: true
+          types:
+          - string
+        contentUrl:
+          type: string
+          description: The url of the content that was shared in the reporting system. This is the url that is was accessed by the viewer.
+          example: https://example.com/doc_123456789
+          exampleSetFlag: true
+          types:
+          - string
+        contentTitle:
+          type: string
+          description: Human readable title of the content.
+          example: Features & Spec V.1
+          exampleSetFlag: true
+          types:
+          - string
+        shareId:
+          type: string
+          description: The id of the share action, in case there can be more than one share per content.
+          example: abc123
+          exampleSetFlag: true
+          types:
+          - string
+        shareInfoUrl:
+          type: string
+          description: The link to a page that presents additional information about this event.
+          example: https://example.com/path/to/a/page
+          exampleSetFlag: true
+          types:
+          - string
+        sharingMessageSubject:
+          type: string
+          description: The subject of share email / message.
+          example: Sample Subject
+          exampleSetFlag: true
+          types:
+          - string
+        sharingMessageBody:
+          type: string
+          description: The share message body. Can contain HTML and will be cleaned when it is presented.
+          example: <b>Hi</b>
+          exampleSetFlag: true
+          types:
+          - string
+        sharer:
+          $ref: '#/components/schemas/Sharer'
+          exampleSetFlag: false
+        recipients:
+          type: array
+          description: array of objects with  name + email of recipients. Email is required.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Actor'
+            exampleSetFlag: false
+          types:
+          - array
+        crmContext:
+          type: array
+          description: A list of references to external systems such as CRM, Telephony System, Case Management, etc.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CallUploadContext'
+            exampleSetFlag: false
+          types:
+          - array
+        contentProperties:
+          type: array
+          description: A list of additional properties for the content
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Generic_Property'
+            exampleSetFlag: false
+          types:
+          - array
+        eventProperties:
+          type: array
+          description: A list of additional properties for the event
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Generic_Property'
+            exampleSetFlag: false
+          types:
+          - array
+        workspaceId:
+          type: string
+          description: Optional workspace identifier. If specified, the event will be placed into this workspace, otherwise, the default algorithm for workspace placement will be applied.
+          example: '623457276584334'
+          exampleSetFlag: true
+          types:
+          - string
+        actionName:
+          type: string
+          description: The name of the action like "Document Sent" or "Presentation Shared".
+          example: My Title
+          exampleSetFlag: true
+          types:
+          - string
+        nonCompanyParticipants:
+          type: array
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Actor'
+            exampleSetFlag: false
+          types:
+          - array
+        moreInfoUrl:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        trackingId:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        mobileAppId:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        agentPlatform:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        userAgent:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+      description: Content Shared Event
+      exampleSetFlag: false
+      types:
+      - object
+    PartyUploadContext:
+      required:
+      - system
+      type: object
+      properties:
+        system:
+          type: string
+          description: External system name. Currently only Salesforce and Generic are supported.
+          example: Salesforce
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Salesforce
+          - HubSpot
+          - MicrosoftDynamic
+          - Generic
+        objects:
+          type: array
+          description: List of objects within the external system
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ExternalCrmPartyObject'
+            exampleSetFlag: false
+          types:
+          - array
+      description: Links to external systems such as CRM, Telephony System, Case Management etc. Currently only Salesforce and Generic are supported.
+      exampleSetFlag: false
+      types:
+      - object
+    CallUploadContext:
+      required:
+      - system
+      type: object
+      properties:
+        system:
+          type: string
+          description: External system name. Currently only Salesforce and Generic are supported.
+          example: Salesforce
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Salesforce
+          - HubSpot
+          - MicrosoftDynamic
+          - Generic
+        objects:
+          type: array
+          description: 'List of objects within the external system. Note: Multiple opportunities/deals belonging to the same account are not supported.'
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ExternalCrmCallObject'
+            exampleSetFlag: false
+          types:
+          - array
+      description: Links to external systems such as CRM, Telephony System, Case Management etc. Currently only Salesforce and Generic are supported.
+      exampleSetFlag: false
+      types:
+      - object
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        errors:
+          type: array
+          description: Error messages.
+          example:
+          - An error has occurred
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    Actor:
+      type: object
+      properties:
+        email:
+          type: string
+          description: The email address of the person, if available.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+        name:
+          type: string
+          description: The name of the person, if available.
+          example: Test User
+          exampleSetFlag: true
+          types:
+          - string
+        title:
+          type: string
+          description: The title of the person, if available.
+          example: Enterprise Account Executive
+          exampleSetFlag: true
+          types:
+          - string
+        context:
+          type: array
+          description: A list of links to external systems such as CRM, Telephony System, Case Management, etc.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/PartyUploadContext'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    Sharer:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The user id in Gong, if available.
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        email:
+          type: string
+          description: The email address of the person, if available.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+        name:
+          type: string
+          description: The name of the person, if available.
+          example: Test User
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    CrmPartyContextField:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Field name
+          example: name
+          exampleSetFlag: true
+          types:
+          - string
+        value:
+          type: object
+          description: Object value
+          example: Gong Inc.
+          exampleSetFlag: true
+          types:
+          - object
+      description: External object data
+      exampleSetFlag: false
+      types:
+      - object
+    RegisterGenericCrmResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        integrationId:
+          type: integer
+          description: '<style>.public-api-info {    background: rgb(222, 235, 255);}.public-api-tip {    background: rgb(227, 252, 239);}.public-api-parameter {    background: rgba(9,30,66,0.08);}.public-api-note {    background: rgb(234, 230, 255);}.public-api-important {    background: rgb(255, 250, 230);}.public-api-critical {    background: rgb(255, 235, 230);}table, th, td {  border: 1px solid gray;  border-collapse: collapse;}th, td {  padding: 5px;}th {  text-align: left;}img {  border: 2px solid #D3D5D9;}</style>Your integration ID to be used in requests to the API. This ensures you are accessing the correct integration.<br><b>Note:</b> Parse the integrationId as Long or BigInt. Parsing the integrationId as an Integer will truncate the integrationId to trailing zeros and will return an incorrect ID.'
+          format: int64
+          example: 5517027188234205706
+          exampleSetFlag: true
+          types:
+          - integer
+      exampleSetFlag: false
+      types:
+      - object

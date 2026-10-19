@@ -1,0 +1,972 @@
+openapi: 3.2.0
+info:
+  title: Gong Tasks API
+  description: 'Overview
+
+
+    The Gong API allows you to:
+
+
+    Receive the following information from Gong:
+
+
+    Your company''s calls in Gong
+
+
+    Your company''s users in Gong
+
+
+    Your company''s user stats in Gong
+
+
+    Your company''s user settings in Gong
+
+
+    Your company''s libraries in Gong
+
+
+    Upload new or
+
+    update
+
+    call recordings in Gong, in order to support cases where you have an internal system that records
+
+    calls or obtains them from a third-party entity.
+
+
+    Data Privacy:
+
+    Delete users and all their associated elements.
+
+
+    Upload CRM data into Gong.
+
+
+    Check here what''s your base URL for all API calls.
+
+
+    Authentication
+
+
+    There are two ways to retrieve credentials to the Gong Public API:
+
+
+    Retrieve Manually:
+
+
+    In the Gong API Page (you
+
+    must be a technical administrator in Gong), click "Create" to receive an Access Key
+
+    and an Access Key Secret.
+
+
+    Use the Basic Authorization HTTP header (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Basic <token>
+
+
+    To create the basic token, combine the Access Key and the Access Key Secret with
+
+    colon (:) and then encode in Base64 as following:
+
+
+    Base64(<accessKey> : <accessKeySecret>)
+
+
+    Retrieve through OAuth
+
+
+    To obtain the Bearer token, follow the steps described in the Gong OAuth Guide.
+
+
+    After obtaining the token, use the Bearer Authorization HTTP header
+
+    (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Bearer <token>
+
+
+    Limits
+
+
+    By default Gong limits your company''s access to the service to 3 API calls per second, and 10,000 API calls per day.
+
+
+    When the rate of API calls exceeds these limits an HTTP status code 429 is returned and a Retry-After header indicates
+
+    how many seconds to wait before making a new request.
+
+
+    If required, contact help.gong.io to change these limits.
+
+
+    Cursors
+
+
+    Some API calls that return a list are limited in the amount of records they may return, so multiple API calls may be
+
+    required to bring all records. Such an API call also returns a records field, which contains the number of records
+
+    in the current page, the current page number and the total number of records.
+
+
+    In cases where the total number of records exceeds the number of records thus far retrieved, the records field will also
+
+    contain a cursor field which can be used to access the next page of records. To retrieve the next page, repeat the API call with
+
+    the cursor value as supplied by the previous API call. All other request inputs should remain the same.
+
+
+    Forward Compatibility
+
+
+    When coding a system to accept Gong data, take into account that Gong may, without prior warning, add fields to the JSON output.
+
+    It is recommended to future proof your code so that it disregards all JSON fields you don''t actually use.'
+  version: V2
+servers:
+- url: https://127.0.0.1:8443
+  description: Generated server url
+tags:
+- name: Tasks
+paths:
+  /v2/tasks:
+    post:
+      tags:
+      - Tasks
+      summary: List user's tasks (/v2/tasks)
+      description: 'Retrieves a list of Engage tasks assigned to a specific user, supporting filters for task type, action, and status.
+
+        Results include detailed metadata for each task, such as ownership, creation and due dates, associated contacts, flows, accounts, and opportunities.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:tasks:read''.'
+      operationId: listTasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListReminderRequest'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRemindersResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/tasks/{taskId}:
+    patch:
+      tags:
+      - Tasks
+      summary: Update task (/v2/tasks/{taskId})
+      description: 'Use this endpoint to update the status or due date of an existing Engage task.
+
+        The task status can be changed to OPEN, DONE, or DISMISSED.
+
+        This is useful for managing task workflows such as marking tasks complete or rescheduling them based on user actions or system events.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:tasks:write''.'
+      operationId: updateReminder
+      parameters:
+      - name: taskId
+        in: path
+        required: true
+        style: SIMPLE
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          exampleSetFlag: false
+          types:
+          - integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateReminderRequest'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRemindersResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: TaskId not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+components:
+  schemas:
+    ReminderFilter:
+      required:
+      - status
+      - taskAction
+      - types
+      - userId
+      type: object
+      properties:
+        userId:
+          minLength: 1
+          type: string
+          description: The id of the Gong user who owns the task
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        workspaceId:
+          type: string
+          description: (Optional) The id of the workspace the tasks are in
+          example: '623457276584334'
+          exampleSetFlag: true
+          types:
+          - string
+        types:
+          type: array
+          description: Defines whether to include tasks that were created as part of a flow, or were created as a one-off task
+          example:
+          - MANUAL
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+            enum:
+            - FLOW
+            - MANUAL
+          types:
+          - array
+        taskAction:
+          type: array
+          description: 'Array of actions included in the task (valid options: CALL)'
+          example:
+          - CALL
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+            enum:
+            - CALL
+          types:
+          - array
+        status:
+          type: array
+          description: 'Only return tasks with this status (valid options: OPEN)'
+          example:
+          - OPEN
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+            enum:
+            - OPEN
+            - DONE
+            - DISMISSED
+          types:
+          - array
+      description: Reminder filter criteria
+      exampleSetFlag: false
+      types:
+      - object
+    StepDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Step id
+          format: int64
+          example: 1695493301223590791
+          exampleSetFlag: true
+          types:
+          - integer
+        name:
+          type: string
+          description: Step name
+          example: Make a call
+          exampleSetFlag: true
+          types:
+          - string
+        stepNumber:
+          type: integer
+          description: Step number
+          format: int64
+          example: 1
+          exampleSetFlag: true
+          types:
+          - integer
+      exampleSetFlag: false
+      types:
+      - object
+    ContactCrmData:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: The contact's first name
+          example: Jon
+          exampleSetFlag: true
+          types:
+          - string
+        lastName:
+          type: string
+          description: The contact's last name
+          example: Snow
+          exampleSetFlag: true
+          types:
+          - string
+        crmUrl:
+          type: string
+          description: A link to the contact's page in the CRM
+          exampleSetFlag: false
+          types:
+          - string
+        companyName:
+          type: string
+          description: The name of the company the contact works for
+          example: GONG
+          exampleSetFlag: true
+          types:
+          - string
+        affiliation:
+          type: string
+          description: Contact affiliation
+          example: Us
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Us
+          - Them
+          - Unknown
+        emails:
+          uniqueItems: true
+          type: array
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ContactEmailDto'
+            exampleSetFlag: false
+          types:
+          - array
+        title:
+          type: string
+          description: The contact's title
+          example: Enterprise Account Executive
+          exampleSetFlag: true
+          types:
+          - string
+        timezone:
+          type: string
+          description: (Optional) The timezone the contact lives in
+          example: US/Pacific
+          exampleSetFlag: true
+          types:
+          - string
+        phoneNumbers:
+          uniqueItems: true
+          type: array
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/PersonPhoneDto'
+            exampleSetFlag: false
+          types:
+          - array
+        city:
+          type: string
+          description: (Optional) The city the contact lives in
+          exampleSetFlag: false
+          types:
+          - string
+        country:
+          type: string
+          description: (Optional) The country the contact lives in
+          exampleSetFlag: false
+          types:
+          - string
+        state:
+          type: string
+          description: (Optional) The state the contact lives in
+          example: California
+          exampleSetFlag: true
+          types:
+          - string
+        zipcode:
+          type: string
+          description: (Optional) The contact's zipcode
+          exampleSetFlag: false
+          types:
+          - string
+        optOutChannels:
+          uniqueItems: true
+          type: array
+          description: Contacts opted out channels
+          exampleSetFlag: false
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+            enum:
+            - CALLS
+            - EMAILS
+            - SMS
+          types:
+          - array
+        linkedinProfile:
+          type: string
+          description: (Optional) A link to the contact's linkedIn profile
+          exampleSetFlag: false
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    AccountDto:
+      type: object
+      properties:
+        crmId:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        name:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        crmUrl:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+      description: (Optional) associated crm account to task
+      exampleSetFlag: false
+      types:
+      - object
+    ContactDto:
+      type: object
+      properties:
+        crmId:
+          type: string
+          description: The contact's CRM id
+          example: a5V1Q00A120DP4CVAW
+          exampleSetFlag: true
+          types:
+          - string
+        type:
+          type: string
+          description: Sets whether the contact is a lead or contact in the CRM
+          example: LEAD
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - CONTACT
+          - LEAD
+        data:
+          $ref: '#/components/schemas/ContactCrmData'
+          exampleSetFlag: false
+      description: (Optional) Array of additional contacts for the task
+      exampleSetFlag: false
+      types:
+      - object
+    UserRemindersResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        tasks:
+          type: array
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ReminderDataDto'
+            exampleSetFlag: false
+          types:
+          - array
+        crmType:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - SALESFORCE
+          - HUBSPOT
+          - MICROSOFT_DYNAMICS
+          - GENERIC
+      exampleSetFlag: false
+      types:
+      - object
+    ListReminderRequest:
+      required:
+      - filter
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/ReminderFilter'
+          exampleSetFlag: false
+      description: Get user's tasks
+      exampleSetFlag: false
+      types:
+      - object
+    ReminderDataDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The id of the task
+          format: int64
+          example: 1234361284629351
+          exampleSetFlag: true
+          types:
+          - integer
+        userId:
+          type: integer
+          description: The id of the Gong user who owns the task
+          format: int64
+          example: 234599484848423
+          exampleSetFlag: true
+          types:
+          - integer
+        created:
+          type: string
+          description: Date and time the task was created. In the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC).
+          format: date-time
+          example: 1518863400.0
+          exampleSetFlag: true
+          types:
+          - string
+        updated:
+          type: string
+          description: Date and time the task was last updated. In the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC).
+          format: date-time
+          example: 1518863400.0
+          exampleSetFlag: true
+          types:
+          - string
+        status:
+          type: string
+          description: The task status
+          example: '["OPEN"]'
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - OPEN
+          - DONE
+          - DISMISSED
+        type:
+          type: string
+          description: Describes whether the task was created as part of a flow, or is a one-off task.
+          example: '["MANUAL"]'
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - FLOW
+          - MANUAL
+        actions:
+          uniqueItems: true
+          type: array
+          description: Action included in the task
+          example:
+          - CALL
+          exampleSetFlag: true
+          items:
+            type: string
+            description: Action included in the task
+            example: '["CALL"]'
+            exampleSetFlag: true
+            types:
+            - string
+            enum:
+            - CALL
+          types:
+          - array
+        account:
+          $ref: '#/components/schemas/AccountDto'
+          exampleSetFlag: false
+        opportunity:
+          $ref: '#/components/schemas/OpportunityDto'
+          exampleSetFlag: false
+        dueDate:
+          type: string
+          description: Date and time the task is due to be completed in the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC).
+          format: date-time
+          example: 1518863400.0
+          exampleSetFlag: true
+          types:
+          - string
+        flow:
+          $ref: '#/components/schemas/FlowDto'
+          exampleSetFlag: false
+        contact:
+          $ref: '#/components/schemas/ContactDto'
+          exampleSetFlag: false
+        additionalContacts:
+          type: array
+          description: (Optional) Array of additional contacts for the task
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ContactDto'
+            exampleSetFlag: false
+          types:
+          - array
+        title:
+          type: string
+          description: The task title, only included if the task is of type MANUAL
+          exampleSetFlag: false
+          types:
+          - string
+        priority:
+          $ref: '#/components/schemas/Priority'
+          exampleSetFlag: false
+        hasSpecificTime:
+          type: boolean
+          description: When false (default), effective due-date is 23:59 of same day
+          exampleSetFlag: false
+          types:
+          - boolean
+      exampleSetFlag: false
+      types:
+      - object
+    UpdateReminderRequest:
+      required:
+      - userId
+      type: object
+      properties:
+        userId:
+          type: string
+          description: 'The id of the Gong user who owns the task '
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        status:
+          type: string
+          description: '(Optional) Sets a new status for the task '
+          example: OPEN
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - OPEN
+          - DONE
+          - DISMISSED
+        dueDate:
+          type: string
+          description: (Optional) Sets a new due date and time for the task in ISO-8601 format ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC).
+          format: date-time
+          example: 1578868200.0
+          exampleSetFlag: true
+          types:
+          - string
+        priority:
+          type: string
+          description: '(Optional) Sets a new priority for the task '
+          example: MEDIUM
+          exampleSetFlag: true
+          types:
+          - string
+        hasSpecificTime:
+          type: boolean
+          description: When false (default), effective due-date is 23:59 of same day
+          exampleSetFlag: false
+          types:
+          - boolean
+      exampleSetFlag: false
+      types:
+      - object
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        errors:
+          type: array
+          description: Error messages.
+          example:
+          - An error has occurred
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    ContactEmailDto:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email addresses associated with the contact
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    FlowDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Flow id
+          format: int64
+          example: 1695493301223590792
+          exampleSetFlag: true
+          types:
+          - integer
+        name:
+          type: string
+          description: Flow name
+          example: Personal Flow
+          exampleSetFlag: true
+          types:
+          - string
+        step:
+          $ref: '#/components/schemas/StepDto'
+          exampleSetFlag: false
+      description: (Optional) associated flow
+      exampleSetFlag: false
+      types:
+      - object
+    Priority:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Priority ID
+          format: int64
+          example: 1
+          exampleSetFlag: true
+          types:
+          - integer
+        name:
+          type: string
+          description: Priority name
+          example: high
+          exampleSetFlag: true
+          types:
+          - string
+        weight:
+          type: integer
+          description: Priority weight (higher = more important)
+          format: int32
+          example: 100
+          exampleSetFlag: true
+          types:
+          - integer
+      description: The reminder priority
+      exampleSetFlag: false
+      types:
+      - object
+    OpportunityDto:
+      type: object
+      properties:
+        crmId:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        name:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        crmUrl:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        status:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        stage:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        amount:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        probability:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        closeDate:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+      description: (Optional) associated crm deal to task
+      exampleSetFlag: false
+      types:
+      - object
+    PersonPhoneDto:
+      type: object
+      properties:
+        raw:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        extension:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        countryCode:
+          type: integer
+          format: int32
+          exampleSetFlag: false
+          types:
+          - integer
+        normalized:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        label:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        isVerified:
+          type: boolean
+          exampleSetFlag: false
+          types:
+          - boolean
+      exampleSetFlag: false
+      types:
+      - object

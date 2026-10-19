@@ -1,22 +1,13 @@
 openapi: 3.2.0
 info:
   title: Gong Data Privacy API
-  description: The Gong Data Privacy API provides data protection capabilities including finding references to email addresses and phone numbers, and purging associated data to support compliance with privacy regulations such as GDPR and CCPA.
-  version: 2.0.0
-  contact:
-    name: Gong
-    url: https://www.gong.io
-    email: support@gong.io
-  license:
-    name: Proprietary
-    url: https://www.gong.io/terms-of-service/
-  termsOfService: https://www.gong.io/terms-of-service/
+  version: '1.0'
+  description: 'Operations tagged Data Privacy across 2 of this provider''s published API definitions: gong-data-privacy-openapi.yml, gong-openapi.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.gong.io/v2
   description: Gong API v2 Production Server
-security:
-- basicAuth: []
-- bearerAuth: []
+- url: https://127.0.0.1:8443
+  description: Generated server url
 tags:
 - name: Data Privacy
   description: Operations for data privacy management and compliance
@@ -61,6 +52,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - basicAuth: []
+      - bearerAuth: []
+    servers:
+    - url: https://api.gong.io/v2
+      description: Gong API v2 Production Server
   /data-privacy/phone-references:
     get:
       operationId: retrievePhoneReferences
@@ -100,6 +97,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - basicAuth: []
+      - bearerAuth: []
+    servers:
+    - url: https://api.gong.io/v2
+      description: Gong API v2 Production Server
   /data-privacy/email-delete:
     post:
       operationId: deleteEmailAddressData
@@ -138,6 +141,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - basicAuth: []
+      - bearerAuth: []
+    servers:
+    - url: https://api.gong.io/v2
+      description: Gong API v2 Production Server
   /data-privacy/phone-delete:
     post:
       operationId: deletePhoneNumberData
@@ -176,8 +185,371 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - basicAuth: []
+      - bearerAuth: []
+    servers:
+    - url: https://api.gong.io/v2
+      description: Gong API v2 Production Server
+  /v2/data-privacy/erase-data-for-phone-number:
+    post:
+      tags:
+      - Data Privacy
+      summary: Delete the phone number, and all associated elements…
+      description: 'Given a phone number, this endpoint deletes from the Gong system any leads or contacts with a matching phone number or mobile phone number. Email messages sent to or from these leads/contacts are deleted. Calls where the leads/contacts appear are deleted. The deletion is not immediate, and may take several hours to complete.
+
+
+        This endpoint contains a data integrity protection mechanism to prevent the deletion of an abnormal number of objects. If the deletion fails please contact support at help@gong.io
+
+
+        Delete the data from your CRM and email system before performing this operation so that private data is not re-imported into Gong.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:data-privacy:delete''.'
+      operationId: purgePhoneNumber
+      parameters:
+      - name: phoneNumber
+        in: query
+        description: 'The phone number.
+
+
+          This number must start with a + (plus) sign followed by the country code, area code, and local phone number. All other non-digits are ignored.
+
+
+          The following are examples of permitted phone numbers: +1 425 555 2671, +1-425-555-2671, +1 425 5552671, +14255552671, +1 425 555 26 71, +1(425) 555-2671, etc.
+
+
+          Note: This parameter should be URL-encoded.'
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        example: +1(425) 555-2671
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+    servers:
+    - url: https://127.0.0.1:8443
+      description: Generated server url
+  /v2/data-privacy/erase-data-for-email-address:
+    post:
+      tags:
+      - Data Privacy
+      summary: Delete the email address, and all associated elements…
+      description: 'Given an email address, this endpoint deletes from the Gong system any calls or email messages that reference this address. Email messages sent to or from the address are deleted. Calls where the email address appears (as a lead, contact, attendee or speaker) are deleted. Leads or Contacts with the email address are deleted. The deletion is not immediate, and may take several hours to complete.
+
+
+        This endpoint contains a data integrity protection mechanism to prevent the deletion of an abnormal number of objects. If the deletion fails please contact support at help@gong.io
+
+
+        Delete the data from your CRM and email system before performing this operation so that private data is not re-imported into Gong.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:data-privacy:delete''.'
+      operationId: purgeEmailAddress
+      parameters:
+      - name: emailAddress
+        in: query
+        description: The email address.
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+    servers:
+    - url: https://127.0.0.1:8443
+      description: Generated server url
+  /v2/data-privacy/data-for-phone-number:
+    get:
+      tags:
+      - Data Privacy
+      summary: Retrieve all references to a phone number.
+      description: 'Shows the elements in the Gong system that reference the given phone number. Given a phone number, this endpoint returns details of any leads or contacts with this phone number and their associated calls and email messages.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:data-privacy:read''.'
+      operationId: findAllReferencesToPhoneNumber
+      parameters:
+      - name: phoneNumber
+        in: query
+        description: 'The phone number.
+
+
+          This number must start with a + (plus) sign followed by the country code, area code, and local phone number. All other non-digits are ignored.
+
+
+          The following are examples of permitted phone numbers: +1 425 555 2671, +1-425-555-2671, +1 425 5552671, +14255552671, +1 425 555 26 71, +1(425) 555-2671, etc.
+
+
+          Note: This parameter should be URL-encoded.'
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        example: +1(425) 555-2671
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumberReferences'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+    servers:
+    - url: https://127.0.0.1:8443
+      description: Generated server url
+  /v2/data-privacy/data-for-email-address:
+    get:
+      tags:
+      - Data Privacy
+      summary: Retrieve all references to an email address.
+      description: 'Shows the elements in the Gong system that reference the given email address. Given an emails address, this endpoint returns details of all calls and email messages that reference this address, and any leads or contacts with this email address.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:data-privacy:read''.'
+      operationId: findAllReferencesToEmailAddress
+      parameters:
+      - name: emailAddress
+        in: query
+        description: The email address.
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailAddressReferences'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+                exampleSetFlag: false
+              exampleSetFlag: false
+    servers:
+    - url: https://127.0.0.1:8443
+      description: Generated server url
 components:
   schemas:
+    PhoneDeleteRequest:
+      type: object
+      required:
+      - phoneNumber
+      properties:
+        phoneNumber:
+          type: string
+          description: The phone number whose associated data should be deleted.
+    EmailDeleteRequest:
+      type: object
+      required:
+      - emailAddress
+      properties:
+        emailAddress:
+          type: string
+          format: email
+          description: The email address whose associated data should be deleted.
     PhoneReferencesResponse:
       type: object
       properties:
@@ -192,23 +564,6 @@ components:
           items:
             $ref: '#/components/schemas/DataReference'
           description: List of references to the phone number.
-    EmailDeleteRequest:
-      type: object
-      required:
-      - emailAddress
-      properties:
-        emailAddress:
-          type: string
-          format: email
-          description: The email address whose associated data should be deleted.
-    PhoneDeleteRequest:
-      type: object
-      required:
-      - phoneNumber
-      properties:
-        phoneNumber:
-          type: string
-          description: The phone number whose associated data should be deleted.
     DataReference:
       type: object
       properties:
@@ -231,21 +586,6 @@ components:
         details:
           type: string
           description: Additional details about the reference.
-    EmailReferencesResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        emailAddress:
-          type: string
-          format: email
-          description: The email address that was searched.
-        references:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataReference'
-          description: List of references to the email address.
     ErrorResponse:
       type: object
       properties:
@@ -270,6 +610,495 @@ components:
           - Processing
           - Complete
           description: Status of the deletion request.
+    EmailReferencesResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A unique identifier for the request.
+        emailAddress:
+          type: string
+          format: email
+          description: The email address that was searched.
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataReference'
+          description: List of references to the email address.
+    CustomerEngagement:
+      type: object
+      properties:
+        eventType:
+          type: string
+          description: Event type
+          example: ExternalCallViewing
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - contentShared
+          - contentViewed
+          - customEvent
+          - digitalInteraction
+        timestamp:
+          type: string
+          description: 'The date and time the event occurred in the ISO-8601 format, for example: ''2024-01-17T16:20:05-03:00'' or ''2016-02-16T03:57:04.834+05:30'' or ''2020-11-20T21:30:07.233692Z'', where Z stands for UTC.'
+          format: date-time
+          example: 1547971200.0
+          exampleSetFlag: true
+          types:
+          - string
+        contentId:
+          type: string
+          description: Event content id
+          example: '7782342274025937895'
+          exampleSetFlag: true
+          types:
+          - string
+        contentUrl:
+          type: string
+          description: Event content url
+          example: https://app.gong.io/e/c-share/tkn=5vjaxkqnzmp515b220vlzto2i
+          exampleSetFlag: true
+          types:
+          - string
+        reportingSystem:
+          type: string
+          description: Event reporting system
+          example: https://app.gong.io/e/c-share/tkn=5vjaxkqnzmp515b220vlzto2i
+          exampleSetFlag: true
+          types:
+          - string
+        eventName:
+          type: string
+          description: Event name
+          example: https://app.gong.io/e/c-share/tkn=5vjaxkqnzmp515b220vlzto2i
+          exampleSetFlag: true
+          types:
+          - string
+        sourceEventId:
+          type: string
+          description: 'Source event Id '
+          example: https://app.gong.io/e/c-share/tkn=5vjaxkqnzmp515b220vlzto2i
+          exampleSetFlag: true
+          types:
+          - string
+      description: A list of customer's engagement (such as viewing external share call)
+      exampleSetFlag: false
+      types:
+      - object
+    PhoneNumberReferences:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        emails:
+          type: array
+          description: Related email messages.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/EmailMessage'
+            exampleSetFlag: false
+          types:
+          - array
+        calls:
+          type: array
+          description: Related calls.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CallReference'
+            exampleSetFlag: false
+          types:
+          - array
+        meetings:
+          type: array
+          description: Related meetings.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Meeting'
+            exampleSetFlag: false
+          types:
+          - array
+        customerData:
+          type: array
+          description: A list of links to data from external systems (such as CRM, Telephony System, Case Management, etc.) that reference the email address and that Gong stores.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CustomerData'
+            exampleSetFlag: false
+          types:
+          - array
+        suppliedPhoneNumber:
+          type: string
+          description: The supplied phone number.
+          exampleSetFlag: false
+          types:
+          - string
+        matchingPhoneNumbers:
+          uniqueItems: true
+          type: array
+          description: Matching phone numbers found.
+          exampleSetFlag: false
+          items:
+            type: string
+            description: Matching phone numbers found.
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        emailAddresses:
+          uniqueItems: true
+          type: array
+          description: Related email addresses.
+          exampleSetFlag: false
+          items:
+            type: string
+            description: Related email addresses.
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    EmailMessage:
+      type: object
+      properties:
+        from:
+          type: string
+          description: The sender's email address.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+        id:
+          type: string
+          description: Gong's unique 32 character identifier for the email message.
+          example: 223mjfaaqqjuegabiyrmpctvcwwl75oz
+          exampleSetFlag: true
+          types:
+          - string
+        sentTime:
+          type: string
+          description: 'The date and time the email message was sent in the ISO-8601 format, for example: ''2024-01-17T16:20:05-03:00'' or ''2016-02-16T03:57:04.834+05:30'' or ''2020-11-20T21:30:07.233692Z'', where Z stands for UTC.'
+          example: '2019-01-20T00:00:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        mailbox:
+          type: string
+          description: The mailbox from which the email was retrieved.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+        messageHash:
+          type: string
+          description: Hash code of the email message.
+          example: l3z7w2s7oircdabnkwizmycm6g2uwznc
+          exampleSetFlag: true
+          types:
+          - string
+      description: Related email messages.
+      exampleSetFlag: false
+      types:
+      - object
+    BaseResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    CustomerData:
+      type: object
+      properties:
+        system:
+          type: string
+          description: External system name.
+          example: Salesforce
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Salesforce
+          - HubSpot
+          - MicrosoftDynamic
+          - Generic
+        objects:
+          type: array
+          description: List of objects in the external system.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CustomerDataObject'
+            exampleSetFlag: false
+          types:
+          - array
+      description: A list of links to data from external systems (such as CRM, Telephony System, Case Management, etc.) that reference the email address and that Gong stores.
+      exampleSetFlag: false
+      types:
+      - object
+    CustomerDataObject:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Gong's unique numeric identifier (up to 20 digits) for the Lead or Contact.
+          example: '7782342274025937895'
+          exampleSetFlag: true
+          types:
+          - string
+        objectType:
+          type: string
+          description: Object Type.
+          example: Contact
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Lead
+          - Contact
+        externalId:
+          type: string
+          description: External ID.
+          example: 0013601230sV7grAAC
+          exampleSetFlag: true
+          types:
+          - string
+        mirrorId:
+          type: string
+          description: Crm Mirror ID.
+          example: '"{\"integrationId\":\"262834820328732\",\"crmObjectType\":\"CONTACT\",\"crmId\":\"0031Q00002DFhi4QAD\"}"'
+          exampleSetFlag: true
+          types:
+          - string
+        fields:
+          type: array
+          description: Object fields.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ContextField'
+            exampleSetFlag: false
+          types:
+          - array
+      description: List of objects in the external system.
+      exampleSetFlag: false
+      types:
+      - object
+    CallReference:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Gong's unique numeric identifier for the call (up to 20 digits).
+          example: '7782342274025937895'
+          exampleSetFlag: true
+          types:
+          - string
+        status:
+          type: string
+          description: Call status
+          example: COMPLETED
+          exampleSetFlag: true
+          types:
+          - string
+        externalSystems:
+          type: array
+          description: A list of links to external systems such as CRM, Telephony System, Case Management, etc.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ExternalSystem'
+            exampleSetFlag: false
+          types:
+          - array
+      description: Details of a call referencing the email address.
+      exampleSetFlag: false
+      types:
+      - object
+    ContextField:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'Field name. For Account supported fields are: Name, Website, Industry and all the custom fields. For Opportunity supported fields are Name, LeadSource, Type, StageName, Probability, Amount, CloseDate and all the custom fields.'
+          example: name
+          exampleSetFlag: true
+          types:
+          - string
+        value:
+          type: object
+          description: Field value
+          example: Gong Inc.
+          exampleSetFlag: true
+          types:
+          - object
+      description: External object data
+      exampleSetFlag: false
+      types:
+      - object
+    Meeting:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Gong's unique identifier for the meeting.
+          example: 8059707022269524529.sb5gr1tgpt5dd799eh035rb3dk@google.com_2022-06-30T13:00:00Z
+          exampleSetFlag: true
+          types:
+          - string
+      description: Related meetings.
+      exampleSetFlag: false
+      types:
+      - object
+    ExternalSystemObject:
+      type: object
+      properties:
+        objectType:
+          type: string
+          description: Object Type.
+          example: Task
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Conversation
+          - Task
+        externalId:
+          type: string
+          description: External ID.
+          example: 0013601230sV7grAAC
+          exampleSetFlag: true
+          types:
+          - string
+      description: List of objects within the external system.
+      exampleSetFlag: false
+      types:
+      - object
+    ErrorResponse_2:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        errors:
+          type: array
+          description: Error messages.
+          example:
+          - An error has occurred
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    EmailAddressReferences:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        emails:
+          type: array
+          description: Related email messages.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/EmailMessage'
+            exampleSetFlag: false
+          types:
+          - array
+        calls:
+          type: array
+          description: Related calls.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CallReference'
+            exampleSetFlag: false
+          types:
+          - array
+        meetings:
+          type: array
+          description: Related meetings.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Meeting'
+            exampleSetFlag: false
+          types:
+          - array
+        customerData:
+          type: array
+          description: A list of links to data from external systems (such as CRM, Telephony System, Case Management, etc.) that reference the email address and that Gong stores.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CustomerData'
+            exampleSetFlag: false
+          types:
+          - array
+        customerEngagement:
+          type: array
+          description: A list of customer's engagement (such as viewing external share call)
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CustomerEngagement'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    ExternalSystem:
+      type: object
+      properties:
+        system:
+          type: string
+          description: External system name.
+          example: Salesforce
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Salesforce
+          - HubSpot
+          - MicrosoftDynamic
+          - Generic
+        objects:
+          type: array
+          description: List of objects within the external system.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ExternalSystemObject'
+            exampleSetFlag: false
+          types:
+          - array
+      description: A list of links to external systems such as CRM, Telephony System, Case Management, etc.
+      exampleSetFlag: false
+      types:
+      - object
   securitySchemes:
     basicAuth:
       type: http
@@ -279,3 +1108,6 @@ components:
       type: http
       scheme: bearer
       description: OAuth 2.0 Bearer token authentication.
+x-refined-from:
+- gong-data-privacy-openapi.yml
+- gong-openapi.json

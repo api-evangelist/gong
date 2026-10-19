@@ -1,838 +1,2907 @@
 openapi: 3.2.0
 info:
   title: Gong Calls API
-  description: The Gong Calls API provides endpoints to retrieve, add, and manage call data including recordings, transcripts, and media files. It supports filtering calls by date range, retrieving detailed call analytics, and uploading call recordings from external telephony systems.
-  version: 2.0.0
-  contact:
-    name: Gong
-    url: https://www.gong.io
-    email: support@gong.io
-  license:
-    name: Proprietary
-    url: https://www.gong.io/terms-of-service/
-  termsOfService: https://www.gong.io/terms-of-service/
+  description: 'Overview
+
+
+    The Gong API allows you to:
+
+
+    Receive the following information from Gong:
+
+
+    Your company''s calls in Gong
+
+
+    Your company''s users in Gong
+
+
+    Your company''s user stats in Gong
+
+
+    Your company''s user settings in Gong
+
+
+    Your company''s libraries in Gong
+
+
+    Upload new or
+
+    update
+
+    call recordings in Gong, in order to support cases where you have an internal system that records
+
+    calls or obtains them from a third-party entity.
+
+
+    Data Privacy:
+
+    Delete users and all their associated elements.
+
+
+    Upload CRM data into Gong.
+
+
+    Check here what''s your base URL for all API calls.
+
+
+    Authentication
+
+
+    There are two ways to retrieve credentials to the Gong Public API:
+
+
+    Retrieve Manually:
+
+
+    In the Gong API Page (you
+
+    must be a technical administrator in Gong), click "Create" to receive an Access Key
+
+    and an Access Key Secret.
+
+
+    Use the Basic Authorization HTTP header (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Basic <token>
+
+
+    To create the basic token, combine the Access Key and the Access Key Secret with
+
+    colon (:) and then encode in Base64 as following:
+
+
+    Base64(<accessKey> : <accessKeySecret>)
+
+
+    Retrieve through OAuth
+
+
+    To obtain the Bearer token, follow the steps described in the Gong OAuth Guide.
+
+
+    After obtaining the token, use the Bearer Authorization HTTP header
+
+    (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Bearer <token>
+
+
+    Limits
+
+
+    By default Gong limits your company''s access to the service to 3 API calls per second, and 10,000 API calls per day.
+
+
+    When the rate of API calls exceeds these limits an HTTP status code 429 is returned and a Retry-After header indicates
+
+    how many seconds to wait before making a new request.
+
+
+    If required, contact help.gong.io to change these limits.
+
+
+    Cursors
+
+
+    Some API calls that return a list are limited in the amount of records they may return, so multiple API calls may be
+
+    required to bring all records. Such an API call also returns a records field, which contains the number of records
+
+    in the current page, the current page number and the total number of records.
+
+
+    In cases where the total number of records exceeds the number of records thus far retrieved, the records field will also
+
+    contain a cursor field which can be used to access the next page of records. To retrieve the next page, repeat the API call with
+
+    the cursor value as supplied by the previous API call. All other request inputs should remain the same.
+
+
+    Forward Compatibility
+
+
+    When coding a system to accept Gong data, take into account that Gong may, without prior warning, add fields to the JSON output.
+
+    It is recommended to future proof your code so that it disregards all JSON fields you don''t actually use.'
+  version: V2
 servers:
-- url: https://api.gong.io/v2
-  description: Gong API v2 Production Server
-security:
-- basicAuth: []
-- bearerAuth: []
+- url: https://127.0.0.1:8443
+  description: Generated server url
 tags:
 - name: Calls
-  description: Operations for managing and retrieving call data
+  description: 'Gong’s “Calls” API endpoints allow you to:
+
+
+    Request calls details from Gong
+
+
+    Upload new calls to Gong
+
+
+    Update Gong Calls with new media
+
+
+    The requested calls may contain the following call details:
+
+
+    Meta Data (Basic details such as call date, title, call URL, etc)
+
+
+    Parties (A list of the call''s participants)
+
+
+    Media (The media urls of the call)
+
+
+    Content (Analysis of the interaction content)
+
+
+    Action Items (A list of action items)
+
+
+    Structure (A list of the agenda of each part of the call)
+
+
+    Topics (A list of topics and their durations)
+
+
+    Trackers (A list of trackers found in the call. Trackers are collections of phrases defined in Gong for this company)
+
+
+    Phrases (A list of occurrence counters for each specific phrase within the tracker (e.g., Amazon, Walmart))
+
+
+    Context (A list of links to external systems such as CRM, Dialer, Case Management, etc)
+
+
+    Interaction (Metrics collected around the interaction during the call)
+
+
+    Interaction Stats (A list of interaction statistics. Applicable values: ''Talk Ratio'', ''Longest Monologue'',
+
+    ''Longest Customer Story'', ''Interactivity'', ''Patience'')
+
+
+    Questions (Question counts of the call)
+
+
+    Speakers (A list of the talk duration per speaker)
+
+
+    Video (A list of video statistics about what''s presented and for how long)
+
+
+    Collaboration (Collaboration information added to the call)
+
+
+    Public Comments (A list of public comments)
+
+
+    Context (A list of links to external systems such as CRM, Dialer, Case Management, etc)
+
+
+    Objects (List of objects within the external system)
+
+
+    Fields (Object fields)'
 paths:
-  /calls:
+  /v2/calls:
     get:
-      operationId: listCalls
-      summary: Gong List calls
-      description: Retrieves a list of calls that took place during a specified date range. Results are paginated and can be filtered by workspace.
       tags:
       - Calls
+      summary: Retrieve call data by date range (/v2/calls)
+      description: 'List calls that took place during a specified date range.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:calls:read:basic''.'
+      operationId: listCalls
       parameters:
-      - name: fromDateTime
-        in: query
-        required: true
-        description: The start date and time for the calls filter in ISO-8601 format (e.g., 2021-01-01T00:00:00Z).
-        schema:
-          type: string
-          format: date-time
-      - name: toDateTime
-        in: query
-        required: true
-        description: The end date and time for the calls filter in ISO-8601 format (e.g., 2021-12-31T23:59:59Z).
-        schema:
-          type: string
-          format: date-time
       - name: cursor
         in: query
+        description: When paging is needed, provide the value supplied by the previous API call to bring the following page of records.
         required: false
-        description: A cursor for pagination. Pass the cursor from the previous response to retrieve the next page of results.
+        style: FORM
+        explode: true
         schema:
           type: string
+          exampleSetFlag: false
+          types:
+          - string
+        example: eyJhbGciOiJIUzI1NiJ9.eyJjYWxsSWQiM1M30.6qKwpOcvnuweTZmFRzYdtjs_YwJphJU4QIwWFM
+      - name: fromDateTime
+        in: query
+        description: 'Date and time (in ISO-8601 format: ''2018-02-18T02:30:00-07:00'' or ''2018-02-18T08:00:00Z'', where Z stands for UTC) from which to list recorded calls. Returns calls that started on or after the specified date and time. If not provided, list starts with earliest call. For web-conference calls recorded by Gong, the date denotes its scheduled time, otherwise, it denotes its actual start time.'
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+      - name: toDateTime
+        in: query
+        description: 'Date and time (in ISO-8601 format: ''2018-02-18T02:30:00-07:00'' or ''2018-02-18T08:00:00Z'', where Z stands for UTC) until which to list recorded calls. Returns calls that started up to but excluding specified date and time. If not provided, list ends with most recent call. For web-conference calls recorded by Gong, the date denotes its scheduled time, otherwise, it denotes its actual start time.'
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
       - name: workspaceId
         in: query
+        description: Optional Workspace identifier, if supplied the API will return only the calls belonging to this workspace.
         required: false
-        description: Optional workspace identifier to filter calls by workspace.
+        style: FORM
+        explode: true
         schema:
           type: string
+          exampleSetFlag: false
+          types:
+          - string
       responses:
         '200':
-          description: Successful response containing a list of calls.
+          description: Successful response
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CallsResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '400':
-          description: Bad request due to invalid parameters.
+          description: Malformed request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '401':
-          description: Unauthorized - invalid or missing authentication credentials.
+          description: Access denied
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: No calls found for the specified period
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '429':
-          description: Rate limit exceeded.
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
     post:
-      operationId: addCall
-      summary: Gong Add a new call
-      description: Adds a new call record to Gong. Either provide a downloadMediaUrl in the request body or use the returned callId in a follow-up request to /v2/calls/{id}/media to upload the media file.
       tags:
       - Calls
+      summary: Add new call (/v2/calls)
+      description: 'When using this endpoint, either provide a downloadMediaUrl or use the returned callId in a follow-up request to /v2/calls/{id}/media to upload the media file.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:calls:create''.'
+      operationId: addCall
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/NewCallAddingRequest'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
       responses:
-        '201':
-          description: Call successfully created.
+        '200':
+          description: Successful response
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/NewCallAddingResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '400':
-          description: Bad request due to invalid parameters.
+          description: Malformed request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '401':
-          description: Unauthorized - invalid or missing authentication credentials.
+          description: Access denied
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '409':
+          description: Conflict, e.g. recording is not enabled for the primary user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '429':
-          description: Rate limit exceeded.
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /calls/{id}:
-    get:
-      operationId: getCall
-      summary: Gong Retrieve a specific call
-      description: Retrieves detailed information about a specific call identified by its unique numeric identifier.
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/calls/{id}/media:
+    put:
       tags:
       - Calls
+      summary: Add call media (/v2/calls/{id}/media)
+      description: 'Adds a call media, recorded by a telephony system (PBX) or other media recording facility. Gong accepts call recordings in various audio and video file formats, including WAV, MP3, MP4, MKV and FLAC. If uploading a dual-channel (stereo) file separated by speaker, make sure to specify which channel correspondsto the company team member (rep) in the parties/mediaChannelId parameter of the Add New Call operation.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:calls:create''.'
+      operationId: addCallRecording
       parameters:
       - name: id
         in: path
+        description: callId returned from 'Add New Call' request
         required: true
-        description: Gong's unique numeric identifier for the call (up to 20 digits).
+        style: SIMPLE
+        explode: false
         schema:
           type: string
-      responses:
-        '200':
-          description: Successful response containing the call details.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SpecificCallResponse'
-        '401':
-          description: Unauthorized - invalid or missing authentication credentials.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Call not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '429':
-          description: Rate limit exceeded.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /calls/extensive:
-    post:
-      operationId: listCallsExtensive
-      summary: Gong Retrieve detailed call data
-      description: Retrieves extensive call data including participants, topics, trackers, comments, scorecards, and other analytics. Supports filtering by date range, call IDs, or hosting users. Requires the scope api:calls:read:extensive.
-      tags:
-      - Calls
+          exampleSetFlag: false
+          types:
+          - string
       requestBody:
-        required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ExtensiveCallsRequest'
+              required:
+              - mediaFile
+              type: object
+              properties:
+                mediaFile:
+                  type: string
+                  description: The media file of the recording. You may attach files up to 1.5GB in size.
+                  format: binary
+                  exampleSetFlag: false
+                  types:
+                  - string
+              exampleSetFlag: false
+              types:
+              - object
+            exampleSetFlag: false
+        required: true
       responses:
-        '200':
-          description: Successful response containing detailed call data.
+        '201':
+          description: Successfully registered the new call recording
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExtensiveCallsResponse'
+                $ref: '#/components/schemas/NewCallRecordingResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '400':
-          description: Bad request due to invalid parameters.
+          description: Malformed request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '401':
-          description: Unauthorized - invalid or missing authentication credentials.
+          description: Access denied
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '429':
-          description: Rate limit exceeded.
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /calls/manual-crm-associations:
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/calls/{id}:
     get:
-      operationId: listManualCrmAssociations
-      summary: Gong List calls manually associated with CRM
-      description: Retrieves a list of calls that were manually associated with CRM objects by users. This endpoint is in beta phase. Results can be filtered by association time.
       tags:
       - Calls
+      summary: Retrieve data for a specific call (/v2/calls/{id})
+      description: 'Retrieve data for a specific call.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:calls:read:basic''.'
+      operationId: getCall
       parameters:
-      - name: fromDateTime
-        in: query
-        required: false
-        description: Filter by the time the manual association was created, in ISO-8601 format.
+      - name: id
+        in: path
+        description: Gong's unique numeric identifier for the call (up to 20 digits).
+        required: true
+        style: SIMPLE
+        explode: false
         schema:
           type: string
-          format: date-time
-      - name: cursor
-        in: query
-        required: false
-        description: A cursor for pagination. Pass the cursor from the previous response to retrieve the next page of results.
-        schema:
-          type: string
+          exampleSetFlag: false
+          types:
+          - string
       responses:
         '200':
-          description: Successful response containing a list of manually associated calls.
+          description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ManualAssociationResponse'
+                $ref: '#/components/schemas/SpecificCall'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '401':
-          description: Unauthorized - invalid or missing authentication credentials.
+          description: Access denied
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: Call ID was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '429':
-          description: Rate limit exceeded.
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /calls/users-access:
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/calls/extensive:
     post:
-      operationId: retrieveUserCallAccess
-      summary: Gong Retrieve user call access
-      description: Retrieves the list of users who have access to specified calls and their access levels.
       tags:
       - Calls
+      summary: Retrieve detailed call data by various filters (/v2/calls/extensive)
+      description: 'Lists detailed call data for calls that took place during a specified date range, have specified call IDs or hosted by specified users.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:calls:read:extensive''.
+
+        Moreover, clients requesting media download URLs by the contentSelector.exposedFields.media field should also have the scope ''api:calls:read:media-url''.'
+      operationId: listCallsExtensive
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserCallAccessRequest'
+              $ref: '#/components/schemas/PublicApiBaseRequestWithDataV2CallsRequestFilterWithOwnersContentSelector'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
       responses:
         '200':
-          description: Successful response containing user call access data.
+          description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserCallAccessResponse'
+                $ref: '#/components/schemas/Calls'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '401':
-          description: Unauthorized - invalid or missing authentication credentials.
+          description: Access denied
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: No calls found for the specified period
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '429':
-          description: Rate limit exceeded.
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-    put:
-      operationId: giveUserCallAccess
-      summary: Gong Give user call access
-      description: Grants specified users access to specified calls within the Gong platform.
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/calls/transcript:
+    post:
       tags:
       - Calls
+      summary: Retrieve transcripts of calls (/v2/calls/transcript)
+      description: 'Returns transcripts for calls that took place during the specified date period. If call IDs are specified, only transcripts for calls with those IDs that took place during the time period are returned.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:calls:read:transcript''.'
+      operationId: getCallTranscripts
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserCallAccessUpdateRequest'
-      responses:
-        '200':
-          description: Call access successfully granted.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BaseResponse'
-        '401':
-          description: Unauthorized - invalid or missing authentication credentials.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '429':
-          description: Rate limit exceeded.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    delete:
-      operationId: removeUserCallAccess
-      summary: Gong Remove user call access
-      description: Removes specified users' access to specified calls within the Gong platform.
-      tags:
-      - Calls
-      requestBody:
+              $ref: '#/components/schemas/PublicApiBaseRequestV2CallsFilter'
+              exampleSetFlag: false
+            exampleSetFlag: false
         required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserCallAccessUpdateRequest'
       responses:
         '200':
-          description: Call access successfully removed.
+          description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BaseResponse'
+                $ref: '#/components/schemas/CallTranscripts'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '401':
-          description: Unauthorized - invalid or missing authentication credentials.
+          description: Access denied
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: No calls found for the specified period
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '429':
-          description: Rate limit exceeded.
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
 components:
   schemas:
-    SpecificCallResponse:
+    Monologue:
       type: object
       properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        call:
-          $ref: '#/components/schemas/Call'
-    ManualAssociationResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-            currentPageSize:
-              type: integer
-            cursor:
-              type: string
-        calls:
-          type: array
-          items:
-            type: object
-            properties:
-              callId:
-                type: string
-                description: The call ID.
-              crmAssociations:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    objectType:
-                      type: string
-                    objectId:
-                      type: string
-                    associatedAt:
-                      type: string
-                      format: date-time
-          description: Calls with their manual CRM associations.
-    CallParty:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the party.
-        emailAddress:
-          type: string
-          format: email
-          description: Email address of the party.
-        name:
-          type: string
-          description: Display name of the party.
-        title:
-          type: string
-          description: Job title of the party.
-        userId:
-          type: string
-          description: Gong user ID if the party is a Gong user.
         speakerId:
           type: string
-          description: Speaker identifier within the call.
-        affiliation:
+          description: 'Unique ID of the speaker. Cross-reference this with the ''speakerId'' field of objects in the ''parties'' array returned from endpoint ''/v2/calls/extensive'' to identify the participant. '
+          example: '6432345678555530067'
+          exampleSetFlag: true
+          types:
+          - string
+        topic:
           type: string
+          description: The name of the topic.
+          example: Objections
+          exampleSetFlag: true
+          types:
+          - string
+        sentences:
+          type: array
+          description: A list of sentences spoken in the monologue.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Sentence'
+            exampleSetFlag: false
+          types:
+          - array
+      description: List of monologues.
+      exampleSetFlag: false
+      types:
+      - object
+    CallTranscripts:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        records:
+          $ref: '#/components/schemas/Records'
+          exampleSetFlag: false
+        callTranscripts:
+          type: array
+          description: A list with one entry per call.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CallTranscript'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    ExternalCrmCallObject:
+      required:
+      - objectId
+      - objectType
+      type: object
+      properties:
+        objectType:
+          type: string
+          description: Object Type. e.g. Account.
+          example: Account
+          exampleSetFlag: true
+          types:
+          - string
           enum:
-          - Internal
-          - External
-          - Unknown
-          description: Whether the party is internal or external.
-        phoneNumber:
+          - Opportunity
+          - Account
+          - Lead
+          - Contact
+          - User
+          - Opportunity,Account
+        objectId:
           type: string
-          description: Phone number of the party.
-        methods:
+          description: Object ID. For Salesforce both case-sensitive and case-insensitive formats are supported.
+          example: 0013601230sV7grAAC
+          exampleSetFlag: true
+          types:
+          - string
+        fields:
           type: array
+          description: Object fields. Intended for future use only.
+          exampleSetFlag: false
           items:
-            type: string
-          description: Communication methods used by the party.
-    NewCallParty:
-      type: object
-      properties:
-        emailAddress:
-          type: string
-          format: email
-          description: Email address of the participant.
-        name:
-          type: string
-          description: Display name of the participant.
-        phoneNumber:
-          type: string
-          description: Phone number of the participant.
-        userId:
-          type: string
-          description: Gong user ID of the participant (if applicable).
-    UserCallAccessUpdateRequest:
-      type: object
-      properties:
-        callIds:
-          type: array
-          items:
-            type: string
-          description: List of call IDs to update access for.
-        userIds:
-          type: array
-          items:
-            type: string
-          description: List of user IDs to grant or revoke access.
-    UserCallAccessResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        callAccessDetails:
-          type: array
-          items:
-            type: object
-            properties:
-              callId:
-                type: string
-              userIds:
-                type: array
-                items:
-                  type: string
-          description: Access details for each call.
-    ErrorResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
+            $ref: '#/components/schemas/ContextField'
+            exampleSetFlag: false
+          types:
+          - array
+      description: External object associated with the call
+      exampleSetFlag: false
+      types:
+      - object
     CallsResponse:
       type: object
       properties:
         requestId:
           type: string
-          description: A unique identifier for the request.
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
         records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-              description: Total number of call records matching the filter.
-            currentPageSize:
-              type: integer
-              description: Number of records in the current page.
-            currentPageNumber:
-              type: integer
-              description: The current page number.
-            cursor:
-              type: string
-              description: Cursor value for retrieving the next page of results.
+          $ref: '#/components/schemas/Records'
+          exampleSetFlag: false
         calls:
           type: array
+          description: A list, in which each item specifies one call.
+          exampleSetFlag: false
           items:
-            $ref: '#/components/schemas/Call'
-          description: List of call objects.
-    BaseResponse:
+            $ref: '#/components/schemas/CallBasicData'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    ContextField:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'Field name. For Account supported fields are: Name, Website, Industry and all the custom fields. For Opportunity supported fields are Name, LeadSource, Type, StageName, Probability, Amount, CloseDate and all the custom fields.'
+          example: name
+          exampleSetFlag: true
+          types:
+          - string
+        value:
+          type: object
+          description: Field value
+          example: Gong Inc.
+          exampleSetFlag: true
+          types:
+          - object
+      description: External object data
+      exampleSetFlag: false
+      types:
+      - object
+    CallUploadContext:
+      required:
+      - system
+      type: object
+      properties:
+        system:
+          type: string
+          description: External system name. Currently only Salesforce and Generic are supported.
+          example: Salesforce
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Salesforce
+          - HubSpot
+          - MicrosoftDynamic
+          - Generic
+        objects:
+          type: array
+          description: 'List of objects within the external system. Note: Multiple opportunities/deals belonging to the same account are not supported.'
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ExternalCrmCallObject'
+            exampleSetFlag: false
+          types:
+          - array
+      description: Links to external systems such as CRM, Telephony System, Case Management etc. Currently only Salesforce and Generic are supported.
+      exampleSetFlag: false
+      types:
+      - object
+    ErrorResponse:
       type: object
       properties:
         requestId:
           type: string
-          description: A unique identifier for the request.
-    UserCallAccessRequest:
-      type: object
-      properties:
-        callIds:
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        errors:
           type: array
+          description: Error messages.
+          example:
+          - An error has occurred
+          exampleSetFlag: true
           items:
             type: string
-          description: List of call IDs to check access for.
-    NewCallAddingRequest:
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    trackerPhrases:
       type: object
+      properties:
+        count:
+          type: integer
+          description: The number of times this phrase was mentioned in the call.
+          format: int32
+          example: 5
+          exampleSetFlag: true
+          types:
+          - integer
+        occurrences:
+          type: array
+          description: Lists when each keyword tracker phrase was mentioned in the call.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/occurrences'
+            exampleSetFlag: false
+          types:
+          - array
+        phrase:
+          type: string
+          description: The specific phrase within the tracker (e.g., Walmart).
+          example: Walmart
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    ExternalCallObject:
+      type: object
+      properties:
+        objectType:
+          type: string
+          description: Object Type. e.g Opportunity.
+          example: Opportunity
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Opportunity
+          - Account
+        objectId:
+          type: string
+          description: Object ID
+          example: 0013601230sV7grAAC
+          exampleSetFlag: true
+          types:
+          - string
+        fields:
+          type: array
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ContextField'
+            exampleSetFlag: false
+          types:
+          - array
+        timing:
+          type: string
+          description: Timing of object
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - Now
+          - TimeOfCall
+      description: External Object
+      exampleSetFlag: false
+      types:
+      - object
+    Records:
+      type: object
+      properties:
+        totalRecords:
+          type: integer
+          description: Total number of records.
+          format: int32
+          example: 263
+          exampleSetFlag: true
+          types:
+          - integer
+        currentPageSize:
+          type: integer
+          description: Number of records in the current page.
+          format: int32
+          example: 100
+          exampleSetFlag: true
+          types:
+          - integer
+        currentPageNumber:
+          type: integer
+          description: Current page number.
+          format: int32
+          example: 0
+          exampleSetFlag: true
+          types:
+          - integer
+        cursor:
+          type: string
+          description: Returned only when there are more records to be retrieved. Repeat the API call and pass this cursor value in the request to retrieve the next page of records.
+          example: eyJhbGciOiJIUzI1NiJ9.eyJjYWxsSWQiM1M30.6qKwpOcvnuweTZmFRzYdtjs_YwJphJU4QIwWFM
+          exampleSetFlag: true
+          types:
+          - string
+      description: Information about the number of records that match the requested filter.
+      exampleSetFlag: false
+      types:
+      - object
+    CallCollaboration:
+      type: object
+      properties:
+        publicComments:
+          type: boolean
+          description: If true, add public comments made for this call
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+      description: Call collaboration
+      exampleSetFlag: false
+      types:
+      - object
+    TopicDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the topic (e.g., Pricing).
+          example: Objections
+          exampleSetFlag: true
+          types:
+          - string
+        duration:
+          type: integer
+          description: The total time, in seconds, spent on this topic within the call.
+          format: int32
+          example: 86
+          exampleSetFlag: true
+          types:
+          - integer
+      exampleSetFlag: false
+      types:
+      - object
+    ExposedFields:
+      type: object
+      properties:
+        parties:
+          type: boolean
+          description: If true, add information about the parties of the call
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        content:
+          $ref: '#/components/schemas/CallContent'
+          exampleSetFlag: false
+        interaction:
+          $ref: '#/components/schemas/CallInteraction'
+          exampleSetFlag: false
+        collaboration:
+          $ref: '#/components/schemas/CallCollaboration'
+          exampleSetFlag: false
+        media:
+          type: boolean
+          description: If true and exist, add audio url and video url of the call. The urls will be available for 8 hours.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+      description: The exposed fields identifies which field, if any, are returned in the response object
+      exampleSetFlag: false
+      types:
+      - object
+    CommentDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the comment within the Gong's system.
+          example: '6843152929075440037'
+          exampleSetFlag: true
+          types:
+          - string
+        audioStartTime:
+          type: number
+          description: The number of seconds from the beginning of the call that the comment start refers to.
+          format: float
+          example: 26
+          exampleSetFlag: true
+          types:
+          - number
+        audioEndTime:
+          type: number
+          description: The number of seconds from the beginning of the call that the comment ends refers to.
+          format: float
+          example: 26
+          exampleSetFlag: true
+          types:
+          - number
+        commenterUserId:
+          type: string
+          description: Unique identifier of the user who wrote the comment.
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        comment:
+          type: string
+          description: The comment itself. The comment may contains person tagging in this format @[user name](user Id)
+          example: new comment
+          exampleSetFlag: true
+          types:
+          - string
+        posted:
+          type: string
+          description: The date and time in the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC); in which the comment was posted.
+          format: date-time
+          example: 1518863400.0
+          exampleSetFlag: true
+          types:
+          - string
+        inReplyTo:
+          type: string
+          description: The unique identifier of the original comment in case the current comment is a reply to the original one.
+          example: '792390015966656336'
+          exampleSetFlag: true
+          types:
+          - string
+        duringCall:
+          type: boolean
+          description: True if the comment was written during the call, false if it was posted after the call.
+          exampleSetFlag: false
+          types:
+          - boolean
+      exampleSetFlag: false
+      types:
+      - object
+    FlowContext:
+      type: object
+      properties:
+        taskId:
+          type: string
+          description: A task identifier
+          example: '714366367493425'
+          exampleSetFlag: true
+          types:
+          - string
+      description: The Id for the task the call should be associated with
+      exampleSetFlag: false
+      types:
+      - object
+    SpecificCall:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        call:
+          $ref: '#/components/schemas/CallBasicData'
+          exampleSetFlag: false
+      exampleSetFlag: false
+      types:
+      - object
+    SpeechSegment:
+      required:
+      - fromTime
+      - partyIds
+      - toTime
+      type: object
+      properties:
+        fromTime:
+          minimum: 0
+          type: integer
+          description: The start time of the segment in milliseconds from the beginning of the call.
+          format: int32
+          example: 5100
+          exampleSetFlag: true
+          types:
+          - integer
+        toTime:
+          minimum: 0
+          type: integer
+          description: The end time of the segment in milliseconds from the beginning of the call.
+          format: int32
+          example: 24000
+          exampleSetFlag: true
+          types:
+          - integer
+        partyIds:
+          type: array
+          description: The speaking parties in the segment, each must have a correlating partyId within 'parties'. It is allowed to provide overlapping segments, i.e. you can either specify multiple speakers in a segment or send several overlapping segments each marked with one speaker.
+          example:
+          - '1'
+          exampleSetFlag: true
+          items:
+            type: string
+            description: The speaking parties in the segment, each must have a correlating partyId within 'parties'. It is allowed to provide overlapping segments, i.e. you can either specify multiple speakers in a segment or send several overlapping segments each marked with one speaker.
+            example: '["1"]'
+            exampleSetFlag: true
+            types:
+            - string
+          types:
+          - array
+      description: 'The audio recording speech segments (who spoke when). '
+      exampleSetFlag: false
+      types:
+      - object
+    InteractionMeasuresDto:
+      type: object
+      properties:
+        speakers:
+          type: array
+          description: A list of the talk duration per speaker.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/UserSpeaker'
+            exampleSetFlag: false
+          types:
+          - array
+        interactionStats:
+          type: array
+          description: 'A list of interaction statistics. Applicable values: ''Talk Ratio'', ''Longest Monologue'', ''Longest Customer Story'', ''Interactivity'', ''Patience''.'
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/InteractionStatsDto'
+            exampleSetFlag: false
+          types:
+          - array
+        video:
+          type: array
+          description: A list of video statistics about what's presented and for how long.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/VideoInteractionDto'
+            exampleSetFlag: false
+          types:
+          - array
+        questions:
+          $ref: '#/components/schemas/Questions'
+          exampleSetFlag: false
+      description: Metrics collected around the interaction during the call.
+      exampleSetFlag: false
+      types:
+      - object
+    NewCallAddingResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        callId:
+          type: string
+          description: New call ID
+          example: '7782342274025937895'
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    CallKeyPoint:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The text of the key point.
+          exampleSetFlag: false
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    PartyContextField:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Field name. All custom fields are supported.
+          example: name
+          exampleSetFlag: true
+          types:
+          - string
+        value:
+          type: object
+          description: Object value
+          example: Gong Inc.
+          exampleSetFlag: true
+          types:
+          - object
+      description: External object data
+      exampleSetFlag: false
+      types:
+      - object
+    CallHighlightsSection:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The title of the highlights section.
+          exampleSetFlag: false
+          types:
+          - string
+        items:
+          type: array
+          description: List of highlight items of the call in this section.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CallHighlightsItem'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    CallInteraction:
+      type: object
+      properties:
+        speakers:
+          type: boolean
+          description: If true, add the time each participant spoke.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        video:
+          type: boolean
+          description: If true, add video statistics
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        personInteractionStats:
+          type: boolean
+          description: If true, add statistics for the host of the call.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        questions:
+          type: boolean
+          description: If true, add question counts
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+      description: The interaction data of the call
+      exampleSetFlag: false
+      types:
+      - object
+    ContentSelector:
+      type: object
+      properties:
+        context:
+          type: string
+          description: If 'Basic', add links to external systems (context objects) such as CRM, Telephony System, Case Management. If 'Extended' include also data (context fields) for these links. Default value 'None'
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - None
+          - Basic
+          - Extended
+        contextTiming:
+          type: array
+          description: Timing for the context data. The field is optional and can contain either "Now" or "TimeOfCall" or both. The default value is ["Now"]. Can be provided only when the context field is set to 'Extended'
+          exampleSetFlag: false
+          items:
+            type: string
+            description: Timing for the context data. The field is optional and can contain either "Now" or "TimeOfCall" or both. The default value is ["Now"]. Can be provided only when the context field is set to 'Extended'
+            exampleSetFlag: false
+            types:
+            - string
+            enum:
+            - Now
+            - TimeOfCall
+          types:
+          - array
+        exposedFields:
+          $ref: '#/components/schemas/ExposedFields'
+          exampleSetFlag: false
+      description: The content selector identifies which data components, if any, are needed, by the caller
+      exampleSetFlag: false
+      types:
+      - object
+    CrmPartyContextField:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Field name
+          example: name
+          exampleSetFlag: true
+          types:
+          - string
+        value:
+          type: object
+          description: Object value
+          example: Gong Inc.
+          exampleSetFlag: true
+          types:
+          - object
+      description: External object data
+      exampleSetFlag: false
+      types:
+      - object
+    InteractionStatsDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Stat name
+          example: Interactivity
+          exampleSetFlag: true
+          types:
+          - string
+        value:
+          type: number
+          description: Stat measurement
+          example: 56
+          exampleSetFlag: true
+          types:
+          - number
+      description: Interaction statistics
+      exampleSetFlag: false
+      types:
+      - object
+    CollaborationDto:
+      type: object
+      properties:
+        publicComments:
+          type: array
+          description: A list of public comments.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CommentDto'
+            exampleSetFlag: false
+          types:
+          - array
+      description: Collaboration information added to the call
+      exampleSetFlag: false
+      types:
+      - object
+    ExternalPartyObject:
+      type: object
+      properties:
+        objectType:
+          type: string
+          description: Object Type. e.g. Lead
+          example: Contact
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Contact
+          - User
+          - Lead
+        objectId:
+          type: string
+          description: Object ID
+          example: 0013601230sV7grAAC
+          exampleSetFlag: true
+          types:
+          - string
+        fields:
+          type: array
+          description: Object fields
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/PartyContextField'
+            exampleSetFlag: false
+          types:
+          - array
+        timing:
+          type: string
+          description: Timing of object
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - Now
+          - TimeOfCall
+      description: External Object
+      exampleSetFlag: false
+      types:
+      - object
+    PublicApiBaseRequestWithDataV2CallsRequestFilterWithOwnersContentSelector:
+      required:
+      - filter
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: When paging is needed, provide the value supplied by the previous API call to bring the following page of records.
+          example: eyJhbGciOiJIUzI1NiJ9.eyJjYWxsSWQiM1M30.6qKwpOcvnuweTZmFRzYdtjs_YwJphJU4QIwWFM
+          exampleSetFlag: true
+          types:
+          - string
+        filter:
+          $ref: '#/components/schemas/CallsRequestFilterWithOwners'
+          exampleSetFlag: false
+        contentSelector:
+          $ref: '#/components/schemas/ContentSelector'
+          exampleSetFlag: false
+      exampleSetFlag: false
+      types:
+      - object
+    Questions:
+      type: object
+      properties:
+        companyCount:
+          type: integer
+          description: The number of questions asked by company speakers.
+          format: int32
+          exampleSetFlag: false
+          types:
+          - integer
+        nonCompanyCount:
+          type: integer
+          description: The number of questions asked by non-company speakers.
+          format: int32
+          exampleSetFlag: false
+          types:
+          - integer
+      description: Question counts of the call.
+      exampleSetFlag: false
+      types:
+      - object
+    ContentDto:
+      type: object
+      properties:
+        structure:
+          type: array
+          description: A list of the agenda of each part of the call.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/StructureDto'
+            exampleSetFlag: false
+          types:
+          - array
+        trackers:
+          type: array
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/TrackerDto'
+            exampleSetFlag: false
+          types:
+          - array
+        topics:
+          type: array
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/TopicDto'
+            exampleSetFlag: false
+          types:
+          - array
+        brief:
+          type: string
+          description: The brief of the call. Returned when it is available and contentSelector.exposedFields.content.brief = true.
+          exampleSetFlag: false
+          types:
+          - string
+        outline:
+          type: array
+          description: Outline of the call, divided into sections. Returned when it is available and contentSelector.exposedFields.content.outline = true.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CallOutlineSection'
+            exampleSetFlag: false
+          types:
+          - array
+        highlights:
+          type: array
+          description: List of highlights of the call. Returned when it is available and contentSelector.exposedFields.content.highlights = true.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CallHighlightsSection'
+            exampleSetFlag: false
+          types:
+          - array
+        callOutcome:
+          $ref: '#/components/schemas/CallOutcome'
+          exampleSetFlag: false
+        keyPoints:
+          type: array
+          description: List of key points of the call. Returned when it is available and contentSelector.exposedFields.content.keyPoints = true.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CallKeyPoint'
+            exampleSetFlag: false
+          types:
+          - array
+      description: Analysis of the interaction content.
+      exampleSetFlag: false
+      types:
+      - object
+    CallsFilter:
+      type: object
+      properties:
+        fromDateTime:
+          type: string
+          description: 'Date and time (in ISO-8601 format: ''2018-02-18T02:30:00-07:00'' or ''2018-02-18T08:00:00Z'', where Z stands for UTC) from which to list recorded calls. Returns calls that started on or after the specified date and time. If not provided, list starts with earliest call. The date applies to call start time.'
+          example: '2018-02-17T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        toDateTime:
+          type: string
+          description: 'Date and time (in ISO-8601 format: ''2018-02-18T02:30:00-07:00'' or ''2018-02-18T08:00:00Z'', where Z stands for UTC) until which to list recorded calls. Returns calls that started up to but excluding specified date and time. If not provided, list ends with most recent call. The date applies to call start time.'
+          example: '2018-02-19T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        workspaceId:
+          type: string
+          description: Optional Workspace identifier, if supplied the API will return only the calls belonging to this workspace.
+          example: '623457276584334'
+          exampleSetFlag: true
+          types:
+          - string
+        callIds:
+          uniqueItems: true
+          type: array
+          description: List of calls Ids to be filtered. If not supplied, returns all calls between fromDateTime and toDateTime.
+          writeOnly: true
+          example:
+          - '7782342274025937895'
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      description: Filter parameters.
+      exampleSetFlag: false
+      types:
+      - object
+    CallsRequestFilterWithOwners:
+      type: object
+      properties:
+        fromDateTime:
+          type: string
+          description: 'Date and time (in ISO-8601 format: ''2018-02-18T02:30:00-07:00'' or ''2018-02-18T08:00:00Z'', where Z stands for UTC) from which to list recorded calls. Returns calls that started on or after the specified date and time. If not provided, list starts with earliest call. The date applies to call start time.'
+          example: '2018-02-17T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        toDateTime:
+          type: string
+          description: 'Date and time (in ISO-8601 format: ''2018-02-18T02:30:00-07:00'' or ''2018-02-18T08:00:00Z'', where Z stands for UTC) until which to list recorded calls. Returns calls that started up to but excluding specified date and time. If not provided, list ends with most recent call. The date applies to call start time.'
+          example: '2018-02-19T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        workspaceId:
+          type: string
+          description: Optional Workspace identifier, if supplied the API will return only the calls belonging to this workspace.
+          example: '623457276584334'
+          exampleSetFlag: true
+          types:
+          - string
+        callIds:
+          uniqueItems: true
+          type: array
+          description: List of calls Ids to be filtered. If not supplied, returns all calls between fromDateTime and toDateTime.
+          writeOnly: true
+          example:
+          - '7782342274025937895'
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        primaryUserIds:
+          uniqueItems: true
+          type: array
+          description: An optional list of user identifiers, if supplied the API will return only the calls hosted by the specified users. The identifiers in this field match the primaryUserId field of the calls.
+          example:
+          - '7782342274025937895'
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      description: Filter parameters.
+      exampleSetFlag: false
+      types:
+      - object
+    CallContextDto:
+      type: object
+      properties:
+        system:
+          type: string
+          description: External system name. e.g. Salesforce
+          example: Salesforce
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Salesforce
+          - HubSpot
+          - MicrosoftDynamic
+          - Generic
+        objects:
+          type: array
+          description: List of objects within the external system
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ExternalCallObject'
+            exampleSetFlag: false
+          types:
+          - array
+      description: Links to external systems such as CRM, Dialer, Case Management etc
+      exampleSetFlag: false
+      types:
+      - object
+    PartyUploadContext:
+      required:
+      - system
+      type: object
+      properties:
+        system:
+          type: string
+          description: External system name. Currently only Salesforce and Generic are supported.
+          example: Salesforce
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Salesforce
+          - HubSpot
+          - MicrosoftDynamic
+          - Generic
+        objects:
+          type: array
+          description: List of objects within the external system
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ExternalCrmPartyObject'
+            exampleSetFlag: false
+          types:
+          - array
+      description: Links to external systems such as CRM, Telephony System, Case Management etc. Currently only Salesforce and Generic are supported.
+      exampleSetFlag: false
+      types:
+      - object
+    occurrences:
+      type: object
+      properties:
+        startTime:
+          type: number
+          description: The number of seconds from the beginning of the call when the tracker phrase was captured.
+          format: double
+          example: 32.56
+          exampleSetFlag: true
+          types:
+          - number
+        speakerId:
+          type: string
+          description: Unique ID of the speaker in the call who said the tracker term. Same as the speakerID in the "parties" field and in the transcript.
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    VideoInteractionDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'Video segment type. Can have the values: ''Browser'', ''Presentation'', ''WebcamPrimaryUser'', ''WebcamNonCompany'', and ''Webcam''.
+
+
+            <b>''Browser''</b>: When the video segment shows a web browser.
+
+
+            <b>''Presentation''</b>: When the video segment shows a presentation (such as PowerPoint).
+
+
+            <b>''WebcamPrimaryUser''</b>: When the video segment shows the webcam of the primary user.
+
+
+            <b>''WebcamNonCompany''</b>: When the video segment shows webcam speakers that gong has identified as being non-company.
+
+
+            <b>''Webcam''</b>: When the video segment shows any webcam.'
+          example: Browser
+          exampleSetFlag: true
+          types:
+          - string
+        duration:
+          type: number
+          description: Total video segments duration in seconds.
+          format: float
+          example: 218
+          exampleSetFlag: true
+          types:
+          - number
+      description: Video statistics
+      exampleSetFlag: false
+      types:
+      - object
+    CallContent:
+      type: object
+      properties:
+        structure:
+          type: boolean
+          description: If true, add call agenda, if available
+          example: false
+          exampleSetFlag: true
+          types:
+          - boolean
+        topics:
+          type: boolean
+          description: If true, add duration of call topics
+          example: false
+          exampleSetFlag: true
+          types:
+          - boolean
+        trackers:
+          type: boolean
+          description: If true, returns smart tracker and keyword tracker information for the call.
+          example: false
+          exampleSetFlag: true
+          types:
+          - boolean
+        trackerOccurrences:
+          type: boolean
+          description: If true, the API will return the timing and speaker ID of each occurrence of a tracker (in addition to other tracker data). This functionality must be used in combination with the "trackers" field. The occurrence data is available only for the calls recorded since Jan 1, 2023, contact Gong support if a backfill of this data is required.
+          example: false
+          exampleSetFlag: true
+          types:
+          - boolean
+        pointsOfInterest:
+          type: boolean
+          description: deprecated.
+          example: false
+          exampleSetFlag: true
+          types:
+          - boolean
+        brief:
+          type: boolean
+          description: When true, returns the spotlight call brief.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        outline:
+          type: boolean
+          description: When true, returns the call outline.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        highlights:
+          type: boolean
+          description: When true, returns the call highlights.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        callOutcome:
+          type: boolean
+          description: When true, returns the outcome of the call.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        keyPoints:
+          type: boolean
+          description: When true, returns the key points of the call.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+      description: The content of the call
+      exampleSetFlag: false
+      types:
+      - object
+    CallTranscript:
+      type: object
+      properties:
+        callId:
+          type: string
+          description: Gong's unique numeric identifier for the call (up to 20 digits).
+          example: '7782342274025937895'
+          exampleSetFlag: true
+          types:
+          - string
+        transcript:
+          type: array
+          description: List of monologues.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Monologue'
+            exampleSetFlag: false
+          types:
+          - array
+      description: A list with one entry per call.
+      exampleSetFlag: false
+      types:
+      - object
+    ExternalCrmPartyObject:
+      required:
+      - objectId
+      - objectType
+      type: object
+      properties:
+        objectType:
+          type: string
+          description: Object Type. Valid only for non-company parties. e.g. Lead.
+          example: Contact
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Lead
+          - Contact
+          - Account
+          - Opportunity
+          - User
+          - Lead,Contact
+        objectId:
+          type: string
+          description: Object ID. For Salesforce both case-sensitive and case-insensitive formats are supported.
+          example: 0013601230sV7grAAC
+          exampleSetFlag: true
+          types:
+          - string
+        fields:
+          type: array
+          description: Object fields. Intended for future use only.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CrmPartyContextField'
+            exampleSetFlag: false
+          types:
+          - array
+      description: External object associated with the party
+      exampleSetFlag: false
+      types:
+      - object
+    SpeakersTimeline:
+      type: object
+      properties:
+        precise:
+          type: boolean
+          description: Indicates whether the provided speech segments match the media precisely or need further refinement based on the media. "Precisely" here means that segments do not deviate from the actual speech in the media by more than 100ms.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        speechSegments:
+          type: array
+          description: 'The audio recording speech segments (who spoke when). '
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/SpeechSegment'
+            exampleSetFlag: false
+          types:
+          - array
+      description: The audio recording speech segments (who spoke when). Note that speakersTimeline and mediaChannelId are mutually exclusive, when providing speakersTimeline - mediaChannelId will not be used.
+      exampleSetFlag: false
+      types:
+      - object
+    CallParticipant:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+          description: The phone number of the party, if available.
+          example: +1 123-567-8989
+          exampleSetFlag: true
+          types:
+          - string
+        emailAddress:
+          type: string
+          description: The email address of the party, if available.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+        name:
+          type: string
+          description: The name of the party, if available.
+          example: Test User
+          exampleSetFlag: true
+          types:
+          - string
+        partyId:
+          type: string
+          description: "An identifier that is only required when speakersTimeline is provided.\n The partyId is used to recognize the speakers within the provided speakersTimeline."
+          example: '1'
+          exampleSetFlag: true
+          types:
+          - string
+        mediaChannelId:
+          maximum: 1
+          minimum: 0
+          type: integer
+          description: The audio channel corresponding to the company team member (rep) used when the uploaded media file is multi-channel (stereo). The channel id is either 0 or 1 (representing left or right respectively)
+          format: int32
+          example: 0
+          exampleSetFlag: true
+          types:
+          - integer
+        context:
+          type: array
+          description: A list of links to external systems such as CRM, Telephony System, Case Management, etc.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/PartyUploadContext'
+            exampleSetFlag: false
+          types:
+          - array
+        userId:
+          type: string
+          description: The user ID of the participant within the Gong system, if the participant is a user.
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+      description: A list of the call's participants. A party must be provided for the primaryUser.
+      exampleSetFlag: false
+      types:
+      - object
+    MediaDto:
+      type: object
+      properties:
+        audioUrl:
+          type: string
+          description: If true and exist, add audio url of the call. The url will be available for 8 hours.
+          format: url
+          exampleSetFlag: false
+          types:
+          - string
+        videoUrl:
+          type: string
+          description: If true and exist, add video url of the call. The url will be available for 8 hours.
+          format: url
+          exampleSetFlag: false
+          types:
+          - string
+      description: The media urls of the call.
+      exampleSetFlag: false
+      types:
+      - object
+    CallData:
+      type: object
+      properties:
+        metaData:
+          $ref: '#/components/schemas/CallBasicData'
+          exampleSetFlag: false
+        context:
+          type: array
+          description: A list of the agenda of each part of the call.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CallContextDto'
+            exampleSetFlag: false
+          types:
+          - array
+        parties:
+          type: array
+          description: A list of the call's participants
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Party'
+            exampleSetFlag: false
+          types:
+          - array
+        content:
+          $ref: '#/components/schemas/ContentDto'
+          exampleSetFlag: false
+        interaction:
+          $ref: '#/components/schemas/InteractionMeasuresDto'
+          exampleSetFlag: false
+        collaboration:
+          $ref: '#/components/schemas/CollaborationDto'
+          exampleSetFlag: false
+        media:
+          $ref: '#/components/schemas/MediaDto'
+          exampleSetFlag: false
+      description: A list with one entry per call.
+      exampleSetFlag: false
+      types:
+      - object
+    TrackerDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the Tracker.
+          example: '56825452554556'
+          exampleSetFlag: true
+          types:
+          - string
+        name:
+          type: string
+          description: The name of the Tracker (e.g., Stores).
+          example: Competitors
+          exampleSetFlag: true
+          types:
+          - string
+        count:
+          type: integer
+          description: The number of times words in this Tracker occurred in the call.
+          format: int32
+          example: 7
+          exampleSetFlag: true
+          types:
+          - integer
+        type:
+          type: string
+          description: The type of the tracker - Keyword or Smart.
+          example: KEYWORD
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - KEYWORD
+          - SMART
+        occurrences:
+          type: array
+          description: Details when the smart or keyword tracker term came up in the call. The list does not specify each phrase defined in the tracker, rather it lists when any term relevant to the tracker was mentioned. Empty when keyword trackers are set to display each term in the tracker separately.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/occurrences'
+            exampleSetFlag: false
+          types:
+          - array
+        phrases:
+          type: array
+          description: Details when each specific phrase defined in the keyword tracker came up in the call. Smart trackers are not listed.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/trackerPhrases'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    UserSpeaker:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the participant in the call.
+          example: '56825452554556'
+          exampleSetFlag: true
+          types:
+          - string
+        userId:
+          type: string
+          description: User Id within the Gong system
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        talkTime:
+          type: number
+          description: Talk duration in seconds
+          format: double
+          example: 145
+          exampleSetFlag: true
+          types:
+          - number
+      description: Talking duration
+      exampleSetFlag: false
+      types:
+      - object
+    Party:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the participant in the call.
+          example: '56825452554556'
+          exampleSetFlag: true
+          types:
+          - string
+        emailAddress:
+          type: string
+          description: Email address.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+        name:
+          type: string
+          description: The name of the participant.
+          example: Test User
+          exampleSetFlag: true
+          types:
+          - string
+        title:
+          type: string
+          description: The job title of the participant
+          example: Enterprise Account Executive
+          exampleSetFlag: true
+          types:
+          - string
+        userId:
+          type: string
+          description: The user ID of the participant within the Gong system, if the participant exists in the system.
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        speakerId:
+          type: string
+          description: Unique ID of a participant that spoke in the call. References to this id will appear in the '/v2/calls/transcript' endpoint response.
+          example: '6432345678555530067'
+          exampleSetFlag: true
+          types:
+          - string
+        context:
+          type: array
+          description: A list of links to external systems such as CRM, Dialer, Case Management, etc.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/PartyContextDto'
+            exampleSetFlag: false
+          types:
+          - array
+        affiliation:
+          type: string
+          description: Whether the participant is from the company or not.
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - Internal
+          - External
+          - Unknown
+        phoneNumber:
+          type: string
+          description: The phone number of the participant.
+          example: +1 123-567-8989
+          exampleSetFlag: true
+          types:
+          - string
+        methods:
+          type: array
+          description: Whether the participant was invited to the meeting or only attended the call.
+          exampleSetFlag: false
+          items:
+            type: string
+            description: Whether the participant was invited to the meeting or only attended the call.
+            exampleSetFlag: false
+            types:
+            - string
+            enum:
+            - Invitee
+            - Attendee
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    CallBasicData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Gong's unique numeric identifier for the call (up to 20 digits).
+          example: '7782342274025937895'
+          exampleSetFlag: true
+          types:
+          - string
+        url:
+          type: string
+          description: The URL to the page in the Gong web application where the call is available.
+          example: https://app.gong.io/call?id=7782342274025937895
+          exampleSetFlag: true
+          types:
+          - string
+        title:
+          type: string
+          description: The title of the call.
+          example: Example call
+          exampleSetFlag: true
+          types:
+          - string
+        scheduled:
+          type: string
+          description: Scheduled date and time of the call in the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC).
+          format: date-time
+          example: 1518863400.0
+          exampleSetFlag: true
+          types:
+          - string
+        started:
+          type: string
+          description: The date and time when the call was recorded in the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC).
+          format: date-time
+          example: 1518863400.0
+          exampleSetFlag: true
+          types:
+          - string
+        duration:
+          type: integer
+          description: The duration of the call, in seconds.
+          format: int64
+          example: 460
+          exampleSetFlag: true
+          types:
+          - integer
+        primaryUserId:
+          type: string
+          description: The primary user ID of the team member who hosted the call.
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        direction:
+          type: string
+          description: Call direction.
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - Inbound
+          - Outbound
+          - Conference
+          - Unknown
+        system:
+          type: string
+          description: The system with which the call was carried out (e.g., WebEx, ShoreTel, etc.).
+          example: Outreach
+          exampleSetFlag: true
+          types:
+          - string
+        scope:
+          type: string
+          description: 'The scope of the call: ''internal'' if all the participants are from the company, ''external'' if some participants are not from the company, or ''unknown'' if the scope is unknown.'
+          example: Internal
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Internal
+          - External
+          - Unknown
+        media:
+          type: string
+          description: Media type
+          example: Video
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Video
+          - Audio
+        language:
+          type: string
+          description: The language codes (as defined by ISO-639-2B). E.g., eng, fre, spa, ger, and ita. Also used are und (unsupported language), and zxx (not enough speech content for identification).
+          example: eng
+          exampleSetFlag: true
+          types:
+          - string
+        workspaceId:
+          type: string
+          description: Gong's unique numeric identifier for the call's workspace (up to 20 digits).
+          example: '623457276584334'
+          exampleSetFlag: true
+          types:
+          - string
+        sdrDisposition:
+          type: string
+          description: The SDR disposition of the call. This can be an automated value provided by the provider, or manually entered by the rep.
+          example: Got the gatekeeper
+          exampleSetFlag: true
+          types:
+          - string
+        clientUniqueId:
+          type: string
+          description: The call's unique identifier in the origin recording system (typically a telephony recording system). The identifier is provided to Gong during the call creation via the Public API or through telephony systems integrations.
+          example: 7JEHFRGXDDZFEW2FC4U
+          exampleSetFlag: true
+          types:
+          - string
+        customData:
+          type: string
+          description: Metadata as was provided to Gong during the call creation via the Public API.
+          example: Conference Call
+          exampleSetFlag: true
+          types:
+          - string
+        purpose:
+          type: string
+          description: The purpose of the call.
+          example: Demo Call
+          exampleSetFlag: true
+          types:
+          - string
+        meetingUrl:
+          type: string
+          description: The meeting provider URL on which the web conference was recorded.
+          example: https://zoom.us/j/123
+          exampleSetFlag: true
+          types:
+          - string
+        isPrivate:
+          type: boolean
+          description: If the call is private.
+          example: false
+          exampleSetFlag: true
+          types:
+          - boolean
+        calendarEventId:
+          type: string
+          description: The Id of the meeting in Google or Outlook Calendar.
+          example: abcde@google.com
+          exampleSetFlag: true
+          types:
+          - string
+      description: call's metadata.
+      exampleSetFlag: false
+      types:
+      - object
+    CallHighlightsItem:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The text of the highlights section item.
+          exampleSetFlag: false
+          types:
+          - string
+        startTimes:
+          type: array
+          description: List of starting times of the highlights section item, in seconds from the start of the call.
+          exampleSetFlag: false
+          items:
+            type: number
+            format: double
+            exampleSetFlag: false
+            types:
+            - number
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    CallOutcome:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the call outcome, as automatically set by Gong AI
+          example: MEETING_BOOKED
+          exampleSetFlag: true
+          types:
+          - string
+        category:
+          type: string
+          description: The category of the call outcome, as automatically set by Gong AI
+          example: Answered
+          exampleSetFlag: true
+          types:
+          - string
+        name:
+          type: string
+          description: The name of the call outcome, as automatically set by Gong AI
+          example: Meeting booked
+          exampleSetFlag: true
+          types:
+          - string
+      description: The outcome of the call, as automatically set by Gong AI. Returned when it is available and contentSelector.exposedFields.content.callOutcome = true.
+      exampleSetFlag: false
+      types:
+      - object
+    PartyContextDto:
+      type: object
+      properties:
+        system:
+          type: string
+          description: External system name. e.g. Salesforce
+          example: Salesforce
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Salesforce
+          - HubSpot
+          - MicrosoftDynamic
+          - Generic
+        objects:
+          type: array
+          description: ' List of objects within the external system'
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ExternalPartyObject'
+            exampleSetFlag: false
+          types:
+          - array
+      description: Links to external systems such as CRM, Dialer, Case Management etc
+      exampleSetFlag: false
+      types:
+      - object
+    PublicApiBaseRequestV2CallsFilter:
+      required:
+      - filter
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: When paging is needed, provide the value supplied by the previous API call to bring the following page of records.
+          example: eyJhbGciOiJIUzI1NiJ9.eyJjYWxsSWQiM1M30.6qKwpOcvnuweTZmFRzYdtjs_YwJphJU4QIwWFM
+          exampleSetFlag: true
+          types:
+          - string
+        filter:
+          $ref: '#/components/schemas/CallsFilter'
+          exampleSetFlag: false
+      exampleSetFlag: false
+      types:
+      - object
+    StructureDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The agenda name
+          example: Meeting Setup
+          exampleSetFlag: true
+          types:
+          - string
+        duration:
+          type: integer
+          description: The duration of this part of the call
+          format: int64
+          example: 67
+          exampleSetFlag: true
+          types:
+          - integer
+      description: Agenda of the current part of the call
+      exampleSetFlag: false
+      types:
+      - object
+    Sentence:
+      type: object
+      properties:
+        start:
+          type: integer
+          description: The starting time of the sentence, in milliseconds from the start of the call.
+          format: int64
+          example: 460230
+          exampleSetFlag: true
+          types:
+          - integer
+        end:
+          type: integer
+          description: The end time of the sentence, in milliseconds from the start of the call.
+          format: int64
+          example: 462343
+          exampleSetFlag: true
+          types:
+          - integer
+        text:
+          type: string
+          description: The sentence.
+          example: No wait, I think we should check that out first.
+          exampleSetFlag: true
+          types:
+          - string
+      description: A list of sentences spoken in the monologue.
+      exampleSetFlag: false
+      types:
+      - object
+    NewCallAddingRequest:
       required:
       - actualStart
       - clientUniqueId
       - direction
       - parties
       - primaryUser
+      type: object
       properties:
-        actualStart:
-          type: string
-          format: date-time
-          description: The actual start time of the call in ISO-8601 format.
         clientUniqueId:
+          maxLength: 2048
+          minLength: 0
           type: string
-          description: A unique identifier for the call provided by the client to prevent duplicates.
-        direction:
+          description: A call's unique identifier in the PBX or the recording system. Gong uses this identifier to prevent repeated attempts to upload the same recording.
+          example: 123abc
+          exampleSetFlag: true
+          types:
+          - string
+        title:
           type: string
-          enum:
-          - Inbound
-          - Outbound
-          - Conference
-          - Unknown
-          description: The direction of the call.
-        downloadMediaUrl:
-          type: string
-          format: uri
-          description: Optional URL from which Gong can download the call recording media. If not provided, use /v2/calls/{id}/media to upload.
-        duration:
-          type: number
-          description: Duration of the call in seconds.
-        languageCode:
-          type: string
-          description: Language code of the call for transcription.
-        meetingUrl:
-          type: string
-          format: uri
-          description: URL of the meeting (if applicable).
-        parties:
-          type: array
-          items:
-            $ref: '#/components/schemas/NewCallParty'
-          description: List of call participants.
-        primaryUser:
-          type: string
-          description: Email address of the primary Gong user on the call.
+          description: The title of the call. This title is available in the Gong system for indexing and search.
+          example: Example call
+          exampleSetFlag: true
+          types:
+          - string
         purpose:
+          maxLength: 255
+          minLength: 0
           type: string
-          description: The purpose or subject of the call.
-        scheduledEnd:
-          type: string
-          format: date-time
-          description: The scheduled end time of the call.
+          description: The purpose of the call. This optional field is a free text of up to 255 characters.
+          example: Demo Call
+          exampleSetFlag: true
+          types:
+          - string
         scheduledStart:
           type: string
-          format: date-time
-          description: The scheduled start time of the call.
-        title:
+          description: The date and time the call was scheduled to begin in the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC);
+          example: '2018-02-17T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        scheduledEnd:
           type: string
-          description: The title of the call.
-        workspaceId:
+          description: The date and time the call was scheduled to end in the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC);
+          example: '2018-02-19T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        actualStart:
           type: string
-          description: The workspace to associate the call with.
-    NewCallAddingResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        callId:
-          type: string
-          description: The Gong-assigned unique identifier for the newly created call.
-    Call:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique numeric identifier for the call.
-        title:
-          type: string
-          description: The title or subject of the call.
-        url:
-          type: string
-          format: uri
-          description: URL to the call in the Gong web application.
-        scheduled:
-          type: string
-          format: date-time
-          description: Scheduled start time of the call in ISO-8601 format.
-        started:
-          type: string
-          format: date-time
-          description: Actual start time of the call in ISO-8601 format.
+          description: The actual date and time when the call started in the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC);
+          example: '2018-02-17T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
         duration:
           type: number
-          description: Duration of the call in seconds.
+          description: The actual call duration in seconds.
+          format: float
+          example: 125.8
+          exampleSetFlag: true
+          types:
+          - number
+        parties:
+          maxItems: 2147483647
+          minItems: 1
+          type: array
+          description: A list of the call's participants. A party must be provided for the primaryUser.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CallParticipant'
+            exampleSetFlag: false
+          types:
+          - array
         direction:
           type: string
+          description: Whether the call is inbound (someone called the company), outbound (a rep dialed someone outside the company), or a conference call.
+          exampleSetFlag: false
+          types:
+          - string
           enum:
           - Inbound
           - Outbound
           - Conference
           - Unknown
-          description: The direction of the call.
-        scope:
+        disposition:
+          maxLength: 255
+          minLength: 0
           type: string
-          enum:
-          - Internal
-          - External
-          - Unknown
-          description: Whether the call was internal or external.
-        media:
+          description: The disposition of the call. The disposition is free text of up to 255 characters.
+          example: No Answer
+          exampleSetFlag: true
+          types:
+          - string
+        context:
+          type: array
+          description: A list of references to external systems such as CRM, Telephony System, Case Management, etc.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CallUploadContext'
+            exampleSetFlag: false
+          types:
+          - array
+        customData:
           type: string
-          enum:
-          - Video
-          - Audio
-          description: The type of media recorded.
-        language:
+          description: Optional metadata associated with the call (represented as text). Gong stores this metadata and it can be used for troubleshooting.
+          example: Optional data
+          exampleSetFlag: true
+          types:
+          - string
+        speakersTimeline:
+          $ref: '#/components/schemas/SpeakersTimeline'
+          exampleSetFlag: false
+        meetingUrl:
           type: string
-          description: The detected language of the call.
+          description: The URL of the conference call by which users join the meeting
+          example: https://www.conference.com/john.smith
+          exampleSetFlag: true
+          types:
+          - string
+        callProviderCode:
+          type: string
+          description: 'The code identifies the provider conferencing or telephony system. For example: zoom, clearslide, gotomeeting, ringcentral, outreach, insidesales, etc. These values are predefined by Gong, please contact help@gong.io to find the proper value for your system.'
+          example: clearslide
+          exampleSetFlag: true
+          types:
+          - string
+        downloadMediaUrl:
+          type: string
+          description: 'The URL from which Gong can download the media file.
+
+            The URL must be unique, the audio or video file must be a maximum of 1.5GB.
+
+            The content-type must either start with ''audio'' or ''video,'' or should be ''application/octet-stream'' or ''binary/octet-stream'' followed by a subtype that specifies a supported file type (WAV, MP3, MP4, MKV and FLAC).
+
+            If you provide this URL, you should not perform the ''Add call media'' step.'
+          example: https://upload-server.com/sample-call.mp3
+          exampleSetFlag: true
+          types:
+          - string
         workspaceId:
           type: string
-          description: The workspace identifier the call belongs to.
-        primaryUserId:
+          description: Optional workspace identifier. If specified, the call will be placed into this workspace, otherwise, the default algorithm for workspace placement will be applied.
+          example: '623457276584334'
+          exampleSetFlag: true
+          types:
+          - string
+        languageCode:
           type: string
-          description: The Gong user ID of the primary user on the call.
-        parties:
-          type: array
-          items:
-            $ref: '#/components/schemas/CallParty'
-          description: The participants in the call.
-    DetailedCall:
-      allOf:
-      - $ref: '#/components/schemas/Call'
-      - type: object
-        properties:
-          content:
-            type: object
-            properties:
-              topics:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    duration:
-                      type: number
-                description: Topics discussed during the call.
-              trackers:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    name:
-                      type: string
-                    count:
-                      type: integer
-                    occurrences:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          startTime:
-                            type: number
-                          speakerId:
-                            type: string
-                description: Tracked keywords and phrases.
-              pointsOfInterest:
-                type: object
-                properties:
-                  actionItems:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        snippet:
-                          type: string
-                        speakerId:
-                          type: string
-                description: Key points and action items.
-            description: Content analysis data.
-          collaboration:
-            type: object
-            properties:
-              publicComments:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    commenterUserId:
-                      type: string
-                    comment:
-                      type: string
-                    audioStartTime:
-                      type: number
-                    posted:
-                      type: string
-                      format: date-time
-                description: Public comments on the call.
-            description: Collaboration data.
-          interaction:
-            type: object
-            properties:
-              speakers:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    userId:
-                      type: string
-                    talkTime:
-                      type: number
-                description: Speaker statistics.
-              interactivity:
-                type: number
-                description: Interactivity score.
-            description: Interaction statistics.
-          media:
-            type: object
-            properties:
-              audioUrl:
-                type: string
-                format: uri
-                description: URL for the audio recording.
-              videoUrl:
-                type: string
-                format: uri
-                description: URL for the video recording.
-            description: Media URLs for the call recording.
-    ExtensiveCallsRequest:
+          description: 'The language code the call should be transcribed to.
+
+            This field is optional as Gong automatically detects the language spoken in the call and transcribes it accordingly. Set this field only if you are sure of the language the call is in.
+
+            Valid values are: af-ZA, am-ET, ar-AE, ar-BH, ar-DZ, ar-EG, ar-IL, ar-IQ, ar-JO, ar-KW, ar-LB, ar-MA, ar-MR, ar-OM, ar-PS, ar-QA, ar-SA, ar-TN, ar-YE, az-AZ, bg-BG, bn-BD, bn-IN, bs-BA, ca-ES, cs-CZ, da-DK, de-AT, de-CH, de-DE, el-GR, en-AB, en-AU, en-CA, en-GB, en-IE, en-IN, en-NZ, en-PH, en-SG, en-US, en-WL, en-ZA, es-AR, es-BO, es-CL, es-CO, es-CR, es-DO, es-EC, es-ES, es-GT, es-HN, es-MX, es-NI, es-PA, es-PE, es-PR, es-PY, es-SV, es-US, es-UY, et-EE, eu-ES, fa-IR, fi-FI, fil-PH, fr-BE, fr-CA, fr-CH, fr-FR, gl-ES, gu-IN, he-IL, hi-IN, hr-HR, hu-HU, hy-AM, id-ID, is-IS, it-CH, it-IT, ja-JP, jv-ID, ka-GE, kk-KZ, km-KH, kn-IN, ko-KR, lo-LA, lt-LT, lv-LV, mk-MK, ml-IN, mn-MN, mr-IN, ms-MY, my-MM, ne-NP, nl-BE, nl-NL, no-NO, pa-Guru-IN, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU, si-LK, sk-SK, sl-SI, sq-AL, sr-RS, su-ID, sv-SE, sw-KE, sw-TZ, ta-IN, ta-LK, ta-MY, ta-SG, te-IN, th-TH, tr-TR, uk-UA, ur-IN, ur-PK, uz-UZ, vi-VN, yue-Hant-HK, zh-CN, zh-TW, zu-ZA'
+          exampleSetFlag: false
+          types:
+          - string
+        flowContext:
+          $ref: '#/components/schemas/FlowContext'
+          exampleSetFlag: false
+        primaryUser:
+          type: string
+          description: The Gong internal user ID of the team member who hosted the call.
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+      description: New call metadata
+      exampleSetFlag: false
+      types:
+      - object
+    CallOutlineItem:
       type: object
       properties:
-        cursor:
+        text:
           type: string
-          description: Cursor for pagination.
-        filter:
-          type: object
-          properties:
-            fromDateTime:
-              type: string
-              format: date-time
-              description: Start of the date range filter.
-            toDateTime:
-              type: string
-              format: date-time
-              description: End of the date range filter.
-            callIds:
-              type: array
-              items:
-                type: string
-              description: Specific call IDs to retrieve.
-            workspaceId:
-              type: string
-              description: Filter by workspace.
-          description: Filter criteria for calls.
-        contentSelector:
-          type: object
-          properties:
-            context:
-              type: string
-              enum:
-              - None
-              - Extended
-              - Full
-              description: Level of context to include.
-            exposedFields:
-              type: object
-              properties:
-                collaboration:
-                  type: boolean
-                  description: Include collaboration data.
-                content:
-                  type: boolean
-                  description: Include content data.
-                currentSpeakerUserIds:
-                  type: boolean
-                  description: Include speaker user IDs.
-                media:
-                  type: boolean
-                  description: Include media URLs (requires api:calls:read:media-url scope).
-                parties:
-                  type: boolean
-                  description: Include party information.
-                publicComments:
-                  type: boolean
-                  description: Include public comments.
-              description: Fields to include in the response.
-          description: Selector for what content to include in the response.
-    ExtensiveCallsResponse:
+          description: The text of this section item.
+          exampleSetFlag: false
+          types:
+          - string
+        startTime:
+          type: number
+          description: The starting time of this section item, in seconds from the start of the call.
+          format: double
+          exampleSetFlag: false
+          types:
+          - number
+      exampleSetFlag: false
+      types:
+      - object
+    Calls:
       type: object
       properties:
         requestId:
           type: string
-          description: A unique identifier for the request.
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
         records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-              description: Total number of matching records.
-            currentPageSize:
-              type: integer
-              description: Number of records in the current page.
-            cursor:
-              type: string
-              description: Cursor for retrieving the next page.
+          $ref: '#/components/schemas/Records'
+          exampleSetFlag: false
         calls:
           type: array
+          description: A list with one entry per call.
+          exampleSetFlag: false
           items:
-            $ref: '#/components/schemas/DetailedCall'
-          description: List of detailed call objects.
-  securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
-      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
-    bearerAuth:
-      type: http
-      scheme: bearer
-      description: OAuth 2.0 Bearer token authentication.
+            $ref: '#/components/schemas/CallData'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    CallOutlineSection:
+      type: object
+      properties:
+        section:
+          type: string
+          description: The name of this section of the call.
+          exampleSetFlag: false
+          types:
+          - string
+        startTime:
+          type: number
+          description: The starting time of this section, in seconds, from the start of the call.
+          format: double
+          exampleSetFlag: false
+          types:
+          - number
+        duration:
+          type: number
+          description: The duration of this section, in seconds.
+          format: double
+          exampleSetFlag: false
+          types:
+          - number
+        items:
+          type: array
+          description: List of items of this section.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CallOutlineItem'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    NewCallRecordingResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        callId:
+          type: string
+          description: New call ID
+          example: '7782342274025937895'
+          exampleSetFlag: true
+          types:
+          - string
+        url:
+          type: string
+          description: The URL to the page in the Gong web application where the call is available.
+          example: https://app.gong.io/call?id=7782342274025937895
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object

@@ -120,18 +120,6 @@ apis:
   properties:
   - type: Documentation
     url: https://app.gong.io/settings/api/documentation
-- aid: gong:gong-audit-logs-api
-  name: Gong Audit Logs API
-  description: Operations for retrieving audit log data
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - Audit Logs
-  properties:
-  - type: OpenAPI
-    url: openapi/gong-audit-logs-api-openapi.yml
-  - type: Overlay
-    url: overlays/gong-audit-logs-api-overlay.yaml
 - aid: gong:gong-calls-api
   name: Gong Calls API
   description: Operations for managing and retrieving call data
@@ -144,42 +132,6 @@ apis:
     url: openapi/gong-calls-api-openapi.yml
   - type: Overlay
     url: overlays/gong-calls-api-overlay.yaml
-- aid: gong:gong-crm-data-api
-  name: Gong CRM Data API
-  description: Operations for uploading and retrieving CRM data
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - CRM Data
-  properties:
-  - type: OpenAPI
-    url: openapi/gong-crm-data-api-openapi.yml
-  - type: Overlay
-    url: overlays/gong-crm-data-api-overlay.yaml
-- aid: gong:gong-crm-integration-api
-  name: Gong CRM Integration API
-  description: Operations for registering and managing CRM integrations
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - CRM Integration
-  properties:
-  - type: OpenAPI
-    url: openapi/gong-crm-integration-api-openapi.yml
-  - type: Overlay
-    url: overlays/gong-crm-integration-api-overlay.yaml
-- aid: gong:gong-crm-schema-api
-  name: Gong CRM Schema API
-  description: Operations for managing CRM object schemas
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - CRM Schema
-  properties:
-  - type: OpenAPI
-    url: openapi/gong-crm-schema-api-openapi.yml
-  - type: Overlay
-    url: overlays/gong-crm-schema-api-overlay.yaml
 - aid: gong:gong-data-privacy-api
   name: Gong Data Privacy API
   description: Operations for data privacy management and compliance
@@ -206,44 +158,6 @@ apis:
     url: openapi/gong-digital-interactions-api-openapi.yml
   - type: Overlay
     url: overlays/gong-digital-interactions-api-overlay.yaml
-- aid: gong:gong-engagement-events-api
-  name: Gong Engagement Events API
-  description: Operations for reporting customer engagement events
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - Engagement Events
-  properties:
-  - type: OpenAPI
-    url: openapi/gong-engagement-events-api-openapi.yml
-  - type: Overlay
-    url: overlays/gong-engagement-events-api-overlay.yaml
-- aid: gong:gong-flows-api
-  name: Gong Flows API
-  description: Operations for managing Engage flows
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - Flow
-  tags_raw:
-  - Flows
-  properties:
-  - type: OpenAPI
-    url: openapi/gong-flows-api-openapi.yml
-  - type: Overlay
-    url: overlays/gong-flows-api-overlay.yaml
-- aid: gong:gong-folders-api
-  name: Gong Folders API
-  description: Operations for managing flow folders
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - Folders
-  properties:
-  - type: OpenAPI
-    url: openapi/gong-folders-api-openapi.yml
-  - type: Overlay
-    url: overlays/gong-folders-api-overlay.yaml
 - aid: gong:gong-library-api
   name: Gong Library API
   description: Operations for browsing and retrieving library content
@@ -256,18 +170,6 @@ apis:
     url: openapi/gong-library-api-openapi.yml
   - type: Overlay
     url: overlays/gong-library-api-overlay.yaml
-- aid: gong:gong-meetings-api
-  name: Gong Meetings API
-  description: Operations for managing meetings
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - Meetings
-  properties:
-  - type: OpenAPI
-    url: openapi/gong-meetings-api-openapi.yml
-  - type: Overlay
-    url: overlays/gong-meetings-api-overlay.yaml
 - aid: gong:gong-permission-profiles-api
   name: Gong Permission Profiles API
   description: Operations for managing permission profiles
@@ -280,80 +182,6 @@ apis:
     url: openapi/gong-permission-profiles-api-openapi.yml
   - type: Overlay
     url: overlays/gong-permission-profiles-api-overlay.yaml
-- aid: gong:gong-prospects-api
-  name: Gong Prospects API
-  description: Operations for managing prospects in Engage flows
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - Prospects
-  properties:
-  - type: OpenAPI
-    url: openapi/gong-prospects-api-openapi.yml
-  - type: Overlay
-    url: overlays/gong-prospects-api-overlay.yaml
-- aid: gong:gong-recordings-api
-  name: Gong Recordings API
-  description: Operations for managing call recordings and media
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - Recording
-  tags_raw:
-  - Recordings
-  properties:
-  - type: OpenAPI
-    url: openapi/gong-recordings-api-openapi.yml
-  - type: Overlay
-    url: overlays/gong-recordings-api-overlay.yaml
-- aid: gong:gong-scorecards-api
-  name: Gong Scorecards API
-  description: Operations for retrieving scorecard configurations
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - Scorecards
-  properties:
-  - type: OpenAPI
-    url: openapi/gong-scorecards-api-openapi.yml
-  - type: Overlay
-    url: overlays/gong-scorecards-api-overlay.yaml
-- aid: gong:gong-statistics-api
-  name: Gong Statistics API
-  description: Operations for retrieving activity and performance statistics
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - Statistics
-  properties:
-  - type: OpenAPI
-    url: openapi/gong-statistics-api-openapi.yml
-  - type: Overlay
-    url: overlays/gong-statistics-api-overlay.yaml
-- aid: gong:gong-trackers-api
-  name: Gong Trackers API
-  description: Operations for retrieving tracker configurations
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - Trackers
-  properties:
-  - type: OpenAPI
-    url: openapi/gong-trackers-api-openapi.yml
-  - type: Overlay
-    url: overlays/gong-trackers-api-overlay.yaml
-- aid: gong:gong-transcripts-api
-  name: Gong Transcripts API
-  description: Operations for retrieving call transcripts
-  humanURL: https://app.gong.io/settings/api/documentation
-  baseURL: https://api.gong.io/v2
-  tags:
-  - Transcripts
-  properties:
-  - type: OpenAPI
-    url: openapi/gong-transcripts-api-openapi.yml
-  - type: Overlay
-    url: overlays/gong-transcripts-api-overlay.yaml
 - aid: gong:gong-users-api
   name: Gong Users API
   description: Operations for managing and retrieving user data
@@ -368,21 +196,733 @@ apis:
     url: openapi/gong-users-api-openapi.yml
   - type: Overlay
     url: overlays/gong-users-api-overlay.yaml
-- aid: gong:gong-workspaces-api
-  name: Gong Workspaces API
-  description: Operations for managing workspaces
+- aid: gong:gong-accounts-enrich-api
+  name: Gong Accounts Enrich API
+  description: >-
+    <h3>Gong’s “Accounts Enrich” API endpoints allow you to enrich your account records with Gong's data.</h3>
+
+    <p>Enrichment is asynchronous and works in two steps:</p>
+
+    <ol>
+
+    <li>
+
+    Submit up to 10 accounts, along with the data categories you want, and receive a <b>jobId</b>.
+
+    </li>
+
+    <li>
+
+    Retrieve the results using the <b>jobId</b>. A data category whose status is “Running” is still being
+    enriched, so poll until no category is “Running”.
+
+    </li>
+
+    </ol>
+
+    <p>
+
+    Each account is identified by search criteria - its name, domain or LinkedIn URL - and is returned
+    with the id you supplied, so you can correlate results with your request.
+
+    </p>
   humanURL: https://app.gong.io/settings/api/documentation
   baseURL: https://api.gong.io/v2
   tags:
-  - Workspace
-  tags_raw:
-  - Workspaces
+  - Accounts Enrich
   properties:
   - type: OpenAPI
-    url: openapi/gong-workspaces-api-openapi.yml
-  - type: Overlay
-    url: overlays/gong-workspaces-api-overlay.yaml
+    url: openapi/gong-accounts-enrich-api-openapi.yml
+- aid: gong:gong-auditing-api
+  name: Gong Auditing API
+  description: >-
+    <h3>Gong’s “Auditing” API endpoints allow you to request the following log types from Gong:</h3>
+
+    <ul>
+
+    <li>
+
+    Access Log - This log is preserved for 14 days only
+
+    </li>
+
+    <li>
+
+    User Activity Log - The data is available since March 2021
+
+    </li>
+
+    <li>
+
+    User Call Play Log - All data is available since inception
+
+    </li>
+
+    <li>
+
+    Externally Shared Call Access Log - All data is available since inception
+
+    </li>
+
+    <li>
+
+    Externally Shared Call Play Log - All data is available since inception
+
+    </li>
+
+    </ul>
+  humanURL: https://app.gong.io/settings/api/documentation
+  baseURL: https://api.gong.io/v2
+  tags:
+  - Auditing
+  properties:
+  - type: OpenAPI
+    url: openapi/gong-auditing-api-openapi.yml
+- aid: gong:gong-coaching-api
+  name: Gong Coaching API
+  description: The Coaching API from Gong — 1 operation(s) for coaching.
+  humanURL: https://app.gong.io/settings/api/documentation
+  baseURL: https://api.gong.io/v2
+  tags:
+  - Coaching
+  properties:
+  - type: OpenAPI
+    url: openapi/gong-coaching-api-openapi.yml
+- aid: gong:gong-contacts-enrich-api
+  name: Gong Contacts Enrich API
+  description: >-
+    <h3>Gong’s “Contacts Enrich” API endpoints allow you to enrich your contact records with Gong's data.</h3>
+
+    <p>Enrichment is asynchronous and works in two steps:</p>
+
+    <ol>
+
+    <li>
+
+    Submit up to 10 contacts, along with the data categories you want, and receive a <b>jobId</b>.
+
+    </li>
+
+    <li>
+
+    Retrieve the results using the <b>jobId</b>. A data category whose status is “Running” is still being
+    enriched, so poll until no category is “Running”.
+
+    </li>
+
+    </ol>
+
+    <h3>Each contact must be identified by one of the following combinations:</h3>
+
+    <ul>
+
+    <li>
+
+    <b>linkedinUrl</b> on its own
+
+    </li>
+
+    <li>
+
+    <b>firstName</b> + <b>lastName</b> + <b>email</b>
+
+    </li>
+
+    <li>
+
+    <b>firstName</b> + <b>lastName</b> + <b>accountSearchCriteria</b> (the account's name, domain or LinkedIn
+    URL)
+
+    </li>
+
+    </ul>
+
+    <p>
+
+    Each contact is returned with the id you supplied, so you can correlate results with your request.
+
+    </p>
+  humanURL: https://app.gong.io/settings/api/documentation
+  baseURL: https://api.gong.io/v2
+  tags:
+  - Contacts Enrich
+  properties:
+  - type: OpenAPI
+    url: openapi/gong-contacts-enrich-api-openapi.yml
+- aid: gong:gong-crm-api
+  name: Gong CRM API
+  description: >-
+    <style>.public-api-info {    background: rgb(222, 235, 255);}.public-api-tip {    background: rgb(227,
+    252, 239);}.public-api-parameter {    background: rgba(9,30,66,0.08);}.public-api-note {    background:
+    rgb(234, 230, 255);}.public-api-important {    background: rgb(255, 250, 230);}.public-api-critical
+    {    background: rgb(255, 235, 230);}table, th, td {  border: 1px solid gray;  border-collapse: collapse;}th,
+    td {  padding: 5px;}th {  text-align: left;}img {  border: 2px solid #D3D5D9;}</style><p>If you are
+    using the deprecated endpoints, download the <a href="/r/img/permanent/crm_api_deprecated_endpoints.pdf"
+    target="_blank">PDF file</a>.</p><h1>What does the CRM API do?</h1><p>This API enables integration
+    with CRMs that are not natively integrated with Gong, so that Gong can provide you with its full capabilities
+    based on your CRM data. This includes:</p><ul>  <li>Pipeline review and forecast</li>  <li>Narrow
+    down conversations (calls and emails) by customer data for coaching and analytics</li>  <li>Track
+    initiatives and adoption based on accounts and opportunities</li></ul><p>By uploading your CRM data
+    to Gong, your Gong users will be able to see their CRM deals in the Gong Deals page, view deal boards
+    to follow up on deal progress, get warnings for deals that are at risk, and see whether their team
+    will reach its quota. The CRM data is also displayed in conversations and calls, so that your Gong
+    users can see account and contact data such as the name and job title of the contact in the call.
+    Account data is displayed in the Accounts page, together with the history of all communication and
+    contact with the company.</p><p><b>Note</b>: Gong provides native integrations with Salesforce, HubSpot
+    and Microsoft Dynamics 365.</p><h2>API Protocol</h2>The API protocol is based on REST guidelines.
+    Check <a href="https://app.gong.io/company/api-authentication?currentTab=MY_API_TAB">here</a> what's
+    your base URL for all API calls.
+
+    <p>The payload is either a JSON object or, for API calls that upload lists of objects, line delimited
+    JSON (see: <a href="https://en.wikipedia.org/wiki/JSON_streaming#Newline-Delimited_JSON">JSON streaming</a>).
+    JSON objects should be UTF-8 encoded.</p><p>Dates and timestamps in JSON objects should be in ISO-8601
+    format without milliseconds (e.g. '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands
+    for UTC).</p><h2>What data can I upload?</h2><p>To see your CRM data in Gong, upload the following
+    entities:</p><ul>  <li>Business User: The CRM user, such as a seller or manager. </li>  <li>Account:
+    The customer details in the CRM</li>  <li>Contact: A specific contact in the CRM that is associated
+    with a customer</li>  <li>Deal: A deal or opportunity, or a contract of a specific account in the
+    CRM</li>  <li>Lead: A potential customers who are not associated with an account</li>  <li>Stage:
+    The list of stages the deal can be in, in your CRM</li></ul><h2>Uploading CRM data to Gong</h2><p>This
+    diagram shows how to set up your system in order to upload CRM data to Gong. This is relevant for
+    each scenario of uploading data, initial, incremental and uploading historical data.</p><img alt=""
+    src="/r/img/permanent/crm_api_flow.png" height="95%" ><h3>Registering your Integration</h3><p>Register
+    your integration to get an integrationId used to identify your company's integration with Gong. This
+    is a one time action that does not need to be repeated unless you delete your integration.</p><p>Use
+    <code>PUT v2/crm/integrations</code> to register your integration. The integration Id is returned
+    in the response. Include the integration Id each time you upload your CRM data.</p><h3>Uploading additional
+    data for CRM entities</h3><p>Each CRM entity has a set of standard fields. In addition, you may want
+    to upload additional fields.</p><p>Use the <code>POST /v2/crm/entity-schema</code> to adjust the schema
+    according to your needs. Once you have uploaded your schema to Gong, you can upload your entities
+    with the additional fields.</p><h3>Uploading your CRM data to Gong</h3><p>This section explains how
+    you can use the CRM API to upload your data to Gong:</p><h4>First-time upload</h4><p>Create a database
+    dump of the data you want to upload to Gong based on your CRM schema and data. When uploading your
+    data for the first time you should include all of the CRM records that should appear in Gong.</p><h4>Incremental
+    upload </h4><p>Send regular incremental data updates to Gong. You can update your data as often as
+    you like, we recommend updating between every 1-5 minutes.<br>You should only send new records or
+    records that have changed since the previous upload of data. New records are added to Gong and existing
+    records are updated or deleted, whichever is relevant. Entities are identified by the objectId. Ensure
+    that this ID remains the same each time it is updated.</p><p>When updating data, the modificationDate
+    parameter is mandatory. This enables us to maintain accurate historical data. If your CRM does not
+    store the modification date, send the date the API call is made.</p><h4>Uploading data change history</h4><p>Gong
+    incorporates historical change data in different areas of Gong in order to provide a more accurate
+    picture of the status of different entities at that time. For example, showing the correct stage of
+    a deal at the time a call was made.</p><p>If your CRM stores record history, you are encouraged to
+    load historical change data as part of the integration. You can do this at any time, but we recommend
+    doing this after the initial upload as follows:</p><ol>  <li>Generate the JSON files with the relevant
+    data. Ensure that the modifiedDate is set to the date the entity was updated.</li>  <li>Upload the
+    entities with their historical data using the <code>POST /v2/crm/entities?objectType=ACCOUNT|CONTACT|DEAL|LEAD</code>
+    endpoint.</li></ol><h2>Gong Data Model</h2><p>This diagram shows the connection between the different
+    objects in the CRM API:</p><img alt="" src="/r/img/permanent/crm_api_model.png" height="80%"><p>The
+    following relationship between entities must exist:</p><ul>  <li>A contact must be linked to a single
+    account.</li>  <li>A deal is linked to a single account.</li>  <li>A deal has an owner who is a user
+    in Gong.</li>  <li>A converted lead is expected to be converted into an account and/or a deal and/or
+    a contact.</li></ul><h2>What if my CRM doesn't match the Gong data model?</h2><p>It is possible that
+    your CRM entity model won't match the Gong CRM entity model. Your CRM may store your data in different
+    entities, or you may not have an entity that represents one of the Gong CRM entities.</p><p>In order
+    to upload your CRM data and associate it with calls and conversations, you need to identify the objects
+    in your CRM which match the Gong CRM entities.</p><p>The account is a mandatory entity which must
+    be uploaded in order to integrate Gong with your CRM. To upload account data, identify your CRM entities
+    that contain data about your customers or companies that you do business with. These customers are
+    not actual people within the org, rather they represent the org itself.</p><p>To upload contact details,
+    identify your CRM entities that hold data about employees in the company that your reps are in touch
+    with. A contact represents a person where communication has advanced beyond the prospect stage. Your
+    reps will have multiple conversations and interactions with the contact.</p><p>The deal represents
+    the selling process to the customer (account).</p><p>The lead is a prospect or potential contact,
+    who is not yet associated with an account. If your CRM has an entity which represents people who you
+    contact in the very early stages, and who is later converted to another entity which represents the
+    people you are doing business with (the contact), upload this data as a lead entity.</p><h2>When will
+    my CRM data be displayed in Gong?</h2><p>In addition to the time it takes for data to upload to Gong,
+    the data is first uploaded as raw data and is not automatically available in Gong.</p><br><br><br><br>
+  humanURL: https://app.gong.io/settings/api/documentation
+  baseURL: https://api.gong.io/v2
+  tags:
+  - CRM
+  properties:
+  - type: OpenAPI
+    url: openapi/gong-crm-api-openapi.yml
+- aid: gong:gong-engage-flows-api
+  name: Gong Engage Flows API
+  description: >-
+    <h3>Gong’s “Flows” API endpoints allow you to:</h3>
+
+    <ul>
+
+    <li>
+
+    View a list of relevant Gong Engage flows to choose from and the current flow assignment status
+
+    </li>
+
+    <li>
+
+    Add prospects to Gong Engage flows
+
+    </li>
+
+    </ul>
+  humanURL: https://app.gong.io/settings/api/documentation
+  baseURL: https://api.gong.io/v2
+  tags:
+  - Engage Flows
+  properties:
+  - type: OpenAPI
+    url: openapi/gong-engage-flows-api-openapi.yml
+- aid: gong:gong-engagement-legacy-see-digital-interactions-api
+  name: Gong Engagement (Legacy – See “Digital Interactions”) API
+  description: >-
+    <h3>Limited release - contact <a href="mailto:integration.requests@gong.io">integration.requests@gong.io</a>
+    for more information.
+
+    </h3>
+
+
+    <h3>Gong’s "Engagement" API endpoints allow you to push engagement events into Gong and display them
+    as events in Gong’s activity timeline.</h3>
+
+    <h3>There are currently 3 types of events:</h3>
+
+    <ul>
+
+    <li>
+
+    "Content Shared" Event Type - Use this event type to push engagement events into Gong when a Gong
+    user shares content with external participants (for example, a contract was “shared” by the account
+    executive with his prospects)</li>
+
+    <li>
+
+    "Content Viewed" Event Type - Use this event type to push engagement events into Gong when a content
+    is viewed by an external participant (for example, a contract was “viewed” by the prospect)
+
+    </li>
+
+    <li>
+
+    "Custom Action" Event Type -  Use this event type to push engagement events into Gong when a content
+    is engaged by an external participant (for example, a contract was “signed” by the prospect)</li>
+
+    </ul>
+  humanURL: https://app.gong.io/settings/api/documentation
+  baseURL: https://api.gong.io/v2
+  tags:
+  - Engagement (Legacy – See “Digital Interactions”)
+  properties:
+  - type: OpenAPI
+    url: openapi/gong-engagement-legacy-see-digital-interactions-api-openapi.yml
+- aid: gong:gong-entities-api
+  name: Gong Entities API
+  description: >-
+    <h3>Gong's “Entity” endpoints allow you to:</h3>
+
+    <ul>
+
+    <li>
+
+    Ask questions in natural language about CRM entities (accounts, contacts, deals, leads) and get AI-generated
+    insights based on data from calls and emails.
+
+    </li>
+
+    <li>
+
+    Generate pre-configured briefs on CRM entities. Briefs are set up in the Agent Studio in Gong.
+
+    </li>
+
+    </ul>
+
+    The response includes the generated answer or brief and the calls and emails used to generate it.
+    It also includes information about the specific parts of those calls or emails that provided the evidence
+    for the AI-generated content.
+  humanURL: https://app.gong.io/settings/api/documentation
+  baseURL: https://api.gong.io/v2
+  tags:
+  - Entities
+  properties:
+  - type: OpenAPI
+    url: openapi/gong-entities-api-openapi.yml
+- aid: gong:gong-integration-settings-api
+  name: Gong Integration Settings API
+  description: >-
+    <p>Configure your integration settings for displaying your company data in iFrames. For example, use
+    this API to configure dynamic links as the iFrame source. This endpoint includes validation mechanisms
+    to ensure the integration is secure.</p><p>Mandatory fields are marked with a *.</p>
+  humanURL: https://app.gong.io/settings/api/documentation
+  baseURL: https://api.gong.io/v2
+  tags:
+  - Integration Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/gong-integration-settings-api-openapi.yml
+- aid: gong:gong-meetings-in-beta-phase-api
+  name: Gong Meetings (in Beta Phase) API
+  description: >-
+    <h3>Gong’s “Consent Meeting” API endpoints allow you to:</h3>
+
+    <ul>
+
+    <li>
+
+    Request creating a Gong Consent meeting link
+
+    </li>
+
+    <li>
+
+    Update a Consent Meeting’s details
+
+    </li>
+
+    <li>
+
+    Delete a Consent Meeting
+
+    </li>
+
+    <li>
+
+    List all Licensed Users in the Gong instance and their Consent Page status
+
+    </li>
+
+    </ul>
+
+    <h3>The requested calls may contain the following meeting details:</h3>
+
+    <ul>
+
+    <li>
+
+    Meeting Scheduled Start Time
+
+    </li>
+
+    <li>
+
+    Meeting Scheduled End Time
+
+    </li>
+
+    <li>
+
+    Organizer
+
+    </li>
+
+    <li>
+
+    Meeting Title
+
+    </li>
+
+    <li>
+
+    Invitees
+
+    </li>
+
+    <li>
+
+    External Meeting Id - The ID as it is formed on an external system
+
+    </li>
+
+    </ul>
+  humanURL: https://app.gong.io/settings/api/documentation
+  baseURL: https://api.gong.io/v2
+  tags:
+  - Meetings (in Beta Phase)
+  properties:
+  - type: OpenAPI
+    url: openapi/gong-meetings-in-beta-phase-api-openapi.yml
+- aid: gong:gong-outcomes-api
+  name: Gong Outcomes API
+  description: The Outcomes API from Gong — 1 operation(s) for outcomes.
+  humanURL: https://app.gong.io/settings/api/documentation
+  baseURL: https://api.gong.io/v2
+  tags:
+  - Outcomes
+  properties:
+  - type: OpenAPI
+    url: openapi/gong-outcomes-api-openapi.yml
+- aid: gong:gong-permissions-api
+  name: Gong Permissions API
+  description: >-
+    <h3>Gong’s "Permission" API endpoints allow you to:</h3>
+
+    <ul>
+
+    <li>
+
+    List all permission profiles in a given workspace
+
+    </li>
+
+    <li>
+
+    Create permission profile
+
+    </li>
+
+    <li>
+
+    Get a permission profile
+
+    </li>
+
+    <li>
+
+    Update permission profile
+
+    </li>
+
+    <li>
+
+    List all users controlled by a permission profile
+
+    </li>
+
+    <li>
+
+    Allow users individual access to calls
+
+    </li>
+
+    <li>
+
+    Remove user's individual access to calls
+
+    </li>
+
+    <li>
+
+    Retrieve users that have individual access to calls
+
+    </li>
+
+    </ul>
+  humanURL: https://app.gong.io/settings/api/documentation
+  baseURL: https://api.gong.io/v2
+  tags:
+  - Permissions
+  properties:
+  - type: OpenAPI
+    url: openapi/gong-permissions-api-openapi.yml
+- aid: gong:gong-settings-api
+  name: Gong Settings API
+  description: >-
+    <h3>Gong’s “Settings” API endpoints allow you to:</h3>
+
+    <ul>
+
+    <li>
+
+    Request all the scorecards within the Gong system.
+
+    </li>
+
+    <li>
+
+    Request all the workspaces including their details.
+
+    </li>
+
+    </ul>
+  humanURL: https://app.gong.io/settings/api/documentation
+  baseURL: https://api.gong.io/v2
+  tags:
+  - Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/gong-settings-api-openapi.yml
+- aid: gong:gong-stats-api
+  name: Gong Stats API
+  description: >-
+    <h3>Gong’s “Stats” API endpoints allow you to:</h3>
+
+    <ul>
+
+    <li>
+
+    Request user activity
+
+    </li>
+
+    <li>
+
+    Request scorecards activity
+
+    </li>
+
+    <li>
+
+    Request interaction stats on calls that have Whisper turned on
+
+    </li>
+
+    </ul>
+
+    <h3>The requested user activity may contain the following details:</h3>
+
+    <ul>
+
+    <li>
+
+    <b>Calls Hosted:</b> The number of recorded calls this user hosted.
+
+    </li>
+
+    <li>
+
+    <b>Call Participated:</b> The number of calls in which this user is a participant (not host).
+
+    </li>
+
+    <li>
+
+    <b>Calls Reviewed:</b> The number of calls in which someone pressed the "Mark as reviewed".
+
+    </li>
+
+    <li>
+
+    <b>Calls Listened:</b> The number of other users' calls the user listened to.
+
+    </li>
+
+    <li>
+
+    <b>Call Shared Outside:</b> The number of calls the user shared with others outside the company.
+
+    </li>
+
+    <li>
+
+    <b>Call Shared Inside:</b> The number of calls the user shared with others inside the company.
+
+    </li>
+
+    <li>
+
+    <b>Own Calls Listened:</b> The number of the user's own calls the user listened to.
+
+    </li>
+
+    <li>
+
+    <b>Comment Given:</b> The number of calls in which a user gave at least one comment.
+
+    </li>
+
+    <li>
+
+    <b>Comment Received:</b> The number of calls in which a user received at least one comment on the
+    users calls.
+
+    </li>
+
+    <li>
+
+    <b>Feedback Given:</b> The number of recorded calls the user gave feedback on.
+
+    </li>
+
+    <li>
+
+    <b>Feedback Received:</b> The number of recorded calls the user received feedback on.
+
+    </li>
+
+    <li>
+
+    <b>Feedback Requested:</b> The number of recorded calls the user requested feedback on.
+
+    </li>
+
+    <li>
+
+    <b>Scorecard Filled:</b> The number of calls in which someone filled a scorecard on the user's calls.
+
+    </li>
+
+    <li>
+
+    <b>Scorecards Completed:</b> The number of scorecards the user completed.
+
+    </li>
+
+    <li>
+
+    <b>Scorecards Answers:</b> The answers in the answered scorecard.
+
+    </li>
+
+    <li>
+
+    <b>Whisper:</b> Person Interaction Stats (List of user interaction stats. Applicable values: 'Talk
+    Ratio',
+     'Longest Monologue', 'Longest Customer Story', 'Interactivity', 'Question Rate', 'Patience').
+    </li>
+
+    </ul>
+  humanURL: https://app.gong.io/settings/api/documentation
+  baseURL: https://api.gong.io/v2
+  tags:
+  - Stats
+  properties:
+  - type: OpenAPI
+    url: openapi/gong-stats-api-openapi.yml
+- aid: gong:gong-targets-api
+  name: Gong Targets API
+  description: The Targets API from Gong — 2 operation(s) for targets.
+  humanURL: https://app.gong.io/settings/api/documentation
+  baseURL: https://api.gong.io/v2
+  tags:
+  - Targets
+  properties:
+  - type: OpenAPI
+    url: openapi/gong-targets-api-openapi.yml
+- aid: gong:gong-tasks-api
+  name: Gong Tasks API
+  description: The Tasks API from Gong — 2 operation(s) for tasks.
+  humanURL: https://app.gong.io/settings/api/documentation
+  baseURL: https://api.gong.io/v2
+  tags:
+  - Tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/gong-tasks-api-openapi.yml
 common:
+- type: Overlay
+  url: overlays/gong-audit-logs-api-overlay.yaml
+- type: Overlay
+  url: overlays/gong-crm-data-api-overlay.yaml
+- type: Overlay
+  url: overlays/gong-crm-integration-api-overlay.yaml
+- type: Overlay
+  url: overlays/gong-crm-schema-api-overlay.yaml
+- type: Overlay
+  url: overlays/gong-engagement-events-api-overlay.yaml
+- type: Overlay
+  url: overlays/gong-flows-api-overlay.yaml
+- type: Overlay
+  url: overlays/gong-folders-api-overlay.yaml
+- type: Overlay
+  url: overlays/gong-meetings-api-overlay.yaml
+- type: Overlay
+  url: overlays/gong-prospects-api-overlay.yaml
+- type: Overlay
+  url: overlays/gong-recordings-api-overlay.yaml
+- type: Overlay
+  url: overlays/gong-scorecards-api-overlay.yaml
+- type: Overlay
+  url: overlays/gong-statistics-api-overlay.yaml
+- type: Overlay
+  url: overlays/gong-trackers-api-overlay.yaml
+- type: Overlay
+  url: overlays/gong-transcripts-api-overlay.yaml
+- type: Overlay
+  url: overlays/gong-workspaces-api-overlay.yaml
 - type: CapabilityMap
   url: capabilities/gong-capability-edges.yml
   name: Gong Business Capability Map

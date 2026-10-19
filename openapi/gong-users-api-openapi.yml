@@ -1,371 +1,1006 @@
 openapi: 3.2.0
 info:
   title: Gong Users API
-  description: The Gong Users API allows retrieval of user information, user histories, and filtering of users by various criteria. It provides access to team member profiles and licensing details within the Gong platform.
-  version: 2.0.0
-  contact:
-    name: Gong
-    url: https://www.gong.io
-    email: support@gong.io
-  license:
-    name: Proprietary
-    url: https://www.gong.io/terms-of-service/
-  termsOfService: https://www.gong.io/terms-of-service/
+  description: 'Overview
+
+
+    The Gong API allows you to:
+
+
+    Receive the following information from Gong:
+
+
+    Your company''s calls in Gong
+
+
+    Your company''s users in Gong
+
+
+    Your company''s user stats in Gong
+
+
+    Your company''s user settings in Gong
+
+
+    Your company''s libraries in Gong
+
+
+    Upload new or
+
+    update
+
+    call recordings in Gong, in order to support cases where you have an internal system that records
+
+    calls or obtains them from a third-party entity.
+
+
+    Data Privacy:
+
+    Delete users and all their associated elements.
+
+
+    Upload CRM data into Gong.
+
+
+    Check here what''s your base URL for all API calls.
+
+
+    Authentication
+
+
+    There are two ways to retrieve credentials to the Gong Public API:
+
+
+    Retrieve Manually:
+
+
+    In the Gong API Page (you
+
+    must be a technical administrator in Gong), click "Create" to receive an Access Key
+
+    and an Access Key Secret.
+
+
+    Use the Basic Authorization HTTP header (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Basic <token>
+
+
+    To create the basic token, combine the Access Key and the Access Key Secret with
+
+    colon (:) and then encode in Base64 as following:
+
+
+    Base64(<accessKey> : <accessKeySecret>)
+
+
+    Retrieve through OAuth
+
+
+    To obtain the Bearer token, follow the steps described in the Gong OAuth Guide.
+
+
+    After obtaining the token, use the Bearer Authorization HTTP header
+
+    (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Bearer <token>
+
+
+    Limits
+
+
+    By default Gong limits your company''s access to the service to 3 API calls per second, and 10,000 API calls per day.
+
+
+    When the rate of API calls exceeds these limits an HTTP status code 429 is returned and a Retry-After header indicates
+
+    how many seconds to wait before making a new request.
+
+
+    If required, contact help.gong.io to change these limits.
+
+
+    Cursors
+
+
+    Some API calls that return a list are limited in the amount of records they may return, so multiple API calls may be
+
+    required to bring all records. Such an API call also returns a records field, which contains the number of records
+
+    in the current page, the current page number and the total number of records.
+
+
+    In cases where the total number of records exceeds the number of records thus far retrieved, the records field will also
+
+    contain a cursor field which can be used to access the next page of records. To retrieve the next page, repeat the API call with
+
+    the cursor value as supplied by the previous API call. All other request inputs should remain the same.
+
+
+    Forward Compatibility
+
+
+    When coding a system to accept Gong data, take into account that Gong may, without prior warning, add fields to the JSON output.
+
+    It is recommended to future proof your code so that it disregards all JSON fields you don''t actually use.'
+  version: V2
 servers:
-- url: https://api.gong.io/v2
-  description: Gong API v2 Production Server
-security:
-- basicAuth: []
-- bearerAuth: []
+- url: https://127.0.0.1:8443
+  description: Generated server url
 tags:
 - name: Users
-  description: Operations for managing and retrieving user data
+  description: 'Gong’s “Users” API endpoints allow you to:
+
+
+    Request a list of all the company''s users with details
+
+
+    Request a specific user’s history from Gong
+
+
+    The requested users may contain the following details:
+
+
+    If the Gong user is active or not.
+
+
+    Creation time of the Gong user.
+
+
+    The email address of the Gong user.
+
+
+    List of email address aliases of the Gong user.
+
+
+    The extension number of the Gong user.
+
+
+    The first name of the Gong user.
+
+
+    The last name of the Gong user.
+
+
+    Gong''s unique numeric identifier for the user.
+
+
+    The manager ID of the Gong user.
+
+
+    The Gong recording consent meeting link.
+
+
+    The list of personal meeting URLs of the Gong user.
+
+
+    The phone number of the Gong user.
+
+
+    The job title of the Gong user.
+
+
+    The user''s settings.
+
+
+    If the team member is set to import emails by Gong.
+
+
+    If the team member is set to prevent import of emails by Gong.
+
+
+    If the invitation of this user to a web conference will prevent its recording (even if other users invited are set to record).
+
+
+    If the team member is set to import telephony calls by Gong.
+
+
+    If the team member is set to be recorded by Gong.
+
+
+    The User''s settings history.
+
+
+    The user capability that was changed.
+
+
+    The date and time the action was set.
+
+
+    The new value that was set.'
 paths:
-  /users:
-    get:
-      operationId: listUsers
-      summary: Gong List all users
-      description: Retrieves a list of all users in the Gong account. Results are paginated and can optionally include user avatar images.
-      tags:
-      - Users
-      parameters:
-      - name: cursor
-        in: query
-        required: false
-        description: A cursor for pagination. Pass the cursor from the previous response to retrieve the next page of results.
-        schema:
-          type: string
-      - name: includeAvatars
-        in: query
-        required: false
-        description: When set to true, the response includes user avatar image URLs.
-        schema:
-          type: boolean
-          default: false
-      responses:
-        '200':
-          description: Successful response containing a list of users.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UsersResponse'
-        '401':
-          description: Unauthorized - invalid or missing authentication credentials.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '429':
-          description: Rate limit exceeded.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /users/{id}:
-    get:
-      operationId: getUser
-      summary: Gong Retrieve a specific user
-      description: Retrieves detailed information about a specific user identified by their unique Gong user ID.
-      tags:
-      - Users
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: The unique Gong user ID.
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Successful response containing the user details.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
-        '401':
-          description: Unauthorized - invalid or missing authentication credentials.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: User not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '429':
-          description: Rate limit exceeded.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /users/{id}/settings-history:
-    get:
-      operationId: getUserSettingsHistory
-      summary: Gong Retrieve user settings history
-      description: Retrieves the settings change history for a specific user, including changes to their role, permissions, and other configuration settings over time.
-      tags:
-      - Users
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: The unique Gong user ID.
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Successful response containing the user settings history.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserSettingsHistoryResponse'
-        '401':
-          description: Unauthorized - invalid or missing authentication credentials.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: User not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '429':
-          description: Rate limit exceeded.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /users/filter:
+  /v2/users/extensive:
     post:
-      operationId: listUsersByFilter
-      summary: Gong List users by filter
-      description: Retrieves a filtered list of users based on specified criteria such as creation date, user IDs, or other attributes.
       tags:
       - Users
+      summary: List users by filter (/v2/users/extensive)
+      description: 'List multiple Users.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:users:read''.'
+      operationId: listMultipleUsers
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UsersFilterRequest'
+              $ref: '#/components/schemas/PublicApiBaseRequestV2MultipleUsersRequestWithCreationDates'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
       responses:
         '200':
-          description: Successful response containing filtered users.
+          description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UsersResponse'
+                $ref: '#/components/schemas/UsersMetadata'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '400':
-          description: Bad request due to invalid filter parameters.
+          description: Malformed request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '401':
-          description: Unauthorized - invalid or missing authentication credentials.
+          description: Access denied
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: No calls found for the specified period
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '429':
-          description: Rate limit exceeded.
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/users:
+    get:
+      tags:
+      - Users
+      summary: List all users (/v2/users)
+      description: 'List all of the company''s users.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:users:read''.'
+      operationId: listUsers
+      parameters:
+      - name: cursor
+        in: query
+        description: When paging is needed, provide the value supplied by the previous API call to bring the following page of records.
+        required: false
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        example: eyJhbGciOiJIUzI1NiJ9.eyJjYWxsSWQiM1M30.6qKwpOcvnuweTZmFRzYdtjs_YwJphJU4QIwWFM
+      - name: includeAvatars
+        in: query
+        description: Avatars are synthetic users representing Gong employees (CSMs and support providers) when they access your instance. References to avatars' IDs may be found in the outputs of other API endpoints. This parameter is optional, if not provided avatars will not be included in the results.
+        required: false
+        style: FORM
+        explode: true
+        schema:
+          type: boolean
+          exampleSetFlag: false
+          types:
+          - boolean
+        example: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersMetadata'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/users/{id}:
+    get:
+      tags:
+      - Users
+      summary: Retrieve user (/v2/users/{id})
+      description: 'Retrieve a specific user.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:users:read''.'
+      operationId: getUser
+      parameters:
+      - name: id
+        in: path
+        description: Gong's unique numeric identifier for the user (up to 20 digits).
+        required: true
+        style: SIMPLE
+        explode: false
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/users/{id}/settings-history:
+    get:
+      tags:
+      - Users
+      summary: Retrieve user settings history (/v2/users/{id}/settings-history)
+      description: 'Retrieve a specific user''s settings history.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:users:read''.'
+      operationId: getUserHistory
+      parameters:
+      - name: id
+        in: path
+        description: Gong's unique numeric identifier for the user (up to 20 digits).
+        required: true
+        style: SIMPLE
+        explode: false
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettingsHistory'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
 components:
   schemas:
-    UsersFilterRequest:
+    spokenLanguage:
+      type: object
+      properties:
+        language:
+          type: string
+          description: Language spoken by the user encoded according to the BCP-47 standard.
+          example: es-ES
+          exampleSetFlag: true
+          types:
+          - string
+        primary:
+          type: boolean
+          description: Indicates the primary language (one per user). The language will be assumed when the system cannot identify the language of a call, e.g., due to poor quality or the call being too short.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+      description: Languages spoken during calls by the Gong user
+      exampleSetFlag: false
+      types:
+      - object
+    ConferencingProvider:
+      type: object
+      properties:
+        provider:
+          type: string
+          description: The provider identifier.
+          example: zoom
+          exampleSetFlag: true
+          types:
+          - string
+        isDefault:
+          type: boolean
+          description: True if this is the user's default conferencing provider.
+          exampleSetFlag: false
+          types:
+          - boolean
+      description: A web conferencing provider configured in the user's consent profile
+      exampleSetFlag: false
+      types:
+      - object
+    MultipleUsersRequestWithCreationDates:
+      type: object
+      properties:
+        createdFromDateTime:
+          type: string
+          description: An optional user creation time lower limit, if supplied the API will return only the users created at or after this time. The filed is in the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC).
+          example: '2018-02-17T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        createdToDateTime:
+          type: string
+          description: An optional user creation time upper limit, if supplied the API will return only the users created before this time. The filed is in the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC).
+          example: '2018-02-19T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        includeAvatars:
+          type: boolean
+          description: Avatars are synthetic users representing Gong employees (CSMs and support providers) when they access your instance. References to avatars' IDs may be found in the outputs of other API endpoints. This parameter is optional, if not provided avatars will not be included in the results.
+          example: false
+          exampleSetFlag: true
+          types:
+          - boolean
+        userIds:
+          uniqueItems: true
+          type: array
+          description: Set of Gong's unique numeric identifiers for the users (up to 20 digits).
+          writeOnly: true
+          example:
+          - '234599484848423'
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      description: Filter parameters.
+      exampleSetFlag: false
+      types:
+      - object
+    UserMetadata:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Gong's unique numeric identifier for the user (up to 20 digits).
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        emailAddress:
+          type: string
+          description: The email address of the Gong user.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+        created:
+          type: string
+          description: Creation time in the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC);of the Gong user.
+          example: '2018-02-17T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        active:
+          type: boolean
+          description: True if the user is active, false if not.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        emailAliases:
+          type: array
+          description: List of email address aliases of the Gong user.
+          example:
+          - testAlias@test.com
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        trustedEmailAddress:
+          type: string
+          description: The trusted authentication email assigned to the Gong user
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+        firstName:
+          type: string
+          description: The first name of the Gong user.
+          example: Jon
+          exampleSetFlag: true
+          types:
+          - string
+        lastName:
+          type: string
+          description: The last name of the Gong user.
+          example: Snow
+          exampleSetFlag: true
+          types:
+          - string
+        title:
+          type: string
+          description: The job title of the Gong user.
+          example: Enterprise Account Executive
+          exampleSetFlag: true
+          types:
+          - string
+        phoneNumber:
+          type: string
+          description: The phone number of the Gong user.
+          example: +1 123-567-8989
+          exampleSetFlag: true
+          types:
+          - string
+        extension:
+          type: string
+          description: The extension number of the Gong user.
+          example: '123'
+          exampleSetFlag: true
+          types:
+          - string
+        personalMeetingUrls:
+          type: array
+          description: The list of personal meeting URLs of the Gong user.
+          example:
+          - https://zoom.us/j/123
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        settings:
+          $ref: '#/components/schemas/Settings'
+          exampleSetFlag: false
+        managerId:
+          type: string
+          description: The manager ID of the Gong user.
+          example: '563515258458745'
+          exampleSetFlag: true
+          types:
+          - string
+        meetingConsentPageUrl:
+          type: string
+          description: The Gong recording consent meeting link
+          example: https://join.gong.io/my-company/jon.snow?tkn=MoNpS9tMNt8BK7EZxQpSJl
+          exampleSetFlag: true
+          types:
+          - string
+        conferencingProviders:
+          type: array
+          description: The list of web conferencing providers configured for this user, including which is the default.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ConferencingProvider'
+            exampleSetFlag: false
+          types:
+          - array
+        spokenLanguages:
+          type: array
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/spokenLanguage'
+            exampleSetFlag: false
+          types:
+          - array
+      description: User's metadata.
+      exampleSetFlag: false
+      types:
+      - object
+    PublicApiBaseRequestV2MultipleUsersRequestWithCreationDates:
+      required:
+      - filter
       type: object
       properties:
         cursor:
           type: string
-          description: Cursor for pagination.
+          description: When paging is needed, provide the value supplied by the previous API call to bring the following page of records.
+          example: eyJhbGciOiJIUzI1NiJ9.eyJjYWxsSWQiM1M30.6qKwpOcvnuweTZmFRzYdtjs_YwJphJU4QIwWFM
+          exampleSetFlag: true
+          types:
+          - string
         filter:
-          type: object
-          properties:
-            userIds:
-              type: array
-              items:
-                type: string
-              description: Filter by specific user IDs.
-            createdFromDateTime:
-              type: string
-              format: date-time
-              description: Filter users created after this date.
-            createdToDateTime:
-              type: string
-              format: date-time
-              description: Filter users created before this date.
-          description: Filter criteria for users.
-    UserSettingsHistoryResponse:
+          $ref: '#/components/schemas/MultipleUsersRequestWithCreationDates'
+          exampleSetFlag: false
+      exampleSetFlag: false
+      types:
+      - object
+    UserSettingsHistory:
+      type: object
+      properties:
+        setting:
+          type: string
+          description: The user capability that was changed
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - webConferencesRecorded
+          - preventWebConferenceRecording
+          - emailsImported
+          - preventEmailImport
+          - active
+          - nonRecordedMeetingsImported
+          - gongConnectEnabled
+          - callsImported
+          - interviewsRecorded
+          - preventInterviewRecording
+        value:
+          type: boolean
+          description: The new value that was set
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        time:
+          type: string
+          description: The date and time the action was set, in the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC).
+          example: '2018-02-19T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+      description: User's settings history.
+      exampleSetFlag: false
+      types:
+      - object
+    Settings:
+      type: object
+      properties:
+        webConferencesRecorded:
+          type: boolean
+          description: True if the team member is set to be recorded by Gong, false if not.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        preventWebConferenceRecording:
+          type: boolean
+          description: If true, invitation of this user to a web conference will prevent its recording (even if other users invited are set to record).
+          exampleSetFlag: false
+          types:
+          - boolean
+        telephonyCallsImported:
+          type: boolean
+          description: True if the team member is set to import telephony calls from by Gong, false if not.
+          exampleSetFlag: false
+          types:
+          - boolean
+        emailsImported:
+          type: boolean
+          description: True if the team member is set to import emails by Gong, false if not.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        preventEmailImport:
+          type: boolean
+          description: True if the team member is set to prevent import of emails by Gong, false if not.
+          exampleSetFlag: false
+          types:
+          - boolean
+        nonRecordedMeetingsImported:
+          type: boolean
+          description: True if the team member is set to import non recorded meetings by Gong, false if not.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        gongConnectEnabled:
+          type: boolean
+          description: True if the team member has Gong Connect enabled, false if not.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+      description: The user's settings in the Gong system.
+      exampleSetFlag: false
+      types:
+      - object
+    UsersMetadata:
       type: object
       properties:
         requestId:
           type: string
-          description: A unique identifier for the request.
-        userSettingsHistory:
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        records:
+          $ref: '#/components/schemas/Records'
+          exampleSetFlag: false
+        users:
           type: array
+          description: A list, in which each item specifies one user's metadata.
+          exampleSetFlag: false
           items:
-            type: object
-            properties:
-              userId:
-                type: string
-                description: The user ID.
-              settingName:
-                type: string
-                description: Name of the setting that changed.
-              previousValue:
-                type: string
-                description: The previous value of the setting.
-              newValue:
-                type: string
-                description: The new value of the setting.
-              changedAt:
-                type: string
-                format: date-time
-                description: When the setting was changed.
-              changedBy:
-                type: string
-                description: Who made the change.
-          description: List of settings changes for the user.
-    UserResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        user:
-          $ref: '#/components/schemas/User'
+            $ref: '#/components/schemas/UserMetadata'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
     ErrorResponse:
       type: object
       properties:
         requestId:
           type: string
-          description: A unique identifier for the request.
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
         errors:
           type: array
+          description: Error messages.
+          example:
+          - An error has occurred
+          exampleSetFlag: true
           items:
             type: string
-          description: List of error messages.
-    UsersResponse:
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    SettingsHistory:
       type: object
       properties:
         requestId:
           type: string
-          description: A unique identifier for the request.
-        records:
-          type: object
-          properties:
-            totalRecords:
-              type: integer
-              description: Total number of user records.
-            currentPageSize:
-              type: integer
-              description: Number of records in the current page.
-            currentPageNumber:
-              type: integer
-              description: The current page number.
-            cursor:
-              type: string
-              description: Cursor value for retrieving the next page.
-        users:
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        userSettingsHistory:
           type: array
+          description: User's settings history.
+          exampleSetFlag: false
           items:
-            $ref: '#/components/schemas/User'
-          description: List of user objects.
+            $ref: '#/components/schemas/UserSettingsHistory'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    Records:
+      type: object
+      properties:
+        totalRecords:
+          type: integer
+          description: Total number of records.
+          format: int32
+          example: 263
+          exampleSetFlag: true
+          types:
+          - integer
+        currentPageSize:
+          type: integer
+          description: Number of records in the current page.
+          format: int32
+          example: 100
+          exampleSetFlag: true
+          types:
+          - integer
+        currentPageNumber:
+          type: integer
+          description: Current page number.
+          format: int32
+          example: 0
+          exampleSetFlag: true
+          types:
+          - integer
+        cursor:
+          type: string
+          description: Returned only when there are more records to be retrieved. Repeat the API call and pass this cursor value in the request to retrieve the next page of records.
+          example: eyJhbGciOiJIUzI1NiJ9.eyJjYWxsSWQiM1M30.6qKwpOcvnuweTZmFRzYdtjs_YwJphJU4QIwWFM
+          exampleSetFlag: true
+          types:
+          - string
+      description: Information about the number of records that match the requested filter.
+      exampleSetFlag: false
+      types:
+      - object
     User:
       type: object
       properties:
-        id:
+        requestId:
           type: string
-          description: Unique Gong user identifier.
-        emailAddress:
-          type: string
-          format: email
-          description: The user's email address.
-        firstName:
-          type: string
-          description: The user's first name.
-        lastName:
-          type: string
-          description: The user's last name.
-        title:
-          type: string
-          description: The user's job title.
-        phoneNumber:
-          type: string
-          description: The user's phone number.
-        extension:
-          type: string
-          description: The user's phone extension.
-        personalMeetingUrls:
-          type: array
-          items:
-            type: string
-            format: uri
-          description: List of the user's personal meeting URLs.
-        settings:
-          type: object
-          properties:
-            webConferencesRecorded:
-              type: boolean
-              description: Whether web conferences are recorded.
-            preventWebConferenceRecording:
-              type: boolean
-              description: Whether web conference recording is prevented.
-            telephonyCallsImported:
-              type: boolean
-              description: Whether telephony calls are imported.
-            emailsImported:
-              type: boolean
-              description: Whether emails are imported.
-            preventEmailImport:
-              type: boolean
-              description: Whether email import is prevented.
-          description: User recording and import settings.
-        managerId:
-          type: string
-          description: The Gong user ID of this user's manager.
-        meetingConsentPageUrl:
-          type: string
-          format: uri
-          description: URL of the meeting consent page.
-        spokenLanguages:
-          type: array
-          items:
-            type: object
-            properties:
-              language:
-                type: string
-              primary:
-                type: boolean
-          description: Languages spoken by the user.
-        active:
-          type: boolean
-          description: Whether the user account is active.
-        created:
-          type: string
-          format: date-time
-          description: When the user account was created.
-        avatarUrl:
-          type: string
-          format: uri
-          description: URL of the user's avatar image.
-        trustedEmailAddress:
-          type: string
-          format: email
-          description: The user's trusted email address for SSO.
-  securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
-      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
-    bearerAuth:
-      type: http
-      scheme: bearer
-      description: OAuth 2.0 Bearer token authentication.
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        user:
+          $ref: '#/components/schemas/UserMetadata'
+          exampleSetFlag: false
+      exampleSetFlag: false
+      types:
+      - object

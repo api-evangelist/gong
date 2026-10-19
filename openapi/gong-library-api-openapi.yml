@@ -1,194 +1,530 @@
 openapi: 3.2.0
 info:
   title: Gong Library API
-  description: The Gong Library API provides access to the library structure and calls stored in specific folders, enabling programmatic browsing and retrieval of curated call content.
-  version: 2.0.0
-  contact:
-    name: Gong
-    url: https://www.gong.io
-    email: support@gong.io
-  license:
-    name: Proprietary
-    url: https://www.gong.io/terms-of-service/
-  termsOfService: https://www.gong.io/terms-of-service/
+  description: 'Overview
+
+
+    The Gong API allows you to:
+
+
+    Receive the following information from Gong:
+
+
+    Your company''s calls in Gong
+
+
+    Your company''s users in Gong
+
+
+    Your company''s user stats in Gong
+
+
+    Your company''s user settings in Gong
+
+
+    Your company''s libraries in Gong
+
+
+    Upload new or
+
+    update
+
+    call recordings in Gong, in order to support cases where you have an internal system that records
+
+    calls or obtains them from a third-party entity.
+
+
+    Data Privacy:
+
+    Delete users and all their associated elements.
+
+
+    Upload CRM data into Gong.
+
+
+    Check here what''s your base URL for all API calls.
+
+
+    Authentication
+
+
+    There are two ways to retrieve credentials to the Gong Public API:
+
+
+    Retrieve Manually:
+
+
+    In the Gong API Page (you
+
+    must be a technical administrator in Gong), click "Create" to receive an Access Key
+
+    and an Access Key Secret.
+
+
+    Use the Basic Authorization HTTP header (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Basic <token>
+
+
+    To create the basic token, combine the Access Key and the Access Key Secret with
+
+    colon (:) and then encode in Base64 as following:
+
+
+    Base64(<accessKey> : <accessKeySecret>)
+
+
+    Retrieve through OAuth
+
+
+    To obtain the Bearer token, follow the steps described in the Gong OAuth Guide.
+
+
+    After obtaining the token, use the Bearer Authorization HTTP header
+
+    (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Bearer <token>
+
+
+    Limits
+
+
+    By default Gong limits your company''s access to the service to 3 API calls per second, and 10,000 API calls per day.
+
+
+    When the rate of API calls exceeds these limits an HTTP status code 429 is returned and a Retry-After header indicates
+
+    how many seconds to wait before making a new request.
+
+
+    If required, contact help.gong.io to change these limits.
+
+
+    Cursors
+
+
+    Some API calls that return a list are limited in the amount of records they may return, so multiple API calls may be
+
+    required to bring all records. Such an API call also returns a records field, which contains the number of records
+
+    in the current page, the current page number and the total number of records.
+
+
+    In cases where the total number of records exceeds the number of records thus far retrieved, the records field will also
+
+    contain a cursor field which can be used to access the next page of records. To retrieve the next page, repeat the API call with
+
+    the cursor value as supplied by the previous API call. All other request inputs should remain the same.
+
+
+    Forward Compatibility
+
+
+    When coding a system to accept Gong data, take into account that Gong may, without prior warning, add fields to the JSON output.
+
+    It is recommended to future proof your code so that it disregards all JSON fields you don''t actually use.'
+  version: V2
 servers:
-- url: https://api.gong.io/v2
-  description: Gong API v2 Production Server
-security:
-- basicAuth: []
-- bearerAuth: []
+- url: https://127.0.0.1:8443
+  description: Generated server url
 tags:
 - name: Library
-  description: Operations for browsing and retrieving library content
+  description: 'Gong’s “Library” API endpoints allow you to:
+
+
+    Request all the calls in a specific folder.
+
+
+    Request all the Library folders. We do not allow retrieval of either private or archived folders.'
 paths:
-  /library/folders:
+  /v2/library/folders:
     get:
-      operationId: listLibraryFolders
-      summary: Gong Retrieve library folders
-      description: Retrieves the library folder structure, listing all folders available in the Gong library. Folders are used to organize curated call content for training and review. Can be filtered by workspace.
       tags:
       - Library
+      summary: Retrieve Library folders (/v2/library/folders)
+      description: 'Use this endpoint to retrieve a list of public library folders. We do not allow retrieval of either private or archived folders.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:library:read''.'
+      operationId: getLibraryStructure
       parameters:
       - name: workspaceId
         in: query
+        description: Workspace identifier. We will retrieve folders which are related to this specific workspace.
         required: false
-        description: Optional workspace ID to filter folders by workspace.
+        style: FORM
+        explode: true
         schema:
           type: string
+          exampleSetFlag: false
+          types:
+          - string
       responses:
         '200':
-          description: Successful response containing library folders.
+          description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LibraryFoldersResponse'
+                $ref: '#/components/schemas/LibraryResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '401':
-          description: Unauthorized - invalid or missing authentication credentials.
+          description: Access denied
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: No folders found for the specified period
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '429':
-          description: Rate limit exceeded.
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /library/folders/{folderId}/calls:
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/library/folder-content:
     get:
-      operationId: listCallsInFolder
-      summary: Gong List calls in a library folder
-      description: Retrieves a list of calls stored in a specific library folder. Returns call references that can be used to retrieve full call details via the Calls API.
       tags:
       - Library
+      summary: List of calls in a specific folder (/v2/library/folder-content)
+      description: 'Given a folder id, this endpoint retrieves a list of calls in it.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:library:read''.'
+      operationId: getCallsInSpecificFolder
       parameters:
       - name: folderId
-        in: path
-        required: true
-        description: The unique identifier of the library folder.
+        in: query
+        description: Gong's unique numeric identifier for the folder (up to 20 digits).
+        required: false
+        style: FORM
+        explode: true
         schema:
           type: string
+          exampleSetFlag: false
+          types:
+          - string
       responses:
         '200':
-          description: Successful response containing calls in the folder.
+          description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LibraryFolderCallsResponse'
+                $ref: '#/components/schemas/LibraryFolderListOfCallsResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '401':
-          description: Unauthorized - invalid or missing authentication credentials.
+          description: Access denied
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '404':
-          description: Folder not found.
+          description: No folders found for the specified period
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '429':
-          description: Rate limit exceeded.
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
 components:
   schemas:
+    LibraryResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        folders:
+          type: array
+          description: A list, in which each item specifies one folder.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/LibraryFolder'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
     LibraryCall:
       type: object
       properties:
-        callId:
+        id:
           type: string
-          description: Unique identifier for the call.
+          description: Gong's unique numeric identifier of a call (up to 20 digits).
+          example: '7782342274025937895'
+          exampleSetFlag: true
+          types:
+          - string
         title:
           type: string
-          description: Title of the call.
-        url:
+          description: The title of the call.
+          example: Example call
+          exampleSetFlag: true
+          types:
+          - string
+        note:
           type: string
-          format: uri
-          description: URL to the call in the Gong web application.
-        started:
-          type: string
-          format: date-time
-          description: When the call started.
-        duration:
-          type: number
-          description: Duration of the call in seconds.
-        primaryUserId:
-          type: string
-          description: User ID of the primary user on the call.
-        addedToLibraryAt:
-          type: string
-          format: date-time
-          description: When the call was added to the library folder.
+          description: A note attached to the call in the folder. The note is optional.
+          example: sample note
+          exampleSetFlag: true
+          types:
+          - string
         addedBy:
           type: string
-          description: User ID of who added the call to the library.
-    ErrorResponse:
+          description: Gong's unique numeric identifier for the user who added the call to folder.
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        created:
+          type: string
+          description: The date and time when the call was added to folder in the ISO-8601 format (e.g., '2020-01-12T14:30:00-08:00').
+          format: date-time
+          example: 1578868200.0
+          exampleSetFlag: true
+          types:
+          - string
+        url:
+          type: string
+          description: URL of the call.
+          example: https://app.gong.io/call?id=3636865806219496180&highlights=%5B%7B%22to%22%3A+3240%2C+%22from%22%3A+1200%2C+%22type%22%3A+%22LIBRARY%22%7D%5D
+          exampleSetFlag: true
+          types:
+          - string
+        snippet:
+          $ref: '#/components/schemas/Snippet'
+          exampleSetFlag: false
+      description: Basic details such as id, title, notes, etc.
+      exampleSetFlag: false
+      types:
+      - object
+    Snippet:
       type: object
       properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
-    LibraryFoldersResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        folders:
-          type: array
-          items:
-            $ref: '#/components/schemas/LibraryFolder'
-          description: List of library folders.
-    LibraryFolderCallsResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: A unique identifier for the request.
-        calls:
-          type: array
-          items:
-            $ref: '#/components/schemas/LibraryCall'
-          description: List of calls in the folder.
+        fromSec:
+          type: integer
+          description: Call snippet start in seconds relative to the call start time. For example 305 is a snippet that starts after 5 minutes and 5 seconds after the beginning of the call.
+          format: int32
+          example: 21
+          exampleSetFlag: true
+          types:
+          - integer
+        toSec:
+          type: integer
+          description: Call snippet end in seconds relative to the call start time. For example 900 means that this snippet ends after exactly 15 minutes after the beginning of the call.
+          format: int32
+          example: 132
+          exampleSetFlag: true
+          types:
+          - integer
+      description: Snippet of call
+      exampleSetFlag: false
+      types:
+      - object
     LibraryFolder:
       type: object
       properties:
         id:
           type: string
-          description: Unique identifier for the library folder.
+          description: Gong's unique numeric identifier for a library's folder (up to 20 digits).
+          example: '3843152912968920037'
+          exampleSetFlag: true
+          types:
+          - string
         name:
           type: string
-          description: Name of the library folder.
-        description:
-          type: string
-          description: Description of the library folder.
+          description: Display name of the folder.
+          example: Sales Onboarding
+          exampleSetFlag: true
+          types:
+          - string
         parentFolderId:
           type: string
-          description: ID of the parent folder. Null for top-level folders.
-        callCount:
-          type: integer
-          description: Number of calls stored in this folder.
+          description: Gong's unique numeric identifier for library's parent folder (null for root folder).
+          example: '295738305212375930'
+          exampleSetFlag: true
+          types:
+          - string
         createdBy:
           type: string
-          description: User ID of the folder creator.
-        created:
+          description: Gong's unique numeric identifier for the user who added the folder.
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        updated:
           type: string
+          description: Folder's last update time in the ISO-8601 format (e.g., '2020-03-14T05:30:00-08:00').
           format: date-time
-          description: When the folder was created.
-  securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
-      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
-    bearerAuth:
-      type: http
-      scheme: bearer
-      description: OAuth 2.0 Bearer token authentication.
+          example: 1584192600.0
+          exampleSetFlag: true
+          types:
+          - string
+      description: Basic details such as sub-folders, title, etc.
+      exampleSetFlag: false
+      types:
+      - object
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        errors:
+          type: array
+          description: Error messages.
+          example:
+          - An error has occurred
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    LibraryFolderListOfCallsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        id:
+          type: string
+          description: Gong's unique numeric identifier for a library's folder (up to 20 digits).
+          example: '3843152912968920037'
+          exampleSetFlag: true
+          types:
+          - string
+        name:
+          type: string
+          description: Display name of the folder.
+          example: Sales Onboarding
+          exampleSetFlag: true
+          types:
+          - string
+        createdBy:
+          type: string
+          description: Gong's unique numeric identifier for the user who added the folder.
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        updated:
+          type: string
+          description: Folder's last update time in the ISO-8601 format (e.g., '2020-03-14T05:30:00-08:00').
+          format: date-time
+          example: 1584192600.0
+          exampleSetFlag: true
+          types:
+          - string
+        calls:
+          type: array
+          description: A list, in which each item represents one library call.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/LibraryCall'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object

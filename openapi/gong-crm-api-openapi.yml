@@ -1,0 +1,1576 @@
+openapi: 3.2.0
+info:
+  title: Gong CRM API
+  description: 'Overview
+
+
+    The Gong API allows you to:
+
+
+    Receive the following information from Gong:
+
+
+    Your company''s calls in Gong
+
+
+    Your company''s users in Gong
+
+
+    Your company''s user stats in Gong
+
+
+    Your company''s user settings in Gong
+
+
+    Your company''s libraries in Gong
+
+
+    Upload new or
+
+    update
+
+    call recordings in Gong, in order to support cases where you have an internal system that records
+
+    calls or obtains them from a third-party entity.
+
+
+    Data Privacy:
+
+    Delete users and all their associated elements.
+
+
+    Upload CRM data into Gong.
+
+
+    Check here what''s your base URL for all API calls.
+
+
+    Authentication
+
+
+    There are two ways to retrieve credentials to the Gong Public API:
+
+
+    Retrieve Manually:
+
+
+    In the Gong API Page (you
+
+    must be a technical administrator in Gong), click "Create" to receive an Access Key
+
+    and an Access Key Secret.
+
+
+    Use the Basic Authorization HTTP header (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Basic <token>
+
+
+    To create the basic token, combine the Access Key and the Access Key Secret with
+
+    colon (:) and then encode in Base64 as following:
+
+
+    Base64(<accessKey> : <accessKeySecret>)
+
+
+    Retrieve through OAuth
+
+
+    To obtain the Bearer token, follow the steps described in the Gong OAuth Guide.
+
+
+    After obtaining the token, use the Bearer Authorization HTTP header
+
+    (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Bearer <token>
+
+
+    Limits
+
+
+    By default Gong limits your company''s access to the service to 3 API calls per second, and 10,000 API calls per day.
+
+
+    When the rate of API calls exceeds these limits an HTTP status code 429 is returned and a Retry-After header indicates
+
+    how many seconds to wait before making a new request.
+
+
+    If required, contact help.gong.io to change these limits.
+
+
+    Cursors
+
+
+    Some API calls that return a list are limited in the amount of records they may return, so multiple API calls may be
+
+    required to bring all records. Such an API call also returns a records field, which contains the number of records
+
+    in the current page, the current page number and the total number of records.
+
+
+    In cases where the total number of records exceeds the number of records thus far retrieved, the records field will also
+
+    contain a cursor field which can be used to access the next page of records. To retrieve the next page, repeat the API call with
+
+    the cursor value as supplied by the previous API call. All other request inputs should remain the same.
+
+
+    Forward Compatibility
+
+
+    When coding a system to accept Gong data, take into account that Gong may, without prior warning, add fields to the JSON output.
+
+    It is recommended to future proof your code so that it disregards all JSON fields you don''t actually use.'
+  version: V2
+servers:
+- url: https://127.0.0.1:8443
+  description: Generated server url
+tags:
+- name: CRM
+  description: '.public-api-info { background: rgb(222, 235, 255);}.public-api-tip { background: rgb(227, 252, 239);}.public-api-parameter { background: rgba(9,30,66,0.08);}.public-api-note { background: rgb(234, 230, 255);}.public-api-important { background: rgb(255, 250, 230);}.public-api-critical { background: rgb(255, 235, 230);}table, th, td { border: 1px solid gray; border-collapse: collapse;}th, td { padding: 5px;}th { text-align: left;}img { border: 2px solid #D3D5D9;}
+
+    If you are using the deprecated endpoints, download the PDF file. What does the CRM API do? This API enables integration with CRMs that are not natively integrated with Gong, so that Gong can provide you with its full capabilities based on your CRM data. This includes:
+
+
+    Pipeline review and forecast
+
+
+    Narrow down conversations (calls and emails) by customer data for coaching and analytics
+
+
+    Track initiatives and adoption based on accounts and opportunities
+
+
+    By uploading your CRM data to Gong, your Gong users will be able to see their CRM deals in the Gong Deals page, view deal boards to follow up on deal progress, get warnings for deals that are at risk, and see whether their team will reach its quota. The CRM data is also displayed in conversations and calls, so that your Gong users can see account and contact data such as the name and job title of the contact in the call. Account data is displayed in the Accounts page, together with the history of all communication and contact with the company. Note: Gong provides native integrations with Salesforce, HubSpot and Microsoft Dynamics 365. API Protocol
+
+    The API protocol is based on REST guidelines. Check here what''s your base URL for all API calls. The payload is either a JSON object or, for API calls that upload lists of objects, line delimited JSON (see: JSON streaming). JSON objects should be UTF-8 encoded. Dates and timestamps in JSON objects should be in ISO-8601 format without milliseconds (e.g. ''2018-02-18T02:30:00-07:00'' or ''2018-02-18T08:00:00Z'', where Z stands for UTC). What data can I upload? To see your CRM data in Gong, upload the following entities:
+
+
+    Business User: The CRM user, such as a seller or manager. Account: The customer details in the CRM
+
+
+    Contact: A specific contact in the CRM that is associated with a customer
+
+
+    Deal: A deal or opportunity, or a contract of a specific account in the CRM
+
+
+    Lead: A potential customers who are not associated with an account
+
+
+    Stage: The list of stages the deal can be in, in your CRM
+
+
+    Uploading CRM data to Gong
+
+
+    This diagram shows how to set up your system in order to upload CRM data to Gong. This is relevant for each scenario of uploading data, initial, incremental and uploading historical data. Registering your Integration
+
+
+    Register your integration to get an integrationId used to identify your company''s integration with Gong. This is a one time action that does not need to be repeated unless you delete your integration. Use PUT v2/crm/integrations to register your integration. The integration Id is returned in the response. Include the integration Id each time you upload your CRM data. Uploading additional data for CRM entities
+
+
+    Each CRM entity has a set of standard fields. In addition, you may want to upload additional fields. Use the POST /v2/crm/entity-schema to adjust the schema according to your needs. Once you have uploaded your schema to Gong, you can upload your entities with the additional fields. Uploading your CRM data to Gong
+
+
+    This section explains how you can use the CRM API to upload your data to Gong:
+
+
+    First-time upload
+
+
+    Create a database dump of the data you want to upload to Gong based on your CRM schema and data. When uploading your data for the first time you should include all of the CRM records that should appear in Gong. Incremental upload
+
+
+    Send regular incremental data updates to Gong. You can update your data as often as you like, we recommend updating between every 1-5 minutes.'
+paths:
+  /v2/crm/integrations:
+    get:
+      tags:
+      - CRM
+      summary: Get Generic CRM integration details (/v2/crm/integrations)
+      description: '.public-api-info { background: rgb(222, 235, 255);}.public-api-tip { background: rgb(227, 252, 239);}.public-api-parameter { background: rgba(9,30,66,0.08);}.public-api-note { background: rgb(234, 230, 255);}.public-api-important { background: rgb(255, 250, 230);}.public-api-critical { background: rgb(255, 235, 230);}table, th, td { border: 1px solid gray; border-collapse: collapse;}th, td { padding: 5px;}th { text-align: left;}img { border: 2px solid #D3D5D9;}
+
+        Returns the CRM integration you set up using the PUT /v2/crm/integrations endpoint. You can only have one integration at a time.
+
+
+        When accessed using a bearer token, this endpoint requires the ''api:crm:integrations:read'' scope.'
+      operationId: listGenericCrmIntegration
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListGenericCrmIntegrationsResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+    put:
+      tags:
+      - CRM
+      summary: Register a Generic CRM integration (/v2/crm/integrations)
+      description: '.public-api-info { background: rgb(222, 235, 255);}.public-api-tip { background: rgb(227, 252, 239);}.public-api-parameter { background: rgba(9,30,66,0.08);}.public-api-note { background: rgb(234, 230, 255);}.public-api-important { background: rgb(255, 250, 230);}.public-api-critical { background: rgb(255, 235, 230);}table, th, td { border: 1px solid gray; border-collapse: collapse;}th, td { padding: 5px;}th { text-align: left;}img { border: 2px solid #D3D5D9;}
+
+        Creates your CRM integration with Gong. Returns an integrationId, which should be used in requests to the CRM API to enable correct association of CRM data.
+
+
+        Multiple CRM integrations are not supported. To create a new integration, delete the old one first (DELETE /v2/crm/integrations).
+
+
+        This includes if you have integrated with Gong using one of the native CRM integrations such as HubSpot or Salesforce.
+
+
+        When accessed using a bearer token, this endpoint requires the ''api:crm:integration:register'' scope.'
+      operationId: registerGenericCrmIntegration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenericCrmRegistrationRequest'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterGenericCrmResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '409':
+          description: Conflict - An active integration already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+    delete:
+      tags:
+      - CRM
+      summary: Delete a Generic CRM integration (/v2/crm/integrations)
+      description: '.public-api-info { background: rgb(222, 235, 255);}.public-api-tip { background: rgb(227, 252, 239);}.public-api-parameter { background: rgba(9,30,66,0.08);}.public-api-note { background: rgb(234, 230, 255);}.public-api-important { background: rgb(255, 250, 230);}.public-api-critical { background: rgb(255, 235, 230);}table, th, td { border: 1px solid gray; border-collapse: collapse;}th, td { padding: 5px;}th { text-align: left;}img { border: 2px solid #D3D5D9;}
+
+        Asynchronously deletes a CRM integration and all its associated CRM objects (Accounts, Contacts, Deals, Leads, and Users).
+
+
+        This endpoint gets the clientRequestId generated by you as the request identifier. Use this to check the status of the delete request by calling the /request-status endpoint,with the clientRequestId.
+
+
+        A status of DONE indicates that the integration and all its associated crm objects have been successfully deleted. This may take up to 24 hours to be deleted.
+
+
+        When accessed using a bearer token, this endpoint requires the ''api:crm:integration:delete'' scope.
+
+        Example
+
+        DELETE https://api.gong.io/v2/crm/integrations?clientRequestId=1234&integrationId=6286478263646'
+      operationId: deleteGenericCrmIntegration
+      parameters:
+      - name: integrationId
+        in: query
+        description: The ID of the integration to delete
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: integer
+          format: int64
+          exampleSetFlag: false
+          types:
+          - integer
+      - name: clientRequestId
+        in: query
+        description: A unique identifier generated and sent by you to allow troubleshooting. Valid characters are letters, numbers, dashes and underscores.
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+      responses:
+        '201':
+          description: Successfully registered the delete integration request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncProcessingResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '409':
+          description: Client request id has already been used
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/crm/entity-schema:
+    get:
+      tags:
+      - CRM
+      summary: List Schema Fields (/v2/crm/entity-schema)
+      description: '.public-api-info { background: rgb(222, 235, 255);}.public-api-tip { background: rgb(227, 252, 239);}.public-api-parameter { background: rgba(9,30,66,0.08);}.public-api-note { background: rgb(234, 230, 255);}.public-api-important { background: rgb(255, 250, 230);}.public-api-critical { background: rgb(255, 235, 230);}table, th, td { border: 1px solid gray; border-collapse: collapse;}th, td { padding: 5px;}th { text-align: left;}img { border: 2px solid #D3D5D9;}
+
+        Retrieves a list of the object schema fields.
+
+
+        When accessed using a bearer token, this endpoint requires the scope ''api:crm:schema''.
+
+
+        Example
+
+
+        Request
+
+        GET https://api.gong.io/v2/crm/entity-schema?integrationId=6286478263646&objectType=ACCOUNT
+
+        Response
+
+        { "requestId": "afjkzqkqglog7ueki5", "objectTypeToSelectedFields": { "ACCOUNT": [ { "name": "accountTypePicklist", "label": "Account Type", "type": "PICKLIST", "lastModified": null, "isDeleted": false, "referenceTo": null, "orderedValueList": null }, { "name": "accountTypePicklist2", "label": "Account Type2", "type": "PICKLIST", "lastModified": null, "isDeleted": false, "referenceTo": null, "orderedValueList": null }, { "name": "fooBar", "label": "Foo Bar", "type": "STRING", "lastModified": null, "isDeleted": false, "referenceTo": null, "orderedValueList": null } ] }}'
+      operationId: listCrmSchemaFields
+      parameters:
+      - name: integrationId
+        in: query
+        description: Integration ID generated when creating the integration
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: integer
+          format: int64
+          exampleSetFlag: false
+          types:
+          - integer
+      - name: objectType
+        in: query
+        description: Type of object to retrieve the schema fields for (case-sensitive). <br>Omitting this parameter returns the schema for all object types.
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - ACCOUNT
+          - CONTACT
+          - DEAL
+          - LEAD
+      responses:
+        '200':
+          description: Successfully retrieved crm schema fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSelectedFieldsResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+    post:
+      tags:
+      - CRM
+      summary: Upload Object Schema (/v2/crm/entity-schema)
+      description: '.public-api-info { background: rgb(222, 235, 255);}.public-api-tip { background: rgb(227, 252, 239);}.public-api-parameter { background: rgba(9,30,66,0.08);}.public-api-note { background: rgb(234, 230, 255);}.public-api-important { background: rgb(255, 250, 230);}.public-api-critical { background: rgb(255, 235, 230);}table, th, td { border: 1px solid gray; border-collapse: collapse;}th, td { padding: 5px;}th { text-align: left;}img { border: 2px solid #D3D5D9;}
+
+        Enables you to add, edit or remove fields to Gong CRM entities, so that you can display additional CRM data in Gong. Fields that are not included in the Gong CRM objects, and are uploaded without updating your schema, are not displayed in Gong.
+
+
+        Update your schema when:
+
+
+        You create a new integration
+
+
+        There are changes to the schema of any object type. You can also send a schema update request before any request to the /v2/crm/entities API.
+
+
+        When updating your schema:
+
+
+        Add or change field: include all fields you want in the schema, including those sent previously. Example:
+
+
+        Date Action Result
+
+
+        3/4/2023 Send account schema with fieldA fieldA added to the account
+
+
+        6/4/23 Send account schema with fieldA and fieldB fieldA still included in account schema. fieldB added to the account
+
+
+        8/4/23 Send account schema with fieldC but without fieldA and fieldB Receive an error that you must include all fields in the schema
+
+
+        15/4/23 Send account schema with fieldB, fieldC, and isDeleted for fieldA fieldA and all it''s data are deleted. fieldB and fieldC remain in the schema
+
+
+        Changing a field: if you change the field type, a new field is created and the data associated with the original field is deleted. Other changes, such as the label do not result in data being deleted.
+
+
+        Deleting a field: to delete a field and it''s associated data, send the field with isDeleted = true
+
+
+        When accessed using a bearer token, this endpoint requires the ''api:crm:schema'' scope.
+
+
+        Supported field types
+
+
+        This table describes the field types that can be added to your schema
+
+
+        Field typeFormat in JSONPossible values
+
+
+        BOOLEANbooleantrue, false
+
+
+        DATEstring (ISO-8601 date without time)"2020-05-31"
+
+
+        DATETIMEstring (ISO-8601 datetime without milliseconds)"2020-12-17T07:37:21+02:00"
+
+        "2020-12-17T05:37:21Z"
+
+
+        PICKLISTstring - one of the values in an orderedValueList"Analyst"
+
+
+        NUMBERnumber45.66, 8453
+
+
+        PERCENTnumber (between 0 to 100)67.3
+
+
+        CURRENCY*number34.68
+
+
+        PHONENUMBERstring"+14055766687"
+
+
+        EMAILADDRESSstring"john.doe@anywhere.com"
+
+
+        REFERENCEstring - the id of another object"48b009drax"
+
+
+        IDstring - the id of the object"843hf8484jr84htg"
+
+
+        STRINGstring"whatever you want"
+
+
+        URLstring"https://crm.com/account/6d4r578f"
+
+
+        * In the integration send a number value, and specify the correct currency symbol in the Gong UI. Currently Gong does not support multiple currencies per company.
+
+
+        Example
+
+
+        Request
+
+
+        POST https://api.gong.io/v2/crm/entity-schema?integrationId=6286478263646&objectType=ACCOUNT
+
+
+        [{"uniqueName": "orderId", "label": "ID", "type": "ID", "lastModified": "2020-11-11T08:11:34+01:00"},
+
+
+        {"uniqueName": "parentAccount", "label": "Main Account", "type": "REFERENCE", "referenceTo": "ACCOUNT", "lastModified": "2020-11-11T08:11:34+01:00"},
+
+
+        {"uniqueName": "category", "label": "Category", "type": "PICKLIST", "orderedValueList": ["Analyst", "Competitor", "Customer", "Integrator", "Investor", "Partner", "Other"], "lastModified": "2020-11-11T08:11:34+01:00"},
+
+
+        // remove custom field
+
+
+        {"uniqueName": "industry", "isDeleted": true, "label": "Industry", "type": "PICKLIST", "lastModified": "2020-11-21T08:11:34+01:00"}]'
+      operationId: uploadCrmSchemaField
+      parameters:
+      - name: integrationId
+        in: query
+        description: Integration ID generated when creating the integration
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: integer
+          format: int64
+          exampleSetFlag: false
+          types:
+          - integer
+      - name: objectType
+        in: query
+        description: The object type to set the schema for (case-sensitive)
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - ACCOUNT
+          - CONTACT
+          - DEAL
+          - LEAD
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              exampleSetFlag: false
+              items:
+                $ref: '#/components/schemas/GenericSchemaFieldRequest'
+                exampleSetFlag: false
+              types:
+              - array
+            exampleSetFlag: false
+        required: true
+      responses:
+        '201':
+          description: Successfully uploaded crm schema fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaUpdateResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/crm/entities:
+    get:
+      tags:
+      - CRM
+      summary: Get CRM objects (/v2/crm/entities)
+      description: '.public-api-info { background: rgb(222, 235, 255);}.public-api-tip { background: rgb(227, 252, 239);}.public-api-parameter { background: rgba(9,30,66,0.08);}.public-api-note { background: rgb(234, 230, 255);}.public-api-important { background: rgb(255, 250, 230);}.public-api-critical { background: rgb(255, 235, 230);}table, th, td { border: 1px solid gray; border-collapse: collapse;}th, td { padding: 5px;}th { text-align: left;}img { border: 2px solid #D3D5D9;}
+
+        This API is for use in the development phase only, to manually verify that objects are uploaded and processed correctly in Gong.
+
+
+        Returns a JSON object where each key is the object’s crm id and the corresponding value is a nested JSON object representing the CRM object fields. Each key in the nested JSON is the field name and the corresponding value is the field value.
+
+
+        The objects are fetched from the Gong main DB. If the object is not found, the JSON’s value is null.
+
+
+        The request body contains an array of objects ids.
+
+
+        The request is limited to 100 objects. If more than 100 objects are requested only the first 100 are returned.
+
+
+        When accessed using a bearer token, this endpoint requires the ''api:crm:get-objects'' scope.
+
+
+        Example
+
+
+        Request
+
+        GET https://api.gong.io/v2/crm/entities?integrationId=6286478263646&objectType=DEAL
+
+
+        ["1234","8765"] //request body'
+      operationId: getCrmObjects
+      parameters:
+      - name: integrationId
+        in: query
+        description: Integration ID generated when creating the integration
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: integer
+          format: int64
+          exampleSetFlag: false
+          types:
+          - integer
+      - name: objectType
+        in: query
+        description: Requested objects type
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - ACCOUNT
+          - CONTACT
+          - DEAL
+          - LEAD
+      - name: objectsCrmIds
+        in: query
+        description: <b>Request Body:</b> The requested objects crm ids (should be sent in the request body)
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          uniqueItems: true
+          type: array
+          exampleSetFlag: false
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      responses:
+        '200':
+          description: Successfully retrieved requested objects data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetGenericCrmObjectsResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+    post:
+      tags:
+      - CRM
+      summary: Upload CRM objects (/v2/crm/entities)
+      description: '.public-api-info { background: rgb(222, 235, 255);}.public-api-tip { background: rgb(227, 252, 239);}.public-api-parameter { background: rgba(9,30,66,0.08);}.public-api-note { background: rgb(234, 230, 255);}.public-api-important { background: rgb(255, 250, 230);}.public-api-critical { background: rgb(255, 235, 230);}table, th, td { border: 1px solid gray; border-collapse: collapse;}th, td { padding: 5px;}th { text-align: left;}img { border: 2px solid #D3D5D9;}
+
+        Inserts, updates, or deletes a CRM entity in Gong. Gong searches for existing entities with the same ID, to determine whether the entity should be added or updated. Ensure you have an authentication key and that you have registered your integration before uploading your CRM data. When accessed using a bearer token, this endpoint requires the ''api:crm:upload'' scope. Request parameters
+
+
+        Query String parameters
+
+
+        Mandatory parameters are marked with a *. Name Description Data Type
+
+
+        integrationId * Integration ID generated when creating the integration long
+
+
+        objectType * The object being uploaded. Options are (case-sensitive):
+
+
+        ACCOUNT
+
+
+        CONTACT
+
+
+        DEAL
+
+
+        LEAD
+
+
+        BUSINESS_USER
+
+
+        STAGE
+
+
+        string
+
+
+        clientRequestId * A unique identifier sent by you to allow troubleshooting and to prevent repeated attempts to upload the same list of objects. Valid characters: letters, numbers, dashes and underscores. string
+
+
+        Request Body
+
+
+        Content-Type should be multipart/form-data
+
+
+        Maximum payload size: 200 megabytes
+
+
+        Name Description Data Type
+
+
+        dataFile * The LDJSON file with the entity data to upload. A file should only contain objects of one entity type. Records that have multiple updates should be sent in separate files. Each JSON object should be on a separate line. file
+
+
+        CRM Entities
+
+
+        This section details the entities that can be uploaded to Gong
+
+
+        Business User
+
+
+        The CRM business user represents the Gong user in the CRM and is responsible for the relationship with the account and for creating opportunities and closing deals. Uploading business users enables Gong to associate CRM entities such as accounts and contacts with the relevant user in Gong and with their Gong activity, such as conversations. Mandatory parameters are marked with a *. To upload your business users to Gong, generate a JSON file with the following fields:
+
+
+        Name Description Data Type
+
+
+        objectId * The CRM unique ID for the object. Note: objectId can have a maximum of 64 characters and can have the following characters:
+
+
+        alpha numeric characters and a "-"
+
+
+        a valid email address
+
+
+        No other special characters can be used string
+
+
+        modifiedDate * The date and time the object was last modified in the CRM ISO-8601 datetime format, without milliseconds
+
+
+        isDeleted (Default: false) When true, the object is deleted from the database. boolean
+
+
+        url The full URL path to view this object in the CRM string (Qualified URI)
+
+
+        emailAddress * The business user''s email address. Used to associate the Gong user with the CRM user. Not mandatory when isDeleted = true. string
+
+
+        Associating the Gong user with the CRM user
+
+
+        The CRM user is associated with the Gong user according to the email address. Each CRM deal contains an ownerId field, which is the CRM user ID. To update an existing user:
+
+
+        Delete the existing user by uploading the business user entity with isDeleted=true. In a new request, send the new user details with isDeleted=false, or send a different user with the same email address. Account
+
+
+        The account object is an active customer in the CRM. Emails and calls in Gong are associated with this account object. Mandatory parameters are marked with a *. To upload your CRM accounts to Gong, generate a JSON file with the following fields:
+
+
+        Name Description Data Type
+
+
+        objectId * The CRM unique ID for the object.'
+      operationId: uploadCrmData
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - dataFile
+              type: object
+              properties:
+                dataFile:
+                  type: string
+                  description: The CRM data file. You may attach files up to 200MB in size
+                  format: binary
+                  exampleSetFlag: false
+                  types:
+                  - string
+              exampleSetFlag: false
+              types:
+              - object
+            exampleSetFlag: false
+        required: true
+      responses:
+        '201':
+          description: 'Successfully uploaded the crm data.<br>Important: This API is asynchronous. A 201 response indicates that the file successfully uploaded to Gong and is pending processing. Use the clientRequestId to verify the status of the request by calling the GET /v2/crm/request-status endpoint.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncProcessingResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '409':
+          description: Client request id has already been used
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/crm/request-status:
+    get:
+      tags:
+      - CRM
+      summary: Get Request Status (/v2/crm/request-status)
+      description: '.public-api-info { background: rgb(222, 235, 255);}.public-api-tip { background: rgb(227, 252, 239);}.public-api-parameter { background: rgba(9,30,66,0.08);}.public-api-note { background: rgb(234, 230, 255);}.public-api-important { background: rgb(255, 250, 230);}.public-api-critical { background: rgb(255, 235, 230);}table, th, td { border: 1px solid gray; border-collapse: collapse;}th, td { padding: 5px;}th { text-align: left;}img { border: 2px solid #D3D5D9;}
+
+        Returns the current status of the request for endpoints run asynchronously:
+
+
+        POST /v2/crm/entities
+
+
+        DELETE /v2/crm/integrations
+
+
+        When accessed using a bearer token, this endpoint requires the ''api:crm:upload'' scope.
+
+
+        Status Codes
+
+
+        PENDING: file is pending being processed
+
+
+        IN_PROGRESS: file is being processed
+
+
+        DONE: all objects in the file were successfully processed
+
+
+        FAILED: failed to parse some objects, or a general error occurred when the file was being processed
+
+
+        Correcting a file that failed to be processed:
+
+
+        When the status in the response is FAILED do one of the following:
+
+
+        If the response includes a list of errors, correct the errors in the file as follows:
+
+
+        Using the errors.line attribute, locate and correct the data in the JSON file.
+
+
+        You can resend the entire LDJSON file, or only the corrected records via the relevant API.
+
+        Note: The response returns a maximum of 20 errors. To make sure you have corrected all errors, upload the entire file repeatedly until you receive a DONE status.
+
+
+        A single error in the form of:
+
+        {"line":0,"description":"....."} indicates a general processing error:
+
+
+        Fix the LDJSON file according to the error message.
+
+
+        Upload the entire LDJSON file again.'
+      operationId: getRequestStatus
+      parameters:
+      - name: integrationId
+        in: query
+        description: Integration ID generated when creating the integration
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: integer
+          format: int64
+          exampleSetFlag: false
+          types:
+          - integer
+      - name: clientRequestId
+        in: query
+        description: The client request ID used in the asynchronous endpoint you want to get a status for
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+      responses:
+        '200':
+          description: Operation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestStatusResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+components:
+  schemas:
+    GenericSchemaFieldRequest:
+      required:
+      - label
+      - type
+      - uniqueName
+      type: object
+      properties:
+        uniqueName:
+          type: string
+          description: The unique name of the field in the CRM system
+          example: accountowner
+          exampleSetFlag: true
+          types:
+          - string
+        label:
+          type: string
+          description: The label to use in the UI for this field
+          example: Account Owner
+          exampleSetFlag: true
+          types:
+          - string
+        type:
+          type: string
+          description: The field type (case-sensitive). Must be one of the types listed above.
+          example: REFERENCE
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - DATE
+          - DATETIME
+          - NUMBER
+          - PERCENT
+          - CURRENCY
+          - ID
+          - URL
+          - STRING
+          - BOOLEAN
+          - PHONENUMBER
+          - EMAILADDRESS
+          - PICKLIST
+          - REFERENCE
+          - STRINGARRAY
+        lastModified:
+          type: string
+          description: 'The date and time the schema was last modified. <br>Valid format: ISO-8601 format without milliseconds e.g., "2020-12-17T13:45:01Z"'
+          example: '2020-12-17T13:45:01Z'
+          exampleSetFlag: true
+          types:
+          - string
+        isDeleted:
+          type: boolean
+          description: When true, deletes the field from the schema and its value is removed from all objects. Use with caution
+          example: false
+          exampleSetFlag: true
+          types:
+          - boolean
+        referenceTo:
+          type: string
+          description: The object type this field refers to. Required for field of type REFERENCE. Must be one of "ACCOUNT", "CONTACT", "DEAL", "LEAD" or "USER"
+          example: USER
+          exampleSetFlag: true
+          types:
+          - string
+        orderedValueList:
+          type: array
+          description: The list of values for the field. Required for PICKLIST fields
+          example:
+          - Analyst
+          - Competitor
+          - Customer
+          - Integrator
+          - Investor
+          - Partner
+          - Other
+          exampleSetFlag: true
+          items:
+            type: string
+            description: The list of values for the field. Required for PICKLIST fields
+            example: '["Analyst","Competitor","Customer","Integrator","Investor","Partner","Other"]'
+            exampleSetFlag: true
+            types:
+            - string
+          types:
+          - array
+      description: selectedFields
+      exampleSetFlag: false
+      types:
+      - object
+    ListSelectedFieldsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        objectTypeToSelectedFields:
+          type: object
+          additionalProperties:
+            type: array
+            description: selectedFields
+            exampleSetFlag: false
+            items:
+              $ref: '#/components/schemas/GenericSchemaFieldRequest'
+              exampleSetFlag: false
+            types:
+            - array
+          description: selectedFields
+          exampleSetFlag: false
+          types:
+          - object
+      exampleSetFlag: false
+      types:
+      - object
+    ListGenericCrmIntegrationsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        integrations:
+          type: array
+          description: A list of integration objects
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/GenericCrmIntegration'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    SchemaUpdateResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    BaseResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    GenericCrmIntegration:
+      type: object
+      properties:
+        integrationId:
+          type: integer
+          description: The ID of the integration.<br><b>Note:</b> Parse the integrationId as Long or BigInt. Parsing the integrationId as an Integer truncates the integrationId to trailing zeros and returns an incorrect ID.
+          format: int64
+          example: 5517027188234205706
+          exampleSetFlag: true
+          types:
+          - integer
+        ownerEmail:
+          type: string
+          description: Email address of the person responsible for the integration
+          example: joe.doe@acme.com
+          exampleSetFlag: true
+          types:
+          - string
+        name:
+          type: string
+          description: The name of the integration
+          example: ACME Sandbox
+          exampleSetFlag: true
+          types:
+          - string
+      description: A list of integration objects
+      exampleSetFlag: false
+      types:
+      - object
+    GetGenericCrmObjectsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        crmObjectsMap:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: object
+              description: crmObjects
+              exampleSetFlag: false
+              types:
+              - object
+            description: crmObjects
+            exampleSetFlag: false
+            types:
+            - object
+          description: crmObjects
+          exampleSetFlag: false
+          types:
+          - object
+      exampleSetFlag: false
+      types:
+      - object
+    LineErrorResponse:
+      type: object
+      properties:
+        line:
+          type: integer
+          description: Line number of failed object
+          format: int32
+          example: 49
+          exampleSetFlag: true
+          types:
+          - integer
+        description:
+          type: string
+          description: Error description
+          example: Mandatory field [objectId] is missing or empty
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        errors:
+          type: array
+          description: Error messages.
+          example:
+          - An error has occurred
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    RequestStatusResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        status:
+          type: string
+          description: Request status
+          example: FAILED
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - PENDING
+          - IN_PROGRESS
+          - DONE
+          - FAILED
+        errors:
+          type: array
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/LineErrorResponse'
+            exampleSetFlag: false
+          types:
+          - array
+        totalErrorCount:
+          type: integer
+          description: Number of objects that failed parsing
+          format: int32
+          example: 3
+          exampleSetFlag: true
+          types:
+          - integer
+        totalSuccessCount:
+          type: integer
+          description: Number of valid objects
+          format: int32
+          example: 97
+          exampleSetFlag: true
+          types:
+          - integer
+      exampleSetFlag: false
+      types:
+      - object
+    GenericCrmRegistrationRequest:
+      required:
+      - name
+      - ownerEmail
+      type: object
+      properties:
+        ownerEmail:
+          type: string
+          description: Email address of the person responsible for the integration
+          example: joe.doe@acme.com
+          exampleSetFlag: true
+          types:
+          - string
+        name:
+          type: string
+          description: The name of the integration
+          example: ACME Sandbox
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    AsyncProcessingResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        clientRequestId:
+          type: string
+          description: The clientRequestId sent in the request - used to monitor the request process
+          example: clientRequest1
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    RegisterGenericCrmResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        integrationId:
+          type: integer
+          description: '<style>.public-api-info {    background: rgb(222, 235, 255);}.public-api-tip {    background: rgb(227, 252, 239);}.public-api-parameter {    background: rgba(9,30,66,0.08);}.public-api-note {    background: rgb(234, 230, 255);}.public-api-important {    background: rgb(255, 250, 230);}.public-api-critical {    background: rgb(255, 235, 230);}table, th, td {  border: 1px solid gray;  border-collapse: collapse;}th, td {  padding: 5px;}th {  text-align: left;}img {  border: 2px solid #D3D5D9;}</style>Your integration ID to be used in requests to the API. This ensures you are accessing the correct integration.<br><b>Note:</b> Parse the integrationId as Long or BigInt. Parsing the integrationId as an Integer will truncate the integrationId to trailing zeros and will return an incorrect ID.'
+          format: int64
+          example: 5517027188234205706
+          exampleSetFlag: true
+          types:
+          - integer
+      exampleSetFlag: false
+      types:
+      - object

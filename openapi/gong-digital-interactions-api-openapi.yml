@@ -1,148 +1,750 @@
 openapi: 3.2.0
 info:
-  title: Gong Engagement Digital Interactions API
-  description: The Gong Engagement API reports customer engagement events including content sharing, content viewing, and custom actions, providing visibility into how prospects interact with shared materials.
-  version: 2.0.0
-  contact:
-    name: Gong
-    url: https://www.gong.io
-    email: support@gong.io
-  license:
-    name: Proprietary
-    url: https://www.gong.io/terms-of-service/
-  termsOfService: https://www.gong.io/terms-of-service/
+  title: Gong Digital Interactions API
+  description: 'Overview
+
+
+    The Gong API allows you to:
+
+
+    Receive the following information from Gong:
+
+
+    Your company''s calls in Gong
+
+
+    Your company''s users in Gong
+
+
+    Your company''s user stats in Gong
+
+
+    Your company''s user settings in Gong
+
+
+    Your company''s libraries in Gong
+
+
+    Upload new or
+
+    update
+
+    call recordings in Gong, in order to support cases where you have an internal system that records
+
+    calls or obtains them from a third-party entity.
+
+
+    Data Privacy:
+
+    Delete users and all their associated elements.
+
+
+    Upload CRM data into Gong.
+
+
+    Check here what''s your base URL for all API calls.
+
+
+    Authentication
+
+
+    There are two ways to retrieve credentials to the Gong Public API:
+
+
+    Retrieve Manually:
+
+
+    In the Gong API Page (you
+
+    must be a technical administrator in Gong), click "Create" to receive an Access Key
+
+    and an Access Key Secret.
+
+
+    Use the Basic Authorization HTTP header (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Basic <token>
+
+
+    To create the basic token, combine the Access Key and the Access Key Secret with
+
+    colon (:) and then encode in Base64 as following:
+
+
+    Base64(<accessKey> : <accessKeySecret>)
+
+
+    Retrieve through OAuth
+
+
+    To obtain the Bearer token, follow the steps described in the Gong OAuth Guide.
+
+
+    After obtaining the token, use the Bearer Authorization HTTP header
+
+    (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Bearer <token>
+
+
+    Limits
+
+
+    By default Gong limits your company''s access to the service to 3 API calls per second, and 10,000 API calls per day.
+
+
+    When the rate of API calls exceeds these limits an HTTP status code 429 is returned and a Retry-After header indicates
+
+    how many seconds to wait before making a new request.
+
+
+    If required, contact help.gong.io to change these limits.
+
+
+    Cursors
+
+
+    Some API calls that return a list are limited in the amount of records they may return, so multiple API calls may be
+
+    required to bring all records. Such an API call also returns a records field, which contains the number of records
+
+    in the current page, the current page number and the total number of records.
+
+
+    In cases where the total number of records exceeds the number of records thus far retrieved, the records field will also
+
+    contain a cursor field which can be used to access the next page of records. To retrieve the next page, repeat the API call with
+
+    the cursor value as supplied by the previous API call. All other request inputs should remain the same.
+
+
+    Forward Compatibility
+
+
+    When coding a system to accept Gong data, take into account that Gong may, without prior warning, add fields to the JSON output.
+
+    It is recommended to future proof your code so that it disregards all JSON fields you don''t actually use.'
+  version: V2
 servers:
-- url: https://api.gong.io/v2
-  description: Gong API v2 Production Server
-security:
-- basicAuth: []
-- bearerAuth: []
+- url: https://127.0.0.1:8443
+  description: Generated server url
 tags:
 - name: Digital Interactions
-  description: Operations for posting digital interaction data
+  description: 'Digital interactions (DIs) are events people make when interacting with (mostly) digital content. It can be described as an action someone did on an object. Anything from viewing a document or a video, to registering/completing a course or someone visiting your website.
+
+
+    The below proposed Digital Interactions API allows mainly tech-partners (and also customers) to capture and track user interactions with various types of digital content. It provides a structured schema for recording a person’s identity, action, content details, and additional contextual information. The API enables seamless integration between tech-partner systems and the Gong platform, providing valuable insights into buyer-seller interactions that sometimes are hidden from a seller’s line-of-sight.
+
+
+    For simplicity & clarity, the API scheme is designed according to a real-world scenario, including the following terminology:For simplicity & clarity, the API scheme is designed according to a real-world scenario, including the following terminology:
+
+
+    Event: Represents something that happened, described as an action verb + content engaged (e.g., "signed a contract").
+
+
+    Content: Refers to the specific content engaged during the event (e.g., contract). Provides details such as label, title, ID, and URLs.
+
+
+    Person: Represents the individual responsible for the action. Can be a known person or an anonymous user associated with a company.
+
+
+    Content Custom Fields: Custom properties for the content. Example: Custom field - "Version: 2.0", Custom field - "Author: Jane Smith".
+
+
+    Company: Refers to the organization associated with the person. Example: Company ID - "7890", Company name - "XYZ Corp".
+
+
+    Partner: An external collaborating organization that owns a software product involved in the digital interactions captured by the API.'
 paths:
-  /digital-interactions:
+  /v2/digital-interaction:
     post:
-      operationId: postDigitalInteraction
-      summary: Gong Post digital interaction
-      description: Posts a digital interaction event to Gong, recording structured data about digital communications such as emails, chat messages, or other text-based interactions with customers.
       tags:
       - Digital Interactions
+      summary: Post a Digital Interaction (/v2/digital-interaction)
+      description: When accessed through a Bearer token authorization method, this endpoint requires the scope 'api:digital-interactions:write'.
+      operationId: addDigitalInteraction
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/DigitalInteractionRequest'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
       responses:
-        '201':
-          description: Digital interaction successfully posted.
+        '200':
+          description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DigitalInteractionResponse'
+                $ref: '#/components/schemas/EventAcceptedResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '400':
-          description: Bad request due to invalid parameters.
+          description: Malformed request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '401':
-          description: Unauthorized - invalid or missing authentication credentials.
+          description: Access denied
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '409':
+          description: Conflict - Event was already reported in the past.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '413':
+          description: Event is too large to be processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
         '429':
-          description: Rate limit exceeded.
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
 components:
   schemas:
-    DigitalInteractionResponse:
+    SearchObjectDetails:
+      required:
+      - domain
+      - name
+      - objectType
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the entity the person searched for
+          exampleSetFlag: false
+          types:
+          - string
+        objectType:
+          type: string
+          description: The type of the entity the person searched for
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - VENDOR
+          - PRODUCT
+          - CATEGORY
+        domain:
+          type: string
+          description: The domain of the entity
+          exampleSetFlag: false
+          types:
+          - string
+        objectId:
+          type: string
+          description: The ID of the entity in the partner system
+          exampleSetFlag: false
+          types:
+          - string
+        url:
+          type: string
+          description: The URL of the entity in the partner system
+          exampleSetFlag: false
+          types:
+          - string
+      description: The objects returned when searching for different content. For example, the companies or products being compared with one another, or 2nd party intent
+      exampleSetFlag: false
+      types:
+      - object
+    Location:
+      type: object
+      properties:
+        country:
+          type: string
+          description: The country of the person in ISO 3166. If not available in ISO 3166, then send as string
+          exampleSetFlag: false
+          types:
+          - string
+        state:
+          type: string
+          description: The state of the person in ISO 3166-2. If not available in ISO 3166-2, then send as string
+          exampleSetFlag: false
+          types:
+          - string
+        region:
+          type: string
+          description: The region of the person in ISO 3166-2. If not available in ISO 3166-2, then send as string
+          exampleSetFlag: false
+          types:
+          - string
+        city:
+          type: string
+          description: The city of the person
+          exampleSetFlag: false
+          types:
+          - string
+      description: The location of the person as identified in the partner's source system
+      exampleSetFlag: false
+      types:
+      - object
+    EventAcceptedResponse:
       type: object
       properties:
         requestId:
           type: string
-          description: A unique identifier for the request.
-        interactionId:
-          type: string
-          description: The Gong-assigned identifier for the digital interaction.
-    DigitalInteractionRequest:
-      type: object
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    CompanyBusinessContext:
       required:
-      - interactionType
-      - participants
-      - timestamp
+      - objectId
+      - objectType
+      type: object
       properties:
-        interactionType:
+        objectType:
           type: string
+          description: The object type in the external system
+          exampleSetFlag: false
+          types:
+          - string
           enum:
-          - Email
-          - Chat
-          - SMS
-          - SocialMedia
-          - Other
-          description: The type of digital interaction.
-        subject:
+          - ACCOUNT
+          - OPPORTUNITY
+        objectId:
           type: string
-          description: Subject of the interaction (e.g., email subject).
-        body:
+          description: The ID of the business context object
+          exampleSetFlag: false
+          types:
+          - string
+        systemName:
           type: string
-          description: Body content of the interaction.
-        timestamp:
+          description: The name of the external system
+          exampleSetFlag: false
+          types:
+          - string
+      description: The company's details in an external system such as the CRM. If the domain is empty, to enable association, send the crmAccountId or crmOpportunityId
+      exampleSetFlag: false
+      types:
+      - object
+    Person:
+      type: object
+      properties:
+        name:
           type: string
-          format: date-time
-          description: When the interaction occurred.
-        direction:
+          description: The name of the person
+          exampleSetFlag: false
+          types:
+          - string
+        email:
           type: string
-          enum:
-          - Inbound
-          - Outbound
-          description: Direction of the interaction.
-        participants:
+          description: The email address of the person. Used for business context association
+          exampleSetFlag: false
+          types:
+          - string
+        phoneNumber:
+          type: string
+          description: The phone number of the person. Used for business context association
+          exampleSetFlag: false
+          types:
+          - string
+        personId:
+          type: string
+          description: A unique person identifier in the partner system. Mandatory for anonymous person, when the name, email, phoneNumber and personBusinessContext are empty
+          exampleSetFlag: false
+          types:
+          - string
+        personBusinessContext:
+          $ref: '#/components/schemas/PersonBusinessContext'
+          exampleSetFlag: false
+        location:
+          $ref: '#/components/schemas/Location'
+          exampleSetFlag: false
+        company:
+          $ref: '#/components/schemas/Company'
+          exampleSetFlag: false
+        personCustomFields:
           type: array
+          description: Include additional custom data about the person
+          exampleSetFlag: false
           items:
-            type: object
-            properties:
-              emailAddress:
-                type: string
-                format: email
-              name:
-                type: string
-              role:
-                type: string
-                enum:
-                - Sender
-                - Recipient
-                - CC
-                - BCC
-          description: Participants in the interaction.
-        workspaceId:
+            $ref: '#/components/schemas/CustomField'
+            exampleSetFlag: false
+          types:
+          - array
+      description: The person who did the event. Must be null if a tracking ID is sent instead.
+      exampleSetFlag: false
+      types:
+      - object
+    Company:
+      type: object
+      properties:
+        companyId:
           type: string
-          description: The workspace to associate the interaction with.
-        clientUniqueId:
+          description: The company ID in the partner's source system
+          exampleSetFlag: false
+          types:
+          - string
+        name:
           type: string
-          description: Client-provided unique ID to prevent duplicate submissions.
+          description: The name of the company
+          exampleSetFlag: false
+          types:
+          - string
+        domain:
+          type: string
+          description: The domain of the person's company. Used to associate the person with the company ("acme.com"). Mandatory for anonymous person, when the name, email, phoneNumber and personBusinessContext are empty
+          exampleSetFlag: false
+          types:
+          - string
+        companyBusinessContexts:
+          type: array
+          description: The company's details in an external system such as the CRM. If the domain is empty, to enable association, send the crmAccountId or crmOpportunityId
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CompanyBusinessContext'
+            exampleSetFlag: false
+          types:
+          - array
+      description: 'The company the person works in. Should include at least one of the following: domain, crmAccountId, crmOpportunityId (via the companyBusinessContext object)'
+      exampleSetFlag: false
+      types:
+      - object
+    CustomField:
+      required:
+      - name
+      - value
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the custom field
+          exampleSetFlag: false
+          types:
+          - string
+        value:
+          type: string
+          description: The value of the custom field
+          exampleSetFlag: false
+          types:
+          - string
+        dataType:
+          type: string
+          description: 'The data type of the custom field: NUMBER, STRING, DATE (ISO 8601), URL, DURATION (in Seconds). Default value: STRING'
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - STRING
+          - NUMBER
+          - DATE
+          - URL
+          - BOOLEAN
+          - DURATION
+      description: Include additional custom data about the event
+      exampleSetFlag: false
+      types:
+      - object
+    StepContentDetails:
+      required:
+      - availableSteps
+      - value
+      type: object
+      properties:
+        value:
+          type: string
+          description: The current step the person is in, in the process
+          exampleSetFlag: false
+          types:
+          - string
+        availableSteps:
+          type: array
+          description: A list of all available steps in the process
+          exampleSetFlag: false
+          items:
+            type: string
+            description: A list of all available steps in the process
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      description: For content where there are a number of steps to complete in the content, such as shipment tracking or course advancement
+      exampleSetFlag: false
+      types:
+      - object
+    PersonBusinessContext:
+      required:
+      - objectId
+      - objectType
+      type: object
+      properties:
+        objectType:
+          type: string
+          description: The object type in the external system
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - CONTACT
+          - LEAD
+        objectId:
+          type: string
+          description: The ID of the object in the external system
+          exampleSetFlag: false
+          types:
+          - string
+        systemName:
+          type: string
+          description: The name of the external system
+          exampleSetFlag: false
+          types:
+          - string
+      description: The person's details in an external system such as the CRM
+      exampleSetFlag: false
+      types:
+      - object
     ErrorResponse:
       type: object
       properties:
         requestId:
           type: string
-          description: A unique identifier for the request.
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
         errors:
           type: array
+          description: Error messages.
+          example:
+          - An error has occurred
+          exampleSetFlag: true
           items:
             type: string
-          description: List of error messages.
-  securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
-      description: 'Basic authentication using your Gong API access key and secret. Format: base64(access_key:access_secret).'
-    bearerAuth:
-      type: http
-      scheme: bearer
-      description: OAuth 2.0 Bearer token authentication.
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    Content:
+      required:
+      - contentTitle
+      type: object
+      properties:
+        contentId:
+          type: string
+          description: A unique identifier for the content in the partner's system
+          exampleSetFlag: false
+          types:
+          - string
+        contentTitle:
+          type: string
+          description: The title of the content
+          exampleSetFlag: false
+          types:
+          - string
+        contentLabel:
+          type: array
+          description: A list of tags defined for the content
+          exampleSetFlag: false
+          items:
+            type: string
+            description: A list of tags defined for the content
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        contentUrl:
+          type: string
+          description: The URL for the content the person looked at
+          exampleSetFlag: false
+          types:
+          - string
+        contentAdditionalInfoUrl:
+          type: string
+          description: The URL for additional details provided by the website or external app, such as analysis of the content viewed
+          exampleSetFlag: false
+          types:
+          - string
+        numericContentDetails:
+          $ref: '#/components/schemas/NumericContentDetails'
+          exampleSetFlag: false
+        stepContentDetails:
+          $ref: '#/components/schemas/StepContentDetails'
+          exampleSetFlag: false
+        searchObjectDetails:
+          $ref: '#/components/schemas/SearchObjectDetails'
+          exampleSetFlag: false
+        contentCustomFields:
+          type: array
+          description: Include additional custom data about the content
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CustomField'
+            exampleSetFlag: false
+          types:
+          - array
+      description: The content the person looked at
+      exampleSetFlag: false
+      types:
+      - object
+    NumericContentDetails:
+      required:
+      - rangeFrom
+      - rangeTo
+      type: object
+      properties:
+        value:
+          type: integer
+          description: The numeric value for the content
+          format: int32
+          exampleSetFlag: false
+          types:
+          - integer
+        rangeFrom:
+          type: integer
+          description: The lowest value that can be given to the content
+          format: int32
+          exampleSetFlag: false
+          types:
+          - integer
+        rangeTo:
+          type: integer
+          description: The highest value that can be given to the content
+          format: int32
+          exampleSetFlag: false
+          types:
+          - integer
+        numericType:
+          type: string
+          description: The type of numeric value
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - PERCENTAGE
+          - NPS
+          - RATING
+          - OTHER
+      description: For content where there is a numeric result, such as NPS score, or metrics such as the percentage of video watched
+      exampleSetFlag: false
+      types:
+      - object
+    DigitalInteractionRequest:
+      required:
+      - content
+      - eventId
+      - eventType
+      - timestamp
+      type: object
+      properties:
+        eventId:
+          type: string
+          description: The provider's unique identifier for the event used for deduplication
+          exampleSetFlag: false
+          types:
+          - string
+        timestamp:
+          type: string
+          description: The date and time of the event in ISO 8601 format
+          format: date-time
+          exampleSetFlag: false
+          types:
+          - string
+        eventType:
+          type: string
+          description: The type of the event, explaining the content and action performed. Values may be partner-aligned, for example, "link clicked", "page viewed"
+          exampleSetFlag: false
+          types:
+          - string
+        sourceSystemName:
+          type: string
+          description: 'When integrating via IPaaS, the name of the technology partner the customer set up a Gong integration with via an IPaaS. When integrating directly with Gong: the name of the company setting up the integration with Gong'
+          exampleSetFlag: false
+          types:
+          - string
+        sessionId:
+          type: string
+          description: The identifier for the session, useful for tying related events together
+          exampleSetFlag: false
+          types:
+          - string
+        device:
+          type: string
+          description: The device used during the event
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - MOBILE
+          - PC
+        content:
+          $ref: '#/components/schemas/Content'
+          exampleSetFlag: false
+        person:
+          $ref: '#/components/schemas/Person'
+          exampleSetFlag: false
+        customFields:
+          type: array
+          description: Include additional custom data about the event
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/CustomField'
+            exampleSetFlag: false
+          types:
+          - array
+        trackingId:
+          type: string
+          description: The ID used for tracking the person who did the event. Must be null if a person is sent instead.
+          exampleSetFlag: false
+          types:
+          - string
+      description: Digital interaction metadata
+      exampleSetFlag: false
+      types:
+      - object

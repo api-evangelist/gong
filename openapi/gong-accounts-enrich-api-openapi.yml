@@ -1,0 +1,565 @@
+openapi: 3.2.0
+info:
+  title: Gong Accounts Enrich API
+  description: 'Overview
+
+
+    The Gong API allows you to:
+
+
+    Receive the following information from Gong:
+
+
+    Your company''s calls in Gong
+
+
+    Your company''s users in Gong
+
+
+    Your company''s user stats in Gong
+
+
+    Your company''s user settings in Gong
+
+
+    Your company''s libraries in Gong
+
+
+    Upload new or
+
+    update
+
+    call recordings in Gong, in order to support cases where you have an internal system that records
+
+    calls or obtains them from a third-party entity.
+
+
+    Data Privacy:
+
+    Delete users and all their associated elements.
+
+
+    Upload CRM data into Gong.
+
+
+    Check here what''s your base URL for all API calls.
+
+
+    Authentication
+
+
+    There are two ways to retrieve credentials to the Gong Public API:
+
+
+    Retrieve Manually:
+
+
+    In the Gong API Page (you
+
+    must be a technical administrator in Gong), click "Create" to receive an Access Key
+
+    and an Access Key Secret.
+
+
+    Use the Basic Authorization HTTP header (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Basic <token>
+
+
+    To create the basic token, combine the Access Key and the Access Key Secret with
+
+    colon (:) and then encode in Base64 as following:
+
+
+    Base64(<accessKey> : <accessKeySecret>)
+
+
+    Retrieve through OAuth
+
+
+    To obtain the Bearer token, follow the steps described in the Gong OAuth Guide.
+
+
+    After obtaining the token, use the Bearer Authorization HTTP header
+
+    (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Bearer <token>
+
+
+    Limits
+
+
+    By default Gong limits your company''s access to the service to 3 API calls per second, and 10,000 API calls per day.
+
+
+    When the rate of API calls exceeds these limits an HTTP status code 429 is returned and a Retry-After header indicates
+
+    how many seconds to wait before making a new request.
+
+
+    If required, contact help.gong.io to change these limits.
+
+
+    Cursors
+
+
+    Some API calls that return a list are limited in the amount of records they may return, so multiple API calls may be
+
+    required to bring all records. Such an API call also returns a records field, which contains the number of records
+
+    in the current page, the current page number and the total number of records.
+
+
+    In cases where the total number of records exceeds the number of records thus far retrieved, the records field will also
+
+    contain a cursor field which can be used to access the next page of records. To retrieve the next page, repeat the API call with
+
+    the cursor value as supplied by the previous API call. All other request inputs should remain the same.
+
+
+    Forward Compatibility
+
+
+    When coding a system to accept Gong data, take into account that Gong may, without prior warning, add fields to the JSON output.
+
+    It is recommended to future proof your code so that it disregards all JSON fields you don''t actually use.'
+  version: V2
+servers:
+- url: https://127.0.0.1:8443
+  description: Generated server url
+tags:
+- name: Accounts Enrich
+  description: 'Gong’s “Accounts Enrich” API endpoints allow you to enrich your account records with Gong''s data.
+
+
+    Enrichment is asynchronous and works in two steps:
+
+
+    Submit up to 10 accounts, along with the data categories you want, and receive a jobId.
+
+
+    Retrieve the results using the jobId. A data category whose status is “Running” is still being enriched, so poll until no category is “Running”.
+
+
+    Each account is identified by search criteria - its name, domain or LinkedIn URL - and is returned with the id you supplied, so you can correlate results with your request.'
+paths:
+  /v2/accounts/enrich:
+    post:
+      tags:
+      - Accounts Enrich
+      summary: Enrich Accounts (/v2/accounts/enrich)
+      description: 'Submits up to 10 accounts for asynchronous enrichment and returns a jobId to poll for results. Each account must include at least one identifier: name, domain, or LinkedIn URL. Accounts that cannot be matched are returned with a matched status of false.
+
+
+        Required authorization scope: ''api:accounts:enrich''.'
+      operationId: accountsEnrich
+      parameters:
+      - name: dataCategories
+        in: query
+        description: The data categories to enrich the account with. Values are case-sensitive.
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          uniqueItems: true
+          type: array
+          exampleSetFlag: false
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+            enum:
+            - accountData
+          types:
+          - array
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountsEnrichRequest'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Enrich job accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountsEnrichJobResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '503':
+          description: Account enrichment is not enabled for your company, or the enrich service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/accounts/enrich/{jobId}/results:
+    get:
+      tags:
+      - Accounts Enrich
+      summary: Get account enrich results (/v2/accounts/enrich/{jobId}/results)
+      description: 'Retrieves the enrichment results for a previously submitted job. A data category with a status of ''Running'' is still being enriched; poll again until no category has that status.
+
+
+        Required authorization scope: ''api:accounts:enrich''.'
+      operationId: getAccountsEnrichResults
+      parameters:
+      - name: jobId
+        in: path
+        description: The jobId returned by POST /v2/accounts/enrich
+        required: true
+        style: SIMPLE
+        explode: false
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountsEnrichResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '503':
+          description: Account enrichment is not enabled for your company, or the enrich service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+components:
+  schemas:
+    AccountsEnrichJobResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        jobId:
+          type: string
+          description: The identifier of the enrichment job. Pass it to the /v2/accounts/enrich/{jobId}/results endpoint to retrieve the enrichment results.
+          example: 3f9c2a7e-8b1d-4c6a-9e2f-5d7b1a0c4e88
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    AccountSearchCriteria:
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: The account's name.
+          example: Gong
+          exampleSetFlag: true
+          types:
+          - string
+        domain:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: The account's domain, for example 'gong.io'.
+          example: gong.io
+          exampleSetFlag: true
+          types:
+          - string
+        linkedinUrl:
+          maxLength: 500
+          minLength: 0
+          type: string
+          description: A link to the account's LinkedIn company page.
+          example: https://www.linkedin.com/company/gong-io
+          exampleSetFlag: true
+          types:
+          - string
+      description: Account details used to identify the account. At least one parameter must be provided.
+      exampleSetFlag: false
+      types:
+      - object
+    AccountEnrichRequest:
+      required:
+      - accountSearchCriteria
+      - id
+      type: object
+      properties:
+        id:
+          minLength: 1
+          type: string
+          description: A unique identifier for the account request, returned in the response to identify this account.
+          example: account-1
+          exampleSetFlag: true
+          types:
+          - string
+        accountSearchCriteria:
+          $ref: '#/components/schemas/AccountSearchCriteria'
+          exampleSetFlag: false
+      description: A single account to enrich. Provide a unique id and search criteria.
+      exampleSetFlag: false
+      types:
+      - object
+    AccountsEnrichSummaryResponse:
+      type: object
+      properties:
+        totalAccounts:
+          type: integer
+          description: The number of accounts submitted to the enrich request endpoint.
+          format: int32
+          example: 1
+          exampleSetFlag: true
+          types:
+          - integer
+        matchedAccounts:
+          type: integer
+          description: The number of accounts that were matched to an account in Gong's data.
+          format: int32
+          example: 1
+          exampleSetFlag: true
+          types:
+          - integer
+        unmatchedAccounts:
+          type: integer
+          description: The number of accounts that could not be matched to an account in Gong's data.
+          format: int32
+          example: 0
+          exampleSetFlag: true
+          types:
+          - integer
+      description: Summary of the account enrichment results
+      exampleSetFlag: false
+      types:
+      - object
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        errors:
+          type: array
+          description: Error messages.
+          example:
+          - An error has occurred
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    AccountEnrichResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier provided in the request.
+          example: account-1
+          exampleSetFlag: true
+          types:
+          - string
+        matched:
+          type: boolean
+          description: Indicates whether the account was matched to an account in one of the Enrich data partners. If false, no data categories are enriched for this account.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        dataCategories:
+          type: array
+          description: The enrichment results for each requested data category. The fields returned in data depend on the dataCategory value.
+          example:
+          - dataCategory: accountData
+            status: Success
+            enriched: true
+            data:
+              name: Gong
+              domain: gong.io
+              linkedinUrl: https://www.linkedin.com/company/gong-io
+              website: https://www.gong.io
+              size: 1001-5000
+              logo: https://cdn.mixrank.com/md5/8396efceb4ebf9b77711d7cebefa3754
+              country: United States
+              state: California
+              industry: Software Development
+              industryGroup:
+              - Technology
+              revenue: 100-500
+              overview: Gong is a revenue AI platform that captures and analyzes customer interactions to help revenue teams win more deals.
+              linkedinType: Privately Held
+              foundedYear: 2015
+              phone: +1 123-567-8989
+          exampleSetFlag: true
+          items:
+            $ref: '#/components/schemas/AccountBaseDataCategoryResponse'
+            exampleSetFlag: false
+          types:
+          - array
+      description: Enrich response for a single account
+      exampleSetFlag: false
+      types:
+      - object
+    AccountsEnrichResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        accounts:
+          type: array
+          description: A list of accounts with their enrichment results. Each account contains the id provided in the request.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/AccountEnrichResponse'
+            exampleSetFlag: false
+          types:
+          - array
+        summary:
+          $ref: '#/components/schemas/AccountsEnrichSummaryResponse'
+          exampleSetFlag: false
+      exampleSetFlag: false
+      types:
+      - object
+    AccountsEnrichRequest:
+      required:
+      - accounts
+      type: object
+      properties:
+        accounts:
+          maxItems: 10
+          minItems: 1
+          type: array
+          description: A list of 1 to 10 accounts to enrich.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/AccountEnrichRequest'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    AccountBaseDataCategoryResponse:
+      type: object
+      properties:
+        dataCategory:
+          type: string
+          description: The name of the data category. Determines the structure of the data object.
+          example: accountData
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - accountData
+        status:
+          type: string
+          description: The enrichment status for this data category.
+          example: Success
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Running
+          - Success
+          - No Result
+          - Excluded
+          - Error
+        enriched:
+          type: boolean
+          description: Indicates whether data was successfully enriched for this data category.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        data:
+          type: object
+          description: The enriched data for this category. The fields vary by dataCategory.
+          exampleSetFlag: false
+          types:
+          - object
+      description: Base response for data category enrichment
+      exampleSetFlag: false
+      types:
+      - object

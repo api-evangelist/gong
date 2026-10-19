@@ -1,0 +1,443 @@
+openapi: 3.2.0
+info:
+  title: Gong Auditing API
+  description: 'Overview
+
+
+    The Gong API allows you to:
+
+
+    Receive the following information from Gong:
+
+
+    Your company''s calls in Gong
+
+
+    Your company''s users in Gong
+
+
+    Your company''s user stats in Gong
+
+
+    Your company''s user settings in Gong
+
+
+    Your company''s libraries in Gong
+
+
+    Upload new or
+
+    update
+
+    call recordings in Gong, in order to support cases where you have an internal system that records
+
+    calls or obtains them from a third-party entity.
+
+
+    Data Privacy:
+
+    Delete users and all their associated elements.
+
+
+    Upload CRM data into Gong.
+
+
+    Check here what''s your base URL for all API calls.
+
+
+    Authentication
+
+
+    There are two ways to retrieve credentials to the Gong Public API:
+
+
+    Retrieve Manually:
+
+
+    In the Gong API Page (you
+
+    must be a technical administrator in Gong), click "Create" to receive an Access Key
+
+    and an Access Key Secret.
+
+
+    Use the Basic Authorization HTTP header (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Basic <token>
+
+
+    To create the basic token, combine the Access Key and the Access Key Secret with
+
+    colon (:) and then encode in Base64 as following:
+
+
+    Base64(<accessKey> : <accessKeySecret>)
+
+
+    Retrieve through OAuth
+
+
+    To obtain the Bearer token, follow the steps described in the Gong OAuth Guide.
+
+
+    After obtaining the token, use the Bearer Authorization HTTP header
+
+    (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Bearer <token>
+
+
+    Limits
+
+
+    By default Gong limits your company''s access to the service to 3 API calls per second, and 10,000 API calls per day.
+
+
+    When the rate of API calls exceeds these limits an HTTP status code 429 is returned and a Retry-After header indicates
+
+    how many seconds to wait before making a new request.
+
+
+    If required, contact help.gong.io to change these limits.
+
+
+    Cursors
+
+
+    Some API calls that return a list are limited in the amount of records they may return, so multiple API calls may be
+
+    required to bring all records. Such an API call also returns a records field, which contains the number of records
+
+    in the current page, the current page number and the total number of records.
+
+
+    In cases where the total number of records exceeds the number of records thus far retrieved, the records field will also
+
+    contain a cursor field which can be used to access the next page of records. To retrieve the next page, repeat the API call with
+
+    the cursor value as supplied by the previous API call. All other request inputs should remain the same.
+
+
+    Forward Compatibility
+
+
+    When coding a system to accept Gong data, take into account that Gong may, without prior warning, add fields to the JSON output.
+
+    It is recommended to future proof your code so that it disregards all JSON fields you don''t actually use.'
+  version: V2
+servers:
+- url: https://127.0.0.1:8443
+  description: Generated server url
+tags:
+- name: Auditing
+  description: 'Gong’s “Auditing” API endpoints allow you to request the following log types from Gong:
+
+
+    Access Log - This log is preserved for 14 days only
+
+
+    User Activity Log - The data is available since March 2021
+
+
+    User Call Play Log - All data is available since inception
+
+
+    Externally Shared Call Access Log - All data is available since inception
+
+
+    Externally Shared Call Play Log - All data is available since inception'
+paths:
+  /v2/logs:
+    get:
+      tags:
+      - Auditing
+      summary: Retrieve logs data by type and time range (/v2/logs)
+      description: 'List log entries that took place during a specified time range.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:logs:read''.'
+      operationId: listLogs
+      parameters:
+      - name: logType
+        in: query
+        description: Type of logs requested.
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - AccessLog
+          - UserActivityLog
+          - UserCallPlay
+          - ExternallySharedCallAccess
+          - ExternallySharedCallPlay
+      - name: fromDateTime
+        in: query
+        description: The time from which to retrieve log records, in the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC).
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+      - name: toDateTime
+        in: query
+        description: The time until which to retrieve log records, in the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC); if not specified, the logs end with the latest recorded log.
+        required: false
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+      - name: cursor
+        in: query
+        description: When paging is needed, provide the value supplied by the previous API call to bring the following page of records.
+        required: false
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+        example: eyJhbGciOiJIUzI1NiJ9.eyJjYWxsSWQiM1M30.6qKwpOcvnuweTZmFRzYdtjs_YwJphJU4QIwWFM
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogsResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: No logs found for the specified period
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+components:
+  schemas:
+    Records:
+      type: object
+      properties:
+        totalRecords:
+          type: integer
+          description: Total number of records.
+          format: int32
+          example: 263
+          exampleSetFlag: true
+          types:
+          - integer
+        currentPageSize:
+          type: integer
+          description: Number of records in the current page.
+          format: int32
+          example: 100
+          exampleSetFlag: true
+          types:
+          - integer
+        currentPageNumber:
+          type: integer
+          description: Current page number.
+          format: int32
+          example: 0
+          exampleSetFlag: true
+          types:
+          - integer
+        cursor:
+          type: string
+          description: Returned only when there are more records to be retrieved. Repeat the API call and pass this cursor value in the request to retrieve the next page of records.
+          example: eyJhbGciOiJIUzI1NiJ9.eyJjYWxsSWQiM1M30.6qKwpOcvnuweTZmFRzYdtjs_YwJphJU4QIwWFM
+          exampleSetFlag: true
+          types:
+          - string
+      description: Information about the number of records that match the requested filter.
+      exampleSetFlag: false
+      types:
+      - object
+    LogsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        records:
+          $ref: '#/components/schemas/Records'
+          exampleSetFlag: false
+        logEntries:
+          type: array
+          description: A list, in which each item specifies one log.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/logEntry'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        errors:
+          type: array
+          description: Error messages.
+          example:
+          - An error has occurred
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    logEntry:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: Gong's unique numeric identifier for the user (up to 20 digits), if available.
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        userEmailAddress:
+          type: string
+          description: The email address of the user, if available.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+        userFullName:
+          type: string
+          description: The full name of the user, if available.
+          example: Jon Snow
+          exampleSetFlag: true
+          types:
+          - string
+        impersonatorUserId:
+          type: string
+          description: Gong's unique numeric identifier for the impersonating user (up to 20 digits), if available.
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        impersonatorEmailAddress:
+          type: string
+          description: The email address of the impersonating user, if available.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+        impersonatorFullName:
+          type: string
+          description: The full name of the impersonating user, if available.
+          example: Jon Snow
+          exampleSetFlag: true
+          types:
+          - string
+        impersonatorCompanyId:
+          type: string
+          description: Gong's unique numeric identifier for the impersonating user's company id (up to 20 digits), if available.
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        eventTime:
+          type: string
+          description: The time in the ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC); when log was created.
+          example: '2018-02-17T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        logRecord:
+          type: object
+          additionalProperties:
+            type: object
+            description: The list of log fields and associated values. This element will be populated dynamically by the log record, depending on the type of log.
+            exampleSetFlag: false
+            types:
+            - object
+          description: The list of log fields and associated values. This element will be populated dynamically by the log record, depending on the type of log.
+          exampleSetFlag: false
+          types:
+          - object
+      description: A list, in which each item specifies one log.
+      exampleSetFlag: false
+      types:
+      - object

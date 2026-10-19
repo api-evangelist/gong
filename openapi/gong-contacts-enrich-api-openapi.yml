@@ -1,0 +1,638 @@
+openapi: 3.2.0
+info:
+  title: Gong Contacts Enrich API
+  description: 'Overview
+
+
+    The Gong API allows you to:
+
+
+    Receive the following information from Gong:
+
+
+    Your company''s calls in Gong
+
+
+    Your company''s users in Gong
+
+
+    Your company''s user stats in Gong
+
+
+    Your company''s user settings in Gong
+
+
+    Your company''s libraries in Gong
+
+
+    Upload new or
+
+    update
+
+    call recordings in Gong, in order to support cases where you have an internal system that records
+
+    calls or obtains them from a third-party entity.
+
+
+    Data Privacy:
+
+    Delete users and all their associated elements.
+
+
+    Upload CRM data into Gong.
+
+
+    Check here what''s your base URL for all API calls.
+
+
+    Authentication
+
+
+    There are two ways to retrieve credentials to the Gong Public API:
+
+
+    Retrieve Manually:
+
+
+    In the Gong API Page (you
+
+    must be a technical administrator in Gong), click "Create" to receive an Access Key
+
+    and an Access Key Secret.
+
+
+    Use the Basic Authorization HTTP header (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Basic <token>
+
+
+    To create the basic token, combine the Access Key and the Access Key Secret with
+
+    colon (:) and then encode in Base64 as following:
+
+
+    Base64(<accessKey> : <accessKeySecret>)
+
+
+    Retrieve through OAuth
+
+
+    To obtain the Bearer token, follow the steps described in the Gong OAuth Guide.
+
+
+    After obtaining the token, use the Bearer Authorization HTTP header
+
+    (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Bearer <token>
+
+
+    Limits
+
+
+    By default Gong limits your company''s access to the service to 3 API calls per second, and 10,000 API calls per day.
+
+
+    When the rate of API calls exceeds these limits an HTTP status code 429 is returned and a Retry-After header indicates
+
+    how many seconds to wait before making a new request.
+
+
+    If required, contact help.gong.io to change these limits.
+
+
+    Cursors
+
+
+    Some API calls that return a list are limited in the amount of records they may return, so multiple API calls may be
+
+    required to bring all records. Such an API call also returns a records field, which contains the number of records
+
+    in the current page, the current page number and the total number of records.
+
+
+    In cases where the total number of records exceeds the number of records thus far retrieved, the records field will also
+
+    contain a cursor field which can be used to access the next page of records. To retrieve the next page, repeat the API call with
+
+    the cursor value as supplied by the previous API call. All other request inputs should remain the same.
+
+
+    Forward Compatibility
+
+
+    When coding a system to accept Gong data, take into account that Gong may, without prior warning, add fields to the JSON output.
+
+    It is recommended to future proof your code so that it disregards all JSON fields you don''t actually use.'
+  version: V2
+servers:
+- url: https://127.0.0.1:8443
+  description: Generated server url
+tags:
+- name: Contacts Enrich
+  description: 'Gong’s “Contacts Enrich” API endpoints allow you to enrich your contact records with Gong''s data.
+
+
+    Enrichment is asynchronous and works in two steps:
+
+
+    Submit up to 10 contacts, along with the data categories you want, and receive a jobId.
+
+
+    Retrieve the results using the jobId. A data category whose status is “Running” is still being enriched, so poll until no category is “Running”.
+
+
+    Each contact must be identified by one of the following combinations:
+
+
+    linkedinUrl on its own
+
+
+    firstName + lastName + email
+
+
+    firstName + lastName + accountSearchCriteria (the account''s name, domain or LinkedIn URL)
+
+
+    Each contact is returned with the id you supplied, so you can correlate results with your request.'
+paths:
+  /v2/contacts/enrich:
+    post:
+      tags:
+      - Contacts Enrich
+      summary: Contact enrich (/v2/contacts/enrich)
+      description: Submits 1-10 contacts for async enrichment against Gong's data. Returns a jobId to poll for results. When accessed through a Bearer token authorization method, use the 'api:contacts:enrich' scope.
+      operationId: contactsEnrich
+      parameters:
+      - name: dataCategories
+        in: query
+        description: The data categories to include in the enrichment response. Values are case sensitive.
+        required: true
+        style: FORM
+        explode: true
+        schema:
+          uniqueItems: true
+          type: array
+          exampleSetFlag: false
+          items:
+            type: string
+            description: A category of contact data that can be requested for enrichment.
+            exampleSetFlag: false
+            types:
+            - string
+            enum:
+            - contactData
+            - enrichEmails
+            - enrichPhones
+          types:
+          - array
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactsEnrichRequest'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Enrich job accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactsEnrichJobResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '503':
+          description: Contact enrichment is not enabled for your company, or the enrich service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/contacts/enrich/{jobId}/results:
+    get:
+      tags:
+      - Contacts Enrich
+      summary: Get contact enrich results (/v2/contacts/enrich/{jobId}/results)
+      description: Retrieves the results of a previously submitted contact enrich job. A data category whose status is 'Running' is still being enriched, so poll again until no category is 'Running'. When accessed through a Bearer token authorization method, use the 'api:contacts:enrich' scope.
+      operationId: getContactsEnrichResults
+      parameters:
+      - name: jobId
+        in: path
+        description: The jobId returned by POST /v2/contacts/enrich
+        required: true
+        style: SIMPLE
+        explode: false
+        schema:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactsEnrichResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '503':
+          description: Contact enrichment is not enabled for your company, or the enrich service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+components:
+  schemas:
+    ContactEnrichResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier provided in the request, used to correlate this result with the input
+          example: contact-1
+          exampleSetFlag: true
+          types:
+          - string
+        matched:
+          type: boolean
+          description: Whether the search criteria were resolved to a contact in Gong's data. When false, no data categories are enriched for this contact.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        dataCategories:
+          type: array
+          description: One entry per data category requested in the 'dataCategories' query parameter. The shape of 'data' depends on 'dataCategory'.
+          example:
+          - dataCategory: contactData
+            status: Success
+            enriched: true
+            data:
+              firstName: Jane
+              lastName: Doe
+              linkedinUrl: https://www.linkedin.com/in/jane-doe-example
+              photoUrl: https://cdn.mixrank.com/md5/8396efceb4ebf9b77711d7cebefa3754
+              scrapingDate: '2026-03-01'
+              isCurrentEmployee: true
+              movedAccount: true
+              movedAccountAt: '2025-11-15'
+              movedFunction: false
+              movedFunctionAt: '2023-06-01'
+              movedSeniority: true
+              movedSeniorityAt: '2025-11-15'
+              currentAccount:
+                title: Senior Account Executive
+                function: Sales
+                functionGroup: Go To Market
+                seniority: Senior
+                seniorityGroup: Individual Contributor
+                accountName: Gong
+                accountLinkedinUrl: https://www.linkedin.com/company/gong-io
+                country: United States
+                state: California
+              requestedAccount:
+                title: Senior Account Executive
+                function: Sales
+                functionGroup: Go To Market
+                seniority: Senior
+                seniorityGroup: Individual Contributor
+                accountName: Gong
+                accountLinkedinUrl: https://www.linkedin.com/company/gong-io
+                country: United States
+                state: California
+          - dataCategory: enrichEmails
+            status: Success
+            enriched: true
+            data:
+              workEmail: jane.doe@example.com
+          - dataCategory: enrichPhones
+            status: Success
+            enriched: true
+            data:
+              mobilePhone1: +1 123-567-8989
+              mobilePhone2: +1 123-567-8990
+          exampleSetFlag: true
+          items:
+            $ref: '#/components/schemas/ContactBaseDataCategoryResponse'
+            exampleSetFlag: false
+          types:
+          - array
+      description: Enrich response for a single contact
+      exampleSetFlag: false
+      types:
+      - object
+    ContactsEnrichJobResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        jobId:
+          type: string
+          description: The identifier of the accepted enrich job. Pass it to get result path to retrieve the results.
+          example: 3f9c2a7e-8b1d-4c6a-9e2f-5d7b1a0c4e88
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    ContactsEnrichSummaryResponse:
+      type: object
+      properties:
+        totalContacts:
+          type: integer
+          description: The number of contacts submitted in the enrich request
+          format: int32
+          example: 1
+          exampleSetFlag: true
+          types:
+          - integer
+        matchedContacts:
+          type: integer
+          description: The number of submitted contacts that were resolved to a contact in Gong's data
+          format: int32
+          example: 1
+          exampleSetFlag: true
+          types:
+          - integer
+        unmatchedContacts:
+          type: integer
+          description: The number of submitted contacts that could not be resolved
+          format: int32
+          example: 0
+          exampleSetFlag: true
+          types:
+          - integer
+      description: Summary of the contact enrichment results
+      exampleSetFlag: false
+      types:
+      - object
+    ContactBaseDataCategoryResponse:
+      type: object
+      properties:
+        dataCategory:
+          type: string
+          description: A category of contact data that can be requested for enrichment.
+          example: contactData
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - contactData
+          - enrichEmails
+          - enrichPhones
+        status:
+          type: string
+          description: The processing state of this data category. 'Running' means the category is still being enriched - poll this endpoint again. 'Success' means data was found, 'No Result' means the category produced no data, 'Excluded' means the category was skipped by your company's exclusion rules, and 'Error' means enrichment failed for this category.
+          example: Success
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - Running
+          - Success
+          - No Result
+          - Excluded
+          - Error
+        enriched:
+          type: boolean
+          description: Whether this data category produced data. True only when status is 'Success'.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        data:
+          type: object
+          description: The enriched fields for this data category, omitted when there is no data. The fields depend on 'dataCategory'. See the example for each one.
+          exampleSetFlag: false
+          types:
+          - object
+      description: Base response for data category enrichment
+      exampleSetFlag: false
+      types:
+      - object
+    ContactEnrichRequest:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          minLength: 1
+          type: string
+          description: A unique identifier for the contact request, used to correlate results in the response
+          example: contact-1
+          exampleSetFlag: true
+          types:
+          - string
+        firstName:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: The contact's first name. Required unless linkedinUrl is provided.
+          example: Jane
+          exampleSetFlag: true
+          types:
+          - string
+        lastName:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: The contact's last name. Required unless linkedinUrl is provided.
+          example: Doe
+          exampleSetFlag: true
+          types:
+          - string
+        linkedinUrl:
+          maxLength: 500
+          minLength: 0
+          type: string
+          description: The contact's LinkedIn profile URL. When provided, it is sufficient on its own.
+          example: https://www.linkedin.com/in/jane-doe-example
+          exampleSetFlag: true
+          types:
+          - string
+        email:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: The contact's email address. Used together with firstName and lastName.
+          example: jane.doe@example.com
+          exampleSetFlag: true
+          types:
+          - string
+        accountSearchCriteria:
+          $ref: '#/components/schemas/AccountSearchCriteria'
+          exampleSetFlag: false
+      description: 'A single contact to enrich. Provide a unique id plus one of the following search criteria combinations: (1) linkedinUrl on its own; (2) firstName, lastName and email; (3) firstName, lastName and accountSearchCriteria. A contact matching none of these combinations is rejected with a 400.'
+      exampleSetFlag: false
+      types:
+      - object
+    ContactsEnrichRequest:
+      required:
+      - contacts
+      type: object
+      properties:
+        contacts:
+          maxItems: 10
+          minItems: 1
+          type: array
+          description: Between 1 and 10 contacts to enrich. Each contact must have an id that is unique within the request.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ContactEnrichRequest'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    AccountSearchCriteria:
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: The account's name.
+          example: Gong
+          exampleSetFlag: true
+          types:
+          - string
+        domain:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: The account's domain, for example 'gong.io'.
+          example: gong.io
+          exampleSetFlag: true
+          types:
+          - string
+        linkedinUrl:
+          maxLength: 500
+          minLength: 0
+          type: string
+          description: A link to the account's LinkedIn company page.
+          example: https://www.linkedin.com/company/gong-io
+          exampleSetFlag: true
+          types:
+          - string
+      description: Account details used to identify the account. At least one parameter must be provided.
+      exampleSetFlag: false
+      types:
+      - object
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        errors:
+          type: array
+          description: Error messages.
+          example:
+          - An error has occurred
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    ContactsEnrichResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        contacts:
+          type: array
+          description: A list of contact enrich results, each containing the id provided in the request
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/ContactEnrichResponse'
+            exampleSetFlag: false
+          types:
+          - array
+        summary:
+          $ref: '#/components/schemas/ContactsEnrichSummaryResponse'
+          exampleSetFlag: false
+      exampleSetFlag: false
+      types:
+      - object

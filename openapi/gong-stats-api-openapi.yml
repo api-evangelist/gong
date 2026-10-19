@@ -1,0 +1,1815 @@
+openapi: 3.2.0
+info:
+  title: Gong Stats API
+  description: 'Overview
+
+
+    The Gong API allows you to:
+
+
+    Receive the following information from Gong:
+
+
+    Your company''s calls in Gong
+
+
+    Your company''s users in Gong
+
+
+    Your company''s user stats in Gong
+
+
+    Your company''s user settings in Gong
+
+
+    Your company''s libraries in Gong
+
+
+    Upload new or
+
+    update
+
+    call recordings in Gong, in order to support cases where you have an internal system that records
+
+    calls or obtains them from a third-party entity.
+
+
+    Data Privacy:
+
+    Delete users and all their associated elements.
+
+
+    Upload CRM data into Gong.
+
+
+    Check here what''s your base URL for all API calls.
+
+
+    Authentication
+
+
+    There are two ways to retrieve credentials to the Gong Public API:
+
+
+    Retrieve Manually:
+
+
+    In the Gong API Page (you
+
+    must be a technical administrator in Gong), click "Create" to receive an Access Key
+
+    and an Access Key Secret.
+
+
+    Use the Basic Authorization HTTP header (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Basic <token>
+
+
+    To create the basic token, combine the Access Key and the Access Key Secret with
+
+    colon (:) and then encode in Base64 as following:
+
+
+    Base64(<accessKey> : <accessKeySecret>)
+
+
+    Retrieve through OAuth
+
+
+    To obtain the Bearer token, follow the steps described in the Gong OAuth Guide.
+
+
+    After obtaining the token, use the Bearer Authorization HTTP header
+
+    (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Bearer <token>
+
+
+    Limits
+
+
+    By default Gong limits your company''s access to the service to 3 API calls per second, and 10,000 API calls per day.
+
+
+    When the rate of API calls exceeds these limits an HTTP status code 429 is returned and a Retry-After header indicates
+
+    how many seconds to wait before making a new request.
+
+
+    If required, contact help.gong.io to change these limits.
+
+
+    Cursors
+
+
+    Some API calls that return a list are limited in the amount of records they may return, so multiple API calls may be
+
+    required to bring all records. Such an API call also returns a records field, which contains the number of records
+
+    in the current page, the current page number and the total number of records.
+
+
+    In cases where the total number of records exceeds the number of records thus far retrieved, the records field will also
+
+    contain a cursor field which can be used to access the next page of records. To retrieve the next page, repeat the API call with
+
+    the cursor value as supplied by the previous API call. All other request inputs should remain the same.
+
+
+    Forward Compatibility
+
+
+    When coding a system to accept Gong data, take into account that Gong may, without prior warning, add fields to the JSON output.
+
+    It is recommended to future proof your code so that it disregards all JSON fields you don''t actually use.'
+  version: V2
+servers:
+- url: https://127.0.0.1:8443
+  description: Generated server url
+tags:
+- name: Stats
+  description: 'Gong’s “Stats” API endpoints allow you to:
+
+
+    Request user activity
+
+
+    Request scorecards activity
+
+
+    Request interaction stats on calls that have Whisper turned on
+
+
+    The requested user activity may contain the following details:
+
+
+    Calls Hosted: The number of recorded calls this user hosted.
+
+
+    Call Participated: The number of calls in which this user is a participant (not host).
+
+
+    Calls Reviewed: The number of calls in which someone pressed the "Mark as reviewed".
+
+
+    Calls Listened: The number of other users'' calls the user listened to.
+
+
+    Call Shared Outside: The number of calls the user shared with others outside the company.
+
+
+    Call Shared Inside: The number of calls the user shared with others inside the company.
+
+
+    Own Calls Listened: The number of the user''s own calls the user listened to.
+
+
+    Comment Given: The number of calls in which a user gave at least one comment.
+
+
+    Comment Received: The number of calls in which a user received at least one comment on the users calls.
+
+
+    Feedback Given: The number of recorded calls the user gave feedback on.
+
+
+    Feedback Received: The number of recorded calls the user received feedback on.
+
+
+    Feedback Requested: The number of recorded calls the user requested feedback on.
+
+
+    Scorecard Filled: The number of calls in which someone filled a scorecard on the user''s calls.
+
+
+    Scorecards Completed: The number of scorecards the user completed.
+
+
+    Scorecards Answers: The answers in the answered scorecard.
+
+
+    Whisper: Person Interaction Stats (List of user interaction stats. Applicable values: ''Talk Ratio'',
+
+    ''Longest Monologue'', ''Longest Customer Story'', ''Interactivity'', ''Question Rate'', ''Patience'').'
+paths:
+  /v2/stats/interaction:
+    post:
+      tags:
+      - Stats
+      summary: Retrieve interaction stats for applicable users by date (/v2/stats/interaction)
+      description: 'Returns interaction stats for users based on calls that have Whisper turned on.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:stats:interaction''.'
+      operationId: listInteractionStats
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicApiBaseRequestV2MultipleUsersWithDates'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyUsersIntercationStatsResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: No stats found for the specified period
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/stats/activity/scorecards:
+    post:
+      tags:
+      - Stats
+      summary: Retrieve answered scorecards for applicable reviewed users or scorecards for a…
+      description: 'Retrieve all the answers for the scorecards that were reviewed during a specified date range, for calls that took place during a specified date range, for specific scorecards or for specific reviewed users.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:stats:scorecards''.'
+      operationId: listAnsweredScorecards
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicApiBaseRequestV2AnsweredScorecardsFilter'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnsweredScorecards'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: Answered scorecards not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/stats/activity/day-by-day:
+    post:
+      tags:
+      - Stats
+      summary: Retrieve daily activity for applicable users for a date range…
+      description: 'Retrieve the daily activity of multiple users within the Gong system for a range of dates. This endpoint returns records including statistics about each user''s activity, on the daily level. Records are returned only for users with activity in the range.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:stats:user-actions:detailed''.'
+      operationId: listMultipleUsersDayByDayActivity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicApiBaseRequestV2MultipleUsersWithDates'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersDayByDayActivity'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/stats/activity/aggregate:
+    post:
+      tags:
+      - Stats
+      summary: Retrieve aggregated activity for defined users by date…
+      description: 'Lists the activity of multiple users within the Gong system during a defined period. Given the period, this endpoint returns multiple records, one for each user, with an applicable activity during the period. Each record includes statistics about the user''s activity.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:stats:user-actions''.'
+      operationId: listMultipleUsersAggregateActivity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicApiBaseRequestV2MultipleUsersWithDates'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyUsersAggregateActivityResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/stats/activity/aggregate-by-period:
+    post:
+      tags:
+      - Stats
+      summary: Retrieve aggregated activity for defined users by a date range with grouping in…
+      description: 'Returns aggregated statistics for team members’ actions on calls in Gong, grouped by the specified time period (aggregationPeriod).
+
+        Each record shows the total number of activities performed within the fromDate–toDate range. If the same activity occurs in different periods, it’s counted separately. For example, if a team member listens to the same call on two different days, each day counts as one; listening to the same call twice on the same day counts as a single activity.
+
+        Use the userIds field to retrieve data for specific team members. If userIds is empty, only team members with activity in the specified date range are returned.
+
+
+        When accessed through a Bearer token authorization method, this endpoint requires the scope ''api:stats:user-actions''.'
+      operationId: listMultipleUsersAggregateByPeriod
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestWithTimePeriod'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersAggregateByPeriodActivity'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+components:
+  schemas:
+    AnsweredScorecards:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        records:
+          $ref: '#/components/schemas/Records'
+          exampleSetFlag: false
+        answeredScorecards:
+          type: array
+          description: A list, in which each item contains one answered scorecard.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/AnsweredScorecard'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    RequestWithTimePeriod:
+      required:
+      - aggregationPeriod
+      - filter
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: When paging is needed, provide the value supplied by the previous API call to bring the following page of records.
+          example: eyJhbGciOiJIUzI1NiJ9.eyJjYWxsSWQiM1M30.6qKwpOcvnuweTZmFRzYdtjs_YwJphJU4QIwWFM
+          exampleSetFlag: true
+          types:
+          - string
+        filter:
+          $ref: '#/components/schemas/MultipleUsersWithDates'
+          exampleSetFlag: false
+        aggregationPeriod:
+          type: string
+          description: 'Calendar time period for aggregating data. Note: First day of the week is Monday.'
+          example: DAY
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - DAY
+          - WEEK
+          - MONTH
+          - QUARTER
+          - YEAR
+      exampleSetFlag: false
+      types:
+      - object
+    PublicApiBaseRequestV2MultipleUsersWithDates:
+      required:
+      - filter
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: When paging is needed, provide the value supplied by the previous API call to bring the following page of records.
+          example: eyJhbGciOiJIUzI1NiJ9.eyJjYWxsSWQiM1M30.6qKwpOcvnuweTZmFRzYdtjs_YwJphJU4QIwWFM
+          exampleSetFlag: true
+          types:
+          - string
+        filter:
+          $ref: '#/components/schemas/MultipleUsersWithDates'
+          exampleSetFlag: false
+      exampleSetFlag: false
+      types:
+      - object
+    AggregateActivity:
+      type: object
+      properties:
+        callsAsHost:
+          type: integer
+          description: The number of recorded calls this user hosted.
+          format: int32
+          example: 20
+          exampleSetFlag: true
+          types:
+          - integer
+        callsGaveFeedback:
+          type: integer
+          description: The number of recorded calls the user gave feedback on.
+          format: int32
+          example: 35
+          exampleSetFlag: true
+          types:
+          - integer
+        callsRequestedFeedback:
+          type: integer
+          description: The number of recorded calls the user requested feedback on.
+          format: int32
+          example: 77
+          exampleSetFlag: true
+          types:
+          - integer
+        callsReceivedFeedback:
+          type: integer
+          description: The number of recorded calls the user received feedback on.
+          format: int32
+          example: 67
+          exampleSetFlag: true
+          types:
+          - integer
+        ownCallsListenedTo:
+          type: integer
+          description: The number of the user's own calls the user listened to.
+          format: int32
+          example: 668
+          exampleSetFlag: true
+          types:
+          - integer
+        othersCallsListenedTo:
+          type: integer
+          description: The number of other users' calls the user listened to.
+          format: int32
+          example: 96
+          exampleSetFlag: true
+          types:
+          - integer
+        callsSharedInternally:
+          type: integer
+          description: The number of calls the user shared with others inside the company.
+          format: int32
+          example: 478
+          exampleSetFlag: true
+          types:
+          - integer
+        callsSharedExternally:
+          type: integer
+          description: The number of calls the user shared with others outside the company.
+          format: int32
+          example: 75
+          exampleSetFlag: true
+          types:
+          - integer
+        callsScorecardsFilled:
+          type: integer
+          description: The number of scorecards the user completed.
+          format: int32
+          example: 876
+          exampleSetFlag: true
+          types:
+          - integer
+        callsScorecardsReceived:
+          type: integer
+          description: The number of calls in which someone filled a scorecard on the user's calls.
+          format: int32
+          example: 876
+          exampleSetFlag: true
+          types:
+          - integer
+        callsAttended:
+          type: integer
+          description: The number of calls in which this user is participant (not host).
+          format: int32
+          example: 46
+          exampleSetFlag: true
+          types:
+          - integer
+        callsCommentsGiven:
+          type: integer
+          description: The number of calls in which a user gave at least one comment.
+          format: int32
+          example: 21
+          exampleSetFlag: true
+          types:
+          - integer
+        callsCommentsReceived:
+          type: integer
+          description: The number of calls in which a user received at least one comment on the users calls.
+          format: int32
+          example: 13
+          exampleSetFlag: true
+          types:
+          - integer
+        callsMarkedAsFeedbackGiven:
+          type: integer
+          description: The number of calls in which someone pressed the "Mark as reviewed".
+          format: int32
+          example: 24
+          exampleSetFlag: true
+          types:
+          - integer
+        callsMarkedAsFeedbackReceived:
+          type: integer
+          description: The number of calls in which someone pressed the “Mark as reviewed” on the users calls.
+          format: int32
+          example: 35
+          exampleSetFlag: true
+          types:
+          - integer
+      description: Aggregated activity for a user within a time period
+      exampleSetFlag: false
+      types:
+      - object
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        errors:
+          type: array
+          description: Error messages.
+          example:
+          - An error has occurred
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    UsersDayByDayActivity:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        records:
+          $ref: '#/components/schemas/Records'
+          exampleSetFlag: false
+        usersDetailedActivities:
+          type: array
+          description: A list, in which each item contains one user's activity.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/UserDayByDayActivity'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    Records:
+      type: object
+      properties:
+        totalRecords:
+          type: integer
+          description: Total number of records.
+          format: int32
+          example: 263
+          exampleSetFlag: true
+          types:
+          - integer
+        currentPageSize:
+          type: integer
+          description: Number of records in the current page.
+          format: int32
+          example: 100
+          exampleSetFlag: true
+          types:
+          - integer
+        currentPageNumber:
+          type: integer
+          description: Current page number.
+          format: int32
+          example: 0
+          exampleSetFlag: true
+          types:
+          - integer
+        cursor:
+          type: string
+          description: Returned only when there are more records to be retrieved. Repeat the API call and pass this cursor value in the request to retrieve the next page of records.
+          example: eyJhbGciOiJIUzI1NiJ9.eyJjYWxsSWQiM1M30.6qKwpOcvnuweTZmFRzYdtjs_YwJphJU4QIwWFM
+          exampleSetFlag: true
+          types:
+          - string
+      description: Information about the number of records that match the requested filter.
+      exampleSetFlag: false
+      types:
+      - object
+    PublicApiBaseRequestV2AnsweredScorecardsFilter:
+      required:
+      - filter
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: When paging is needed, provide the value supplied by the previous API call to bring the following page of records.
+          example: eyJhbGciOiJIUzI1NiJ9.eyJjYWxsSWQiM1M30.6qKwpOcvnuweTZmFRzYdtjs_YwJphJU4QIwWFM
+          exampleSetFlag: true
+          types:
+          - string
+        filter:
+          $ref: '#/components/schemas/AnsweredScorecardsFilter'
+          exampleSetFlag: false
+      exampleSetFlag: false
+      types:
+      - object
+    CompanyUsersIntercationStatsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        records:
+          $ref: '#/components/schemas/Records'
+          exampleSetFlag: false
+        peopleInteractionStats:
+          type: array
+          description: 'A list of interaction statistics. Applicable values: ''Longest Monologue'', ''Longest Customer Story'', ''Interactivity'', ''Patience'', ''Question Rate''.'
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/InteractionStats'
+            exampleSetFlag: false
+          types:
+          - array
+        fromDateTime:
+          type: string
+          description: 'The date and time in the ISO-8601 format, for example: ''2024-01-17T16:20:05-03:00'' or ''2016-02-16T03:57:04.834+05:30'' or ''2020-11-20T21:30:07.233692Z'', where Z stands for UTC, when the list of results starts.'
+          example: '2019-01-20T00:00:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        toDateTime:
+          type: string
+          description: 'The date and time in the ISO-8601 format, for example: ''2024-01-17T16:20:05-03:00'' or ''2016-02-16T03:57:04.834+05:30'' or ''2020-11-20T21:30:07.233692Z'', where Z stands for UTC, when the list of results ends.'
+          example: 2019-01-21T000:00:00-08:00
+          exampleSetFlag: true
+          types:
+          - string
+        timeZone:
+          type: string
+          description: The company's defined timezone in Gong.
+          example: US/Pacific
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    UsersAggregateByPeriodActivity:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        records:
+          $ref: '#/components/schemas/Records'
+          exampleSetFlag: false
+        usersAggregateActivity:
+          type: array
+          description: A list, in which each item contains details of one user's activities.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/UserAggregateByPeriodActivities'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    MultipleUsersWithDates:
+      required:
+      - fromDate
+      - toDate
+      type: object
+      properties:
+        fromDate:
+          type: string
+          description: 'The date (in the company''s time zone) from which to list a user''s activity. This value is inclusive. The date should be specified in the following format: YYYY-MM-DD.'
+          example: '2019-01-20'
+          exampleSetFlag: true
+          types:
+          - string
+        toDate:
+          type: string
+          description: 'The date (in the company''s time zone) until which to list a user''s activity. This value is exclusive. This value should not exceed the current day. The date should be specified in the following format: YYYY-MM-DD.'
+          example: '2019-01-21'
+          exampleSetFlag: true
+          types:
+          - string
+        createdFromDateTime:
+          type: string
+          format: date-time
+          exampleSetFlag: false
+          types:
+          - string
+        createdToDateTime:
+          type: string
+          format: date-time
+          exampleSetFlag: false
+          types:
+          - string
+        userIds:
+          uniqueItems: true
+          type: array
+          description: Set of Gong's unique numeric identifiers for the users (up to 20 digits).
+          writeOnly: true
+          example:
+          - '234599484848423'
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      description: Filter parameters.
+      exampleSetFlag: false
+      types:
+      - object
+    UserDayByDayActivity:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: Gong's unique numeric identifier for the user (up to 20 digits).
+          exampleSetFlag: false
+          types:
+          - string
+        userEmailAddress:
+          type: string
+          description: The email address of the Gong user.
+          exampleSetFlag: false
+          types:
+          - string
+        userDailyActivityStats:
+          type: array
+          description: Array of daily activity records, one for every day in the date range.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/DailyActivityWithDates'
+            exampleSetFlag: false
+          types:
+          - array
+      description: A list, in which each item contains one user's activity.
+      exampleSetFlag: false
+      types:
+      - object
+    AnsweredScorecard:
+      type: object
+      properties:
+        answeredScorecardId:
+          type: integer
+          description: The identifier of the answer of the scorecard.
+          format: int64
+          example: 563515258458745
+          exampleSetFlag: true
+          types:
+          - integer
+        scorecardId:
+          type: integer
+          description: The identifier of the scorecard.
+          format: int64
+          example: 6843152929075440037
+          exampleSetFlag: true
+          types:
+          - integer
+        scorecardName:
+          type: string
+          description: Scorecard name.
+          example: SDR Call Scorecard
+          exampleSetFlag: true
+          types:
+          - string
+        callId:
+          type: integer
+          description: Gong's unique numeric identifier for the call (up to 20 digits).
+          format: int64
+          example: 7782342274025937895
+          exampleSetFlag: true
+          types:
+          - integer
+        callStartTime:
+          type: string
+          description: 'The date and time when the call was recorded in the ISO-8601 format, for example: ''2024-01-17T16:20:05-03:00'' or ''2016-02-16T03:57:04.834+05:30'' or ''2020-11-20T21:30:07.233692Z'', where Z stands for UTC.'
+          format: date-time
+          example: 1518863400.0
+          exampleSetFlag: true
+          types:
+          - string
+        reviewedUserId:
+          type: integer
+          description: The user Id of the team member being reviewed, who hosted the call.
+          format: int64
+          example: 234599484848423
+          exampleSetFlag: true
+          types:
+          - integer
+        reviewerUserId:
+          type: integer
+          description: The user Id of the team member who answered the scorecard for the call, if the scorecard reviewMethod is AUTOMATIC this id would be null
+          format: int64
+          example: 563515258458745
+          exampleSetFlag: true
+          types:
+          - integer
+        reviewMethod:
+          type: string
+          description: The method used to review the scorecard.
+          example: AUTOMATIC
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - AUTOMATIC
+          - MANUAL
+        editorUserId:
+          type: integer
+          description: The user Id of the last team member to edit the answer. Null when no-one has edited the scorecard, or when the original team member to fill in the scorecard has edited the answers.
+          format: int64
+          example: 733525198384216
+          exampleSetFlag: true
+          types:
+          - integer
+        reviewTime:
+          type: string
+          description: 'The date and time when the review was completed and published in the ISO-8601 format, for example: ''2024-01-17T16:20:05-03:00'' or ''2016-02-16T03:57:04.834+05:30'' or ''2020-11-20T21:30:07.233692Z'', where Z stands for UTC.'
+          format: date-time
+          example: 1518863400.0
+          exampleSetFlag: true
+          types:
+          - string
+        visibilityType:
+          type: string
+          exampleSetFlag: false
+          types:
+          - string
+          enum:
+          - PUBLIC
+          - PRIVATE
+          - OPT_IN_USERS
+          - MANAGERS
+          - MANAGERS_AND_REVIEWEE
+        answers:
+          type: array
+          description: The answers in the answered scorecard.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/Answer'
+            exampleSetFlag: false
+          types:
+          - array
+      description: A list, in which each item contains one answered scorecard.
+      exampleSetFlag: false
+      types:
+      - object
+    AnsweredScorecardsFilter:
+      type: object
+      properties:
+        callFromDate:
+          type: string
+          description: 'The date (in the company''s time zone) of the call from when to list calls. This value is inclusive. The date should be specified in the following format: YYYY-MM-DD; if not specified, it starts with the earliest recorded call.'
+          example: '2019-01-20'
+          exampleSetFlag: true
+          types:
+          - string
+        callToDate:
+          type: string
+          description: 'The date (in the company''s time zone) of the call until when to list calls. This value is exclusive. The date should be specified in the following format: YYYY-MM-DD; if not specified, it ends with the latest recorded call.'
+          example: '2019-01-25'
+          exampleSetFlag: true
+          types:
+          - string
+        reviewFromDate:
+          type: string
+          description: 'The review date (in the company''s time zone) from when to list calls. This value is inclusive. The date should be specified in the following format: YYYY-MM-DD; if not specified, it starts with the earliest reviewed call.'
+          example: '2019-01-20'
+          exampleSetFlag: true
+          types:
+          - string
+        reviewToDate:
+          type: string
+          description: 'The review date (in the company''s time zone) until when to list calls. This value is exclusive. The date should be specified in the following format: YYYY-MM-DD; if not specified, it ends with the latest reviewed call.'
+          example: '2019-01-25'
+          exampleSetFlag: true
+          types:
+          - string
+        reviewMethod:
+          type: string
+          description: 'Select whether to return scorecards that have been reviewed manually, automatically, or both. Default value: MANUAL'
+          example: AUTOMATIC
+          exampleSetFlag: true
+          types:
+          - string
+          enum:
+          - AUTOMATIC
+          - MANUAL
+          - BOTH
+        reviewedUserIds:
+          uniqueItems: true
+          type: array
+          description: List of user Ids of the team members being reviewed. If not specified, it returns all answered scorecards in the corresponding filter.
+          writeOnly: true
+          example:
+          - '234599484848423'
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        scorecardIds:
+          uniqueItems: true
+          type: array
+          description: List of scorecards Ids. If not specified, it returns all answered scorecards in the corresponding filter.
+          writeOnly: true
+          example:
+          - '6843152929075440037'
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      description: Filter parameters.
+      exampleSetFlag: false
+      types:
+      - object
+    UserAggregateByPeriodActivities:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: Gong's unique numeric identifier for the user (up to 20 digits).
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        userEmailAddress:
+          type: string
+          description: The email address of the Gong user.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+        userAggregateActivity:
+          type: array
+          description: A list, in which each item contains aggregate user activity for consecutive time periods in the date range.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/AggregateActivityWithDates'
+            exampleSetFlag: false
+          types:
+          - array
+      description: A list, in which each item contains details of one user's activities.
+      exampleSetFlag: false
+      types:
+      - object
+    InteractionStat:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Stat name
+          example: Interactivity
+          exampleSetFlag: true
+          types:
+          - string
+        value:
+          type: number
+          description: Stat measurement (Can be either a double or integer)
+          format: double
+          example: 9.23
+          exampleSetFlag: true
+          types:
+          - number
+      exampleSetFlag: false
+      types:
+      - object
+    Answer:
+      type: object
+      properties:
+        questionId:
+          type: integer
+          description: The identifier of the question.
+          format: int64
+          exampleSetFlag: false
+          types:
+          - integer
+        questionRevisionId:
+          type: integer
+          description: The identifier of the revision version of the question.
+          format: int64
+          example: 43955224753211112
+          exampleSetFlag: true
+          types:
+          - integer
+        isOverall:
+          type: boolean
+          description: If the question is the main overall question or not.
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        score:
+          type: integer
+          description: Score between 1 to 50, if answered. Null otherwise.
+          format: int32
+          example: 4
+          exampleSetFlag: true
+          types:
+          - integer
+        answerText:
+          type: string
+          description: The answer's text, if answered. Null otherwise.
+          example: Done a great job. Scheduled a follow-up demo.
+          exampleSetFlag: true
+          types:
+          - string
+        notApplicable:
+          type: boolean
+          description: If the question is irrelevant for the call.
+          example: false
+          exampleSetFlag: true
+          types:
+          - boolean
+        selectedOptions:
+          type: array
+          description: The identifier of the options selected. Null otherwise
+          example:
+          - '1'
+          - '3'
+          exampleSetFlag: true
+          items:
+            type: string
+            description: The identifier of the options selected. Null otherwise
+            example: '["1","3"]'
+            exampleSetFlag: true
+            types:
+            - string
+          types:
+          - array
+      description: The answers in the answered scorecard.
+      exampleSetFlag: false
+      types:
+      - object
+    InteractionStats:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: Gong's unique numeric identifier for the user (up to 20 digits).
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        userEmailAddress:
+          type: string
+          description: The email address of the Gong user.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+        personInteractionStats:
+          type: array
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/InteractionStat'
+            exampleSetFlag: false
+          types:
+          - array
+      description: 'A list of interaction statistics. Applicable values: ''Longest Monologue'', ''Longest Customer Story'', ''Interactivity'', ''Patience'', ''Question Rate''.'
+      exampleSetFlag: false
+      types:
+      - object
+    DailyActivityWithDates:
+      type: object
+      properties:
+        callsAsHost:
+          type: array
+          description: List of IDs of calls in which this user is the host.
+          example:
+          - 348056639626337006
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        callsGaveFeedback:
+          type: array
+          description: List of IDs of calls where the user gave feedback.
+          example:
+          - 5580564522626337006
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        callsRequestedFeedback:
+          type: array
+          description: ' List of IDs of calls where the user requested feedback.'
+          example:
+          - 342556337006
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        callsReceivedFeedback:
+          type: array
+          description: ' List of IDs of calls where the user received feedback.'
+          example:
+          - 342556337006
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        ownCallsListenedTo:
+          type: array
+          description: List of IDs of the user's own calls, that the user listened to.
+          example:
+          - 4553256639626337006
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        othersCallsListenedTo:
+          type: array
+          description: List of IDs of calls, not belonging to this user, that the user listened to.
+          example:
+          - 56305663962633755
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        callsSharedInternally:
+          type: array
+          description: List of IDs of calls the user shared with other users inside the company.
+          example:
+          - 37555663966526337006
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        callsSharedExternally:
+          type: array
+          description: List of IDs of calls the user shared with people outside the company.
+          example:
+          - 4563962633756
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        callsAttended:
+          type: array
+          description: List of IDs of calls in which this user is participant (not host)
+          example:
+          - 45783962636582
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        callsCommentsGiven:
+          type: array
+          description: List of IDs of calls in which a user gave at least one comment.
+          example:
+          - 45663345636581
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        callsCommentsReceived:
+          type: array
+          description: List of IDs of calls in which a user received at least one comment on the users calls.
+          example:
+          - 45663962636582
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        callsMarkedAsFeedbackGiven:
+          type: array
+          description: ' List of IDs of calls in which someone pressed the "Mark as reviewed".'
+          example:
+          - 45663962636581
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        callsMarkedAsFeedbackReceived:
+          type: array
+          description: List of IDs of calls in which someone pressed the "Mark as reviewed" on the users calls.
+          example:
+          - 45663388836581
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        callsScorecardsFilled:
+          type: array
+          description: List of IDs of calls in which the user filled scorecards.
+          example:
+          - 45663962636582
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        callsScorecardsReceived:
+          type: array
+          description: List of IDs of calls in which someone filled a scorecard on the users calls.
+          example:
+          - 45663962636581
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+        fromDate:
+          type: string
+          description: 'The start of the day in the ISO-8601 format, for example: ''2024-01-17T16:20:05-03:00'' or ''2016-02-16T03:57:04.834+05:30'' or ''2020-11-20T21:30:07.233692Z'', where Z stands for UTC.'
+          example: '2019-01-20T00:00:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        toDate:
+          type: string
+          description: 'The end of the day in the ISO-8601 format, for example: ''2024-01-17T16:20:05-03:00'' or ''2016-02-16T03:57:04.834+05:30'' or ''2020-11-20T21:30:07.233692Z'', where Z stands for UTC.'
+          example: 2019-01-21T000:00:00-08:00
+          exampleSetFlag: true
+          types:
+          - string
+      description: User daily activity
+      exampleSetFlag: false
+      types:
+      - object
+    UserActivity:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: Gong's unique numeric identifier for the user (up to 20 digits).
+          example: '234599484848423'
+          exampleSetFlag: true
+          types:
+          - string
+        userEmailAddress:
+          type: string
+          description: The email address of the Gong user.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+        userAggregateActivityStats:
+          $ref: '#/components/schemas/AggregateActivity'
+          exampleSetFlag: false
+      description: A list, in which each item specifies one user's activities.
+      exampleSetFlag: false
+      types:
+      - object
+    CompanyUsersAggregateActivityResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        records:
+          $ref: '#/components/schemas/Records'
+          exampleSetFlag: false
+        usersAggregateActivityStats:
+          type: array
+          description: A list, in which each item specifies one user's activities.
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/UserActivity'
+            exampleSetFlag: false
+          types:
+          - array
+        fromDateTime:
+          type: string
+          description: 'The date and time in the ISO-8601 format, for example: ''2024-01-17T16:20:05-03:00'' or ''2016-02-16T03:57:04.834+05:30'' or ''2020-11-20T21:30:07.233692Z'', where Z stands for UTC, when the list of results starts.'
+          example: '2019-01-20T00:00:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        toDateTime:
+          type: string
+          description: 'The date and time in the ISO-8601 format, for example: ''2024-01-17T16:20:05-03:00'' or ''2016-02-16T03:57:04.834+05:30'' or ''2020-11-20T21:30:07.233692Z'', where Z stands for UTC, when the list of results ends.'
+          example: 2019-01-21T000:00:00-08:00
+          exampleSetFlag: true
+          types:
+          - string
+        timeZone:
+          type: string
+          description: The company's defined timezone in Gong.
+          example: US/Pacific
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    AggregateActivityWithDates:
+      type: object
+      properties:
+        callsAsHost:
+          type: integer
+          description: The number of recorded calls this user hosted.
+          format: int32
+          example: 20
+          exampleSetFlag: true
+          types:
+          - integer
+        callsGaveFeedback:
+          type: integer
+          description: The number of recorded calls the user gave feedback on.
+          format: int32
+          example: 35
+          exampleSetFlag: true
+          types:
+          - integer
+        callsRequestedFeedback:
+          type: integer
+          description: The number of recorded calls the user requested feedback on.
+          format: int32
+          example: 77
+          exampleSetFlag: true
+          types:
+          - integer
+        callsReceivedFeedback:
+          type: integer
+          description: The number of recorded calls the user received feedback on.
+          format: int32
+          example: 67
+          exampleSetFlag: true
+          types:
+          - integer
+        ownCallsListenedTo:
+          type: integer
+          description: The number of the user's own calls the user listened to.
+          format: int32
+          example: 668
+          exampleSetFlag: true
+          types:
+          - integer
+        othersCallsListenedTo:
+          type: integer
+          description: The number of other users' calls the user listened to.
+          format: int32
+          example: 96
+          exampleSetFlag: true
+          types:
+          - integer
+        callsSharedInternally:
+          type: integer
+          description: The number of calls the user shared with others inside the company.
+          format: int32
+          example: 478
+          exampleSetFlag: true
+          types:
+          - integer
+        callsSharedExternally:
+          type: integer
+          description: The number of calls the user shared with others outside the company.
+          format: int32
+          example: 75
+          exampleSetFlag: true
+          types:
+          - integer
+        callsScorecardsFilled:
+          type: integer
+          description: The number of scorecards the user completed.
+          format: int32
+          example: 876
+          exampleSetFlag: true
+          types:
+          - integer
+        callsScorecardsReceived:
+          type: integer
+          description: The number of calls in which someone filled a scorecard on the user's calls.
+          format: int32
+          example: 876
+          exampleSetFlag: true
+          types:
+          - integer
+        callsAttended:
+          type: integer
+          description: The number of calls in which this user is participant (not host).
+          format: int32
+          example: 46
+          exampleSetFlag: true
+          types:
+          - integer
+        callsCommentsGiven:
+          type: integer
+          description: The number of calls in which a user gave at least one comment.
+          format: int32
+          example: 21
+          exampleSetFlag: true
+          types:
+          - integer
+        callsCommentsReceived:
+          type: integer
+          description: The number of calls in which a user received at least one comment on the users calls.
+          format: int32
+          example: 13
+          exampleSetFlag: true
+          types:
+          - integer
+        callsMarkedAsFeedbackGiven:
+          type: integer
+          description: The number of calls in which someone pressed the "Mark as reviewed".
+          format: int32
+          example: 24
+          exampleSetFlag: true
+          types:
+          - integer
+        callsMarkedAsFeedbackReceived:
+          type: integer
+          description: The number of calls in which someone pressed the “Mark as reviewed” on the users calls.
+          format: int32
+          example: 35
+          exampleSetFlag: true
+          types:
+          - integer
+        fromDate:
+          type: string
+          description: 'The start of the period, or the request filter''s fromDate for the first period in the range, in the ISO-8601 format, for example: ''2024-01-17T16:20:05-03:00'' or ''2016-02-16T03:57:04.834+05:30'' or ''2020-11-20T21:30:07.233692Z'', where Z stands for UTC.'
+          example: '2019-01-20T00:00:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        toDate:
+          type: string
+          description: 'The end of the period, or the request filter''s toDate for the last period in the range,  in the ISO-8601 format, for example: ''2024-01-17T16:20:05-03:00'' or ''2016-02-16T03:57:04.834+05:30'' or ''2020-11-20T21:30:07.233692Z'', where Z stands for UTC.'
+          example: 2019-01-21T000:00:00-08:00
+          exampleSetFlag: true
+          types:
+          - string
+      description: Aggregated activity for a user within a time period
+      exampleSetFlag: false
+      types:
+      - object

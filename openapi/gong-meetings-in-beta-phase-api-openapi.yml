@@ -1,0 +1,874 @@
+openapi: 3.2.0
+info:
+  title: Gong Meetings (in Beta Phase) API
+  description: 'Overview
+
+
+    The Gong API allows you to:
+
+
+    Receive the following information from Gong:
+
+
+    Your company''s calls in Gong
+
+
+    Your company''s users in Gong
+
+
+    Your company''s user stats in Gong
+
+
+    Your company''s user settings in Gong
+
+
+    Your company''s libraries in Gong
+
+
+    Upload new or
+
+    update
+
+    call recordings in Gong, in order to support cases where you have an internal system that records
+
+    calls or obtains them from a third-party entity.
+
+
+    Data Privacy:
+
+    Delete users and all their associated elements.
+
+
+    Upload CRM data into Gong.
+
+
+    Check here what''s your base URL for all API calls.
+
+
+    Authentication
+
+
+    There are two ways to retrieve credentials to the Gong Public API:
+
+
+    Retrieve Manually:
+
+
+    In the Gong API Page (you
+
+    must be a technical administrator in Gong), click "Create" to receive an Access Key
+
+    and an Access Key Secret.
+
+
+    Use the Basic Authorization HTTP header (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Basic <token>
+
+
+    To create the basic token, combine the Access Key and the Access Key Secret with
+
+    colon (:) and then encode in Base64 as following:
+
+
+    Base64(<accessKey> : <accessKeySecret>)
+
+
+    Retrieve through OAuth
+
+
+    To obtain the Bearer token, follow the steps described in the Gong OAuth Guide.
+
+
+    After obtaining the token, use the Bearer Authorization HTTP header
+
+    (as per RFC)
+
+    to access the Public API as shown below:
+
+
+    Authorization: Bearer <token>
+
+
+    Limits
+
+
+    By default Gong limits your company''s access to the service to 3 API calls per second, and 10,000 API calls per day.
+
+
+    When the rate of API calls exceeds these limits an HTTP status code 429 is returned and a Retry-After header indicates
+
+    how many seconds to wait before making a new request.
+
+
+    If required, contact help.gong.io to change these limits.
+
+
+    Cursors
+
+
+    Some API calls that return a list are limited in the amount of records they may return, so multiple API calls may be
+
+    required to bring all records. Such an API call also returns a records field, which contains the number of records
+
+    in the current page, the current page number and the total number of records.
+
+
+    In cases where the total number of records exceeds the number of records thus far retrieved, the records field will also
+
+    contain a cursor field which can be used to access the next page of records. To retrieve the next page, repeat the API call with
+
+    the cursor value as supplied by the previous API call. All other request inputs should remain the same.
+
+
+    Forward Compatibility
+
+
+    When coding a system to accept Gong data, take into account that Gong may, without prior warning, add fields to the JSON output.
+
+    It is recommended to future proof your code so that it disregards all JSON fields you don''t actually use.'
+  version: V2
+servers:
+- url: https://127.0.0.1:8443
+  description: Generated server url
+tags:
+- name: Meetings (in Beta Phase)
+  description: 'Gong’s “Consent Meeting” API endpoints allow you to:
+
+
+    Request creating a Gong Consent meeting link
+
+
+    Update a Consent Meeting’s details
+
+
+    Delete a Consent Meeting
+
+
+    List all Licensed Users in the Gong instance and their Consent Page status
+
+
+    The requested calls may contain the following meeting details:
+
+
+    Meeting Scheduled Start Time
+
+
+    Meeting Scheduled End Time
+
+
+    Organizer
+
+
+    Meeting Title
+
+
+    Invitees
+
+
+    External Meeting Id - The ID as it is formed on an external system'
+paths:
+  /v2/meetings/{meetingId}:
+    put:
+      tags:
+      - Meetings (in Beta Phase)
+      summary: Update a Gong Meeting (/v2/meetings/{meetingId})
+      description: When accessed through a Bearer token authorization method, this endpoint requires the scope 'api:meetings:user:update'.
+      operationId: updateMeeting
+      parameters:
+      - name: meetingId
+        in: path
+        description: Gong's unique identifier for the meeting (up to 20 digits).
+        required: true
+        style: SIMPLE
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          exampleSetFlag: false
+          types:
+          - integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMeetingRequest'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateMeetingResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '403':
+          description: This API endpoint is in Limited release - contact your CSM for more information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: No meeting found corresponding to the provided meeting ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '409':
+          description: Conflict, e.g. consent page is not enabled in your company
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+    delete:
+      tags:
+      - Meetings (in Beta Phase)
+      summary: Delete a Gong Meeting (/v2/meetings)
+      description: When accessed through a Bearer token authorization method, this endpoint requires the scope 'api:meetings:user:delete'.
+      operationId: deleteMeeting
+      parameters:
+      - name: meetingId
+        in: path
+        description: Gong's unique identifier for the meeting (up to 20 digits).
+        required: true
+        style: SIMPLE
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          exampleSetFlag: false
+          types:
+          - integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteMeetingRequest'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteMeetingRequest'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '403':
+          description: This API endpoint is in Limited release - contact your CSM for more information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: No Gong meeting found corresponding to the provided organizer email
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '409':
+          description: Conflict, e.g. consent page is not enabled in your company
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/meetings:
+    post:
+      tags:
+      - Meetings (in Beta Phase)
+      summary: Create a New Gong Meeting (/v2/meetings)
+      description: When accessed through a Bearer token authorization method, this endpoint requires the scope 'api:meetings:user:create'.
+      operationId: addMeeting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewMeetingRequest'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewMeetingResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '403':
+          description: This API endpoint is in Limited release - contact your CSM for more information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '404':
+          description: No Gong user found corresponding to the provided organizer email
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '409':
+          description: Conflict, e.g. consent page is not enabled in your company
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+  /v2/meetings/integration/status:
+    post:
+      tags:
+      - Meetings (in Beta Phase)
+      summary: Validate Gong meeting Integration (/v2/meetings/integration/status)
+      description: When accessed through a Bearer token authorization method, this endpoint requires the scope 'api:meetings:integration:status'.
+      operationId: integrationStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntegrationStatusRequest'
+              exampleSetFlag: false
+            exampleSetFlag: false
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationStatusResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '400':
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '403':
+          description: This API endpoint is in Limited release - contact your CSM for more information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '429':
+          description: API request limit exceeded
+          headers:
+            Retry-After:
+              description: Number of seconds to wait before making a new request.
+              style: SIMPLE
+              explode: false
+              schema:
+                type: integer
+                format: int32
+                exampleSetFlag: false
+                types:
+                - integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+        '500':
+          description: Failed to complete the operation due to an unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                exampleSetFlag: false
+              exampleSetFlag: false
+components:
+  schemas:
+    NewMeetingResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        meetingId:
+          type: string
+          description: Gong's unique identifier for the meeting (up to 20 digits).
+          example: '7782342274025937895'
+          exampleSetFlag: true
+          types:
+          - string
+        meetingUrl:
+          type: string
+          description: The Gong URL of the meeting, should be used to enter the meeting.
+          example: https://join.gong.io/my-company/jon.snow?tkn=MoNpS9tMNt8BK7EZxQpSJl
+          exampleSetFlag: true
+          types:
+          - string
+        additionalInvitees:
+          type: array
+          description: Attendees the requesting party should add to the invitation, this should support adding email addresses such as coordinator@gong.io for Gong to schedule the recording of the meeting.
+          example:
+          - displayName: Gong Assistant
+            email: assistant@gong.io
+          exampleSetFlag: true
+          items:
+            $ref: '#/components/schemas/MeetingInvitee'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    UpdateMeetingResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        meetingId:
+          type: string
+          description: The unique meeting identifier of the meeting.
+          example: '7782342274025937895'
+          exampleSetFlag: true
+          types:
+          - string
+      exampleSetFlag: false
+      types:
+      - object
+    IntegrationStatusRequest:
+      type: object
+      properties:
+        emails:
+          type: array
+          description: String array of emails of users (max 100)
+          exampleSetFlag: false
+          items:
+            type: string
+            description: String array of emails of users (max 100)
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    DeleteMeetingRequest:
+      type: object
+      properties:
+        organizerEmail:
+          type: string
+          description: The email address of the user who created the meeting.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+      description: Meeting update metadata
+      exampleSetFlag: false
+      types:
+      - object
+    User_Integration_Status:
+      type: object
+      properties:
+        email:
+          type: string
+          description: The email address meeting organizer
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+        exists:
+          type: boolean
+          description: Whether the user exists in Gong
+          example: true
+          exampleSetFlag: true
+          types:
+          - boolean
+        valid:
+          type: boolean
+          description: User-level validation - whether the integration is connected
+          example: false
+          exampleSetFlag: true
+          types:
+          - boolean
+        userFacingError:
+          type: string
+          description: The message explaining in case the integration is currently not connected
+          example: The Gong consent page is not enabled in your company. Contact your Gong Admin.
+          exampleSetFlag: true
+          types:
+          - string
+        fixUrl:
+          type: string
+          description: A URL to place in the application to fix the problem
+          example: https://app.gong.io/company/recording-consent/consent-page
+          exampleSetFlag: true
+          types:
+          - string
+        helpUrl:
+          type: string
+          description: A URL to the Gong help center where more information can be found about the error
+          example: https://help.gong.io/hc/en-us/articles/360056677792
+          exampleSetFlag: true
+          types:
+          - string
+      description: The integration status for the request users
+      exampleSetFlag: false
+      types:
+      - object
+    IntegrationStatusResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        users:
+          type: array
+          description: The integration status for the request users
+          exampleSetFlag: false
+          items:
+            $ref: '#/components/schemas/User_Integration_Status'
+            exampleSetFlag: false
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    MeetingInvitee:
+      type: object
+      properties:
+        email:
+          type: string
+          description: The unique meeting to identify the meeting.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+        displayName:
+          type: string
+          description: The name of the person.
+          example: Test User
+          exampleSetFlag: true
+          types:
+          - string
+        firstName:
+          type: string
+          description: The first name of the person, if available.
+          example: Jon
+          exampleSetFlag: true
+          types:
+          - string
+        lastName:
+          type: string
+          description: The last name of the person, if available.
+          example: Snow
+          exampleSetFlag: true
+          types:
+          - string
+      description: Attendees the requesting party should add to the invitation, this should support adding email addresses such as coordinator@gong.io for Gong to schedule the recording of the meeting.
+      example:
+      - displayName: Gong Assistant
+        email: assistant@gong.io
+      exampleSetFlag: true
+      types:
+      - object
+    ErrorResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: A Gong request reference Id, generated for this request. Can be used for troubleshooting purposes.
+          example: 4al018gzaztcr8nbukw
+          exampleSetFlag: true
+          types:
+          - string
+        errors:
+          type: array
+          description: Error messages.
+          example:
+          - An error has occurred
+          exampleSetFlag: true
+          items:
+            type: string
+            exampleSetFlag: false
+            types:
+            - string
+          types:
+          - array
+      exampleSetFlag: false
+      types:
+      - object
+    NewMeetingRequest:
+      required:
+      - endTime
+      - invitees
+      - organizerEmail
+      - startTime
+      type: object
+      properties:
+        startTime:
+          type: string
+          description: The meeting start time in ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC).
+          example: '2018-02-17T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        endTime:
+          type: string
+          description: The meeting end time in ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC).
+          example: '2018-02-19T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        title:
+          type: string
+          description: Title of the event.
+          example: Example call
+          exampleSetFlag: true
+          types:
+          - string
+        invitees:
+          type: array
+          description: A list of email addresses of invitees to the event (not including the organizer).
+          example:
+          - displayName: Cookie Monster
+            email: cookie.monster@cookies.com
+          exampleSetFlag: true
+          items:
+            $ref: '#/components/schemas/MeetingInvitee'
+            exampleSetFlag: false
+          types:
+          - array
+        externalId:
+          type: string
+          description: The ID as it is formed on the external system.
+          example: 7JEHFRGXDDZFEW2FC4U
+          exampleSetFlag: true
+          types:
+          - string
+        provider:
+          type: string
+          description: The web conferencing provider to use for this meeting (e.g. 'zoom'). When not specified, the user's default provider is used.
+          example: zoom
+          exampleSetFlag: true
+          types:
+          - string
+        organizerEmail:
+          type: string
+          description: The email address of the user creating the meeting, the Gong consent page link will be used according to the settings of this user.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+      description: New meeting metadata
+      exampleSetFlag: false
+      types:
+      - object
+    UpdateMeetingRequest:
+      required:
+      - endTime
+      - invitees
+      - organizerEmail
+      - startTime
+      type: object
+      properties:
+        startTime:
+          type: string
+          description: The meeting start time in ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC).
+          example: '2018-02-17T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        endTime:
+          type: string
+          description: The meeting end time in ISO-8601 format (e.g., '2018-02-18T02:30:00-07:00' or '2018-02-18T08:00:00Z', where Z stands for UTC).
+          example: '2018-02-19T02:30:00-08:00'
+          exampleSetFlag: true
+          types:
+          - string
+        title:
+          type: string
+          description: Title of the event.
+          example: Example call
+          exampleSetFlag: true
+          types:
+          - string
+        invitees:
+          type: array
+          description: A list of email addresses of invitees to the event (not including the organizer).
+          example:
+          - displayName: Cookie Monster
+            email: cookie.monster@cookies.com
+          exampleSetFlag: true
+          items:
+            $ref: '#/components/schemas/MeetingInvitee'
+            exampleSetFlag: false
+          types:
+          - array
+        externalId:
+          type: string
+          description: The ID as it is formed on the external system.
+          example: 7JEHFRGXDDZFEW2FC4U
+          exampleSetFlag: true
+          types:
+          - string
+        provider:
+          type: string
+          description: The web conferencing provider to use for this meeting (e.g. 'zoom'). When not specified, the user's default provider is used.
+          example: zoom
+          exampleSetFlag: true
+          types:
+          - string
+        organizerEmail:
+          type: string
+          description: The email address of the user who created the meeting.
+          example: test@test.com
+          exampleSetFlag: true
+          types:
+          - string
+      description: Meeting update metadata
+      exampleSetFlag: false
+      types:
+      - object
