@@ -1236,3 +1236,9 @@ components:
       exampleSetFlag: false
       types:
       - object
+x-provenance:
+  method: harvested
+  publisher: Gong
+  source: https://app.gong.io/ajax/settings/api/documentation/specs?version=
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
