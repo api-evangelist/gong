@@ -1,4 +1,4 @@
-# Gong (gong)
+# Gong
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,233 +64,279 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Gong is the revenue intelligence platform that captures and analyzes customer interactions across calls, emails, and meetings. APIs expose calls, transcripts, deals, users, and analytics.
+Gong is the revenue intelligence platform that captures and analyzes customer interactions across calls, emails, meetings and web conferencing, then applies AI to surface deal risk, coaching signal and forecast correction for B2B go-to-market teams. Its public REST v2 API at api.gong.io exposes 57 operations covering calls, transcripts, recordings, users, permission profiles, workspaces, statistics, scorecards, trackers, library content, Engage flows and prospects, engagement events, meetings, audit logs, generic CRM ingestion and GDPR/CCPA data-privacy erasure. Gong also runs an official remote MCP server at mcp.gong.io for external AI agents, a rule-driven outbound webhook surface for calls, and a frontend SDK for partner apps embedded in the Gong UI.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/gong/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/gong/refs/heads/main/apis.yml)
+**Areas:** Sales · Revenue Intelligence · Conversations · Analytics · Artificial Intelligence · Conversation Intelligence · Sales Engagement · CRM · Forecasting · Transcription · Agents
 
-## Tags
+## Gong on APIs.io
 
-- Sales
-- Revenue Intelligence
-- Conversation
-- Analytics
-- AI
+Everything profiled for Gong is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/gong/](https://apis.io/providers/gong/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (26)
 
-- **Created:** 2026-05-08
-- **Modified:** 2026-05-08
+- [Gong Calls API](https://apis.io/apis/gong/gong-calls-api/) — List calls, retrieve metadata, transcripts, recordings and trackers.
+- [Gong Users API](https://apis.io/apis/gong/gong-users-api/) — Read user, manager and team data.
+- [Gong CRM Integration API](https://apis.io/apis/gong/gong-crm-integration-api/) — Push CRM-style account, contact, deal and engagement data into Gong.
+- [Gong Engagement Data API](https://apis.io/apis/gong/gong-engagement-data-api/) — Read activity, scorecards, trackers, and library content.
+- [Gong Library API](https://apis.io/apis/gong/gong-library-api/) — Access and organize library folders and shared call collections.
+- [Gong Audit Logs API](https://apis.io/apis/gong/gong-audit-logs-api/) — Operations for retrieving audit log data
+- [Gong Calls API](https://apis.io/apis/gong/gong-calls-api/) — Operations for managing and retrieving call data
+- [Gong CRM Data API](https://apis.io/apis/gong/gong-crm-data-api/) — Operations for uploading and retrieving CRM data
+- [Gong CRM Integration API](https://apis.io/apis/gong/gong-crm-integration-api/) — Operations for registering and managing CRM integrations
+- [Gong CRM Schema API](https://apis.io/apis/gong/gong-crm-schema-api/) — Operations for managing CRM object schemas
+- [Gong Data Privacy API](https://apis.io/apis/gong/gong-data-privacy-api/) — Operations for data privacy management and compliance
+- [Gong Digital Interactions API](https://apis.io/apis/gong/gong-digital-interactions-api/) — Operations for posting digital interaction data
+- [Gong Engagement Events API](https://apis.io/apis/gong/gong-engagement-events-api/) — Operations for reporting customer engagement events
+- [Gong Flows API](https://apis.io/apis/gong/gong-flows-api/) — Operations for managing Engage flows
+- [Gong Folders API](https://apis.io/apis/gong/gong-folders-api/) — Operations for managing flow folders
+- [Gong Library API](https://apis.io/apis/gong/gong-library-api/) — Operations for browsing and retrieving library content
+- [Gong Meetings API](https://apis.io/apis/gong/gong-meetings-api/) — Operations for managing meetings
+- [Gong Permission Profiles API](https://apis.io/apis/gong/gong-permission-profiles-api/) — Operations for managing permission profiles
+- [Gong Prospects API](https://apis.io/apis/gong/gong-prospects-api/) — Operations for managing prospects in Engage flows
+- [Gong Recordings API](https://apis.io/apis/gong/gong-recordings-api/) — Operations for managing call recordings and media
+- [Gong Scorecards API](https://apis.io/apis/gong/gong-scorecards-api/) — Operations for retrieving scorecard configurations
+- [Gong Statistics API](https://apis.io/apis/gong/gong-statistics-api/) — Operations for retrieving activity and performance statistics
+- [Gong Trackers API](https://apis.io/apis/gong/gong-trackers-api/) — Operations for retrieving tracker configurations
+- [Gong Transcripts API](https://apis.io/apis/gong/gong-transcripts-api/) — Operations for retrieving call transcripts
+- [Gong Users API](https://apis.io/apis/gong/gong-users-api/) — Operations for managing and retrieving user data
+- [Gong Workspaces API](https://apis.io/apis/gong/gong-workspaces-api/) — Operations for managing workspaces
 
-## APIs
+### Published properties
 
-### Gong Calls API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-List calls, retrieve metadata, transcripts, recordings and trackers.
+#### AsyncAPI (1)
 
-- **Human URL:** [https://app.gong.io/settings/api/documentation](https://app.gong.io/settings/api/documentation)
-- **Base URL:** `https://api.gong.io/v2`
+Event-driven and webhook contracts.
 
-#### Tags
+- [Gong Webhooks](https://apis.io/asyncapis/gong/gong-webhooks/)
 
-- Calls
-- Conversation Intelligence
+#### MCP servers (1)
 
-#### Properties
+Model Context Protocol servers that expose the API to agents.
 
-- [Documentation](https://app.gong.io/settings/api/documentation)
-- [Postman Collection](collections/gong-auditing.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-auditing.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-calls.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-calls.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-crm.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-crm.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-data-privacy.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-data-privacy.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-engage.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-engage.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-engagement.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-engagement.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-library.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-library.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-meetings.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-meetings.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-permissions.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-permissions.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-settings.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-settings.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-stats.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-stats.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-users.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-users.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Gong MCP server](https://apis.io/servers/gong/gong-mcp-server/)
 
-### Gong Users API
+#### Agentic access (1)
 
-Read user, manager and team data.
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- **Human URL:** [https://app.gong.io/settings/api/documentation](https://app.gong.io/settings/api/documentation)
-- **Base URL:** `https://api.gong.io/v2`
+- [Gong Agentic Access](https://apis.io/agentic-access/gong/gong-agentic-access/)
 
-#### Tags
+#### JSON Schema (97)
 
-- Users
+The data models the API reads and writes.
 
-#### Properties
+- [AggregatedActivityRequest](https://apis.io/schemas/gong/gong-aggregatedactivityrequest/)
+- [AggregatedActivityResponse](https://apis.io/schemas/gong/gong-aggregatedactivityresponse/)
+- [AnsweredScorecard](https://apis.io/schemas/gong/gong-answeredscorecard/)
+- [AnsweredScorecardsRequest](https://apis.io/schemas/gong/gong-answeredscorecardsrequest/)
+- [AnsweredScorecardsResponse](https://apis.io/schemas/gong/gong-answeredscorecardsresponse/)
+- [AssignProspectsRequest](https://apis.io/schemas/gong/gong-assignprospectsrequest/)
+- [AssignProspectsResponse](https://apis.io/schemas/gong/gong-assignprospectsresponse/)
+- [AuditLogEntry](https://apis.io/schemas/gong/gong-auditlogentry/)
+- [AuditLogsResponse](https://apis.io/schemas/gong/gong-auditlogsresponse/)
+- [BaseResponse](https://apis.io/schemas/gong/gong-baseresponse/)
+- [Gong Call](https://apis.io/schemas/gong/gong-call/)
+- [CallParty](https://apis.io/schemas/gong/gong-callparty/)
+- [CallsResponse](https://apis.io/schemas/gong/gong-callsresponse/)
+- [CallTranscript](https://apis.io/schemas/gong/gong-calltranscript/)
+- [CallTranscriptRequest](https://apis.io/schemas/gong/gong-calltranscriptrequest/)
+- [CallTranscriptsResponse](https://apis.io/schemas/gong/gong-calltranscriptsresponse/)
+- [CoachingMetricsResponse](https://apis.io/schemas/gong/gong-coachingmetricsresponse/)
+- [ContentShareEventRequest](https://apis.io/schemas/gong/gong-contentshareeventrequest/)
+- [ContentViewEventRequest](https://apis.io/schemas/gong/gong-contentvieweventrequest/)
+- [CreateMeetingRequest](https://apis.io/schemas/gong/gong-createmeetingrequest/)
+- [CreatePermissionProfileRequest](https://apis.io/schemas/gong/gong-createpermissionprofilerequest/)
+- [CrmEntitiesUploadRequest](https://apis.io/schemas/gong/gong-crmentitiesuploadrequest/)
+- [CrmEntitiesUploadResponse](https://apis.io/schemas/gong/gong-crmentitiesuploadresponse/)
+- [CrmEntitySchemaResponse](https://apis.io/schemas/gong/gong-crmentityschemaresponse/)
+- [CrmEntitySchemaUploadRequest](https://apis.io/schemas/gong/gong-crmentityschemauploadrequest/)
+- …and 72 more published on APIs.io
 
-- [Documentation](https://app.gong.io/settings/api/documentation)
-- [Postman Collection](collections/gong-auditing.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-auditing.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-calls.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-calls.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-crm.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-crm.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-data-privacy.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-data-privacy.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-engage.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-engage.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-engagement.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-engagement.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-library.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-library.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-meetings.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-meetings.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-permissions.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-permissions.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-settings.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-settings.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-stats.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-stats.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-users.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-users.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### JSON Structure (1)
 
-### Gong CRM Integration API
+Data models expressed in JSON Structure.
 
-Push CRM-style account, contact, deal and engagement data into Gong.
+- [Gong Structure](https://apis.io/json-structure/gong/gong-structure/)
 
-- **Human URL:** [https://app.gong.io/settings/api/documentation](https://app.gong.io/settings/api/documentation)
-- **Base URL:** `https://api.gong.io/v2`
+#### JSON-LD (1)
 
-#### Tags
+Linked-data contexts for the provider's vocabulary.
 
-- CRM
-- Integration
+- [Gong Context](https://apis.io/jsonld/gong/gong-context/)
 
-#### Properties
+#### Vocabulary (1)
 
-- [Documentation](https://app.gong.io/settings/api/documentation)
-- [Postman Collection](collections/gong-auditing.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-auditing.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-calls.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-calls.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-crm.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-crm.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-data-privacy.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-data-privacy.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-engage.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-engage.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-engagement.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-engagement.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-library.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-library.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-meetings.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-meetings.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-permissions.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-permissions.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-settings.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-settings.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-stats.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-stats.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-users.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-users.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+The provider's domain terms, defined.
 
-### Gong Engagement Data API
+- [Gong Domain Vocabulary](https://apis.io/vocabularies/gong/gong-vocabulary/)
 
-Read activity, scorecards, trackers, and library content.
+#### Collections (33)
 
-- **Human URL:** [https://app.gong.io/settings/api/documentation](https://app.gong.io/settings/api/documentation)
-- **Base URL:** `https://api.gong.io/v2`
+Postman and Open Collection request collections.
 
-#### Tags
+- [Gong Auditing Audit Logs API](https://apis.io/collections/gong/open-gong-audit-logs-api/)
+- [Gong Auditing API](https://apis.io/collections/gong/open-gong-auditing/)
+- [Gong Calls API](https://apis.io/collections/gong/open-gong-calls/)
+- [Gong Auditing Audit Logs Calls API](https://apis.io/collections/gong/open-gong-calls-api/)
+- [Gong CRM API](https://apis.io/collections/gong/open-gong-crm/)
+- [Gong Auditing Audit Logs CRM Data API](https://apis.io/collections/gong/open-gong-crm-data-api/)
+- [Gong Auditing Audit Logs CRM Integration API](https://apis.io/collections/gong/open-gong-crm-integration-api/)
+- [Gong Auditing Audit Logs CRM Schema API](https://apis.io/collections/gong/open-gong-crm-schema-api/)
+- [Gong Data Privacy API](https://apis.io/collections/gong/open-gong-data-privacy/)
+- [Gong Auditing Audit Logs Data Privacy API](https://apis.io/collections/gong/open-gong-data-privacy-api/)
+- [Gong Auditing Audit Logs Digital Interactions API](https://apis.io/collections/gong/open-gong-digital-interactions-api/)
+- [Gong Engage API](https://apis.io/collections/gong/open-gong-engage/)
+- [Gong Engagement API](https://apis.io/collections/gong/open-gong-engagement/)
+- [Gong Auditing Audit Logs Engagement Events API](https://apis.io/collections/gong/open-gong-engagement-events-api/)
+- [Gong Auditing Audit Logs Flows API](https://apis.io/collections/gong/open-gong-flows-api/)
+- [Gong Auditing Audit Logs Folders API](https://apis.io/collections/gong/open-gong-folders-api/)
+- [Gong Library API](https://apis.io/collections/gong/open-gong-library/)
+- [Gong Auditing Audit Logs Library API](https://apis.io/collections/gong/open-gong-library-api/)
+- [Gong Meetings API](https://apis.io/collections/gong/open-gong-meetings/)
+- [Gong Auditing Audit Logs Meetings API](https://apis.io/collections/gong/open-gong-meetings-api/)
+- [Gong Auditing Audit Logs Permission Profiles API](https://apis.io/collections/gong/open-gong-permission-profiles-api/)
+- [Gong Permissions API](https://apis.io/collections/gong/open-gong-permissions/)
+- [Gong Auditing Audit Logs Prospects API](https://apis.io/collections/gong/open-gong-prospects-api/)
+- [Gong Auditing Audit Logs Recordings API](https://apis.io/collections/gong/open-gong-recordings-api/)
+- [Gong Auditing Audit Logs Scorecards API](https://apis.io/collections/gong/open-gong-scorecards-api/)
+- …and 8 more published on APIs.io
 
-- Engagement
-- Analytics
+#### Overlays (21)
 
-#### Properties
+OpenAPI overlays, including conversational phrasing for each operation.
 
-- [Documentation](https://app.gong.io/settings/api/documentation)
-- [Postman Collection](collections/gong-auditing.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-auditing.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-calls.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-calls.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-crm.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-crm.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-data-privacy.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-data-privacy.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-engage.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-engage.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-engagement.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-engagement.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-library.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-library.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-meetings.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-meetings.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-permissions.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-permissions.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-settings.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-settings.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-stats.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-stats.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-users.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-users.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Gong Audit Logs Api Overlay](https://apis.io/overlays/gong/gong-audit-logs-api-overlay/)
+- [Gong Calls Api Overlay](https://apis.io/overlays/gong/gong-calls-api-overlay/)
+- [Gong Crm Data Api Overlay](https://apis.io/overlays/gong/gong-crm-data-api-overlay/)
+- [Gong Crm Integration Api Overlay](https://apis.io/overlays/gong/gong-crm-integration-api-overlay/)
+- [Gong Crm Schema Api Overlay](https://apis.io/overlays/gong/gong-crm-schema-api-overlay/)
+- [Gong Data Privacy Api Overlay](https://apis.io/overlays/gong/gong-data-privacy-api-overlay/)
+- [Gong Digital Interactions Api Overlay](https://apis.io/overlays/gong/gong-digital-interactions-api-overlay/)
+- [Gong Engagement Events Api Overlay](https://apis.io/overlays/gong/gong-engagement-events-api-overlay/)
+- [Gong Flows Api Overlay](https://apis.io/overlays/gong/gong-flows-api-overlay/)
+- [Gong Folders Api Overlay](https://apis.io/overlays/gong/gong-folders-api-overlay/)
+- [Gong Library Api Overlay](https://apis.io/overlays/gong/gong-library-api-overlay/)
+- [Gong Meetings Api Overlay](https://apis.io/overlays/gong/gong-meetings-api-overlay/)
+- [Gong Permission Profiles Api Overlay](https://apis.io/overlays/gong/gong-permission-profiles-api-overlay/)
+- [Gong Prospects Api Overlay](https://apis.io/overlays/gong/gong-prospects-api-overlay/)
+- [Gong Recordings Api Overlay](https://apis.io/overlays/gong/gong-recordings-api-overlay/)
+- [Gong Scorecards Api Overlay](https://apis.io/overlays/gong/gong-scorecards-api-overlay/)
+- [Gong Statistics Api Overlay](https://apis.io/overlays/gong/gong-statistics-api-overlay/)
+- [Gong Trackers Api Overlay](https://apis.io/overlays/gong/gong-trackers-api-overlay/)
+- [Gong Transcripts Api Overlay](https://apis.io/overlays/gong/gong-transcripts-api-overlay/)
+- [Gong Users Api Overlay](https://apis.io/overlays/gong/gong-users-api-overlay/)
+- [Gong Workspaces Api Overlay](https://apis.io/overlays/gong/gong-workspaces-api-overlay/)
 
-### Gong Library API
+#### Governance rules (1)
 
-Access and organize library folders and shared call collections.
+Spectral rulesets for the provider's contracts.
 
-- **Human URL:** [https://app.gong.io/settings/api/documentation](https://app.gong.io/settings/api/documentation)
-- **Base URL:** `https://api.gong.io/v2`
+- [Gong — jsonschema rules](https://apis.io/rules/gong/gong-jsonschema-spectral-rules/)
 
-#### Tags
+#### Security (4)
 
-- Library
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Properties
+- [Gong Authentication](https://apis.io/security/gong/gong-authentication/)
+- [Gong Domain Security](https://apis.io/security/gong/gong-domain-security/)
+- [Gong Trust Center](https://apis.io/security/gong/gong-trust-center/)
+- [Gong Vulnerability Disclosure](https://apis.io/security/gong/gong-vulnerability-disclosure/)
 
-- [Documentation](https://app.gong.io/settings/api/documentation)
-- [Postman Collection](collections/gong-auditing.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-auditing.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-calls.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-calls.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-crm.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-crm.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-data-privacy.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-data-privacy.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-engage.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-engage.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-engagement.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-engagement.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-library.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-library.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-meetings.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-meetings.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-permissions.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-permissions.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-settings.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-settings.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-stats.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-stats.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/gong-users.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gong-users.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### OAuth scopes (1)
 
-## Common Properties
+The permissions the API asks for.
 
-- [GitHub Organization](https://github.com/gong-io)
-- [LinkedIn](https://www.linkedin.com/company/gong-io)
+- [Gong Scopes](https://apis.io/scopes/gong/gong-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Gong Plans Pricing](https://apis.io/plans/gong/gong-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Gong Rate Limits](https://apis.io/rate-limits/gong/gong-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Gong Finops](https://apis.io/finops/gong/gong-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.gong.io/)
-- [Plans](plans/gong-plans-pricing.yml)
-- [Rate Limits](rate-limits/gong-rate-limits.yml)
-- [Fin Ops](finops/gong-finops.yml)
+- [Documentation](https://app.gong.io/settings/api/documentation)
+- [Getting started](https://app.gong.io/help/docs/api)
+- [API reference](https://app.gong.io/settings/api/documentation)
+- [Pricing](https://www.gong.io/pricing)
+- [Support](https://contact.gong.io/hc/en-us/requests/new)
+- [Blog](https://www.gong.io/blog)
+- [Security](https://www.gong.io/trust-center/security)
+- [Compliance](https://www.gong.io/security)
+- [Terms of service](https://www.gong.io/terms-of-service)
+- [Privacy policy](https://www.gong.io/privacy-policy)
+- [GitHub](https://github.com/gong-io)
+- [Status](https://status.gong.io)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 62.8** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 80.0 |
+| Contract quality | 63.6 |
+| Contract governance | 28.0 |
+| Operational transparency | 81.6 |
+| Developer ergonomics | 67.3 |
+| Access clarity | 43.4 |
+
+**Agent readiness 55.5** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | verified |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | yes |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 38.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/gong/](https://apis.io/providers/gong/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Gong: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/gong/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
